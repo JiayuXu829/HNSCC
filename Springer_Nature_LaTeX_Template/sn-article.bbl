@@ -1,0 +1,111 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\burl{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\bibcommenthead
+
+\bibitem{bib1}
+\bibinfo{author}{Campbell, S.~L.} \& \bibinfo{author}{Gear, C.~W.}
+\newblock \bibinfo{title}{The index of general nonlinear {D}{A}{E}{S}}.
+\newblock \emph{\bibinfo{journal}{Numer. {M}ath.}}
+  \textbf{\bibinfo{volume}{72}}, \bibinfo{pages}{173--196}
+  (\bibinfo{year}{1995}).
+
+\bibitem{bib2}
+\bibinfo{author}{Slifka, M.~K.} \& \bibinfo{author}{Whitton, J.~L.}
+\newblock \bibinfo{title}{Clinical implications of dysregulated cytokine
+  production}.
+\newblock \emph{\bibinfo{journal}{J. {M}ol. {M}ed.}}
+  \textbf{\bibinfo{volume}{78}}, \bibinfo{pages}{74--80}
+  (\bibinfo{year}{2000}).
+
+\bibitem{bib3}
+\bibinfo{author}{Hamburger, C.}
+\newblock \bibinfo{title}{Quasimonotonicity, regularity and duality for
+  nonlinear systems of partial differential equations}.
+\newblock \emph{\bibinfo{journal}{Ann. Mat. Pura. Appl.}}
+  \textbf{\bibinfo{volume}{169}}, \bibinfo{pages}{321--354}
+  (\bibinfo{year}{1995}).
+
+\bibitem{bib4}
+\bibinfo{author}{Geddes, K.~O.}, \bibinfo{author}{Czapor, S.~R.} \&
+  \bibinfo{author}{Labahn, G.}
+\newblock \emph{\bibinfo{title}{Algorithms for {C}omputer {A}lgebra}}
+  (\bibinfo{publisher}{Kluwer}, \bibinfo{address}{Boston},
+  \bibinfo{year}{1992}).
+
+\bibitem{bib5}
+\bibinfo{author}{Broy, M.}
+\newblock \bibinfo{title}{ in \textit{Software engineering---from auxiliary to
+  key technologies}} (eds \bibinfo{editor}{Broy, M.} \&
+  \bibinfo{editor}{Denert, E.}) \emph{\bibinfo{booktitle}{Software Pioneers}}
+  \bibinfo{pages}{10--13} (\bibinfo{publisher}{Springer}, \bibinfo{address}{New
+  {Y}ork}, \bibinfo{year}{1992}).
+
+\bibitem{bib6}
+\bibinfo{editor}{Seymour, R.~S.} (ed.) \emph{\bibinfo{title}{Conductive
+  {P}olymers}}  (\bibinfo{publisher}{Plenum}, \bibinfo{address}{New {Y}ork},
+  \bibinfo{year}{1981}).
+
+\bibitem{bib7}
+\bibinfo{author}{Smith, S.~E.}
+\newblock \bibinfo{editor}{Zaimis, E.} (ed.)
+  \emph{\bibinfo{title}{Neuromuscular blocking drugs in man}}.
+\newblock (ed.\bibinfo{editor}{Zaimis, E.})
+  \emph{\bibinfo{booktitle}{Neuromuscular junction. {H}andbook of experimental
+  pharmacology}}, Vol.~\bibinfo{volume}{42}, \bibinfo{pages}{593--660}
+  (\bibinfo{publisher}{Springer}, \bibinfo{address}{Heidelberg},
+  \bibinfo{year}{1976}).
+
+\bibitem{bib8}
+\bibinfo{author}{Chung, S.~T.} \& \bibinfo{author}{Morris, R.~L.}
+\newblock \bibinfo{title}{Isolation and characterization of plasmid
+  deoxyribonucleic acid from streptomyces fradiae} (\bibinfo{year}{1978}).
+\newblock \bibinfo{note}{Paper presented at the 3rd international symposium on
+  the genetics of industrial microorganisms, University of {W}isconsin,
+  {M}adison, 4--9 June 1978}.
+
+\bibitem{bib9}
+\bibinfo{author}{Hao, Z.}, \bibinfo{author}{AghaKouchak, A.},
+  \bibinfo{author}{Nakhjiri, N.} \& \bibinfo{author}{Farahmand, A.}
+\newblock \bibinfo{title}{Global integrated drought monitoring and prediction
+  system (gidmaps) data sets} (\bibinfo{year}{2014}).
+\newblock \bibinfo{note}{Figshare
+  \url{https://doi.org/10.6084/m9.figshare.853801}}.
+
+\bibitem{bib10}
+\bibinfo{author}{Babichev, S.~A.}, \bibinfo{author}{Ries, J.} \&
+  \bibinfo{author}{Lvovsky, A.~I.}
+\newblock \bibinfo{title}{Quantum scissors: teleportation of single-mode
+  optical states by means of a nonlocal single photon} (\bibinfo{year}{2002}).
+\newblock \bibinfo{note}{Preprint at
+  \url{https://arxiv.org/abs/quant-ph/0208066v1}}.
+
+\bibitem{bib11}
+\bibinfo{author}{Beneke, M.}, \bibinfo{author}{Buchalla, G.} \&
+  \bibinfo{author}{Dunietz, I.}
+\newblock \bibinfo{title}{Mixing induced {CP} asymmetries in inclusive {B}
+  decays}.
+\newblock \emph{\bibinfo{journal}{Phys. {L}ett.}}
+  \textbf{\bibinfo{volume}{B393}}, \bibinfo{pages}{132--142}
+  (\bibinfo{year}{1997}).
+
+\bibitem{bib12}
+\bibinfo{author}{Stahl, B.}
+\newblock \bibinfo{title}{deep{SIP}: deep learning of {S}upernova {I}a
+  {P}arameters}, \bibinfo{version}{0.42}.
+\newblock \bibinfo{howpublished}{Astrophysics {S}ource {C}ode {L}ibrary}
+  (\bibinfo{year}{2020}).
+\newblock {\href{https://ascl.net/2006.023}{{ascl:2006.023}}}.
+
+\bibitem{bib13}
+\bibinfo{author}{Abbott, T. M.~C.} \emph{et~al.}
+\newblock \bibinfo{title}{{Dark Energy Survey Year 1 Results: Constraints on
+  Extended Cosmological Models from Galaxy Clustering and Weak Lensing}}.
+\newblock \emph{\bibinfo{journal}{Phys. Rev. D}} \textbf{\bibinfo{volume}{99}},
+  \bibinfo{pages}{123505} (\bibinfo{year}{2019}).
+
+\end{thebibliography}
