@@ -1,0 +1,14 @@
+﻿{
+  "schema_version": "3.0",
+  "phase": "Phase 3 baselines",
+  "development_outcomes_allowed": ["RADCURE train/calibration", "HANCOCK train/calibration", "TCGA-HNSC train/calibration"],
+  "forbidden_outcomes": ["RADCURE challenge test", "HANCOCK OOD test", "GSE65858 external test", "GSE41613 sensitivity cohort"],
+  "preprocessing_fit_scope": "training fold for OOF; full development train for calibration-set predictions",
+  "feature_selection_fit_scope": "training fold only",
+  "model_selection": "no outcome-guided hyperparameter search; use phase3_baselines.json fixed values",
+  "patient_predictions": "results/predictions/phase3; Git-ignored",
+  "tracked_outputs": "aggregate metrics, figures, audit, and hash receipts only",
+  "phase4_components_forbidden": ["residual/offset fusion", "OOD detector", "bootstrap uncertainty gate", "AUGMENT/FALLBACK/ABSTAIN thresholds"],
+  "analysis_freeze_status_required": "DRAFT",
+  "test_unseal_allowed": false
+}

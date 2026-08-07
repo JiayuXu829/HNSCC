@@ -1,4 +1,4 @@
-﻿# Work-stage reports / 工作阶段报告
+# Work-stage reports / 工作阶段报告
 
 This directory preserves dated snapshots of the documents produced during each TRUST-HN work stage. English originals and faithful Simplified Chinese translations are kept side by side so that project decisions, verification evidence, scientific boundaries, and next-stage gates remain traceable.
 
@@ -18,6 +18,7 @@ This directory preserves dated snapshots of the documents produced during each T
 | Phase 1 progress report / Phase 1 进展报告 | `en/2026-08-07_phase1_progress_report.md` | `zh-CN/2026-08-07_phase1_progress_report.md` | `PHASE1_PROGRESS.md` |
 | Phase 1 completion report / Phase 1 完成报告 | `en/2026-08-07_phase1_completion_report.md` | `zh-CN/2026-08-07_phase1_completion_report.md` | `PHASE1_PROGRESS.md`, `PROJECT_STATUS.md`, Phase 1 audits/manifests |
 | Phase 2 completion report / Phase 2 完成报告 | `en/2026-08-07_phase2_completion_report.md` | `zh-CN/2026-08-07_phase2_completion_report.md` | Phase 2 contract, adapters, metrics, audit, and receipt |
+| Phase 3 completion report / Phase 3 完成报告 | `en/2026-08-07_phase3_completion_report.md` | `zh-CN/2026-08-07_phase3_completion_report.md` | Phase 3 baselines, metrics, leakage/findings audits, figures, and receipt |
 | Project status / 项目状态 | `en/2026-08-07_project_status.md` | `zh-CN/2026-08-07_project_status.md` | `PROJECT_STATUS.md` |
 | Phase 1 acquisition plan / Phase 1 数据获取计划 | `en/2026-08-07_phase1_acquisition_plan.md` | `zh-CN/2026-08-07_phase1_acquisition_plan.md` | `docs/phase1_acquisition_plan.md` |
 | Project kickoff decision / 项目启动决策 | `en/2026-08-07_project_kickoff_decision.md` | `zh-CN/2026-08-07_project_kickoff_decision.md` | `docs/decisions/0001_project_kickoff.md` |
@@ -31,6 +32,6 @@ This directory preserves dated snapshots of the documents produced during each T
 
 ## Current scientific gate / 当前科学门槛
 
-As of 2026-08-07, Phase 2 is complete within its conditional authorization. Phase 3 remains unauthorized. The current recommendation is a conditional GO for clinical and expression baselines only after explicit user authorization, and a NO-GO for RADCURE radiomics until the ORCESTRA RDS structure is validated. Locked and external outcomes remain unavailable for preprocessing, tuning, calibration, threshold selection, and final evaluation.
+As of 2026-08-07, Phase 3 is complete within its conditional authorization and awaits user review before Phase 4. RADCURE radiomics B4/B5/N0 remain NO-GO until the ORCESTRA RDS structure is validated. Phase 4 and locked/external evaluation remain unauthorized.
 
-截至 2026-08-07，Phase 2 已在有条件授权范围内完成，Phase 3 仍未获授权。当前建议是在用户明确批准后，仅有条件开展临床与表达组学基线；在 ORCESTRA RDS 结构完成验证前，不开展 RADCURE 放射组学基线。锁定与外部结局仍不得用于预处理、调优、校准、阈值选择和最终评价。
+截至 2026-08-07，Phase 3 已在有条件授权范围内完成，当前等待用户审阅后再决定是否进入 Phase 4。在 ORCESTRA RDS 结构完成验证前，RADCURE 放射组学 B4/B5/N0 仍为 NO-GO。Phase 4 及锁定/外部评价仍未获授权。

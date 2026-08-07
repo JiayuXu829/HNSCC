@@ -1,5 +1,5 @@
 study: tcga_geo
-status: phase2_adapter_complete_external_outcomes_sealed
+status: phase3_tcga_development_baselines_complete_external_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 development_cohort: TCGA-HNSC
 external_cohort: GSE65858
@@ -71,3 +71,8 @@ phase2_decisions:
   - "TCGA-HNSC expression/clinical-overlap cases use deterministic train/calibration subsets."
   - "GSE65858 primary eligibility is Primary, M0, non-palliative."
   - "GSE41613 follow-up is frozen in months with conversion months * 30.4375; external/sensitivity outcomes remain suppressed."
+phase3_authorized: true
+phase3_completed_on: "2026-08-07"
+phase3_decisions:
+  - "TCGA-HNSC clinical, expression, direct-fusion, missingness, and permuted-modality development baselines completed."
+  - "GSE65858 and GSE41613 outcomes remain sealed and unused."

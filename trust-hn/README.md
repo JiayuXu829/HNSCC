@@ -1,4 +1,4 @@
-﻿# TRUST-HN
+# TRUST-HN
 
 TRUST-HN is a resource-efficient reliability framework for prognosis in head and neck cancer. It evaluates whether an additional modality should **augment** a clinical anchor, whether the system should **fallback** to the clinical anchor, or whether it should **abstain** under unreliable clinical input.
 
@@ -8,7 +8,8 @@ The repository is being implemented phase by phase from `../docs/TRUST_HN_master
 
 - **Phase 0:** repository, governance, reproducible configuration, audit templates, synthetic tests, and sealed-test protection.
 - **Phase 1:** completed acquisition/registration and feasibility audit of authorized public artifacts.
-- **Phase 2:** completed unified adapters, frozen data contract, and governance-safe descriptive outputs; Phase 3 is not authorized.
+- **Phase 2:** completed unified adapters, frozen data contract, and governance-safe descriptive outputs.
+- **Phase 3:** completed development-only baselines within the authorized conditional scope; Phase 4 is not authorized, and RADCURE radiomics remain blocked pending ORCESTRA RDS structural validation.
 - Raw RADCURE CT and HANCOCK WSI are explicitly out of scope.
 - No locked/sealed outcomes may be inspected for tuning.
 
@@ -50,7 +51,7 @@ The reproducible full analysis environment is also specified by `environment.yml
 .\scripts\test.ps1
 ```
 
-The Phase 0 suite uses the Python standard library and checks data contracts, censoring logic, patient-level split isolation, deterministic hashing, and sealed-test refusal.
+The full test suite covers governance, data contracts and adapters, censoring/IPCW metrics, patient-level split isolation, baseline models, deterministic hashing, and sealed-test refusal.
 
 ## Data governance
 
@@ -100,3 +101,12 @@ python scripts/build_dataset.py --phase phase2
 ```
 
 The command does not expose test/external outcomes and does not implement any Phase 3 model.
+## Phase 3 command
+
+Run all authorized development-only baseline experiments:
+
+```powershell
+.venv\Scripts\python.exe scripts\train_baselines.py --phase phase3
+```
+
+This command writes patient-level OOF/calibration predictions only to Git-ignored `results/predictions/phase3/` and writes aggregate metrics, figures, audits, and a hashed receipt to tracked locations. It refuses Phase 4 and does not load RADCURE challenge-test, HANCOCK OOD-test, or GEO external outcomes. RADCURE B4/B5/N0 remain governance-blocked until the ORCESTRA RDS structure is validated.

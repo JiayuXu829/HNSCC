@@ -1,0 +1,98 @@
+{
+  "schema_version": "3.0",
+  "status": "FROZEN_FOR_PHASE3_DEVELOPMENT",
+  "authorized_on": "2026-08-07",
+  "scope": "B0-B5 clinical and expression/available structured-modality baselines on development train/calibration data only",
+  "phase4_authorized": false,
+  "sealed_outcomes_authorized": false,
+  "external_outcomes_authorized": false,
+  "horizon_days": 730.5,
+  "cv_folds": 5,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "calibration_usage": "evaluation of uncalibrated baseline predictions and storage of prespecified calibration diagnostics only; no gate thresholds",
+  "models": {
+    "B0": "Kaplan-Meier constant-risk baseline",
+    "B1": "clinical Cox proportional hazards",
+    "B2": "clinical elastic-net Cox",
+    "B3": "clinical random survival forest",
+    "B4": "available additional modality-only elastic-net Cox",
+    "B5": "clinical plus additional modality direct-concatenation elastic-net Cox",
+    "M0": "missingness-indicator-only elastic-net Cox",
+    "N0": "outcome-independent permuted-modality negative control"
+  },
+  "hyperparameters": {
+    "coxph_alpha": 0.01,
+    "coxnet_alpha": 0.05,
+    "coxnet_l1_ratio": 0.5,
+    "coxnet_max_iter": 100000,
+    "rsf_n_estimators": 200,
+    "rsf_min_samples_leaf": 10,
+    "rsf_max_features": "sqrt",
+    "tcga_expression_gene_type": "protein_coding",
+    "tcga_expression_transform": "log2(TPM+1)",
+    "tcga_expression_foldwise_variance_top_k": 500,
+    "ipcw_survival_floor": 0.05,
+    "dca_thresholds": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5
+    ],
+    "coxph_n_iter": 1000
+  },
+  "study_scope": {
+    "RADCURE": {
+      "models": [
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "M0"
+      ],
+      "blocked_models": [
+        "B4",
+        "B5",
+        "N0"
+      ],
+      "blocker": "ORCESTRA RDS structure not validated; no radiomics or GTV modality exposed"
+    },
+    "HANCOCK": {
+      "models": [
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "M0",
+        "N0"
+      ],
+      "additional_modality": "baseline blood measurements plus TMA cell-density features"
+    },
+    "TCGA-HNSC": {
+      "models": [
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "M0",
+        "N0"
+      ],
+      "additional_modality": "primary-tumor STAR-count protein-coding log2(TPM+1) expression"
+    }
+  }
+}

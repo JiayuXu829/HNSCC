@@ -1,0 +1,9 @@
+﻿{
+  "python_version": "3.11.9",
+  "installation_root": ".runtime/python311",
+  "virtual_environment": ".venv",
+  "installer_url": "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe",
+  "installer_sha256": "5ee42c4eee1e6b4464bb23722f90b45303f79442df63083f05322f1785f5fdde",
+  "installed_on": "2026-08-07",
+  "physical_environment_drive": "D"
+}

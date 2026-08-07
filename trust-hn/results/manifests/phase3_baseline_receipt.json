@@ -1,0 +1,36 @@
+{
+  "schema_version": "3.0",
+  "generated_at_utc": "2026-08-07T08:51:36.164678+00:00",
+  "phase": "Phase 3 development-only baselines",
+  "horizon_days": 730.5,
+  "cv_folds": 5,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "successful_runs": 105,
+  "successful_runs_with_warnings": 10,
+  "failed_runs": 0,
+  "blocked_entries": 3,
+  "patient_prediction_directory": "results/predictions/phase3 (Git-ignored)",
+  "sealed_or_external_outcomes_used": false,
+  "phase4_components_used": false,
+  "config_sha256": {
+    "configs/phase3_baselines.json": "8d18348cf059895a25c3b1a07ea4d670b23fa5a18dfa9809fea64caf40f9822e",
+    "configs/phase3_governance.json": "ff6a17e96e496f1bc04296980d3965cb03bd0a713612da7014d5f09617df8f5d"
+  },
+  "aggregate_output_sha256": {
+    "results/metrics/phase3/oof_metrics.csv": "607fb42af5d77d3d7a556dfb90d1a5040217dd9732a4ae475a60b7d4571d628d",
+    "results/metrics/phase3/calibration_metrics.csv": "c13813e7d0ce7f9270557d53abad96e27924cd30a7c984258795eac9e6ab9372",
+    "results/metrics/phase3/stability_summary.csv": "71b604f16e116cdd12c7efcf2a189c4f017ea303dd7daf0107bd656bdc34ca52",
+    "results/metrics/phase3/model_status.csv": "fc167d0d8a761c6987d4e9f495d68fe45dba27e72f09ef45f730fe4a81f3ff60",
+    "results/metrics/phase3/decision_curve.csv": "4b7f40e3c20caa7055cbb4481ed2cc69b3192e037082c09a2574319d1d65c795",
+    "results/figures/phase3/oof_metric_comparison.svg": "a45143d555ed541f07d6bd9a00e6bf51570c2cd10676bcdf42694b13491af41d",
+    "results/figures/phase3/calibration_metric_comparison.svg": "a5c9aa30de044d62ea9eced755308abceec36f4cc64294e5a8ea6e13fdb34951",
+    "results/figures/phase3/decision_curve.svg": "7fc08a50f2fb70e63bcdd08391a6a848d97a593d5d3233fcf9d6bd1a3efe051e",
+    "docs/audits/phase3/leakage_audit.md": "73253fe84717da54a1f1df6913eb387b5cef39d1759b4df1efcaa4354d58e4fd"
+  }
+}

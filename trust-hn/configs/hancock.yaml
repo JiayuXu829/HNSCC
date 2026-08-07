@@ -1,5 +1,5 @@
 study: hancock
-status: phase2_adapter_complete
+status: phase3_baselines_complete
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_763_patients
 index_date: surgery_or_diagnosis_requires_final_adapter_definition
@@ -58,3 +58,8 @@ phase2_decisions:
   - "The official OOD training partition is divided into deterministic train/calibration subsets without outcomes."
   - "Overall survival is diagnosis-to-last-information/death."
   - "Official OOD-test outcomes remain suppressed."
+phase3_authorized: true
+phase3_completed_on: "2026-08-07"
+phase3_decisions:
+  - "Clinical, blood/TMA, direct-fusion, missingness, and permuted-modality development baselines completed."
+  - "Official OOD-test outcomes remain sealed and unused."
