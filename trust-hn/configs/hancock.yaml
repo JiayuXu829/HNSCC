@@ -1,5 +1,5 @@
 study: hancock
-status: phase1_feasible
+status: phase2_adapter_complete
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_763_patients
 index_date: surgery_or_diagnosis_requires_final_adapter_definition
@@ -52,4 +52,9 @@ missingness:
 phase1_conditions:
   - "Freeze prediction-time availability and the final index-date definition in the Phase 2 adapter."
   - "Treat days_to_recurrence missingness in no-recurrence cases as structural, not ordinary missingness."
-phase2_authorized: false
+phase2_authorized: true
+phase2_completed_on: "2026-08-07"
+phase2_decisions:
+  - "The official OOD training partition is divided into deterministic train/calibration subsets without outcomes."
+  - "Overall survival is diagnosis-to-last-information/death."
+  - "Official OOD-test outcomes remain suppressed."

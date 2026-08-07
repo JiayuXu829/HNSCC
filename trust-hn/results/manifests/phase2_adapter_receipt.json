@@ -1,0 +1,98 @@
+{
+  "schema_version": "2.0",
+  "generated_at_utc": "2026-08-07T07:46:59.363864+00:00",
+  "phase": "Phase 2 unified adapters and descriptive analysis",
+  "modeling_performed": false,
+  "phase3_authorized": false,
+  "sealed_or_external_outcomes_in_public_outputs": false,
+  "patient_level_outputs": "data/interim/phase2 (Git-ignored)",
+  "adapters": [
+    {
+      "adapter": "RadcureAdapter",
+      "records": 3346
+    },
+    {
+      "adapter": "HancockAdapter",
+      "records": 763
+    },
+    {
+      "adapter": "TranscriptomicsAdapter",
+      "records": 887
+    }
+  ],
+  "validations": {
+    "RADCURE": {
+      "study": "RADCURE",
+      "records": 3346,
+      "eligible": 2144,
+      "sealed": 626,
+      "endpoint_usable": 1518
+    },
+    "HANCOCK": {
+      "study": "HANCOCK",
+      "records": 763,
+      "eligible": 763,
+      "sealed": 152,
+      "endpoint_usable": 611
+    },
+    "TCGA-HNSC": {
+      "study": "TCGA-HNSC",
+      "records": 520,
+      "eligible": 520,
+      "sealed": 0,
+      "endpoint_usable": 519
+    },
+    "GSE65858": {
+      "study": "GSE65858",
+      "records": 270,
+      "eligible": 244,
+      "sealed": 244,
+      "endpoint_usable": 0
+    },
+    "GSE41613": {
+      "study": "GSE41613",
+      "records": 97,
+      "eligible": 97,
+      "sealed": 97,
+      "endpoint_usable": 0
+    }
+  },
+  "source_sha256": {
+    "data/interim/gse41613/geo_2026-07-06/GSE41613_series_matrix.txt": "92c9adea26af6e58fbbfc87f74ad46b9aee688cfdce11c2cc2df90f84940ee17",
+    "data/interim/gse65858/geo_2026-06-03/GSE65858_series_matrix.txt": "88b303164882ee37fe85170eaf7a71a08781e6809ede640233883b30aad355cd",
+    "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a/repository/HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a/features/targets.csv": "c6e8674cb304b1c90d3ea55570359e79ac2353b64ec201e1501726f558c08503",
+    "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a/repository/HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a/features/tma_cell_density.csv": "fb2468d284e29a067d5d08793de5e52c48978410a0145671cd81381466d48b99",
+    "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a/splits_and_dictionaries/DataSplits_DataDictionaries/dataset_split_out.json": "75b42a6dbd86207a4803629c3fe580cd18103c688595350abf13b1710ebc051f",
+    "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a/structured_data/StructuredData/clinical_data.json": "355a53661f8e9a6b36dd7a5d66a57b650cd34cd3b87cbf7c91b4806fe7949bb4",
+    "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a/structured_data/StructuredData/pathological_data.json": "9595b3427087bd4922147bf40321559f024c74d52b46c9c6a698c2751eaffaf5",
+    "data/interim/radcure/v04_20241219/clinical_csv/01_RADCURE_TCIA_Clinical_r2_offset.csv": "18068176b5e92fbd57e4879610613ece6d123de3100be3016d22a3d5439eb8e0",
+    "data/raw/tcga_hnsc/gdc_cases_clinical_response.json": "df0d8bbd8345acdde6b2286252d07e3a605351fbeb8bb5fd77b1670e273aa72f",
+    "data/raw/tcga_hnsc/gdc_star_counts_primary_tumor_manifest.tsv": "68b36aea7b8c4befeeaf310de39ab6cb5f6f8832e5af8f24560326b75566a6dc"
+  },
+  "contract_sha256": {
+    "configs/phase2_contract.json": "8ce3633debeca7148c0e11a80bd582821f9a919a7bd3ec7b3bb9207f0ab56d40",
+    "configs/phase2_governance.json": "ae489b5e9cb34ccd855107cf35936fcbcb9ab5a4d147e8aec3c9ee2c318cd952",
+    "data/schemas/unified_patient_record.schema.json": "3e76aa29862deade7d7e05f35bb036577d05ce79980f22383a749d737828405b"
+  },
+  "output_sha256": {
+    "results/metrics/phase2/cohort_flow.csv": "5a0aced0ca84f6ab114efadeb2d91cfce814a73542ce50bcf4e65e15b395b63f",
+    "results/metrics/phase2/table1_candidates.csv": "30f814e58012155a334398275c0a11fa0d001389175bdf7edbc27a74b54ab5da",
+    "results/metrics/phase2/missingness_summary.csv": "8e4cbc7ddf5a66b4b60a748aa50d3d8de354b5e48cd020aa312e2e6d6bd12d59",
+    "results/metrics/phase2/event_summary_development_only.csv": "eedde69c6d30d75b15d30957d3de810e5fff3f96c3dbc1b1278dad6fa7f4cfa9",
+    "results/metrics/phase2/kaplan_meier_development_only.csv": "7c350a646ebed5e913c8627adab027f8cf30c0f9ad6afb2ae905d48f730859db",
+    "results/metrics/phase2/composition_comparison.csv": "12891e4db44b1dc91507d7d3ae30e1c7ec4781b2fef55f325dad8f5baa7fcff4",
+    "results/figures/phase2/missingness_heatmap.svg": "2a948c3d0f3cf10c943b5e3cbd799fee8a3b13493ab28174eb899781b6e71818",
+    "results/figures/phase2/event_distribution.svg": "4c30244fd8f38c6e28b3c2b588432f3fc7dc59b08fb8282b2de75c9fb4facd78",
+    "results/figures/phase2/kaplan_meier_development_only.svg": "6af2933d861453b0c8cb8fdf7a606aaa7fa5c0a6693ad029069f0e8ff0abc78e",
+    "docs/audits/phase2/endpoint_audit.md": "8c0943ae078c78e008aefd1c87b8056a45de2e8035fa021755286df44986e72d"
+  },
+  "identifier_leakage_guard": {
+    "forbidden_csv_headers_checked": true,
+    "native_id_patterns_checked": [
+      "RADCURE numeric format",
+      "TCGA submitter format",
+      "GEO GSM numeric format"
+    ],
+    "short_numeric_HANCOCK_ids": "protected structurally by aggregate-only writers; substring scanning is not specific"
+  }
+}

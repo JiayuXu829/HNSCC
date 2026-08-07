@@ -1,0 +1,374 @@
+study,split_role,variable,level,statistic,value,n_observed,n_missing,percent_observed
+GSE41613,sensitivity,age,,not_available,,0,97,
+GSE41613,sensitivity,age_group,19-39,count_percent_observed,6,97,0,6.185567010309279
+GSE41613,sensitivity,age_group,40-49,count_percent_observed,16,97,0,16.49484536082474
+GSE41613,sensitivity,age_group,50-59,count_percent_observed,28,97,0,28.8659793814433
+GSE41613,sensitivity,age_group,60-88,count_percent_observed,47,97,0,48.45360824742268
+GSE41613,sensitivity,sex,F,count_percent_observed,31,97,0,31.95876288659794
+GSE41613,sensitivity,sex,M,count_percent_observed,66,97,0,68.04123711340206
+GSE41613,sensitivity,site,Oral cavity,count_percent_observed,97,97,0,100.0
+GSE41613,sensitivity,stage,I/II,count_percent_observed,41,97,0,42.2680412371134
+GSE41613,sensitivity,stage,III/IV,count_percent_observed,56,97,0,57.7319587628866
+GSE41613,sensitivity,hpv,negative,count_percent_observed,97,97,0,100.0
+GSE41613,sensitivity,treatment,multii-modality,count_percent_observed,53,96,1,55.208333333333336
+GSE41613,sensitivity,treatment,uni-modality,count_percent_observed,43,96,1,44.791666666666664
+GSE65858,external_test,age,,mean,59.571313158514826,244,0,
+GSE65858,external_test,age,,sd,10.020399757271665,244,0,
+GSE65858,external_test,age,,median,58.11362080766595,244,0,
+GSE65858,external_test,age,,q1,52.3258042436687,244,0,
+GSE65858,external_test,age,,q3,68.24982888432584,244,0,
+GSE65858,external_test,sex,F,count_percent_observed,41,244,0,16.80327868852459
+GSE65858,external_test,sex,M,count_percent_observed,203,244,0,83.19672131147541
+GSE65858,external_test,site,Cavum Oris,count_percent_observed,73,241,3,30.29045643153527
+GSE65858,external_test,site,Hypopharynx,count_percent_observed,27,241,3,11.203319502074688
+GSE65858,external_test,site,Larynx,count_percent_observed,42,241,3,17.42738589211618
+GSE65858,external_test,site,Oropharynx,count_percent_observed,99,241,3,41.07883817427386
+GSE65858,external_test,stage,I,count_percent_observed,15,244,0,6.147540983606557
+GSE65858,external_test,stage,II,count_percent_observed,33,244,0,13.524590163934427
+GSE65858,external_test,stage,III,count_percent_observed,33,244,0,13.524590163934427
+GSE65858,external_test,stage,IVA,count_percent_observed,148,244,0,60.65573770491803
+GSE65858,external_test,stage,IVB,count_percent_observed,15,244,0,6.147540983606557
+GSE65858,external_test,hpv,DNA+RNA+,count_percent_observed,35,225,19,15.555555555555555
+GSE65858,external_test,hpv,DNA+RNA-,count_percent_observed,19,225,19,8.444444444444445
+GSE65858,external_test,hpv,DNA-,count_percent_observed,171,225,19,76.0
+GSE65858,external_test,treatment,mono,count_percent_observed,74,244,0,30.327868852459016
+GSE65858,external_test,treatment,multi,count_percent_observed,170,244,0,69.67213114754098
+GSE65858,external_test,smoking,No,count_percent_observed,40,244,0,16.39344262295082
+GSE65858,external_test,smoking,Yes,count_percent_observed,204,244,0,83.60655737704919
+HANCOCK,calibration,age,,mean,62.31967213114754,122,0,
+HANCOCK,calibration,age,,sd,9.487065046546205,122,0,
+HANCOCK,calibration,age,,median,61.5,122,0,
+HANCOCK,calibration,age,,q1,56.0,122,0,
+HANCOCK,calibration,age,,q3,68.75,122,0,
+HANCOCK,calibration,sex,female,count_percent_observed,31,122,0,25.40983606557377
+HANCOCK,calibration,sex,male,count_percent_observed,91,122,0,74.59016393442623
+HANCOCK,calibration,site,Hypopharynx,count_percent_observed,16,122,0,13.114754098360656
+HANCOCK,calibration,site,Larynx,count_percent_observed,21,122,0,17.21311475409836
+HANCOCK,calibration,site,Oral_Cavity,count_percent_observed,29,122,0,23.770491803278688
+HANCOCK,calibration,site,Oropharynx,count_percent_observed,56,122,0,45.90163934426229
+HANCOCK,calibration,stage,pT1/NX,count_percent_observed,12,122,0,9.836065573770492
+HANCOCK,calibration,stage,pT1/pN0,count_percent_observed,6,122,0,4.918032786885246
+HANCOCK,calibration,stage,pT1/pN1,count_percent_observed,9,122,0,7.377049180327869
+HANCOCK,calibration,stage,pT1/pN2,count_percent_observed,4,122,0,3.278688524590164
+HANCOCK,calibration,stage,pT1/pN2a,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT1/pN2b,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT1/pN2c,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT1/pN3,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT1/pN3b,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT1a/NX,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT2/NX,count_percent_observed,5,122,0,4.098360655737705
+HANCOCK,calibration,stage,pT2/pN0,count_percent_observed,13,122,0,10.655737704918034
+HANCOCK,calibration,stage,pT2/pN1,count_percent_observed,7,122,0,5.737704918032787
+HANCOCK,calibration,stage,pT2/pN2,count_percent_observed,5,122,0,4.098360655737705
+HANCOCK,calibration,stage,pT2/pN2a,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT2/pN2b,count_percent_observed,12,122,0,9.836065573770492
+HANCOCK,calibration,stage,pT2/pN2c,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT2/pN3,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT2/pN3b,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT3/NX,count_percent_observed,4,122,0,3.278688524590164
+HANCOCK,calibration,stage,pT3/pN0,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT3/pN1,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT3/pN2,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT3/pN2a,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT3/pN2b,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT3/pN2c,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT3/pN3b,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT4a/pN0,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pT4a/pN1,count_percent_observed,3,122,0,2.459016393442623
+HANCOCK,calibration,stage,pT4a/pN2b,count_percent_observed,4,122,0,3.278688524590164
+HANCOCK,calibration,stage,pT4a/pN2c,count_percent_observed,2,122,0,1.639344262295082
+HANCOCK,calibration,stage,pT4a/pN3b,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,stage,pTis/NX,count_percent_observed,1,122,0,0.819672131147541
+HANCOCK,calibration,hpv,negative,count_percent_observed,28,122,0,22.950819672131146
+HANCOCK,calibration,hpv,not_tested,count_percent_observed,66,122,0,54.09836065573771
+HANCOCK,calibration,hpv,positive,count_percent_observed,28,122,0,22.950819672131146
+HANCOCK,calibration,treatment,surgery + adjuvant radiochemotherapy,count_percent_observed,49,122,0,40.16393442622951
+HANCOCK,calibration,treatment,surgery + adjuvant radiotherapy,count_percent_observed,28,122,0,22.950819672131146
+HANCOCK,calibration,treatment,surgery alone,count_percent_observed,45,122,0,36.885245901639344
+HANCOCK,calibration,smoking,former,count_percent_observed,24,119,3,20.168067226890756
+HANCOCK,calibration,smoking,non-smoker,count_percent_observed,38,119,3,31.932773109243698
+HANCOCK,calibration,smoking,smoker,count_percent_observed,57,119,3,47.89915966386555
+HANCOCK,sealed_test,age,,mean,61.125,152,0,
+HANCOCK,sealed_test,age,,sd,10.576315223583745,152,0,
+HANCOCK,sealed_test,age,,median,60.0,152,0,
+HANCOCK,sealed_test,age,,q1,54.0,152,0,
+HANCOCK,sealed_test,age,,q3,69.0,152,0,
+HANCOCK,sealed_test,sex,female,count_percent_observed,22,152,0,14.473684210526315
+HANCOCK,sealed_test,sex,male,count_percent_observed,130,152,0,85.52631578947368
+HANCOCK,sealed_test,site,CUP,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,site,Hypopharynx,count_percent_observed,19,152,0,12.5
+HANCOCK,sealed_test,site,Larynx,count_percent_observed,40,152,0,26.31578947368421
+HANCOCK,sealed_test,site,Oral_Cavity,count_percent_observed,23,152,0,15.131578947368421
+HANCOCK,sealed_test,site,Oropharynx,count_percent_observed,69,152,0,45.39473684210526
+HANCOCK,sealed_test,stage,TX/NX,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,TX/pN2c,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT1/NX,count_percent_observed,15,152,0,9.868421052631579
+HANCOCK,sealed_test,stage,pT1/pN0,count_percent_observed,11,152,0,7.2368421052631575
+HANCOCK,sealed_test,stage,pT1/pN1,count_percent_observed,9,152,0,5.921052631578948
+HANCOCK,sealed_test,stage,pT1/pN2,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT1/pN2a,count_percent_observed,2,152,0,1.3157894736842106
+HANCOCK,sealed_test,stage,pT1/pN2b,count_percent_observed,2,152,0,1.3157894736842106
+HANCOCK,sealed_test,stage,pT1/pN3,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT1/pN3b,count_percent_observed,2,152,0,1.3157894736842106
+HANCOCK,sealed_test,stage,pT1a/NX,count_percent_observed,6,152,0,3.9473684210526314
+HANCOCK,sealed_test,stage,pT1a/pN1,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT2/NX,count_percent_observed,7,152,0,4.605263157894737
+HANCOCK,sealed_test,stage,pT2/pN0,count_percent_observed,14,152,0,9.210526315789474
+HANCOCK,sealed_test,stage,pT2/pN1,count_percent_observed,6,152,0,3.9473684210526314
+HANCOCK,sealed_test,stage,pT2/pN2,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT2/pN2a,count_percent_observed,5,152,0,3.289473684210526
+HANCOCK,sealed_test,stage,pT2/pN2b,count_percent_observed,4,152,0,2.6315789473684212
+HANCOCK,sealed_test,stage,pT2/pN2c,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT2/pN3b,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT3/NX,count_percent_observed,2,152,0,1.3157894736842106
+HANCOCK,sealed_test,stage,pT3/pN0,count_percent_observed,9,152,0,5.921052631578948
+HANCOCK,sealed_test,stage,pT3/pN1,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT3/pN2,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT3/pN2a,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT3/pN2b,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT3/pN2c,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT3/pN3b,count_percent_observed,7,152,0,4.605263157894737
+HANCOCK,sealed_test,stage,pT4a/pN0,count_percent_observed,4,152,0,2.6315789473684212
+HANCOCK,sealed_test,stage,pT4a/pN1,count_percent_observed,5,152,0,3.289473684210526
+HANCOCK,sealed_test,stage,pT4a/pN2a,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT4a/pN2b,count_percent_observed,7,152,0,4.605263157894737
+HANCOCK,sealed_test,stage,pT4a/pN2c,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT4a/pN3,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT4b/pN1,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,stage,pT4b/pN2c,count_percent_observed,3,152,0,1.9736842105263157
+HANCOCK,sealed_test,stage,pT4b/pN3,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,hpv,negative,count_percent_observed,37,152,0,24.342105263157894
+HANCOCK,sealed_test,hpv,not_tested,count_percent_observed,82,152,0,53.94736842105263
+HANCOCK,sealed_test,hpv,positive,count_percent_observed,33,152,0,21.710526315789473
+HANCOCK,sealed_test,treatment,surgery + adjuvant radiochemotherapy,count_percent_observed,54,152,0,35.526315789473685
+HANCOCK,sealed_test,treatment,surgery + adjuvant radiotherapy,count_percent_observed,36,152,0,23.68421052631579
+HANCOCK,sealed_test,treatment,surgery + adjuvant systemic therapy,count_percent_observed,1,152,0,0.6578947368421053
+HANCOCK,sealed_test,treatment,surgery alone,count_percent_observed,61,152,0,40.13157894736842
+HANCOCK,sealed_test,smoking,former,count_percent_observed,41,149,3,27.516778523489933
+HANCOCK,sealed_test,smoking,non-smoker,count_percent_observed,43,149,3,28.859060402684563
+HANCOCK,sealed_test,smoking,smoker,count_percent_observed,65,149,3,43.624161073825505
+HANCOCK,train,age,,mean,60.9079754601227,489,0,
+HANCOCK,train,age,,sd,10.107096485957069,489,0,
+HANCOCK,train,age,,median,61.0,489,0,
+HANCOCK,train,age,,q1,54.0,489,0,
+HANCOCK,train,age,,q3,69.0,489,0,
+HANCOCK,train,sex,female,count_percent_observed,96,489,0,19.631901840490798
+HANCOCK,train,sex,male,count_percent_observed,393,489,0,80.3680981595092
+HANCOCK,train,site,CUP,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,site,Hypopharynx,count_percent_observed,54,489,0,11.042944785276074
+HANCOCK,train,site,Larynx,count_percent_observed,146,489,0,29.856850715746422
+HANCOCK,train,site,Oral_Cavity,count_percent_observed,82,489,0,16.768916155419223
+HANCOCK,train,site,Oropharynx,count_percent_observed,206,489,0,42.12678936605317
+HANCOCK,train,stage,TX/pN1,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,stage,TX/pN2c,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,stage,pT1/NX,count_percent_observed,41,489,0,8.384458077709612
+HANCOCK,train,stage,pT1/pN0,count_percent_observed,37,489,0,7.566462167689162
+HANCOCK,train,stage,pT1/pN1,count_percent_observed,20,489,0,4.08997955010225
+HANCOCK,train,stage,pT1/pN2,count_percent_observed,9,489,0,1.8404907975460123
+HANCOCK,train,stage,pT1/pN2a,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT1/pN2b,count_percent_observed,27,489,0,5.521472392638037
+HANCOCK,train,stage,pT1/pN2c,count_percent_observed,5,489,0,1.0224948875255624
+HANCOCK,train,stage,pT1/pN3,count_percent_observed,3,489,0,0.6134969325153374
+HANCOCK,train,stage,pT1/pN3b,count_percent_observed,6,489,0,1.2269938650306749
+HANCOCK,train,stage,pT1a/NX,count_percent_observed,21,489,0,4.294478527607362
+HANCOCK,train,stage,pT1a/pN0,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,stage,pT1b/NX,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT2/NX,count_percent_observed,24,489,0,4.9079754601226995
+HANCOCK,train,stage,pT2/pN0,count_percent_observed,56,489,0,11.451942740286299
+HANCOCK,train,stage,pT2/pN1,count_percent_observed,30,489,0,6.134969325153374
+HANCOCK,train,stage,pT2/pN2,count_percent_observed,9,489,0,1.8404907975460123
+HANCOCK,train,stage,pT2/pN2a,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT2/pN2b,count_percent_observed,27,489,0,5.521472392638037
+HANCOCK,train,stage,pT2/pN2c,count_percent_observed,13,489,0,2.658486707566462
+HANCOCK,train,stage,pT2/pN3,count_percent_observed,3,489,0,0.6134969325153374
+HANCOCK,train,stage,pT2/pN3b,count_percent_observed,7,489,0,1.4314928425357873
+HANCOCK,train,stage,pT3/NX,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT3/pN0,count_percent_observed,29,489,0,5.930470347648262
+HANCOCK,train,stage,pT3/pN1,count_percent_observed,12,489,0,2.4539877300613497
+HANCOCK,train,stage,pT3/pN2,count_percent_observed,3,489,0,0.6134969325153374
+HANCOCK,train,stage,pT3/pN2a,count_percent_observed,6,489,0,1.2269938650306749
+HANCOCK,train,stage,pT3/pN2b,count_percent_observed,22,489,0,4.4989775051124745
+HANCOCK,train,stage,pT3/pN2c,count_percent_observed,5,489,0,1.0224948875255624
+HANCOCK,train,stage,pT3/pN3,count_percent_observed,3,489,0,0.6134969325153374
+HANCOCK,train,stage,pT4a/NX,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT4a/pN0,count_percent_observed,17,489,0,3.476482617586912
+HANCOCK,train,stage,pT4a/pN1,count_percent_observed,2,489,0,0.40899795501022496
+HANCOCK,train,stage,pT4a/pN1a,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,stage,pT4a/pN2,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,stage,pT4a/pN2a,count_percent_observed,2,489,0,0.40899795501022496
+HANCOCK,train,stage,pT4a/pN2b,count_percent_observed,10,489,0,2.044989775051125
+HANCOCK,train,stage,pT4a/pN2c,count_percent_observed,10,489,0,2.044989775051125
+HANCOCK,train,stage,pT4a/pN3,count_percent_observed,4,489,0,0.8179959100204499
+HANCOCK,train,stage,pT4a/pN3b,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,hpv,negative,count_percent_observed,126,489,0,25.766871165644172
+HANCOCK,train,hpv,not_tested,count_percent_observed,283,489,0,57.87321063394683
+HANCOCK,train,hpv,positive,count_percent_observed,80,489,0,16.359918200409
+HANCOCK,train,treatment,surgery + adjuvant radiochemotherapy,count_percent_observed,206,489,0,42.12678936605317
+HANCOCK,train,treatment,surgery + adjuvant radiotherapy,count_percent_observed,104,489,0,21.267893660531698
+HANCOCK,train,treatment,surgery + adjuvant systemic therapy,count_percent_observed,1,489,0,0.20449897750511248
+HANCOCK,train,treatment,surgery alone,count_percent_observed,178,489,0,36.40081799591002
+HANCOCK,train,smoking,former,count_percent_observed,121,479,10,25.260960334029228
+HANCOCK,train,smoking,non-smoker,count_percent_observed,130,479,10,27.139874739039666
+HANCOCK,train,smoking,smoker,count_percent_observed,228,479,10,47.59916492693111
+RADCURE,calibration,age,,mean,63.537293729372934,303,0,
+RADCURE,calibration,age,,sd,11.0315964904754,303,0,
+RADCURE,calibration,age,,median,62.7,303,0,
+RADCURE,calibration,age,,q1,55.5,303,0,
+RADCURE,calibration,age,,q3,72.2,303,0,
+RADCURE,calibration,sex,Female,count_percent_observed,59,303,0,19.471947194719473
+RADCURE,calibration,sex,Male,count_percent_observed,244,303,0,80.52805280528052
+RADCURE,calibration,site,Esophagus,count_percent_observed,1,303,0,0.33003300330033003
+RADCURE,calibration,site,Hypopharynx,count_percent_observed,22,303,0,7.260726072607261
+RADCURE,calibration,site,Larynx,count_percent_observed,100,303,0,33.00330033003301
+RADCURE,calibration,site,Lip & Oral Cavity,count_percent_observed,15,303,0,4.9504950495049505
+RADCURE,calibration,site,Oropharynx,count_percent_observed,153,303,0,50.495049504950494
+RADCURE,calibration,site,Paranasal Sinus,count_percent_observed,2,303,0,0.6600660066006601
+RADCURE,calibration,site,esophagus,count_percent_observed,4,303,0,1.3201320132013201
+RADCURE,calibration,site,nasal cavity,count_percent_observed,6,303,0,1.9801980198019802
+RADCURE,calibration,stage,I,count_percent_observed,44,302,1,14.56953642384106
+RADCURE,calibration,stage,II,count_percent_observed,46,302,1,15.2317880794702
+RADCURE,calibration,stage,IIA,count_percent_observed,1,302,1,0.33112582781456956
+RADCURE,calibration,stage,III,count_percent_observed,46,302,1,15.2317880794702
+RADCURE,calibration,stage,IIIA,count_percent_observed,1,302,1,0.33112582781456956
+RADCURE,calibration,stage,IVA,count_percent_observed,138,302,1,45.6953642384106
+RADCURE,calibration,stage,IVB,count_percent_observed,26,302,1,8.609271523178808
+RADCURE,calibration,hpv,"Yes, Negative",count_percent_observed,42,147,156,28.571428571428573
+RADCURE,calibration,hpv,"Yes, positive",count_percent_observed,105,147,156,71.42857142857143
+RADCURE,calibration,treatment,ChemoRT,count_percent_observed,111,303,0,36.633663366336634
+RADCURE,calibration,treatment,RT + EGFRI,count_percent_observed,13,303,0,4.29042904290429
+RADCURE,calibration,treatment,RT alone,count_percent_observed,179,303,0,59.07590759075907
+RADCURE,calibration,smoking,Current,count_percent_observed,110,303,0,36.303630363036305
+RADCURE,calibration,smoking,Ex-smoker,count_percent_observed,125,303,0,41.254125412541256
+RADCURE,calibration,smoking,Non-smoker,count_percent_observed,68,303,0,22.442244224422442
+RADCURE,sealed_test,age,,mean,63.24920127795527,626,0,
+RADCURE,sealed_test,age,,sd,10.375167630502283,626,0,
+RADCURE,sealed_test,age,,median,63.2,626,0,
+RADCURE,sealed_test,age,,q1,56.3,626,0,
+RADCURE,sealed_test,age,,q3,69.7,626,0,
+RADCURE,sealed_test,sex,Female,count_percent_observed,108,626,0,17.252396166134186
+RADCURE,sealed_test,sex,Male,count_percent_observed,518,626,0,82.74760383386581
+RADCURE,sealed_test,site,Esophagus,count_percent_observed,7,626,0,1.1182108626198084
+RADCURE,sealed_test,site,Hypopharynx,count_percent_observed,28,626,0,4.472843450479234
+RADCURE,sealed_test,site,Larynx,count_percent_observed,161,626,0,25.71884984025559
+RADCURE,sealed_test,site,Lip & Oral Cavity,count_percent_observed,10,626,0,1.597444089456869
+RADCURE,sealed_test,site,Nasal Cavity,count_percent_observed,18,626,0,2.8753993610223643
+RADCURE,sealed_test,site,Oropharynx,count_percent_observed,394,626,0,62.93929712460064
+RADCURE,sealed_test,site,Paranasal Sinus,count_percent_observed,7,626,0,1.1182108626198084
+RADCURE,sealed_test,site,Unknown,count_percent_observed,1,626,0,0.1597444089456869
+RADCURE,sealed_test,stage,I,count_percent_observed,60,624,2,9.615384615384615
+RADCURE,sealed_test,stage,II,count_percent_observed,78,624,2,12.5
+RADCURE,sealed_test,stage,III,count_percent_observed,76,624,2,12.179487179487179
+RADCURE,sealed_test,stage,IIIC,count_percent_observed,1,624,2,0.16025641025641027
+RADCURE,sealed_test,stage,IV,count_percent_observed,3,624,2,0.4807692307692308
+RADCURE,sealed_test,stage,IVA,count_percent_observed,362,624,2,58.01282051282051
+RADCURE,sealed_test,stage,IVB,count_percent_observed,43,624,2,6.891025641025641
+RADCURE,sealed_test,stage,IVC,count_percent_observed,1,624,2,0.16025641025641027
+RADCURE,sealed_test,hpv,"Yes, Negative",count_percent_observed,127,449,177,28.285077951002226
+RADCURE,sealed_test,hpv,"Yes, positive",count_percent_observed,322,449,177,71.71492204899778
+RADCURE,sealed_test,treatment,ChemoRT,count_percent_observed,270,626,0,43.13099041533546
+RADCURE,sealed_test,treatment,RT + EGFRI,count_percent_observed,6,626,0,0.9584664536741214
+RADCURE,sealed_test,treatment,RT alone,count_percent_observed,350,626,0,55.91054313099041
+RADCURE,sealed_test,smoking,Current,count_percent_observed,238,626,0,38.019169329073485
+RADCURE,sealed_test,smoking,Ex-smoker,count_percent_observed,217,626,0,34.66453674121406
+RADCURE,sealed_test,smoking,Non-smoker,count_percent_observed,162,626,0,25.878594249201278
+RADCURE,sealed_test,smoking,unknown,count_percent_observed,9,626,0,1.4376996805111821
+RADCURE,train,age,,mean,63.340329218106994,1215,0,
+RADCURE,train,age,,sd,10.805471944540157,1215,0,
+RADCURE,train,age,,median,62.9,1215,0,
+RADCURE,train,age,,q1,55.650000000000006,1215,0,
+RADCURE,train,age,,q3,70.85,1215,0,
+RADCURE,train,sex,Female,count_percent_observed,218,1215,0,17.94238683127572
+RADCURE,train,sex,Male,count_percent_observed,997,1215,0,82.05761316872427
+RADCURE,train,site,Hypopharynx,count_percent_observed,93,1215,0,7.654320987654321
+RADCURE,train,site,Larynx,count_percent_observed,420,1215,0,34.5679012345679
+RADCURE,train,site,Lip & Oral Cavity,count_percent_observed,53,1215,0,4.362139917695473
+RADCURE,train,site,Nasal Cavity,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,site,Oropharynx,count_percent_observed,611,1215,0,50.288065843621396
+RADCURE,train,site,Paranasal Sinus,count_percent_observed,7,1215,0,0.5761316872427984
+RADCURE,train,site,esophagus,count_percent_observed,9,1215,0,0.7407407407407407
+RADCURE,train,site,nasal cavity,count_percent_observed,21,1215,0,1.728395061728395
+RADCURE,train,stage,0,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,stage,I,count_percent_observed,166,1215,0,13.662551440329219
+RADCURE,train,stage,II,count_percent_observed,155,1215,0,12.757201646090534
+RADCURE,train,stage,III,count_percent_observed,197,1215,0,16.213991769547324
+RADCURE,train,stage,IIIA,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,stage,IIIC,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,stage,IV,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,stage,IVA,count_percent_observed,590,1215,0,48.559670781893004
+RADCURE,train,stage,IVB,count_percent_observed,103,1215,0,8.477366255144032
+RADCURE,train,hpv,"Yes, Negative",count_percent_observed,201,600,615,33.5
+RADCURE,train,hpv,"Yes, positive",count_percent_observed,399,600,615,66.5
+RADCURE,train,treatment,ChemoRT,count_percent_observed,413,1215,0,33.991769547325106
+RADCURE,train,treatment,Postop RT alone,count_percent_observed,1,1215,0,0.0823045267489712
+RADCURE,train,treatment,RT + EGFRI,count_percent_observed,41,1215,0,3.374485596707819
+RADCURE,train,treatment,RT alone,count_percent_observed,760,1215,0,62.55144032921811
+RADCURE,train,smoking,Current,count_percent_observed,447,1215,0,36.79012345679013
+RADCURE,train,smoking,Ex-smoker,count_percent_observed,529,1215,0,43.53909465020576
+RADCURE,train,smoking,Non-smoker,count_percent_observed,236,1215,0,19.4238683127572
+RADCURE,train,smoking,unknown,count_percent_observed,3,1215,0,0.24691358024691357
+TCGA-HNSC,calibration,age,,mean,60.21153846153846,104,0,
+TCGA-HNSC,calibration,age,,sd,10.720340051231599,104,0,
+TCGA-HNSC,calibration,age,,median,60.0,104,0,
+TCGA-HNSC,calibration,age,,q1,52.0,104,0,
+TCGA-HNSC,calibration,age,,q3,67.0,104,0,
+TCGA-HNSC,calibration,sex,female,count_percent_observed,28,104,0,26.923076923076923
+TCGA-HNSC,calibration,sex,male,count_percent_observed,76,104,0,73.07692307692308
+TCGA-HNSC,calibration,site,"Base of tongue, NOS",count_percent_observed,6,104,0,5.769230769230769
+TCGA-HNSC,calibration,site,Border of tongue,count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,Cheek mucosa,count_percent_observed,6,104,0,5.769230769230769
+TCGA-HNSC,calibration,site,"Floor of mouth, NOS",count_percent_observed,13,104,0,12.5
+TCGA-HNSC,calibration,site,"Gum, NOS",count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,Hard palate,count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,"Larynx, NOS",count_percent_observed,22,104,0,21.153846153846153
+TCGA-HNSC,calibration,site,"Lip, NOS",count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,Lower gum,count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,Mandible,count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,"Mouth, NOS",count_percent_observed,4,104,0,3.8461538461538463
+TCGA-HNSC,calibration,site,"Oropharynx, NOS",count_percent_observed,4,104,0,3.8461538461538463
+TCGA-HNSC,calibration,site,"Overlapping lesion of lip, oral cavity and pharynx",count_percent_observed,11,104,0,10.576923076923077
+TCGA-HNSC,calibration,site,"Palate, NOS",count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,site,"Tongue, NOS",count_percent_observed,22,104,0,21.153846153846153
+TCGA-HNSC,calibration,site,"Tonsil, NOS",count_percent_observed,9,104,0,8.653846153846153
+TCGA-HNSC,calibration,stage,Stage I,count_percent_observed,8,104,0,7.6923076923076925
+TCGA-HNSC,calibration,stage,Stage II,count_percent_observed,13,104,0,12.5
+TCGA-HNSC,calibration,stage,Stage III,count_percent_observed,18,104,0,17.307692307692307
+TCGA-HNSC,calibration,stage,Stage IVA,count_percent_observed,59,104,0,56.73076923076923
+TCGA-HNSC,calibration,stage,Stage IVB,count_percent_observed,5,104,0,4.8076923076923075
+TCGA-HNSC,calibration,stage,Stage IVC,count_percent_observed,1,104,0,0.9615384615384616
+TCGA-HNSC,calibration,treatment,No,count_percent_observed,102,104,0,98.07692307692308
+TCGA-HNSC,calibration,treatment,Yes,count_percent_observed,2,104,0,1.9230769230769231
+TCGA-HNSC,train,age,,mean,61.028915662650604,415,1,
+TCGA-HNSC,train,age,,sd,12.146414851671612,415,1,
+TCGA-HNSC,train,age,,median,61.0,415,1,
+TCGA-HNSC,train,age,,q1,53.0,415,1,
+TCGA-HNSC,train,age,,q3,69.0,415,1,
+TCGA-HNSC,train,sex,female,count_percent_observed,108,416,0,25.96153846153846
+TCGA-HNSC,train,sex,male,count_percent_observed,308,416,0,74.03846153846153
+TCGA-HNSC,train,site,Anterior floor of mouth,count_percent_observed,2,416,0,0.4807692307692308
+TCGA-HNSC,train,site,"Base of tongue, NOS",count_percent_observed,19,416,0,4.5673076923076925
+TCGA-HNSC,train,site,Cheek mucosa,count_percent_observed,13,416,0,3.125
+TCGA-HNSC,train,site,"Floor of mouth, NOS",count_percent_observed,41,416,0,9.85576923076923
+TCGA-HNSC,train,site,"Gum, NOS",count_percent_observed,7,416,0,1.6826923076923077
+TCGA-HNSC,train,site,Hard palate,count_percent_observed,2,416,0,0.4807692307692308
+TCGA-HNSC,train,site,"Hypopharynx, NOS",count_percent_observed,8,416,0,1.9230769230769231
+TCGA-HNSC,train,site,"Larynx, NOS",count_percent_observed,95,416,0,22.83653846153846
+TCGA-HNSC,train,site,"Lip, NOS",count_percent_observed,2,416,0,0.4807692307692308
+TCGA-HNSC,train,site,Lower gum,count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,site,"Mouth, NOS",count_percent_observed,18,416,0,4.326923076923077
+TCGA-HNSC,train,site,"Oropharynx, NOS",count_percent_observed,7,416,0,1.6826923076923077
+TCGA-HNSC,train,site,"Overlapping lesion of lip, oral cavity and pharynx",count_percent_observed,59,416,0,14.182692307692308
+TCGA-HNSC,train,site,Posterior wall of oropharynx,count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,site,Retromolar area,count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,site,Supraglottis,count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,site,"Tongue, NOS",count_percent_observed,106,416,0,25.48076923076923
+TCGA-HNSC,train,site,"Tonsil, NOS",count_percent_observed,31,416,0,7.451923076923077
+TCGA-HNSC,train,site,Upper Gum,count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,site,"Ventral surface of tongue, NOS",count_percent_observed,1,416,0,0.2403846153846154
+TCGA-HNSC,train,stage,Stage I,count_percent_observed,19,416,0,4.5673076923076925
+TCGA-HNSC,train,stage,Stage II,count_percent_observed,70,416,0,16.826923076923077
+TCGA-HNSC,train,stage,Stage III,count_percent_observed,76,416,0,18.26923076923077
+TCGA-HNSC,train,stage,Stage IVA,count_percent_observed,238,416,0,57.21153846153846
+TCGA-HNSC,train,stage,Stage IVB,count_percent_observed,10,416,0,2.4038461538461537
+TCGA-HNSC,train,stage,Stage IVC,count_percent_observed,3,416,0,0.7211538461538461
+TCGA-HNSC,train,treatment,No,count_percent_observed,408,416,0,98.07692307692308
+TCGA-HNSC,train,treatment,Yes,count_percent_observed,8,416,0,1.9230769230769231

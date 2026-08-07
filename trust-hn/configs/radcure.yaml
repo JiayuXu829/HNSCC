@@ -1,5 +1,5 @@
 study: radcure
-status: phase1_conditionally_feasible
+status: phase2_clinical_adapter_complete_radiomics_blocked
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_histology_rule_requires_manual_freeze
 index_date: treatment_start_requires_alignment_with_source_follow_up_origin
@@ -50,4 +50,9 @@ provenance_flags:
   fmcib_requires_audit: true
   rds_structure_audit_outstanding: true
   prohibited_imaging_acquired: false
-phase2_authorized: false
+phase2_authorized: true
+phase2_completed_on: "2026-08-07"
+phase2_decisions:
+  - "RADCURE treatment-start OS uses Last FU - RT Start."
+  - "Normalized exact invasive SCC eligibility is frozen for the primary Phase 2 cohort."
+  - "Challenge-test outcomes remain suppressed; ORCESTRA radiomics remain blocked pending RDS structural validation."

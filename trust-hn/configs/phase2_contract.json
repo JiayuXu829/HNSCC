@@ -1,0 +1,50 @@
+﻿{
+  "schema_version": "2.0",
+  "status": "FROZEN_FOR_PHASE2",
+  "frozen_on": "2026-08-07",
+  "scope": "unified adapters and descriptive analysis only",
+  "calibration_fraction": 0.2,
+  "split_algorithm": "exact-size SHA-256 ranking of native identifiers; outcome independent",
+  "common_fields": [
+    "study", "cohort_role", "native_id", "split_role", "eligible",
+    "exclusion_reason", "index_date_definition", "duration_days", "event",
+    "endpoint_name", "endpoint_status", "age", "age_group", "sex", "site",
+    "stage", "hpv", "treatment", "smoking", "clinical_features_available",
+    "modality_features_available", "source_row_number", "provenance"
+  ],
+  "cohorts": {
+    "RADCURE": {
+      "population": "Path normalized by trim+casefold exactly equals Squamous Cell Carcinoma",
+      "primary_split": "official RADCURE challenge training/test; outside-challenge rows excluded from primary Phase 2 cohort",
+      "index_date": "first radiotherapy fraction (RT Start)",
+      "endpoint": "overall survival = Last FU - RT Start; Dead=1, Alive=0",
+      "radiomics": "unavailable until ORCESTRA RDS structural validation"
+    },
+    "HANCOCK": {
+      "population": "all 763 curatively treated, surgically managed patients",
+      "primary_split": "official OOD split; deterministic calibration subset drawn only from official training",
+      "index_date": "initial diagnosis",
+      "endpoint": "days_to_last_information with survival_status deceased=1"
+    },
+    "TCGA-HNSC": {
+      "population": "Primary Tumor STAR-count cases overlapping GDC clinical cases",
+      "primary_split": "outcome-independent deterministic train/calibration split",
+      "index_date": "initial diagnosis",
+      "endpoint": "Dead: days_to_death; Alive: maximum follow-up days",
+      "expression": "lazy access; no full modeling matrix in Phase 2"
+    },
+    "GSE65858": {
+      "role": "external_test",
+      "population": "tumor_type=Primary AND distant_metastasis=0 AND treatment!=palliative",
+      "endpoint": "sealed in Phase 2"
+    },
+    "GSE41613": {
+      "role": "sensitivity",
+      "population": "HPV-negative oral squamous cell carcinoma",
+      "follow_up_unit": "months",
+      "conversion_to_days": "months * 30.4375",
+      "source": "Chen et al., Clinical Cancer Research 2013, PMCID PMC3593802",
+      "endpoint": "sealed in Phase 2"
+    }
+  }
+}

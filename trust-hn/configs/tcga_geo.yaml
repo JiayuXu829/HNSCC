@@ -1,5 +1,5 @@
 study: tcga_geo
-status: phase1_feasible_with_population_endpoint_conditions
+status: phase2_adapter_complete_external_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 development_cohort: TCGA-HNSC
 external_cohort: GSE65858
@@ -65,4 +65,9 @@ phase1_conditions:
   - "Verify the GSE41613 follow-up-time unit from the source publication before modeling."
   - "Keep GSE41613 as an HPV-negative OSCC sensitivity cohort, not general HNSCC external validation."
   - "Do not use external outcomes for preprocessing, feature selection, tuning, calibration, or gate thresholds."
-phase2_authorized: false
+phase2_authorized: true
+phase2_completed_on: "2026-08-07"
+phase2_decisions:
+  - "TCGA-HNSC expression/clinical-overlap cases use deterministic train/calibration subsets."
+  - "GSE65858 primary eligibility is Primary, M0, non-palliative."
+  - "GSE41613 follow-up is frozen in months with conversion months * 30.4375; external/sensitivity outcomes remain suppressed."

@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trust-hn/unified_patient_record.schema.json",
+  "title": "TRUST-HN Unified Patient Record v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "study", "cohort_role", "native_id", "split_role", "eligible",
+    "index_date_definition", "endpoint_name", "endpoint_status",
+    "clinical_features_available", "modality_features_available",
+    "source_row_number", "provenance"
+  ],
+  "properties": {
+    "study": {"type": "string", "minLength": 1},
+    "cohort_role": {"enum": ["development", "held_out", "external", "sensitivity"]},
+    "native_id": {"type": "string", "minLength": 1},
+    "split_role": {"enum": ["train", "calibration", "sealed_test", "external_test", "sensitivity", "excluded"]},
+    "eligible": {"type": "boolean"},
+    "exclusion_reason": {"type": ["string", "null"]},
+    "index_date_definition": {"type": "string", "minLength": 1},
+    "duration_days": {"type": ["number", "null"], "minimum": 0},
+    "event": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "endpoint_name": {"type": "string", "minLength": 1},
+    "endpoint_status": {"enum": ["usable", "early_censored", "sealed", "unresolved", "not_applicable"]},
+    "age": {"type": ["number", "null"]},
+    "age_group": {"type": ["string", "null"]},
+    "sex": {"type": ["string", "null"]},
+    "site": {"type": ["string", "null"]},
+    "stage": {"type": ["string", "null"]},
+    "hpv": {"type": ["string", "null"]},
+    "treatment": {"type": ["string", "null"]},
+    "smoking": {"type": ["string", "null"]},
+    "clinical_features_available": {"type": "boolean"},
+    "modality_features_available": {"type": "boolean"},
+    "source_row_number": {"type": "integer", "minimum": 1},
+    "provenance": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  }
+}

@@ -1,53 +1,52 @@
-# TRUST-HN Project Status
+﻿# TRUST-HN Project Status
 
-**Last updated:** 2026-08-07  
-**Current gate:** Phase 1 complete with documented unresolved items; awaiting user go/no-go review before Phase 2.  
-**Sealed or external outcomes used for tuning:** No.
+**Last updated:** 2026-08-07
+**Current gate:** Phase 2 complete within the user-approved conditional scope; awaiting explicit review before Phase 3.
+**Sealed or external outcomes used for preprocessing, selection, tuning, calibration, or thresholds:** No.
 
 ## Phase status
 
 | Phase | Status | Evidence / decision |
 |---|---|---|
 | 0. Repository and governance | Complete | Governance, configuration, templates, acquisition policy, and sealed-test refusal are implemented. |
-| 1. Data acquisition and feasibility audit | Complete with conditions | Authorized artifacts acquired, hashed, extracted, audited, manifested, and frozen read-only. The ORCESTRA RDS structural audit and several endpoint/population definitions remain explicit conditions. |
-| 2. Unified adapters and descriptive analysis | Awaiting authorization | Conditional GO is recommended, but user approval is required before work begins. |
-| 3. Baselines | Not authorized | Requires approved adapters, endpoint definitions, and Phase 2 review. |
+| 1. Data acquisition and feasibility audit | Complete with conditions | Authorized artifacts acquired, hashed, extracted, audited, manifested, and frozen read-only. |
+| 2. Unified adapters and descriptive analysis | Complete with one modeling blocker | Three adapters, unified contract/schema, Table 1 candidates, missingness, event, Kaplan–Meier, and composition-comparison outputs are generated. ORCESTRA RDS structural validation remains required before radiomics modeling. |
+| 3. Baselines | Not authorized | Requires explicit user authorization after Phase 2 review. |
 | 4. TRUST-HN core | Not authorized | Requires baseline review. |
 | 5. Stress tests and freeze | Not authorized | Not started. |
-| 6. Locked/external tests | Sealed | Must remain unavailable until analysis freeze and explicit approval. |
+| 6. Locked/external tests | Sealed | Must remain unavailable for tuning and may be evaluated only after analysis freeze and explicit approval. |
 | 7. Paper | Skeleton only | Results text must remain placeholder until real analyses are complete. |
 | 8. Reproduction/submission | Not started | Not started. |
 
-## Phase 1 evidence snapshot
+## Phase 2 evidence snapshot
 
-- Raw-area inventory: 1,068 files, 3,128,490,508 bytes (2.914 GiB).
-- Source immutability: 534/534 acquired source files read-only; 533 receipt files intentionally mutable.
-- RADCURE: 3,346 unique patients.
-- HANCOCK: 763 unique patients.
-- TCGA-HNSC: 520 open Primary Tumor STAR-count files/cases; 528 clinical project cases.
-- GSE65858: 270 samples.
-- GSE41613: 97 samples.
-- TCGA expression consistency: 520/520 conforming files, GENCODE v36, 60,664 gene rows per file, one gene identity/order signature.
-- Exact native-ID overlap between different cohorts: zero.
-- Prohibited imaging, controlled genomic data, and GEO raw files acquired: none.
-- Automated verification baseline: 30 tests passed.
+- Three adapter classes: `RadcureAdapter`, `HancockAdapter`, and `TranscriptomicsAdapter`.
+- Unified immutable record contract and JSON Schema v2.0.
+- RADCURE: 3,346 source records; 2,144 primary eligible exact invasive SCC records; 1,215 train, 303 calibration, 626 sealed test.
+- HANCOCK: 763 eligible records; 489 train, 122 calibration, 152 sealed OOD test.
+- TCGA-HNSC: 520 expression/clinical-overlap records; 416 train, 104 calibration; 519 usable OS endpoints and one unresolved duration.
+- GSE65858: 270 source samples; 244 frozen primary/nonmetastatic/nonpalliative external-test samples.
+- GSE41613: 97 HPV-negative OSCC sensitivity samples; follow-up unit frozen as months and converted by 30.4375 days/month when audited.
+- Aggregate outputs include cohort flow, Table 1 candidates, missingness, development-only event summaries, Kaplan–Meier coordinates/SVG, and covariate-only composition comparisons.
+- Patient-level adapter records are stored only in Git-ignored `data/interim/phase2/`.
+- Automated verification: 45 tests passed after Phase 2 integration.
 
-## Frozen source versions
+## Frozen endpoint and population decisions
 
-- RADCURE clinical: TCIA Version 4, updated 2024-12-19.
-- ORCESTRA radiomics: DOI `10.5281/zenodo.14226536`; RDS SHA-256 `32b06ea1acd7b34dd061edea03400ed482144369f41a2d0a9636201608eebd36`.
-- HANCOCK repository: commit `521b99b03a94008b28df5c3df4aa5f82aa14b25a`.
-- GDC: Data Release 45.0 dated 2025-12-04, API tag 8.5.0, commit `8f7c2a51ab0084b216ad1b62a3fae8b945439c53`.
-- GEO processed matrices and platform annotations are frozen in per-study manifests.
+1. RADCURE OS origin is the first radiotherapy fraction: `Last FU - RT Start`. The diagnosis-origin `Length FU` field is not used by the adapter.
+2. RADCURE primary histology uses trimmed, case-insensitive exact equality to `Squamous Cell Carcinoma`; in-situ, verrucous, ambiguous, and non-SCC labels are excluded from the primary cohort.
+3. HANCOCK OS is measured from diagnosis to last information/death, matching its data dictionary.
+4. GSE65858 external eligibility is `Primary AND distant_metastasis == 0 AND treatment != palliative`.
+5. GSE41613 is an HPV-negative OSCC sensitivity cohort. The source article reports follow-up in months; the frozen day conversion is `months x 30.4375`.
+6. Test/external outcomes are absent from adapter records and tracked summaries.
 
-## Outstanding conditions
+## Remaining risks and conditions
 
-1. Align the RADCURE survival time origin with the intended treatment-start index date.
-2. Inspect the ORCESTRA RDS structure with a project-local R runtime or validated parser before radiomics modeling.
-3. Prespecify GSE65858 population restrictions.
-4. Verify the GSE41613 follow-up-time unit and retain it as an HPV-negative OSCC sensitivity cohort.
-5. Continue enforcing sealed-test governance and prohibit external-outcome-guided tuning.
+1. The ORCESTRA RDS cannot be exposed for radiomics modeling until its structure is validated with R/Rscript or a validated parser.
+2. One TCGA-HNSC expression case has unresolved OS duration; it remains in the clinical/expression cohort but is excluded from endpoint-dependent summaries.
+3. RADCURE contains one aggregate date-reconciliation discrepancy between `Date of Death` and `Last FU`; the adapter consistently uses source-defined `Last FU` and the discrepancy does not create a negative duration.
+4. Cross-study covariate differences are descriptive and do not authorize harmonization choices based on external outcomes.
 
 ## Next checkpoint
 
-Review the Phase 1 completion report and make an explicit go/no-go decision. A GO authorizes only Phase 2 unified adapters and descriptive analyses; it does not authorize baseline or TRUST-HN model tuning, nor access to locked/external outcomes for tuning.
+Review the bilingual Phase 2 completion report and make an explicit go/no-go decision. A GO for Phase 3 would authorize baseline implementation only; it would not authorize TRUST-HN core training, threshold optimization on locked/external outcomes, or final sealed-test evaluation.

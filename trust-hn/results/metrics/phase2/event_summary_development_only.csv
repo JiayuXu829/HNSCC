@@ -1,0 +1,7 @@
+study,split_role,n_eligible,n_endpoint_usable,n_events_all_followup,event_fraction,horizon_days,event_by_horizon,event_free_at_horizon,censored_before_horizon,test_and_external_outcomes_suppressed
+HANCOCK,calibration,122,122,38,0.3114754098360656,730.5,20,80,22,True
+HANCOCK,train,489,489,135,0.27607361963190186,730.5,58,342,89,True
+RADCURE,calibration,303,303,119,0.3927392739273927,730.5,62,240,1,True
+RADCURE,train,1215,1215,526,0.43292181069958846,730.5,252,960,3,True
+TCGA-HNSC,calibration,104,104,44,0.4230769230769231,730.5,33,47,24,True
+TCGA-HNSC,train,416,415,177,0.42650602409638555,730.5,126,185,104,True

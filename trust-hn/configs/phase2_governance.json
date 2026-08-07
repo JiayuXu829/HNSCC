@@ -1,0 +1,29 @@
+﻿{
+  "schema_version": "2.0",
+  "authorized": true,
+  "authorized_on": "2026-08-07",
+  "authorized_scope": [
+    "dataset adapters",
+    "unified data contract",
+    "cohort and endpoint audits",
+    "Table 1 candidates",
+    "missingness summaries and SVG",
+    "development-only event summaries and Kaplan-Meier outputs",
+    "covariate-only train/calibration/test composition comparison"
+  ],
+  "not_authorized": [
+    "Phase 3 baselines",
+    "TRUST-HN model training",
+    "hyperparameter tuning",
+    "calibration fitting",
+    "gate threshold selection",
+    "locked or external outcome evaluation"
+  ],
+  "outcome_suppression": {
+    "RADCURE sealed_test": true,
+    "HANCOCK sealed_test": true,
+    "GSE65858 external_test": true,
+    "GSE41613 sensitivity": true
+  },
+  "patient_identifier_policy": "native IDs only in data/interim/phase2, which is Git-ignored; tracked outputs are aggregate-only"
+}

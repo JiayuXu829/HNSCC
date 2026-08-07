@@ -1,4 +1,4 @@
-# TRUST-HN
+﻿# TRUST-HN
 
 TRUST-HN is a resource-efficient reliability framework for prognosis in head and neck cancer. It evaluates whether an additional modality should **augment** a clinical anchor, whether the system should **fallback** to the clinical anchor, or whether it should **abstain** under unreliable clinical input.
 
@@ -7,7 +7,8 @@ TRUST-HN is a resource-efficient reliability framework for prognosis in head and
 The repository is being implemented phase by phase from `../docs/TRUST_HN_master_project_implementation.md`.
 
 - **Phase 0:** repository, governance, reproducible configuration, audit templates, synthetic tests, and sealed-test protection.
-- **Phase 1:** acquisition/registration of public clinical tables, processed features, expression matrices, and official splits only.
+- **Phase 1:** completed acquisition/registration and feasibility audit of authorized public artifacts.
+- **Phase 2:** completed unified adapters, frozen data contract, and governance-safe descriptive outputs; Phase 3 is not authorized.
 - Raw RADCURE CT and HANCOCK WSI are explicitly out of scope.
 - No locked/sealed outcomes may be inspected for tuning.
 
@@ -25,9 +26,9 @@ The repository is being implemented phase by phase from `../docs/TRUST_HN_master
 
 ## Work-stage reports / 工作阶段报告
 
-Dated English snapshots and faithful Simplified Chinese translations of the current stage documents are indexed in `docs/work_stage_reports/README.md`.
+Dated English reports and faithful Simplified Chinese translations are stored and indexed under `docs/work_stage_reports/`.
 
-当前阶段文档的英文日期快照与简体中文忠实译本统一收录并索引于 `docs/work_stage_reports/README.md`。
+带日期的英文报告及其忠实简体中文译本统一保存并索引于 `docs/work_stage_reports/`。
 
 ## Bootstrap (Windows PowerShell)
 
@@ -89,3 +90,13 @@ python scripts/query_gdc_metadata.py `
 ```
 
 Network commands are not run until explicitly approved. Query output does not authorize downloading controlled-access files or inspecting external outcomes for model selection.
+
+## Phase 2 command
+
+Generate unified patient records in the Git-ignored interim area and aggregate-only descriptive outputs:
+
+```powershell
+python scripts/build_dataset.py --phase phase2
+```
+
+The command does not expose test/external outcomes and does not implement any Phase 3 model.
