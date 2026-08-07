@@ -1,0 +1,28 @@
+﻿{
+  "schema_version": "4.0",
+  "phase": "Phase 4 TRUST-HN core development",
+  "development_outcomes_allowed": [
+    "HANCOCK train/calibration",
+    "TCGA-HNSC train/calibration"
+  ],
+  "forbidden_outcomes": [
+    "RADCURE challenge test",
+    "HANCOCK OOD test",
+    "GSE65858 external test",
+    "GSE41613 sensitivity cohort"
+  ],
+  "preprocessing_fit_scope": "training fold for OOF; full development train for calibration prediction",
+  "ood_fit_scope": "training features only; no outcome input",
+  "bootstrap_fit_scope": "training rows only",
+  "rank_reference_scope": "dedicated calibration reliability indicators",
+  "threshold_selection": "calibration reliability quantiles for prespecified 80% and 90% coverage; no outcome optimization",
+  "patient_decision_traces": "results/predictions/phase4; Git-ignored",
+  "tracked_outputs": "aggregate metrics, risk-coverage, action summaries, figures, audits, and hash receipt only",
+  "phase5_components_forbidden": [
+    "full natural/artificial dropout campaign",
+    "study-specific shortcut ablation matrix",
+    "subgroup worst-case campaign",
+    "analysis freeze"
+  ],
+  "test_unseal_allowed": false
+}

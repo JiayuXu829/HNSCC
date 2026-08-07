@@ -1,0 +1,59 @@
+﻿{
+  "schema_version": "4.0",
+  "status": "FROZEN_FOR_PHASE4_DEVELOPMENT",
+  "authorized_on": "2026-08-07",
+  "scope": "TRUST-HN B6/B7 core on development train/calibration data only",
+  "phase5_authorized": false,
+  "sealed_outcomes_authorized": false,
+  "external_outcomes_authorized": false,
+  "horizon_days": 730.5,
+  "cv_folds": 5,
+  "seeds": [17, 29, 43, 71, 101],
+  "models": {
+    "anchor": "B2 clinical elastic-net Cox",
+    "clinical_nonlinear_reference": "B3 clinical random survival forest",
+    "forced_fusion": "B5 direct concatenation elastic-net Cox",
+    "B6": "stacked residual survival learner using cross-fitted clinical anchor score plus modality embedding",
+    "B7": "reliability-gated B6 with clinical fallback or abstention"
+  },
+  "hyperparameters": {
+    "coxnet_alpha": 0.05,
+    "coxnet_l1_ratio": 0.5,
+    "coxnet_max_iter": 100000,
+    "rsf_n_estimators": 200,
+    "rsf_min_samples_leaf": 10,
+    "rsf_max_features": "sqrt",
+    "tcga_expression_foldwise_variance_top_k": 500,
+    "bootstrap_ensemble_size": 20,
+    "bootstrap_min_unique_fraction": 0.5,
+    "knn_neighbors": 10,
+    "isolation_forest_estimators": 200,
+    "isolation_forest_contamination": "auto",
+    "ood_embedding_max_features": 50,
+    "ipcw_survival_floor": 0.05
+  },
+  "reliability": {
+    "clinical_components": ["clinical_ood", "clinical_uncertainty", "clinical_model_disagreement"],
+    "modality_components": ["modality_ood", "fusion_uncertainty", "perturbation_sensitivity", "modality_missingness", "fusion_disagreement"],
+    "combination": "equal-weight mean of calibration-referenced empirical percentile ranks",
+    "clinical_threshold_role": "non-abstention coverage",
+    "modality_threshold_role": "augmentation eligibility among non-abstained cases",
+    "coverage_profiles": [0.8, 0.9],
+    "risk_coverage_grid": [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0],
+    "threshold_outcome_optimization": false
+  },
+  "study_scope": {
+    "RADCURE": {
+      "status": "blocked",
+      "reason": "ORCESTRA RDS structure not validated; modality-dependent B6/B7 unavailable"
+    },
+    "HANCOCK": {
+      "status": "authorized",
+      "additional_modality": "baseline blood measurements plus TMA cell-density features"
+    },
+    "TCGA-HNSC": {
+      "status": "authorized",
+      "additional_modality": "protein-coding log2(TPM+1) expression"
+    }
+  }
+}

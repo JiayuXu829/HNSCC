@@ -1,0 +1,12 @@
+study,seed,status,reason,clinical_bootstrap_models,clinical_bootstrap_attempts,fusion_bootstrap_models,fusion_bootstrap_attempts
+RADCURE,,blocked,ORCESTRA RDS structure not validated; modality-dependent B6/B7 unavailable,0,0,0,0
+HANCOCK,17,complete,,120,120,120,120
+HANCOCK,29,complete,,120,120,120,120
+HANCOCK,43,complete,,120,120,120,120
+HANCOCK,71,complete,,120,120,120,120
+HANCOCK,101,complete,,120,120,120,120
+TCGA-HNSC,17,complete,,120,120,120,120
+TCGA-HNSC,29,complete,,120,120,120,120
+TCGA-HNSC,43,complete,,120,120,120,120
+TCGA-HNSC,71,complete,,120,120,120,120
+TCGA-HNSC,101,complete,,120,120,120,120

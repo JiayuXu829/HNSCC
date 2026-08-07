@@ -1,5 +1,5 @@
 study: hancock
-status: phase3_baselines_complete
+status: phase4_trust_hn_core_complete_ood_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_763_patients
 index_date: surgery_or_diagnosis_requires_final_adapter_definition
@@ -63,3 +63,9 @@ phase3_completed_on: "2026-08-07"
 phase3_decisions:
   - "Clinical, blood/TMA, direct-fusion, missingness, and permuted-modality development baselines completed."
   - "Official OOD-test outcomes remain sealed and unused."
+phase4_authorized: true
+phase4_completed_on: "2026-08-07"
+phase4_decisions:
+  - "B6 stacked residual fusion and B7 reliability gating completed on frozen development train/calibration rows."
+  - "Official OOD-test outcomes remain sealed and unused."
+  - "Phase 5 stress tests and Phase 6 locked evaluation remain unauthorized."

@@ -19,6 +19,7 @@ This directory preserves dated snapshots of the documents produced during each T
 | Phase 1 completion report / Phase 1 完成报告 | `en/2026-08-07_phase1_completion_report.md` | `zh-CN/2026-08-07_phase1_completion_report.md` | `PHASE1_PROGRESS.md`, `PROJECT_STATUS.md`, Phase 1 audits/manifests |
 | Phase 2 completion report / Phase 2 完成报告 | `en/2026-08-07_phase2_completion_report.md` | `zh-CN/2026-08-07_phase2_completion_report.md` | Phase 2 contract, adapters, metrics, audit, and receipt |
 | Phase 3 completion report / Phase 3 完成报告 | `en/2026-08-07_phase3_completion_report.md` | `zh-CN/2026-08-07_phase3_completion_report.md` | Phase 3 baselines, metrics, leakage/findings audits, figures, and receipt |
+| Phase 4 completion report / Phase 4 完成报告 | `en/2026-08-07_phase4_completion_report.md` | `zh-CN/2026-08-07_phase4_completion_report.md` | Phase 4 residual fusion, reliability gate, metrics, audits, figures, and receipt |
 | Project status / 项目状态 | `en/2026-08-07_project_status.md` | `zh-CN/2026-08-07_project_status.md` | `PROJECT_STATUS.md` |
 | Phase 1 acquisition plan / Phase 1 数据获取计划 | `en/2026-08-07_phase1_acquisition_plan.md` | `zh-CN/2026-08-07_phase1_acquisition_plan.md` | `docs/phase1_acquisition_plan.md` |
 | Project kickoff decision / 项目启动决策 | `en/2026-08-07_project_kickoff_decision.md` | `zh-CN/2026-08-07_project_kickoff_decision.md` | `docs/decisions/0001_project_kickoff.md` |
@@ -32,6 +33,6 @@ This directory preserves dated snapshots of the documents produced during each T
 
 ## Current scientific gate / 当前科学门槛
 
-As of 2026-08-07, Phase 3 is complete within its conditional authorization and awaits user review before Phase 4. RADCURE radiomics B4/B5/N0 remain NO-GO until the ORCESTRA RDS structure is validated. Phase 4 and locked/external evaluation remain unauthorized.
+As of 2026-08-07, Phase 4 is complete within its conditional authorization and awaits user review before Phase 5. RADCURE modality-dependent B6/B7 remain blocked until the ORCESTRA RDS structure is validated. Phase 5 is not authorized, and locked/external Phase 6 evaluation remains sealed and unauthorized.
 
-截至 2026-08-07，Phase 3 已在有条件授权范围内完成，当前等待用户审阅后再决定是否进入 Phase 4。在 ORCESTRA RDS 结构完成验证前，RADCURE 放射组学 B4/B5/N0 仍为 NO-GO。Phase 4 及锁定/外部评价仍未获授权。
+截至 2026-08-07，Phase 4 已在有条件授权范围内完成，当前等待用户审阅后再决定是否进入 Phase 5。在 ORCESTRA RDS 结构完成验证前，RADCURE 模态依赖型 B6/B7 仍处于阻塞状态。Phase 5 尚未获授权，锁定/外部 Phase 6 评价仍保持封存且未获授权。

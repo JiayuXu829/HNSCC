@@ -1,5 +1,5 @@
 study: tcga_geo
-status: phase3_tcga_development_baselines_complete_external_outcomes_sealed
+status: phase4_tcga_trust_hn_core_complete_external_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 development_cohort: TCGA-HNSC
 external_cohort: GSE65858
@@ -76,3 +76,9 @@ phase3_completed_on: "2026-08-07"
 phase3_decisions:
   - "TCGA-HNSC clinical, expression, direct-fusion, missingness, and permuted-modality development baselines completed."
   - "GSE65858 and GSE41613 outcomes remain sealed and unused."
+phase4_authorized: true
+phase4_completed_on: "2026-08-07"
+phase4_decisions:
+  - "TCGA-HNSC B6 stacked residual fusion and B7 reliability gating completed on frozen development train/calibration rows."
+  - "GSE65858 and GSE41613 outcomes remain sealed and unused."
+  - "Phase 5 stress tests and Phase 6 external evaluation remain unauthorized."

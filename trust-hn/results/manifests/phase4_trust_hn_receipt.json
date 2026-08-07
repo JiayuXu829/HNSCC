@@ -1,0 +1,43 @@
+{
+  "schema_version": "4.0",
+  "generated_at_utc": "2026-08-07T17:24:39.761205+00:00",
+  "phase": "Phase 4 TRUST-HN core development",
+  "studies": [
+    "HANCOCK",
+    "TCGA-HNSC"
+  ],
+  "horizon_days": 730.5,
+  "cv_folds": 5,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "bootstrap_ensemble_size": 20,
+  "successful_runs": 10,
+  "failed_runs": 0,
+  "blocked_entries": 1,
+  "patient_prediction_directory": "results/predictions/phase4 (Git-ignored for canonical project run)",
+  "sealed_or_external_outcomes_used": false,
+  "phase5_components_used": false,
+  "config_sha256": {
+    "configs/phase4_trust_hn.json": "25322f6b68927f267c98a7d017bca01a6ebe6debd434926b72dd6a2e844abb0d",
+    "configs/phase4_governance.json": "c34bc832c999dc69539088ad70a927a6278beb9db40426ee4c0f9b4f7bef7de1"
+  },
+  "aggregate_output_sha256": {
+    "results/metrics/phase4/model_metrics.csv": "2b3482c02f6c5d162f872f4c35d79b7b39f8797a83942cc9846b07d7a4fa385a",
+    "results/metrics/phase4/gate_metrics.csv": "5edf7e154080f6fb80fa11c77e30a11609abe18da1c95f22701d5500c9ea56b3",
+    "results/metrics/phase4/risk_coverage.csv": "e8e837bea6db671dd5ad10bdcb6c13d617f13a0d55728e0e664ac72faf8a9c25",
+    "results/metrics/phase4/action_summary.csv": "b8f7adbc5cd46e11983f37813c8c500296efb5121fa2df12283472845488c4c0",
+    "results/metrics/phase4/thresholds.csv": "bf85da4564b5082ccc0a4b938c27af16e2e81d86c8833d432b8ae2c82fcb4c26",
+    "results/metrics/phase4/reliability_diagnostics.csv": "4d23dc4a590a5f8f4a9e70a92baa4224c30abe6f7310cebf0b63f25844635549",
+    "results/metrics/phase4/model_status.csv": "69603ad1130ce475ab3aa385293fd842eff6af8f85dae2891b263d1f09ab31de",
+    "results/figures/phase4/model_comparison.svg": "52ce14acdf6495fa2362dd8086d7dca008ef5d045c548576090ae931472d8123",
+    "results/figures/phase4/risk_coverage.svg": "a909c64a6343a753b612497313fb4d988f345b15c2b826188a26eb7b352bb22d",
+    "results/figures/phase4/action_distribution.svg": "e810c33265ed5bec8e05d62f3d63bd322fae02e0dfc8e728b35ff3c97b96b4bb",
+    "docs/audits/phase4/leakage_audit.md": "6597cdc66abc709e5686bd6f512f71eb1fd17814330caf3ce147f0e463bc8f73",
+    "docs/audits/phase4/core_findings.md": "e8b155ab9f3d85a907e30ff3921dff752ecb57ded664bd58abbc37dcf7fc2c85"
+  }
+}

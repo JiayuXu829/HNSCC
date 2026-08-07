@@ -9,7 +9,8 @@ The repository is being implemented phase by phase from `../docs/TRUST_HN_master
 - **Phase 0:** repository, governance, reproducible configuration, audit templates, synthetic tests, and sealed-test protection.
 - **Phase 1:** completed acquisition/registration and feasibility audit of authorized public artifacts.
 - **Phase 2:** completed unified adapters, frozen data contract, and governance-safe descriptive outputs.
-- **Phase 3:** completed development-only baselines within the authorized conditional scope; Phase 4 is not authorized, and RADCURE radiomics remain blocked pending ORCESTRA RDS structural validation.
+- **Phase 3:** completed development-only baselines within the authorized conditional scope.
+- **Phase 4:** completed B6 stacked residual fusion and B7 reliability gating for HANCOCK and TCGA-HNSC within the authorized conditional scope; Phase 5 is not authorized, and RADCURE modality-dependent TRUST-HN remains blocked pending ORCESTRA RDS structural validation.
 - Raw RADCURE CT and HANCOCK WSI are explicitly out of scope.
 - No locked/sealed outcomes may be inspected for tuning.
 
@@ -51,7 +52,7 @@ The reproducible full analysis environment is also specified by `environment.yml
 .\scripts\test.ps1
 ```
 
-The full test suite covers governance, data contracts and adapters, censoring/IPCW metrics, patient-level split isolation, baseline models, deterministic hashing, and sealed-test refusal.
+The full test suite covers governance, data contracts and adapters, censoring/IPCW metrics, patient-level split isolation, baseline and residual-fusion models, reliability gating, deterministic hashing, and sealed-test refusal.
 
 ## Data governance
 
@@ -110,3 +111,13 @@ Run all authorized development-only baseline experiments:
 ```
 
 This command writes patient-level OOF/calibration predictions only to Git-ignored `results/predictions/phase3/` and writes aggregate metrics, figures, audits, and a hashed receipt to tracked locations. It refuses Phase 4 and does not load RADCURE challenge-test, HANCOCK OOD-test, or GEO external outcomes. RADCURE B4/B5/N0 remain governance-blocked until the ORCESTRA RDS structure is validated.
+
+## Phase 4 command
+
+Run the authorized development-only TRUST-HN core experiment:
+
+```powershell
+.venv\Scripts\python.exe scripts\train_trust_hn.py --phase phase4
+```
+
+This command fits B6 stacked residual fusion and B7 reliability gating on frozen HANCOCK and TCGA-HNSC training/calibration rows. Patient-level decision traces are written only to Git-ignored `results/predictions/phase4/`; aggregate metrics, figures, audits, and a hashed receipt are written to tracked locations. It does not enter Phase 5 and does not load RADCURE challenge-test, HANCOCK OOD-test, GSE65858, or GSE41613 outcomes. RADCURE B6/B7 remain governance-blocked until the ORCESTRA RDS structure is validated.

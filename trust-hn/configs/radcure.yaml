@@ -1,5 +1,5 @@
 study: radcure
-status: phase3_clinical_baselines_complete_radiomics_blocked
+status: phase4_modality_dependent_trust_hn_blocked
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_histology_rule_requires_manual_freeze
 index_date: treatment_start_requires_alignment_with_source_follow_up_origin
@@ -62,3 +62,9 @@ phase3_decisions:
   - "Clinical B0/B1/B2/B3 and missingness M0 completed on development train/calibration data only."
   - "Radiomics B4/B5/N0 remain blocked pending validated ORCESTRA RDS structural inspection."
   - "Challenge-test outcomes remain sealed and unused."
+phase4_authorized: true
+phase4_completed_on: "2026-08-07"
+phase4_decisions:
+  - "RADCURE B6/B7 were not run because the ORCESTRA RDS modality structure remains unvalidated."
+  - "Challenge-test outcomes remain sealed and unused."
+  - "No radiomics-fusion or reliability-gate claim is authorized for RADCURE."
