@@ -1,0 +1,13 @@
+{
+  "study": "TCGA_GEO",
+  "field_candidates": {
+    "patient_id": ["patient_id", "case_id", "submitter_id", "geo_accession", "sample_id"],
+    "split": ["split", "cohort", "dataset", "study"],
+    "duration": ["overall_survival_days", "OS_days", "days_to_death_or_last_follow_up", "OS.time"],
+    "event": ["death_event", "OS_event", "vital_status_event", "OS"]
+  },
+  "duration_multiplier_to_days": 1.0,
+  "event_mapping": {"0": 0, "1": 1, "Alive": 0, "Dead": 1, "LIVING": 0, "DECEASED": 1},
+  "horizon_days": 730.5,
+  "notes": "Audit each cohort separately before constructing any common-field table."
+}

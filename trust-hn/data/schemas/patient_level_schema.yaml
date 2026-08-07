@@ -1,0 +1,26 @@
+schema_version: "1.0"
+required_fields:
+  patient_id:
+    type: string
+    nullable: false
+    role: identifier
+  split:
+    type: categorical
+    allowed: [train, calibration, test, id_test, ood_test, external_test]
+    nullable: false
+  index_date_definition:
+    type: string
+    nullable: false
+  duration_days:
+    type: number
+    minimum: 0
+    nullable: false
+  event:
+    type: integer
+    allowed: [0, 1]
+    nullable: false
+constraints:
+  - patient_id is unique after patient-level aggregation
+  - one patient cannot occur in multiple splits
+  - endpoint variables are not predictors
+  - raw patient identifiers are never written to tracked result files

@@ -1,0 +1,66 @@
+{
+    "endpoint":  "https://api.gdc.cancer.gov/files",
+    "filters":  {
+                    "op":  "and",
+                    "content":  [
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "cases.project.project_id",
+                                                        "value":  [
+                                                                      "TCGA-HNSC"
+                                                                  ]
+                                                    }
+                                    },
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "data_category",
+                                                        "value":  [
+                                                                      "Transcriptome Profiling"
+                                                                  ]
+                                                    }
+                                    },
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "data_type",
+                                                        "value":  [
+                                                                      "Gene Expression Quantification"
+                                                                  ]
+                                                    }
+                                    },
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "analysis.workflow_type",
+                                                        "value":  [
+                                                                      "STAR - Counts"
+                                                                  ]
+                                                    }
+                                    },
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "access",
+                                                        "value":  [
+                                                                      "open"
+                                                                  ]
+                                                    }
+                                    },
+                                    {
+                                        "op":  "in",
+                                        "content":  {
+                                                        "field":  "cases.samples.sample_type",
+                                                        "value":  [
+                                                                      "Primary Tumor"
+                                                                  ]
+                                                    }
+                                    }
+                                ]
+                },
+    "format":  "JSON",
+    "fields":  "file_id,file_name,md5sum,file_size,data_format,access,analysis.workflow_type,cases.case_id,cases.submitter_id,cases.samples.sample_id,cases.samples.submitter_id,cases.samples.sample_type",
+    "size":  2000,
+    "sort":  "file_id:asc"
+}

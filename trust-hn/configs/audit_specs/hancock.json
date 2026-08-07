@@ -1,0 +1,13 @@
+{
+  "study": "HANCOCK",
+  "field_candidates": {
+    "patient_id": ["patient_id", "patient", "ID"],
+    "split": ["split", "dataset", "distribution", "cohort"],
+    "duration": ["overall_survival_days", "OS_days", "survival_time", "time_to_event"],
+    "event": ["death_event", "OS_event", "survival_event", "event"]
+  },
+  "duration_multiplier_to_days": 1.0,
+  "event_mapping": {"0": 0, "1": 1, "Alive": 0, "Dead": 1},
+  "horizon_days": 730.5,
+  "notes": "Status-only tasks must not be represented as time-to-event if duration is absent."
+}

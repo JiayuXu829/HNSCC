@@ -1,0 +1,27 @@
+project:
+  name: TRUST-HN
+  schema_version: "1.0"
+  root: "."
+  timezone: "Asia/Shanghai"
+reproducibility:
+  python: "3.11"
+  seeds: [17, 29, 43, 71, 101]
+  deterministic: true
+  hash_algorithm: sha256
+splitting:
+  unit: patient
+  calibration_fraction: 0.20
+  test_policy: official_or_temporal_only
+  locked_test_default: true
+reliability:
+  coverage_targets: [0.90, 0.80]
+  score_primary: equal_weight_rank
+  score_sensitivity: nonnegative_logistic
+  actions: [AUGMENT, FALLBACK, ABSTAIN]
+uncertainty:
+  bootstrap_ensemble_min: 20
+  bootstrap_final: 2000
+governance:
+  freeze_file: configs/analysis_freeze.yaml
+  sealed_manifest_dir: data/manifests/sealed
+  prohibit_test_outcome_tuning: true

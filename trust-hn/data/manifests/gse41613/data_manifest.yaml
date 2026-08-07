@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "study": "gse41613",
+  "generated_at_utc": "2026-08-07T06:53:01.473214+00:00",
+  "source_version": "GEO series matrix server object 2026-07-06; GPL570 annotation",
+  "expected_subjects": 97,
+  "phase1_audit": {
+    "relative_path": "data/interim/phase1_audit/phase1_audit.json",
+    "sha256": "fcce6ab5eb4c627c764799942523f641936f49e3c30be2f3027658bbc1b6e8e1"
+  },
+  "files": [
+    {
+      "relative_path": "data/raw/gse41613/GPL570.annot.gz",
+      "filename": "GPL570.annot.gz",
+      "role": "platform_annotation",
+      "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPLnnn/GPL570/annot/GPL570.annot.gz",
+      "version": "server object last-modified 2016-08-22",
+      "retrieved_at_utc": "2026-08-07T06:01:52.762840+00:00",
+      "bytes": 8471521,
+      "sha256": "d7cd44352127b1e34f3a720ebea86093ef255a38f1612a85a2962b71bde8f394",
+      "immutable": true,
+      "receipt": "data/raw/gse41613/GPL570.annot.gz.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/gse41613/GSE41613_series_matrix.txt.gz",
+      "filename": "GSE41613_series_matrix.txt.gz",
+      "role": "processed_expression",
+      "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE41nnn/GSE41613/matrix/GSE41613_series_matrix.txt.gz",
+      "version": "server object last-modified 2026-07-06",
+      "retrieved_at_utc": "2026-08-07T06:01:47.764173+00:00",
+      "bytes": 28797959,
+      "sha256": "5ff6d4aa02979bb357b1baf54246280bc89f4312f32556aa4173d82d8c9d0548",
+      "immutable": true,
+      "receipt": "data/raw/gse41613/GSE41613_series_matrix.txt.gz.receipt.json"
+    }
+  ],
+  "prohibited_material_acquired": false
+}

@@ -1,0 +1,53 @@
+study: radcure
+status: phase1_conditionally_feasible
+phase1_completed_on: "2026-08-07"
+population_label: hnscc_histology_rule_requires_manual_freeze
+index_date: treatment_start_requires_alignment_with_source_follow_up_origin
+primary_endpoint:
+  name: overall_survival_24_month
+  horizon_days: 730.5
+  censor_before_horizon_as_negative: false
+  audit_duration_source: "Length FU multiplied by 365.25"
+  audited_usable: 3346
+  death_by_horizon: 532
+  event_free_observed_through_horizon: 2436
+  censored_before_horizon: 378
+secondary_endpoint: overall_survival_time_to_event
+cohort_audit:
+  rows: 3346
+  unique_patients: 3346
+  duplicate_patient_rows: 0
+  exact_squamous_cell_carcinoma: 2847
+  broad_squamous_string_match_descriptive_only: 2906
+  challenge_training: 1800
+  challenge_test: 750
+  outside_challenge: 796
+split:
+  preference: official_challenge
+  fallback: temporal
+  random_split_primary: false
+  locked_test_must_remain_sealed: true
+allowed_downloads:
+  - clinical_table
+  - official_split
+  - processed_pyradiomics
+  - processed_negative_controls
+forbidden_downloads:
+  - raw_ct
+  - raw_dicom
+  - rtstruct
+primary_feature_sets:
+  - clinical
+  - log_gtvp_volume
+  - pyradiomics
+  - random_voxel_negative_control
+  - permuted_voxel_negative_control
+phase1_conditions:
+  - "Resolve diagnosis-to-last-contact versus treatment-start endpoint origin before modeling."
+  - "Inspect the ORCESTRA RDS with a project-local R runtime or validated parser before radiomics modeling."
+  - "Freeze a clinically justified histology eligibility rule; do not use the broad string match as the final rule without review."
+provenance_flags:
+  fmcib_requires_audit: true
+  rds_structure_audit_outstanding: true
+  prohibited_imaging_acquired: false
+phase2_authorized: false

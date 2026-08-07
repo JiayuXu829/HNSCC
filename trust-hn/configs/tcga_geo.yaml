@@ -1,0 +1,68 @@
+study: tcga_geo
+status: phase1_feasible_with_population_endpoint_conditions
+phase1_completed_on: "2026-08-07"
+development_cohort: TCGA-HNSC
+external_cohort: GSE65858
+sensitivity_cohort: GSE41613
+primary_endpoint: overall_survival
+cohort_audit:
+  tcga_hnsc:
+    expression_files: 520
+    expression_cases: 520
+    clinical_cases: 528
+    expression_clinical_overlap: 520
+    clinical_only_cases: 8
+    expression_only_cases: 0
+    usable_duration_event_pairs: 527
+    death_by_24_months: 162
+    event_free_observed_through_24_months: 233
+    censored_before_24_months: 132
+    star_gene_model: "GENCODE v36"
+    gene_rows_per_file: 60664
+    conforming_files: 520
+    gene_identity_order_signatures: 1
+  gse65858:
+    samples: 270
+    feature_rows: 31330
+    usable_overall_survival: 270
+    deaths: 94
+    death_by_24_months: 60
+    event_free_observed_through_24_months: 173
+    censored_before_24_months: 37
+    primary_tumors: 253
+    secondary_tumors: 14
+    relapse_tumors: 3
+    distant_metastasis_positive: 7
+    palliative_treatment: 3
+  gse41613:
+    samples: 97
+    feature_rows: 54613
+    usable_follow_up_status: 97
+    all_death_events: 51
+    oral_cancer_deaths: 30
+    non_oral_cancer_deaths: 14
+    unknown_cause_deaths: 7
+    follow_up_unit_verified: false
+allowed_downloads:
+  - harmonized_or_processed_expression
+  - public_clinical_tables
+  - platform_annotation
+forbidden_downloads:
+  - controlled_access_genomics
+  - raw_cel
+  - fastq
+forbidden_processing:
+  - all_data_combat_before_split
+  - external_outcome_guided_feature_selection
+representation_priority:
+  - within_sample_rank
+  - hallmark_pathway_scores
+  - reactome_pathway_scores_if_needed
+external_test_policy: freeze_once_then_evaluate
+clinical_fallback_policy: conditional_on_common_field_audit
+phase1_conditions:
+  - "Prespecify whether GSE65858 is restricted to primary, nonmetastatic, nonpalliative subjects."
+  - "Verify the GSE41613 follow-up-time unit from the source publication before modeling."
+  - "Keep GSE41613 as an HPV-negative OSCC sensitivity cohort, not general HNSCC external validation."
+  - "Do not use external outcomes for preprocessing, feature selection, tuning, calibration, or gate thresholds."
+phase2_authorized: false

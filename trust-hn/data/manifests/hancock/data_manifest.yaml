@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "study": "hancock",
+  "generated_at_utc": "2026-08-07T06:53:01.473214+00:00",
+  "source_version": "Git commit 521b99b03a94008b28df5c3df4aa5f82aa14b25a; external ZIP objects retrieved 2026-08-07",
+  "expected_subjects": 763,
+  "phase1_audit": {
+    "relative_path": "data/interim/phase1_audit/phase1_audit.json",
+    "sha256": "fcce6ab5eb4c627c764799942523f641936f49e3c30be2f3027658bbc1b6e8e1"
+  },
+  "files": [
+    {
+      "relative_path": "data/raw/hancock/DataSplits_DataDictionaries.zip",
+      "filename": "DataSplits_DataDictionaries.zip",
+      "role": "official_split",
+      "source_url": "https://data.fau.de/public/24/87/322108724/DataSplits_DataDictionaries.zip",
+      "version": "server object last-modified 2024-05-08",
+      "retrieved_at_utc": "2026-08-07T06:10:24.926290+00:00",
+      "bytes": 15149,
+      "sha256": "0532d7682ee9ab8e1de7f5f8641ba712f1dee89cf25a3446ffc49e4c7a69c56a",
+      "immutable": true,
+      "receipt": "data/raw/hancock/DataSplits_DataDictionaries.zip.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/hancock/HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip",
+      "filename": "HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip",
+      "role": "source_code_snapshot",
+      "source_url": "https://github.com/ankilab/HANCOCK_MultimodalDataset/archive/521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip",
+      "version": "git commit 521b99b03a94008b28df5c3df4aa5f82aa14b25a",
+      "retrieved_at_utc": "2026-08-07T06:10:19.186970+00:00",
+      "bytes": 14349016,
+      "sha256": "dc6b7336b67ef9b718a297e61357ada87f1ae3b7af5dc81691d58eb01c7cfdf3",
+      "immutable": true,
+      "receipt": "data/raw/hancock/HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/hancock/StructuredData.zip",
+      "filename": "StructuredData.zip",
+      "role": "structured_clinical_data",
+      "source_url": "https://data.fau.de/public/24/87/322108724/StructuredData.zip",
+      "version": "server object last-modified 2024-05-08",
+      "retrieved_at_utc": "2026-08-07T06:10:23.015617+00:00",
+      "bytes": 257467,
+      "sha256": "46f5df2e4e58305fa29b11df9ace3b0068c4a8739e391c7018f473795184d1d0",
+      "immutable": true,
+      "receipt": "data/raw/hancock/StructuredData.zip.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/hancock/TMA_CellDensityMeasurements.zip",
+      "filename": "TMA_CellDensityMeasurements.zip",
+      "role": "preextracted_patient_features",
+      "source_url": "https://data.fau.de/public/24/87/322108724/TMA_CellDensityMeasurements.zip",
+      "version": "server object last-modified 2024-05-08",
+      "retrieved_at_utc": "2026-08-07T06:10:27.748542+00:00",
+      "bytes": 148894,
+      "sha256": "07c8024150e86cc8909044c487eba799f2b7710ad03c23e0da14c9948a4d5608",
+      "immutable": true,
+      "receipt": "data/raw/hancock/TMA_CellDensityMeasurements.zip.receipt.json"
+    }
+  ],
+  "prohibited_material_acquired": false
+}

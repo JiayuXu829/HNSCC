@@ -1,0 +1,20 @@
+schema_version: "1.0"
+study: tcga_geo
+manifest_status: draft
+retrieved_at_utc: null
+source_page: null
+accession_or_doi: null
+release_or_version: null
+license_name: pending_verification
+license_url: null
+citation: null
+retrieval_method: null
+files:
+  - relative_path: null
+    source_url: null
+    bytes: null
+    sha256: null
+    content_role: null
+    contains_patient_identifiers: unknown
+    immutable: true
+notes: []

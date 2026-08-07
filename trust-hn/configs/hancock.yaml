@@ -1,0 +1,55 @@
+study: hancock
+status: phase1_feasible
+phase1_completed_on: "2026-08-07"
+population_label: hnscc_763_patients
+index_date: surgery_or_diagnosis_requires_final_adapter_definition
+cohort_audit:
+  master_patients: 763
+  duplicate_master_ids: 0
+  clinical_patients: 763
+  pathological_patients: 763
+  target_patients: 763
+  blood_patients: 692
+  icd_patients: 712
+  tma_cell_density_patients: 736
+endpoint_audit:
+  overall_survival_usable: 763
+  deceased: 213
+  living: 550
+  death_by_24_months: 104
+  event_free_observed_through_24_months: 516
+  censored_before_24_months: 143
+  recurrence_yes: 177
+  recurrence_no: 586
+  rfs_event_positive: 303
+  rfs_event_negative: 460
+  rfs_duration_missing: 0
+task_priority:
+  - overall_survival_time_to_event
+  - recurrence_time_to_event
+  - survival_status_classification
+  - recurrence_status_classification
+split:
+  official_id: "training 611; test 152"
+  official_ood: "training 611; test 152"
+  oropharynx_holdout: "training 432; test 331"
+  treatment_outcome: "training 663; test 100"
+  all_splits_cover_all_patients_without_duplicates: true
+allowed_downloads:
+  - clinical_pathological_tables
+  - blood_tables
+  - official_splits
+  - preextracted_patient_features
+forbidden_downloads:
+  - whole_slide_images
+  - raw_tma_images
+  - tma_annotations
+  - uni_encodings
+missingness:
+  evaluate_natural: true
+  evaluate_artificial_dropout: true
+  missingness_only_negative_control: true
+phase1_conditions:
+  - "Freeze prediction-time availability and the final index-date definition in the Phase 2 adapter."
+  - "Treat days_to_recurrence missingness in no-recurrence cases as structural, not ordinary missingness."
+phase2_authorized: false

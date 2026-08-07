@@ -1,0 +1,115 @@
+{
+    "schema_version":  "1.0",
+    "frozen_at_utc":  "2026-08-07T06:00:04.3704662Z",
+    "authorization":  "User explicitly approved Phase 1 acquisition on 2026-08-07.",
+    "scope":  "Public clinical/structured tables, processed features, open-access expression, metadata and platform annotations only.",
+    "artifacts":  [
+                      {
+                          "study":  "radcure",
+                          "filename":  "RADCURE_Clinical_v04_20241219.xlsx",
+                          "url":  "https://www.cancerimagingarchive.net/wp-content/uploads/RADCURE_Clinical_v04_20241219.xlsx",
+                          "role":  "clinical_table",
+                          "expected_bytes":  462993,
+                          "version":  "v04_20241219"
+                      },
+                      {
+                          "study":  "radcure",
+                          "filename":  "RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv",
+                          "url":  "https://www.cancerimagingarchive.net/wp-content/uploads/RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv",
+                          "role":  "data_dictionary",
+                          "expected_bytes":  14565,
+                          "version":  "2023-09-13"
+                      },
+                      {
+                          "study":  "radcure",
+                          "filename":  "RADCURE_READII-RADIOMICS_MAE.RDS",
+                          "url":  "https://zenodo.org/records/14226536/files/RADCURE_READII-RADIOMICS_MAE.RDS?download=1",
+                          "role":  "processed_radiomics",
+                          "expected_bytes":  842779545,
+                          "expected_md5":  "e3d570c4b7e4754681252c55ab7a275a",
+                          "version":  "ORCESTRA RADCURE Features 2.0",
+                          "doi":  "10.5281/zenodo.14226536"
+                      },
+                      {
+                          "study":  "hancock",
+                          "filename":  "HANCOCK_MultimodalDataset-521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip",
+                          "url":  "https://github.com/ankilab/HANCOCK_MultimodalDataset/archive/521b99b03a94008b28df5c3df4aa5f82aa14b25a.zip",
+                          "role":  "source_code_snapshot",
+                          "version":  "git commit 521b99b03a94008b28df5c3df4aa5f82aa14b25a"
+                      },
+                      {
+                          "study":  "hancock",
+                          "filename":  "StructuredData.zip",
+                          "url":  "https://data.fau.de/public/24/87/322108724/StructuredData.zip",
+                          "role":  "structured_clinical_data",
+                          "expected_bytes":  257467,
+                          "version":  "server object last-modified 2024-05-08"
+                      },
+                      {
+                          "study":  "hancock",
+                          "filename":  "DataSplits_DataDictionaries.zip",
+                          "url":  "https://data.fau.de/public/24/87/322108724/DataSplits_DataDictionaries.zip",
+                          "role":  "official_split",
+                          "expected_bytes":  15149,
+                          "version":  "server object last-modified 2024-05-08"
+                      },
+                      {
+                          "study":  "hancock",
+                          "filename":  "TMA_CellDensityMeasurements.zip",
+                          "url":  "https://data.fau.de/public/24/87/322108724/TMA_CellDensityMeasurements.zip",
+                          "role":  "preextracted_patient_features",
+                          "expected_bytes":  148894,
+                          "version":  "server object last-modified 2024-05-08"
+                      },
+                      {
+                          "study":  "gse65858",
+                          "filename":  "GSE65858_series_matrix.txt.gz",
+                          "url":  "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE65nnn/GSE65858/matrix/GSE65858_series_matrix.txt.gz",
+                          "role":  "processed_expression",
+                          "expected_bytes":  21329581,
+                          "version":  "server object last-modified 2026-06-03"
+                      },
+                      {
+                          "study":  "gse65858",
+                          "filename":  "GPL10558.annot.gz",
+                          "url":  "https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPL10nnn/GPL10558/annot/GPL10558.annot.gz",
+                          "role":  "platform_annotation",
+                          "expected_bytes":  7290886,
+                          "version":  "server object last-modified 2016-08-22"
+                      },
+                      {
+                          "study":  "gse41613",
+                          "filename":  "GSE41613_series_matrix.txt.gz",
+                          "url":  "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE41nnn/GSE41613/matrix/GSE41613_series_matrix.txt.gz",
+                          "role":  "processed_expression",
+                          "expected_bytes":  28797959,
+                          "version":  "server object last-modified 2026-07-06"
+                      },
+                      {
+                          "study":  "gse41613",
+                          "filename":  "GPL570.annot.gz",
+                          "url":  "https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPLnnn/GPL570/annot/GPL570.annot.gz",
+                          "role":  "platform_annotation",
+                          "expected_bytes":  8471521,
+                          "version":  "server object last-modified 2016-08-22"
+                      }
+                  ],
+    "gdc":  {
+                "project":  "TCGA-HNSC",
+                "data_release":  "Data Release 45.0 - December 04, 2025",
+                "api_tag":  "8.5.0",
+                "workflow":  "STAR - Counts",
+                "access":  "open",
+                "sample_type":  "Primary Tumor",
+                "expected_cases":  520,
+                "expected_files":  520,
+                "expected_expression_bytes":  2200875562,
+                "clinical_project_cases":  528
+            },
+    "explicitly_excluded":  [
+                                "RADCURE CT/DICOM/RTSTRUCT and OPC imaging archives",
+                                "HANCOCK WSI/TMA source images, annotations, core images and UNI encodings",
+                                "controlled-access genomic data",
+                                "GEO raw CEL/FASTQ files"
+                            ]
+}

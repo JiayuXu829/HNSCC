@@ -1,0 +1,94 @@
+schema_version: "1.1"
+verified_on: "2026-08-07"
+status: phase1_acquired_and_audited_conditional_go_pending_user_review
+phase1_audit:
+  relative_path: data/interim/phase1_audit/phase1_audit.json
+  sha256: fcce6ab5eb4c627c764799942523f641936f49e3c30be2f3027658bbc1b6e8e1
+  cross_cohort_exact_native_id_overlap_off_diagonal: 0
+raw_storage:
+  files_including_receipts: 1068
+  bytes: 3128490508
+  gibibytes: 2.914
+  source_files_read_only: 534
+  mutable_receipts: 533
+sources:
+  - study: radcure
+    artifact: clinical_data
+    canonical_page: "https://www.cancerimagingarchive.net/collection/radcure/"
+    accession_or_doi: "10.7937/J47W-NM11"
+    frozen_version: "TCIA Version 4, updated 2024-12-19"
+    local_file: data/raw/radcure/RADCURE_Clinical_v04_20241219.xlsx
+    downloaded_bytes: 462993
+    sha256: 68a55c3b427fc0511b768c201f6367914f0146d50549f4823e637032af3d18b9
+    audited_subjects: 3346
+    license: "CC BY 4.0; see data/manifests/radcure/license_notes.md"
+    manifest: data/manifests/radcure/data_manifest.yaml
+    status: acquired_audited
+  - study: radcure
+    artifact: ORCESTRA_processed_radiomics_and_negative_controls
+    canonical_page: "https://zenodo.org/records/14226536"
+    accession_or_doi: "10.5281/zenodo.14226536"
+    frozen_version: "ORCESTRA RADCURE Features 2.0"
+    local_file: data/raw/radcure/RADCURE_READII-RADIOMICS_MAE.RDS
+    downloaded_bytes: 842779545
+    publisher_md5: e3d570c4b7e4754681252c55ab7a275a
+    sha256: 32b06ea1acd7b34dd061edea03400ed482144369f41a2d0a9636201608eebd36
+    license: "CC BY 4.0; see data/manifests/radcure/license_notes.md"
+    status: acquired_integrity_verified_structure_audit_outstanding
+  - study: hancock
+    artifact: official_code_structured_data_splits_and_preextracted_tma_density
+    canonical_page: "https://github.com/ankilab/HANCOCK_MultimodalDataset"
+    accession_or_doi: "Data paper DOI 10.1038/s41467-025-62386-6"
+    frozen_version: "git commit 521b99b03a94008b28df5c3df4aa5f82aa14b25a; FAU objects retrieved 2026-08-07"
+    downloaded_source_artifacts: 4
+    audited_subjects: 763
+    license: "Repository code Apache-2.0; artifact-level reuse notes in data/manifests/hancock/license_notes.md"
+    manifest: data/manifests/hancock/data_manifest.yaml
+    status: acquired_audited
+  - study: tcga_hnsc
+    artifact: open_access_primary_tumor_star_counts_and_public_clinical_metadata
+    canonical_page: "https://portal.gdc.cancer.gov/projects/TCGA-HNSC"
+    accession_or_doi: TCGA-HNSC
+    frozen_version: "GDC Data Release 45.0 - 2025-12-04; API tag 8.5.0; commit 8f7c2a51ab0084b216ad1b62a3fae8b945439c53"
+    expression_files: 520
+    expression_cases: 520
+    clinical_project_cases: 528
+    expression_bytes: 2200875562
+    gene_model: "GENCODE v36"
+    manifest: data/manifests/tcga_hnsc/data_manifest.yaml
+    license: "GDC open-data policy; see data/manifests/tcga_hnsc/license_notes.md"
+    status: acquired_audited
+  - study: gse65858
+    artifact: processed_series_matrix_and_GPL10558_annotation
+    canonical_page: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE65858"
+    accession_or_doi: GSE65858
+    frozen_version: "series matrix server object 2026-06-03; GPL10558 annotation"
+    samples: 270
+    feature_rows: 31330
+    manifest: data/manifests/gse65858/data_manifest.yaml
+    license: "NCBI GEO reuse/citation notes in data/manifests/gse65858/license_notes.md"
+    status: acquired_audited_population_filter_pending
+  - study: gse41613
+    artifact: processed_series_matrix_and_GPL570_annotation
+    canonical_page: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE41613"
+    accession_or_doi: GSE41613
+    frozen_version: "series matrix server object 2026-07-06; GPL570 annotation"
+    samples: 97
+    feature_rows: 54613
+    manifest: data/manifests/gse41613/data_manifest.yaml
+    license: "NCBI GEO reuse/citation notes in data/manifests/gse41613/license_notes.md"
+    status: acquired_audited_follow_up_unit_pending
+prohibited:
+  acquired: false
+  items:
+    - "RADCURE CT/DICOM/RTSTRUCT and imaging archives"
+    - "HANCOCK WSI/TMA source images, annotations, core images, and UNI encodings"
+    - "controlled-access genomic files"
+    - "GEO raw CEL/FASTQ files"
+outstanding_conditions:
+  - "Resolve RADCURE diagnosis-based Length FU versus treatment-start index-date alignment."
+  - "Inspect the ORCESTRA RDS with a project-local R runtime or validated RDS parser."
+  - "Verify the GSE41613 follow-up-time unit from the source publication."
+  - "Prespecify GSE65858 population restrictions."
+  - "Keep all locked and external outcomes unavailable to tuning."
+phase2_authorized: false

@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "study": "radcure",
+  "generated_at_utc": "2026-08-07T06:53:01.473214+00:00",
+  "source_version": "TCIA Version 4 (2024-12-19) and Zenodo DOI 10.5281/zenodo.14226536",
+  "expected_subjects": 3346,
+  "phase1_audit": {
+    "relative_path": "data/interim/phase1_audit/phase1_audit.json",
+    "sha256": "fcce6ab5eb4c627c764799942523f641936f49e3c30be2f3027658bbc1b6e8e1"
+  },
+  "files": [
+    {
+      "relative_path": "data/raw/radcure/RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv",
+      "filename": "RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv",
+      "role": "data_dictionary",
+      "source_url": "https://www.cancerimagingarchive.net/wp-content/uploads/RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv",
+      "version": "2023-09-13",
+      "retrieved_at_utc": "2026-08-07T06:10:03.102369+00:00",
+      "bytes": 14565,
+      "sha256": "1c3f0e07511134eb3dd6801e9ef4e60dc60117c7568476b0450d4dcb262be55e",
+      "immutable": true,
+      "receipt": "data/raw/radcure/RADCURE-patient-id-to-OPC-Radiomics-patient-id-mapping.csv.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/radcure/RADCURE_Clinical_v04_20241219.xlsx",
+      "filename": "RADCURE_Clinical_v04_20241219.xlsx",
+      "role": "clinical_table",
+      "source_url": "https://www.cancerimagingarchive.net/wp-content/uploads/RADCURE_Clinical_v04_20241219.xlsx",
+      "version": "v04_20241219",
+      "retrieved_at_utc": "2026-08-07T06:10:01.326468+00:00",
+      "bytes": 462993,
+      "sha256": "68a55c3b427fc0511b768c201f6367914f0146d50549f4823e637032af3d18b9",
+      "immutable": true,
+      "receipt": "data/raw/radcure/RADCURE_Clinical_v04_20241219.xlsx.receipt.json"
+    },
+    {
+      "relative_path": "data/raw/radcure/RADCURE_READII-RADIOMICS_MAE.RDS",
+      "filename": "RADCURE_READII-RADIOMICS_MAE.RDS",
+      "role": "processed_radiomics",
+      "source_url": "https://zenodo.org/records/14226536/files/RADCURE_READII-RADIOMICS_MAE.RDS?download=1",
+      "version": "ORCESTRA RADCURE Features 2.0",
+      "retrieved_at_utc": "2026-08-07T06:07:09.248153+00:00",
+      "bytes": 842779545,
+      "sha256": "32b06ea1acd7b34dd061edea03400ed482144369f41a2d0a9636201608eebd36",
+      "immutable": true,
+      "receipt": "data/raw/radcure/RADCURE_READII-RADIOMICS_MAE.RDS.receipt.json"
+    }
+  ],
+  "prohibited_material_acquired": false
+}

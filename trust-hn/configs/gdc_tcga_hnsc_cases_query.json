@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://api.gdc.cancer.gov/cases",
+  "filters": {
+    "op": "in",
+    "content": {"field": "project.project_id", "value": ["TCGA-HNSC"]}
+  },
+  "format": "JSON",
+  "fields": "case_id,submitter_id,project.project_id,demographic.vital_status,demographic.days_to_death,diagnoses.days_to_last_follow_up,diagnoses.primary_diagnosis,diagnoses.tumor_stage,diagnoses.tissue_or_organ_of_origin,diagnoses.age_at_diagnosis,diagnoses.classification_of_tumor,diagnoses.morphology,diagnoses.prior_treatment,diagnoses.treatment_or_therapy,exposures.tobacco_smoking_status,exposures.pack_years_smoked",
+  "expand": "demographic,diagnoses,exposures,follow_ups",
+  "size": 1000,
+  "sort": "case_id:asc"
+}

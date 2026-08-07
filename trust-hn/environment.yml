@@ -1,0 +1,24 @@
+name: trust-hn
+channels:
+  - conda-forge
+channel_priority: strict
+dependencies:
+  - python=3.11
+  - pip=25.2
+  - numpy=2.3.2
+  - pandas=2.3.1
+  - pyarrow=21.0.0
+  - pyyaml=6.0.2
+  - scikit-learn=1.7.1
+  - scipy=1.16.1
+  - lifelines=0.30.0
+  - matplotlib=3.10.5
+  - seaborn=0.13.2
+  - requests=2.32.4
+  - tqdm=4.67.1
+  - pytest=8.4.1
+  - pytest-cov=6.2.1
+  - ruff=0.12.8
+  - pip:
+      - scikit-survival==0.25.0
+      - xgboost==3.0.3

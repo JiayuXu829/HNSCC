@@ -1,0 +1,13 @@
+{
+  "completed_at_utc": "2026-08-07T06:53:01.576214+00:00",
+  "manifests": {
+    "radcure": 3,
+    "hancock": 4,
+    "gse65858": 2,
+    "gse41613": 2,
+    "tcga_hnsc": 523
+  },
+  "source_files_read_only": 534,
+  "mutable_receipts": 533,
+  "mutable_placeholders": 1
+}

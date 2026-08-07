@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "status": "DRAFT",
+  "frozen_at": null,
+  "git_commit": null,
+  "config_sha256": {},
+  "sealed_manifest_sha256": {},
+  "primary_hypotheses_frozen": false,
+  "models_frozen": false,
+  "thresholds_frozen": false,
+  "test_unseal": {
+    "approved": false,
+    "approved_by": null,
+    "approved_at": null,
+    "approval_token_sha256": null
+  },
+  "notes": "Do not change to FROZEN or approve test unsealing before Phase 5 review."
+}

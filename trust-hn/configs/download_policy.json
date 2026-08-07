@@ -1,0 +1,39 @@
+{
+    "schema_version":  "1.0",
+    "allowed_hosts":  [
+                          "api.gdc.cancer.gov",
+                          "cancerimagingarchive.net",
+                          "data.fau.de",
+                          "ftp.ncbi.nlm.nih.gov",
+                          "github.com",
+                          "ncbi.nlm.nih.gov",
+                          "orcestra.ca",
+                          "raw.githubusercontent.com",
+                          "zenodo.org",
+                          "www.cancerimagingarchive.net"
+                      ],
+    "allowed_artifact_roles":  [
+                                   "clinical_table",
+                                   "data_dictionary",
+                                   "official_split",
+                                   "processed_expression",
+                                   "platform_annotation",
+                                   "processed_radiomics",
+                                   "negative_control_features",
+                                   "preextracted_patient_features",
+                                   "structured_clinical_data",
+                                   "source_code_snapshot"
+                               ],
+    "forbidden_artifact_roles":  [
+                                     "raw_ct",
+                                     "dicom",
+                                     "rtstruct",
+                                     "whole_slide_image",
+                                     "raw_tma_image",
+                                     "controlled_access_genomics"
+                                 ],
+    "max_single_file_bytes":  5368709120,
+    "max_planned_total_bytes":  32212254720,
+    "https_required":  true,
+    "raw_destination_root":  "data/raw"
+}

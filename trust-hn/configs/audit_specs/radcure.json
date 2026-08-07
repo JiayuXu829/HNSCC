@@ -1,0 +1,13 @@
+{
+  "study": "RADCURE",
+  "field_candidates": {
+    "patient_id": ["patient_id", "PatientID", "patient", "ID"],
+    "split": ["split", "challenge_split", "dataset", "cohort"],
+    "duration": ["overall_survival_days", "OS_days", "survival_time_days", "Time"],
+    "event": ["death_event", "OS_event", "event", "Status"]
+  },
+  "duration_multiplier_to_days": 1.0,
+  "event_mapping": {"0": 0, "1": 1, "Alive": 0, "Dead": 1},
+  "horizon_days": 730.5,
+  "notes": "Candidates must be replaced by verified source fields; ambiguity is an error."
+}
