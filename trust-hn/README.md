@@ -10,7 +10,9 @@ The repository is being implemented phase by phase from `../docs/TRUST_HN_master
 - **Phase 1:** completed acquisition/registration and feasibility audit of authorized public artifacts.
 - **Phase 2:** completed unified adapters, frozen data contract, and governance-safe descriptive outputs.
 - **Phase 3:** completed development-only baselines within the authorized conditional scope.
-- **Phase 4:** completed B6 stacked residual fusion and B7 reliability gating for HANCOCK and TCGA-HNSC within the authorized conditional scope; Phase 5 is not authorized, and RADCURE modality-dependent TRUST-HN remains blocked pending ORCESTRA RDS structural validation.
+- **Phase 4:** completed B6 stacked residual fusion and B7 reliability gating for HANCOCK and TCGA-HNSC within the authorized conditional scope.
+- **Phase 5:** completed development-only stress tests, gate ablations, 100%/90%/80% coverage profiles, subgroup/worst-group analyses, representation/imputation sensitivity, and the immutable analysis freeze. RADCURE modality-dependent analyses remain blocked pending ORCESTRA RDS structural validation.
+- **Phase 6:** sealed and not authorized. RADCURE challenge-test, HANCOCK OOD-test, GSE65858, and GSE41613 outcomes remain unused.
 - Raw RADCURE CT and HANCOCK WSI are explicitly out of scope.
 - No locked/sealed outcomes may be inspected for tuning.
 
@@ -121,3 +123,13 @@ Run the authorized development-only TRUST-HN core experiment:
 ```
 
 This command fits B6 stacked residual fusion and B7 reliability gating on frozen HANCOCK and TCGA-HNSC training/calibration rows. Patient-level decision traces are written only to Git-ignored `results/predictions/phase4/`; aggregate metrics, figures, audits, and a hashed receipt are written to tracked locations. It does not enter Phase 5 and does not load RADCURE challenge-test, HANCOCK OOD-test, GSE65858, or GSE41613 outcomes. RADCURE B6/B7 remain governance-blocked until the ORCESTRA RDS structure is validated.
+
+## Phase 5 command
+
+Run the frozen development-only stress-test and analysis-freeze workflow:
+
+```powershell
+.venv\Scripts\python.exe scripts\run_phase5.py --phase phase5
+```
+
+The command evaluates HANCOCK and TCGA-HNSC development calibration rows only, records RADCURE as blocked, writes patient-level traces only to Git-ignored `results/predictions/phase5/`, and produces aggregate metrics, figures, audits, a sealed-cohort set digest, and `configs/analysis_freeze.yaml`. It does **not** authorize or execute Phase 6.

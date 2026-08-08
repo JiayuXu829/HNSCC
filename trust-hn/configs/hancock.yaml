@@ -1,5 +1,5 @@
 study: hancock
-status: phase4_trust_hn_core_complete_ood_outcomes_sealed
+status: phase5_development_stress_tests_complete_ood_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_763_patients
 index_date: surgery_or_diagnosis_requires_final_adapter_definition
@@ -69,3 +69,11 @@ phase4_decisions:
   - "B6 stacked residual fusion and B7 reliability gating completed on frozen development train/calibration rows."
   - "Official OOD-test outcomes remain sealed and unused."
   - "Phase 5 stress tests and Phase 6 locked evaluation remain unauthorized."
+
+phase5_authorized: true
+phase5_completed_on: "2026-08-07"
+phase5_decisions:
+  - "Development-only stress tests, gate ablations, coverage profiles, subgroup analyses, and imputation sensitivity completed on the frozen HANCOCK train/calibration partition."
+  - "The prespecified full equal-weight 90% gate remains the frozen primary configuration; no outcome-guided switch to the learned-weight alternative was made."
+  - "The clean same-subset B7-versus-B6 Brier noninferiority check failed for HANCOCK (delta 0.01550 versus margin 0.01000) and must be reported."
+  - "Official HANCOCK OOD-test outcomes remain sealed and unused; Phase 6 is not authorized."

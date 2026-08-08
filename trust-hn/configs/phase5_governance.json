@@ -1,0 +1,14 @@
+﻿{
+  "schema_version": "5.0",
+  "phase": "Phase 5 development stress tests and analysis freeze",
+  "development_outcomes_allowed": ["HANCOCK train/calibration", "TCGA-HNSC train/calibration"],
+  "forbidden_outcomes": ["RADCURE challenge test", "HANCOCK OOD test", "GSE65858 external test", "GSE41613 sensitivity cohort"],
+  "stress_fit_scope": "models and preprocessing fit on frozen training rows only; perturbations applied to calibration predictors only",
+  "learned_gate_scope": "nonnegative reliability weights fit from training OOF prediction errors only; calibration outcomes are evaluation-only",
+  "threshold_selection": "calibration reliability quantiles at 100%, 90%, and 80%; no calibration-outcome threshold optimization",
+  "subgroup_policy": "prespecified aggregate groups with minimum n=20 and minimum events=5; no patient-level tracked output",
+  "patient_traces": "results/predictions/phase5; Git-ignored",
+  "tracked_outputs": "aggregate metrics, figures, audits, immutable config hashes, sealed cohort set digests, and receipt only",
+  "phase6_unseal_allowed": false,
+  "test_unseal_requires": ["completed Phase 5 review", "immutable analysis_freeze.yaml", "matching config and sealed-manifest hashes", "separate explicit user authorization", "one-time approval token"]
+}

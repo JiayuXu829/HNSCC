@@ -1,18 +1,44 @@
 {
-  "schema_version": "1.0",
-  "status": "DRAFT",
-  "frozen_at": null,
-  "git_commit": null,
-  "config_sha256": {},
-  "sealed_manifest_sha256": {},
-  "primary_hypotheses_frozen": false,
-  "models_frozen": false,
-  "thresholds_frozen": false,
+  "schema_version": "2.0",
+  "status": "FROZEN",
+  "frozen_at": "2026-08-07",
+  "git_commit": "6e9a4776c8709d7cecbe7f6eab232db434706b07",
+  "config_sha256": {
+    "configs/base.yaml": "974a5c028edc20e7ea30e06f5047bd882ede6157fb343a20baef999642bf2731",
+    "configs/hancock.yaml": "e997a671c9e7623f1a660f4904d452a5c2d85e9f988db1351d1d3585bb2e3f21",
+    "configs/tcga_geo.yaml": "83dac7827ec55e7ada69ed48dd25087ff1ebf21dd72a1ad2283b9a0d2703beea",
+    "configs/radcure.yaml": "add5432d8fd1fc19b503846ca1de649d7ff2ba0f7de14f9dc20ea3be872870bc",
+    "configs/phase3_baselines.json": "8d18348cf059895a25c3b1a07ea4d670b23fa5a18dfa9809fea64caf40f9822e",
+    "configs/phase3_governance.json": "ff6a17e96e496f1bc04296980d3965cb03bd0a713612da7014d5f09617df8f5d",
+    "configs/phase4_trust_hn.json": "25322f6b68927f267c98a7d017bca01a6ebe6debd434926b72dd6a2e844abb0d",
+    "configs/phase4_governance.json": "c34bc832c999dc69539088ad70a927a6278beb9db40426ee4c0f9b4f7bef7de1",
+    "configs/phase5_stress_tests.json": "d96963f354f57b9cafc32427fd4ceefe652f7c351ef74fb19bc56efea3131598",
+    "configs/phase5_governance.json": "51180c2a80731cab78fdd299b97efd7996033ccb965805727e5baee49c61bfdc",
+    "src/trust_hn/models/residual_fusion.py": "fb9606ec38f5624ae0e6f2945756fbb74df9cd27854edc58ac1285b10591570c",
+    "src/trust_hn/reliability/gating.py": "a81286f2cfa8398655b29a926505fd8925e189d909445105f792bcfee4d834f7",
+    "src/trust_hn/reliability/ablations.py": "b3fe394d0e58d4ac8a12577fbdb517cdbc771ce2abf340be29966ef974bf608b",
+    "src/trust_hn/evaluation/phase4.py": "08cb46ac3bcdc9aa225afa029ca453322e3fe97c3d394a1a43aa0f72429f501b",
+    "src/trust_hn/evaluation/phase5.py": "7e386e806601f906cc9e82810b5a5348573e522ab7ee309e2410b1494970ef5b",
+    "scripts/run_phase5.py": "229306173a94070043d428fa8f747d82ebfb33f60199d1ee0f3985f9eb210c0e"
+  },
+  "sealed_manifest_sha256": {
+    "data/manifests/sealed/phase6_cohort_set_manifest.json": "c2ad1939fc77674d6b0e83715bea83b12dbf16560dfafbc180ef60fb1bad8470"
+  },
+  "primary_hypotheses_frozen": true,
+  "models_frozen": true,
+  "thresholds_frozen": true,
+  "primary_gate": "full_equal_weight_90",
+  "sensitivity_profiles": [
+    "full_equal_weight_80",
+    "full_equal_weight_100"
+  ],
+  "phase6_outcomes_seen": false,
   "test_unseal": {
     "approved": false,
     "approved_by": null,
     "approved_at": null,
-    "approval_token_sha256": null
+    "approval_token_sha256": null,
+    "reason": "Phase 6 requires separate explicit user authorization after Phase 5 review"
   },
-  "notes": "Do not change to FROZEN or approve test unsealing before Phase 5 review."
+  "notes": "Phase 5 freeze records exact file hashes. Locked/external evaluation remains refused."
 }

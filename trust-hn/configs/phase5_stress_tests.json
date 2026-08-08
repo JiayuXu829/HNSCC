@@ -1,0 +1,44 @@
+﻿{
+  "schema_version": "5.0",
+  "status": "FROZEN_FOR_PHASE5_DEVELOPMENT",
+  "authorized_on": "2026-08-07",
+  "scope": "Development-only stress tests, gate ablations, subgroup analyses, and analysis freeze",
+  "phase6_authorized": false,
+  "sealed_outcomes_authorized": false,
+  "external_outcomes_authorized": false,
+  "horizon_days": 730.5,
+  "cv_folds": 5,
+  "seeds": [17, 29, 43, 71, 101],
+  "bootstrap_ensemble_size": 20,
+  "coverage_profiles": [1.0, 0.9, 0.8],
+  "primary_gate_profile": "full_equal_weight_90",
+  "primary_models": ["B2", "B4", "B5", "B6", "B7"],
+  "gate_ablations": ["no_gate", "ood_only", "uncertainty_only", "full_equal_weight", "full_learned_nonnegative"],
+  "stress_scenarios": {
+    "common": ["clean", "random_cell_dropout_10pct", "random_cell_dropout_30pct", "measurement_noise_0.5sd", "location_shift_1sd", "row_permutation_negative_control", "complete_modality_dropout"],
+    "HANCOCK": ["blood_block_dropout_30pct_rows", "tma_block_dropout_30pct_rows", "blood_and_tma_dropout_30pct_rows", "oropharynx_targeted_tma_dropout"],
+    "TCGA-HNSC": ["within_sample_rank_representation"]
+  },
+  "subgroups": {
+    "minimum_n": 20,
+    "minimum_events": 5,
+    "variables": ["sex", "age_group", "site_group", "stage_group", "hpv_group", "natural_modality_missingness"]
+  },
+  "acceptance_margins": {
+    "clean_b7_vs_b6_brier_noninferiority": 0.01,
+    "complete_dropout_b7_100_vs_b2_brier_noninferiority": 0.01,
+    "complete_dropout_fallback_rate_minimum": 0.9,
+    "severe_shift_action_response_increase_minimum": 0.1,
+    "worst_group_brier_regret_vs_b2_exploratory": 0.03
+  },
+  "selection_rule": "Freeze the prespecified full equal-weight 90% gate as primary without outcome-based threshold retuning; use 80% and 100% as sensitivities and report failed acceptance checks without switching to a more favorable profile.",
+  "blocked_or_deferred": {
+    "RADCURE": "ORCESTRA RDS modality structure is not validated",
+    "HANCOCK_official_OOD": "sealed for Phase 6",
+    "GSE65858": "external outcomes and platform comparison sealed for Phase 6",
+    "GSE41613": "sensitivity outcomes sealed for Phase 6",
+    "Hallmark_Reactome": "gene-set resources are not present and will not be introduced after development data review",
+    "all_data_ComBat": "forbidden as a primary method and external covariates remain sealed before freeze",
+    "recurrence_endpoint": "not entered because overall survival is the frozen primary endpoint"
+  }
+}

@@ -1,0 +1,12 @@
+study,seed,status,reason
+RADCURE,,blocked,ORCESTRA RDS modality structure is not validated
+HANCOCK,17,complete,
+HANCOCK,29,complete,
+HANCOCK,43,complete,
+HANCOCK,71,complete,
+HANCOCK,101,complete,
+TCGA-HNSC,17,complete,
+TCGA-HNSC,29,complete,
+TCGA-HNSC,43,complete,
+TCGA-HNSC,71,complete,
+TCGA-HNSC,101,complete,

@@ -1,0 +1,9 @@
+study,check,value,criterion,passed
+HANCOCK,clean_primary_b7_vs_b6_brier,0.01549859789011171,<= 0.01,False
+HANCOCK,complete_dropout_b7_100_vs_b2_brier,0.0,<= 0.01,True
+HANCOCK,complete_dropout_fallback_rate,1.0,>= 0.9,True
+HANCOCK,severe_shift_action_response_increase,0.44180327868852454,>= 0.1,True
+TCGA-HNSC,clean_primary_b7_vs_b6_brier,-0.013294005941628106,<= 0.01,True
+TCGA-HNSC,complete_dropout_b7_100_vs_b2_brier,0.0,<= 0.01,True
+TCGA-HNSC,complete_dropout_fallback_rate,1.0,>= 0.9,True
+TCGA-HNSC,severe_shift_action_response_increase,0.460576923076923,>= 0.1,True

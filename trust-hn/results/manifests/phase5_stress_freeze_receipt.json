@@ -1,0 +1,48 @@
+{
+  "schema_version": "5.0",
+  "generated_on": "2026-08-07",
+  "phase": "Phase 5 development stress tests and analysis freeze",
+  "studies": [
+    "HANCOCK",
+    "TCGA-HNSC"
+  ],
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "bootstrap_ensemble_size": 20,
+  "successful_runs": 10,
+  "failed_runs": 0,
+  "blocked_entries": 1,
+  "blocked_studies": [
+    "RADCURE"
+  ],
+  "sealed_or_external_outcomes_used": false,
+  "phase6_authorized": false,
+  "analysis_frozen": true,
+  "patient_prediction_directory": "results/predictions/phase5 (Git-ignored)",
+  "config_sha256": {
+    "configs/phase5_stress_tests.json": "d96963f354f57b9cafc32427fd4ceefe652f7c351ef74fb19bc56efea3131598",
+    "configs/phase5_governance.json": "51180c2a80731cab78fdd299b97efd7996033ccb965805727e5baee49c61bfdc"
+  },
+  "aggregate_output_sha256": {
+    "results/metrics/phase5/stress_metrics.csv": "34a9c5e29baaefbed17d74ad58479bc7eb3dc7219cd666c904d64cc802bcc48e",
+    "results/metrics/phase5/action_summary.csv": "fef43fbd02df3bc8ffbf51a51440802e90f79f505a1b2d5148866d90d744aa8d",
+    "results/metrics/phase5/detection_summary.csv": "9133ff8161ee9698f5ee36b2d17c1c85af7d70c917e9283adabf91096c110561",
+    "results/metrics/phase5/subgroup_metrics.csv": "ae27a91d76548ba84b78beab6a5a1f693a87f0c5e30f7f44e5a1dbcc1d852b8a",
+    "results/metrics/phase5/representation_metrics.csv": "0790836b9e59a8b12a0c0e64949450a5b155986c677877352eaf36498d9d5bcc",
+    "results/metrics/phase5/learned_gate_weights.csv": "1306845e5da9cfc4f2b8347f2b8ac8d2c1c5a94c657a6d2664c191ef9e1bc46f",
+    "results/metrics/phase5/model_status.csv": "00d58275f8eb81f1154b102d925bc881c993c95e0d9d0ab745c6d29c6018ad74",
+    "results/metrics/phase5/worst_group_summary.csv": "f475a806d616ac8a9f72632282173da37d024464583cb717ce3129af431846ae",
+    "results/metrics/phase5/worst_group_regret.csv": "81532434c32bd35cad9c8776600bdc1e99f3ba506a37307090b8e7e74a3b0bfb",
+    "results/metrics/phase5/acceptance_checks.csv": "33b662a1c7874f439e0591ff5ad93a3d3ef0d7a3b34c2db43c1f4e1d83c23330",
+    "results/figures/phase5/stress_brier.svg": "431f7581c8a6f616550e5b309904866194c8db7ef42c1c33dec349bee0922818",
+    "results/figures/phase5/stress_actions.svg": "a87a33cc0da0755382765465009aca3310cdcbf06b8e7686ffea2d172871d81b",
+    "docs/audits/phase5/leakage_audit.md": "2e4a5a0ce7a690f10ed1891d383932f4564bef7f1cd04000015f3770c59cf202",
+    "data/manifests/sealed/phase6_cohort_set_manifest.json": "c2ad1939fc77674d6b0e83715bea83b12dbf16560dfafbc180ef60fb1bad8470",
+    "configs/analysis_freeze.yaml": "306feee634b1cbb5eba396baadd4bef7f6828f551d3105812a68d600adbffe4e"
+  }
+}

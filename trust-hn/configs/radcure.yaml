@@ -1,5 +1,5 @@
 study: radcure
-status: phase4_modality_dependent_trust_hn_blocked
+status: phase5_modality_dependent_stress_tests_blocked
 phase1_completed_on: "2026-08-07"
 population_label: hnscc_histology_rule_requires_manual_freeze
 index_date: treatment_start_requires_alignment_with_source_follow_up_origin
@@ -68,3 +68,10 @@ phase4_decisions:
   - "RADCURE B6/B7 were not run because the ORCESTRA RDS modality structure remains unvalidated."
   - "Challenge-test outcomes remain sealed and unused."
   - "No radiomics-fusion or reliability-gate claim is authorized for RADCURE."
+
+phase5_authorized: true
+phase5_completed_on: "2026-08-07"
+phase5_decisions:
+  - "RADCURE modality-dependent stress tests and B6/B7 analyses remain blocked because the ORCESTRA RDS modality structure has not been validated."
+  - "The blocked status is recorded in Phase 5 aggregate model_status output; no radiomics-fusion claim is authorized."
+  - "RADCURE challenge-test outcomes remain sealed and unused; Phase 6 is not authorized."

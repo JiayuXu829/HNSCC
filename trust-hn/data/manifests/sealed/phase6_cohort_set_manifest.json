@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "created_on": "2026-08-07",
+  "purpose": "Aggregate set digests for Phase 6 integrity checks; no patient IDs or outcomes",
+  "cohorts": [
+    {
+      "cohort": "RADCURE challenge test",
+      "split_roles": [
+        "sealed_test"
+      ],
+      "patient_count": 626,
+      "ordered_id_set_sha256": "8a954d9bb913145994df80c91a2f76c309e81d3ec32652869945744310439000",
+      "source_adapter_sha256": "a20454cbf97cbaae81d198ced4a883c30363135c3f2fedebba0169dc0753729d",
+      "contains_patient_level_identifiers": false,
+      "contains_outcomes": false
+    },
+    {
+      "cohort": "HANCOCK OOD test",
+      "split_roles": [
+        "sealed_test"
+      ],
+      "patient_count": 152,
+      "ordered_id_set_sha256": "655e61bfcafbcd01a6b9bb749a7f94bc3f1bd9ab961aef2e83e6d276295fe146",
+      "source_adapter_sha256": "dbb6bca68d434d1c6678f0101fe5d6c5f25d1cd0a2389c2264e6c064e9446795",
+      "contains_patient_level_identifiers": false,
+      "contains_outcomes": false
+    },
+    {
+      "cohort": "GSE65858 external test",
+      "split_roles": [
+        "external_test"
+      ],
+      "patient_count": 244,
+      "ordered_id_set_sha256": "ae8894e3e04be368fb7afb64a4cb07a75f2fafa4f05b541463b91c4a12136380",
+      "source_adapter_sha256": "14d7f16811d38af8b0f1a797790cbb53b7b66ee0374b1cfd61d81642b72abaee",
+      "contains_patient_level_identifiers": false,
+      "contains_outcomes": false
+    },
+    {
+      "cohort": "GSE41613 sensitivity",
+      "split_roles": [
+        "sensitivity"
+      ],
+      "patient_count": 97,
+      "ordered_id_set_sha256": "f2935569e8d1363da65ffa7d67e2d33f3f356a213e88d6fbc026b267eb814b76",
+      "source_adapter_sha256": "cf4f3a5203df1fc3f1c6d6024cb2ed0e3c774fd7e000a98e142324f8169abe2c",
+      "contains_patient_level_identifiers": false,
+      "contains_outcomes": false
+    }
+  ]
+}

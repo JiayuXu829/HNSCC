@@ -1,5 +1,5 @@
 study: tcga_geo
-status: phase4_tcga_trust_hn_core_complete_external_outcomes_sealed
+status: phase5_tcga_development_stress_tests_complete_external_outcomes_sealed
 phase1_completed_on: "2026-08-07"
 development_cohort: TCGA-HNSC
 external_cohort: GSE65858
@@ -82,3 +82,11 @@ phase4_decisions:
   - "TCGA-HNSC B6 stacked residual fusion and B7 reliability gating completed on frozen development train/calibration rows."
   - "GSE65858 and GSE41613 outcomes remain sealed and unused."
   - "Phase 5 stress tests and Phase 6 external evaluation remain unauthorized."
+
+phase5_authorized: true
+phase5_completed_on: "2026-08-07"
+phase5_decisions:
+  - "Development-only stress tests, gate ablations, coverage profiles, subgroup analyses, and within-sample-rank sensitivity completed on frozen TCGA-HNSC train/calibration rows."
+  - "The prespecified full equal-weight 90% gate remains the frozen primary configuration without outcome-guided threshold or gate-weight switching."
+  - "Two exploratory TCGA-HNSC age >=65 seed/group evaluations exceeded the 0.03 Brier-regret flag versus B2 and require cautious reporting."
+  - "GSE65858 and GSE41613 outcomes remain sealed and unused; Phase 6 is not authorized."
