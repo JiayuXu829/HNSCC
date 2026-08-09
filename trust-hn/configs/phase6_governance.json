@@ -1,0 +1,41 @@
+{
+  "schema_version": "6.0",
+  "phase": "Phase 6 one-time retrospective locked and external evaluation",
+  "authorized_on": "2026-08-08",
+  "authorized_by": "project owner via explicit conversation instruction",
+  "authorization_text": "好的，请继续进行phase6",
+  "pre_unseal_requirements": [
+    "Phase 5 freeze intact",
+    "RADCURE RDS aggregate structural audit passes",
+    "evaluation code and tests complete",
+    "all decision-file hashes registered",
+    "sealed cohort digests match",
+    "one-time token hash registered"
+  ],
+  "allowed_outcomes_after_unseal": [
+    "RADCURE challenge test overall survival",
+    "HANCOCK official OOD-test overall survival",
+    "GSE65858 external overall survival",
+    "GSE41613 sensitivity overall survival"
+  ],
+  "forbidden_uses": [
+    "outcome-guided preprocessing",
+    "feature selection",
+    "hyperparameter tuning",
+    "threshold tuning",
+    "gate-profile switching",
+    "model selection",
+    "exclusion based on performance"
+  ],
+  "one_time_semantics": "Authorization is consumed immediately before held-out outcomes are loaded; deterministic reproduction after unseal must use unchanged registered code/config and is not a new model-selection opportunity.",
+  "bootstrap_replicates": 2000,
+  "patient_identifiers": "Git-ignored outputs only",
+  "tracked_outputs": "aggregate metrics, confidence intervals, figures, reports, checklists, and hash receipts only",
+  "claims_not_authorized": [
+    "prospective validation",
+    "clinical deployment readiness",
+    "established clinical utility",
+    "causal benefit",
+    "universal cross-cohort model"
+  ]
+}

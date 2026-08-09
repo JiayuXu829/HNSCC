@@ -1,0 +1,114 @@
+{
+  "schema_version": "6.0",
+  "status": "FROZEN_FOR_ONE_TIME_PHASE6_EVALUATION",
+  "authorized_on": "2026-08-08",
+  "authorization_basis": "Explicit user instruction: 好的，请继续进行phase6",
+  "scope": "Retrospective one-time RADCURE locked test, HANCOCK OOD test, GSE65858 external test, and GSE41613 sensitivity analysis",
+  "outcome_use_policy": "Held-out outcomes may be loaded only after token/hash/cohort-digest authorization; never for preprocessing, feature selection, tuning, threshold selection, model selection, or retuning",
+  "horizon_days": 730.5,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "patient",
+  "bootstrap_pairing": "same resampled patient indices for all compared models within a cohort",
+  "primary_gate_profile": "full_equal_weight_90",
+  "sensitivity_gate_profiles": [
+    "full_equal_weight_80",
+    "full_equal_weight_100"
+  ],
+  "models": [
+    "B2",
+    "B4",
+    "B5",
+    "B6",
+    "B7"
+  ],
+  "hyperparameters_source": "configs/phase4_trust_hn.json",
+  "model_uncertainty_bootstrap_ensemble_size": 20,
+  "cohorts": {
+    "RADCURE": {
+      "role": "locked_test",
+      "expected_n": 626,
+      "training_assay": "radiomics.pyradiomics_original",
+      "negative_control_assays": [
+        "radiomics.pyradiomics_shuffled_full",
+        "radiomics.pyradiomics_randomized_sampled_full"
+      ],
+      "feature_policy": "numeric PyRadiomics vectors; exclude identifiers, metadata, diagnostics, and FMCIB; exact feature/order alignment required",
+      "foldwise_variance_top_k": 500,
+      "missing_modality_policy": "retain all frozen patients; fully missing radiomics rows trigger B7 clinical fallback"
+    },
+    "HANCOCK": {
+      "role": "ood_test",
+      "expected_n": 152,
+      "feature_policy": "same frozen baseline blood plus TMA cell-density loader as development",
+      "missing_modality_policy": "retain and gate/fallback"
+    },
+    "GSE65858": {
+      "role": "external_test",
+      "expected_n": 244,
+      "representation": "within-sample ranks over outcome-independent common gene-symbol intersection",
+      "probe_aggregation": "median by uppercase gene symbol",
+      "tcga_duplicate_symbol_aggregation": "median",
+      "foldwise_variance_top_k": 500
+    },
+    "GSE41613": {
+      "role": "sensitivity",
+      "expected_n": 97,
+      "representation": "same TCGA/GSE65858/GSE41613 common-gene rank model",
+      "endpoint": "all-cause overall survival; any source Dead category is an event",
+      "follow_up_conversion": "months * 30.4375 days"
+    }
+  },
+  "metrics": [
+    "Harrell C",
+    "Uno C",
+    "24-month time-dependent AUC",
+    "24-month IPCW Brier",
+    "calibration-in-the-large",
+    "calibration slope",
+    "coverage",
+    "AUGMENT/FALLBACK/ABSTAIN rates"
+  ],
+  "comparisons": [
+    "B7 vs B6 on the identical non-abstained subset",
+    "B7 vs B2 on the identical non-abstained subset",
+    "B6 vs B5",
+    "RADCURE original radiomics vs shuffled/randomized controls"
+  ],
+  "no_retuning": true,
+  "no_threshold_switching": true,
+  "no_model_selection_on_phase6": true,
+  "patient_level_output": "results/predictions/phase6 (Git-ignored)",
+  "tracked_output": "aggregate-only",
+  "seed_aggregation": {
+    "base_model_predictions": "arithmetic mean across the five frozen seeds",
+    "b7_action_consensus": "majority vote with ABSTAIN precedence, then FALLBACK, then AUGMENT",
+    "minimum_votes": 3,
+    "b7_risk": "mean seed-specific B7 risk; consensus FALLBACK replaced by mean B2 risk; consensus ABSTAIN set to missing"
+  },
+  "bootstrap_random_state_by_cohort": {
+    "RADCURE": 6101,
+    "HANCOCK": 6201,
+    "GSE65858": 6301,
+    "GSE41613": 6401,
+    "RADCURE_NEGATIVE_CONTROLS": 6501
+  },
+  "decision_curve_thresholds": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5
+  ]
+}

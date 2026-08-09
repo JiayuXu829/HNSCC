@@ -19,7 +19,23 @@
     "src/trust_hn/reliability/ablations.py": "b3fe394d0e58d4ac8a12577fbdb517cdbc771ce2abf340be29966ef974bf608b",
     "src/trust_hn/evaluation/phase4.py": "08cb46ac3bcdc9aa225afa029ca453322e3fe97c3d394a1a43aa0f72429f501b",
     "src/trust_hn/evaluation/phase5.py": "7e386e806601f906cc9e82810b5a5348573e522ab7ee309e2410b1494970ef5b",
-    "scripts/run_phase5.py": "229306173a94070043d428fa8f747d82ebfb33f60199d1ee0f3985f9eb210c0e"
+    "scripts/run_phase5.py": "229306173a94070043d428fa8f747d82ebfb33f60199d1ee0f3985f9eb210c0e",
+    "configs/phase6_evaluation.json": "dc1c3a318dfb2fda4b1d6f8409f59b70b9f7f5d3719e1002a694839396600c03",
+    "configs/phase6_governance.json": "c895fb7517a0d7d68c6ef94e0467ebd6176a883480b73207c26a64b42137a549",
+    "src/trust_hn/data/radcure_rds.py": "e308278000c05c5db71fb2ae38d82472f79e6e7431741717556c2365282c9cec",
+    "src/trust_hn/data/phase6_data.py": "0aa2aa3b791a177ce075d2f2df9de86ec22968d6b2a94ff6caa843399737fa2a",
+    "src/trust_hn/evaluation/phase6.py": "d976bb7677edda04840caf17b0913acbb4002a3fd11cd7e4c80a5b9e37cd6baa",
+    "src/trust_hn/evaluation/phase6_runner.py": "7ed413d2113ff333189f4100b1f0956a12020517d04ba1d7d09ec3ace6ab823e",
+    "src/trust_hn/phase6_governance.py": "92849b309d39bbfabf3b6b5c05fee6a107ff39e3dc84570347eea6bcac77080c",
+    "scripts/audit_radcure_rds.py": "3ab6af29c53b5fccefdbe4d4316773b6874ef8eda928d77e7c893bea13d1ecf7",
+    "scripts/run_phase6.py": "5014dbe3830b54071b1e25588f18c67b68721ea3e424b016afb8e72afddb0011",
+    "tests/test_radcure_rds.py": "b9565103daff569ef51fa70617c166908db375e96fb61b76959b8b83000453d6",
+    "tests/test_phase6_data.py": "a2a2de6baae043e4af475abe597f256b962d1e07a48c80842941ddb51f2d8a73",
+    "tests/test_phase6_statistics.py": "7d304b7dfd5335045f215239d281d56b80f17d9d2ba24367dea2f5d098029bb1",
+    "tests/test_phase6_governance.py": "a9dad24c47588491f71b6ff0fb878396943375045bfcda696bfe3c8f35e75837",
+    "tests/test_phase6_runner.py": "38b60f625f19ef22c000029fce96116804913d6fb15a563942960c151a3ebb89",
+    "pyproject.toml": "b6ed73952402fe6dcf4a8ea70260a0674e53a1da5c9dc6d5b4e9e8bb8b74373f",
+    "environment.yml": "3b6a7b19fa9f9e33f00d56d22f2ce2dc96d0fd6474692b96164e4714648032a0"
   },
   "sealed_manifest_sha256": {
     "data/manifests/sealed/phase6_cohort_set_manifest.json": "c2ad1939fc77674d6b0e83715bea83b12dbf16560dfafbc180ef60fb1bad8470"
@@ -32,13 +48,61 @@
     "full_equal_weight_80",
     "full_equal_weight_100"
   ],
-  "phase6_outcomes_seen": false,
+  "phase6_outcomes_seen": true,
   "test_unseal": {
-    "approved": false,
-    "approved_by": null,
-    "approved_at": null,
-    "approval_token_sha256": null,
-    "reason": "Phase 6 requires separate explicit user authorization after Phase 5 review"
+    "approved": true,
+    "approved_by": "project owner via explicit Phase 6 instruction",
+    "approved_at": "2026-08-08",
+    "approval_token_sha256": "b71402f39f82c2984c406c267d03ac7043894b171669d0de28a74ba65138ef2b",
+    "reason": "Explicit project-owner authorization to continue Phase 6",
+    "consumed": true,
+    "consumed_at": "2026-08-08T02:21:33+00:00"
   },
-  "notes": "Phase 5 freeze records exact file hashes. Locked/external evaluation remains refused."
+  "notes": "Phase 5 freeze records exact file hashes. Locked/external evaluation remains refused.",
+  "phase6_pre_unseal_freeze_sha256": "306feee634b1cbb5eba396baadd4bef7f6828f551d3105812a68d600adbffe4e",
+  "phase6_registered_decision_files": [
+    "configs/phase6_evaluation.json",
+    "configs/phase6_governance.json",
+    "environment.yml",
+    "pyproject.toml",
+    "scripts/audit_radcure_rds.py",
+    "scripts/run_phase6.py",
+    "src/trust_hn/data/phase6_data.py",
+    "src/trust_hn/data/radcure_rds.py",
+    "src/trust_hn/evaluation/phase6.py",
+    "src/trust_hn/evaluation/phase6_runner.py",
+    "src/trust_hn/phase6_governance.py",
+    "tests/test_phase6_data.py",
+    "tests/test_phase6_governance.py",
+    "tests/test_phase6_runner.py",
+    "tests/test_phase6_statistics.py",
+    "tests/test_radcure_rds.py"
+  ],
+  "phase6_registered_cohorts": [
+    {
+      "cohort": "RADCURE",
+      "role": "sealed_test",
+      "patient_count": 626,
+      "ordered_id_set_sha256": "8a954d9bb913145994df80c91a2f76c309e81d3ec32652869945744310439000"
+    },
+    {
+      "cohort": "HANCOCK",
+      "role": "sealed_test",
+      "patient_count": 152,
+      "ordered_id_set_sha256": "655e61bfcafbcd01a6b9bb749a7f94bc3f1bd9ab961aef2e83e6d276295fe146"
+    },
+    {
+      "cohort": "GSE65858",
+      "role": "external_test",
+      "patient_count": 244,
+      "ordered_id_set_sha256": "ae8894e3e04be368fb7afb64a4cb07a75f2fafa4f05b541463b91c4a12136380"
+    },
+    {
+      "cohort": "GSE41613",
+      "role": "sensitivity",
+      "patient_count": 97,
+      "ordered_id_set_sha256": "f2935569e8d1363da65ffa7d67e2d33f3f356a213e88d6fbc026b267eb814b76"
+    }
+  ],
+  "phase6_outcome_access_state": "CONSUMED_FOR_LOCKED_EVALUATION"
 }

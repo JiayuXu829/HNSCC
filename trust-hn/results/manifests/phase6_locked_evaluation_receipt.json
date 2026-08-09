@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "phase": "Phase 6 one-time retrospective locked/external evaluation",
+  "consumed_at": "2026-08-08T02:21:33+00:00",
+  "authorization_token_sha256": "b71402f39f82c2984c406c267d03ac7043894b171669d0de28a74ba65138ef2b",
+  "freeze_sha256_before_consumption": "ad4dd612d62b9710a65fe0b07aeb95f895e0099b28479206d7356faae6860218",
+  "freeze_sha256_after_consumption": "3d366899c3770f9de4ca4b44dcd1d6951ce8fbb8954659ca4e934a389e06201e",
+  "phase6_pre_unseal_freeze_sha256": "306feee634b1cbb5eba396baadd4bef7f6828f551d3105812a68d600adbffe4e",
+  "registered_decision_file_count": 16,
+  "cohorts": [
+    {
+      "cohort": "RADCURE",
+      "role": "sealed_test",
+      "patient_count": 626,
+      "ordered_id_set_sha256": "8a954d9bb913145994df80c91a2f76c309e81d3ec32652869945744310439000"
+    },
+    {
+      "cohort": "HANCOCK",
+      "role": "sealed_test",
+      "patient_count": 152,
+      "ordered_id_set_sha256": "655e61bfcafbcd01a6b9bb749a7f94bc3f1bd9ab961aef2e83e6d276295fe146"
+    },
+    {
+      "cohort": "GSE65858",
+      "role": "external_test",
+      "patient_count": 244,
+      "ordered_id_set_sha256": "ae8894e3e04be368fb7afb64a4cb07a75f2fafa4f05b541463b91c4a12136380"
+    },
+    {
+      "cohort": "GSE41613",
+      "role": "sensitivity",
+      "patient_count": 97,
+      "ordered_id_set_sha256": "f2935569e8d1363da65ffa7d67e2d33f3f356a213e88d6fbc026b267eb814b76"
+    }
+  ],
+  "patient_level_identifiers_in_receipt": false,
+  "outcomes_in_receipt": false,
+  "retuning_authorized": false,
+  "evaluation_completed_at": "2026-08-08T02:49:12+00:00",
+  "deterministic_reproduction_run": false,
+  "bootstrap_replicates": 2000,
+  "primary_gate_profile": "full_equal_weight_90",
+  "cohort_metric_rows": 20,
+  "paired_comparison_rows": 48,
+  "negative_control_rows": 47,
+  "aggregate_output_sha256": {
+    "results/figures/phase6/action_distribution.svg": "4137b81f16894c9e495b03898e28e41dff488fb42d497434d704d71df86caaca",
+    "results/figures/phase6/cohort_brier.svg": "9da4ce2b4cffbc2069e5f07a499db2def772525909ae98bd65edec5d55c6cfcc",
+    "results/figures/phase6/decision_curve.svg": "19787b94c040a638ed2909ab113d697f790a83c4de66f54ad261c72766321e2a",
+    "results/figures/phase6/paired_brier_differences.svg": "8c6a3adf484d519e7d5ca9aa61ad8fc57280f2eb46bba244ec40657acaece383",
+    "results/metrics/phase6/action_summary.csv": "0628e0a0ec1b2f26ba2fdc659595cd309d0c80ba82e128b42bd3a235c8ce40d6",
+    "results/metrics/phase6/bootstrap_confidence_intervals.csv": "20ab90e9821a02bc986ea2c7df465076a703d88e18740996aab83ab3492548d4",
+    "results/metrics/phase6/cohort_metrics.csv": "ceeaa92a608cfd97122a6e5c075f3207d97cffda6262c1e53b7bd7db897eaae4",
+    "results/metrics/phase6/decision_curve.csv": "b8b34883b33fabc8beb86c78168500c6d6f8dd7b4373239409a46e4d06ded4e0",
+    "results/metrics/phase6/paired_comparisons.csv": "938d6a80d8681c8e71dc35f6b7beaff9432d7d752c29c47285f1d7ee9c063b33",
+    "results/metrics/phase6/radcure_negative_controls.csv": "8c0a284533efbd6224ef5ecb97e1993735542ac04576d5ff5fed0dc0c8613288"
+  },
+  "patient_level_identifiers_in_tracked_outputs": false,
+  "outcome_guided_retuning_performed": false
+}

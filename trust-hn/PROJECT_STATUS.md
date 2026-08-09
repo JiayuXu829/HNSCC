@@ -1,61 +1,60 @@
-# TRUST-HN Project Status
+﻿# TRUST-HN Project Status
 
-**Last updated:** 2026-08-07
-**Current gate:** Phase 5 complete and analysis configuration frozen; Phase 6 locked/external evaluation remains sealed and requires a separate explicit authorization.
-**Sealed or external outcomes used for preprocessing, selection, tuning, calibration, thresholds, or evaluation:** No.
+**Last updated:** 2026-08-08  
+**Current gate:** Phase 6 one-time retrospective locked/external evaluation complete; outcomes have been consumed and registered Phase 6 decision files must not be edited.  
+**Outcome-guided preprocessing, selection, tuning, gate switching or recalibration performed:** No.
 
 ## Phase status
 
 | Phase | Status | Evidence / decision |
 |---|---|---|
-| 0. Repository and governance | Complete | Governance, configuration, audit templates, reproducibility controls, and sealed-test refusal are implemented. |
-| 1. Data acquisition and feasibility audit | Complete with conditions | Authorized artifacts were acquired, hashed, extracted, audited, manifested, and frozen read-only. |
-| 2. Unified adapters and descriptive analysis | Complete with one modeling blocker | Unified records and aggregate descriptive outputs are complete; ORCESTRA RDS structural validation remains required for RADCURE radiomics. |
-| 3. Baselines | Complete within authorized scope | Development-only clinical/modality/fusion baselines and negative controls were completed. |
-| 4. TRUST-HN core | Complete within authorized scope | B6 stacked residual fusion and B7 reliability gating were completed for HANCOCK and TCGA-HNSC; RADCURE B6/B7 remained blocked. |
-| 5. Stress tests and freeze | **Complete within authorized development-only scope** | 10/10 study-seed runs completed, 0 failed, 1 RADCURE blocker recorded; stress tests, gate ablations, coverage profiles, subgroup/worst-group analyses, sensitivity analyses, sealed cohort digests, and `analysis_freeze.yaml` were produced. |
-| 6. Locked/external tests | **Sealed / not authorized** | RADCURE challenge-test, HANCOCK OOD-test, GSE65858, and GSE41613 outcomes remain unused. `test_unseal.approved` is `false`. |
-| 7. Paper | Development-stage evidence available | Phase 3?5 methods/results can be drafted, but external robustness, prospective validity, deployability, and clinical utility cannot yet be claimed. |
-| 8. Reproduction/submission | Not started | Final locked statistics and manuscript completion remain pending. |
+| 0. Repository and governance | Complete | Repository, governance, reproducibility and sealed-test controls implemented. |
+| 1. Data acquisition and audit | Complete with documented conditions | Authorized public artifacts acquired, hashed, audited and frozen. |
+| 2. Unified adapters/descriptive analysis | Complete | Unified adapters, endpoint harmonization and aggregate descriptive audits completed. |
+| 3. Baselines | Complete | Clinical, modality-only, direct-fusion and negative-control baselines completed. |
+| 4. TRUST-HN core | Complete | Residual fusion (B6) and reliability gating (B7) implemented in the development ecosystems. |
+| 5. Stress tests and freeze | Complete | 10/10 development runs completed; 7/8 prespecified checks passed; configuration frozen. |
+| 6. Locked/external tests | **Complete** | RADCURE locked test, HANCOCK OOD test, GSE65858 external test and GSE41613 sensitivity analysis completed with 2,000 paired bootstrap replicates. |
+| 7. Paper | In progress | Phase 6 methods/results, supplement, figure legends and reporting self-assessments drafted; references, author declarations, model card and final journal conversion remain pending. |
+| 8. Reproduction/submission | Not started | Public archival release, independent clean-environment reproduction and submission package remain pending. |
 
-## Phase 5 evidence snapshot
+## Phase 6 evidence snapshot
 
-- Frozen design: seeds `17, 29, 43, 71, 101`; 20 bootstrap models per fit scope; coverage profiles 100%, 90%, and 80%; primary gate `full_equal_weight_90`.
-- Completed runs: 5 HANCOCK plus 5 TCGA-HNSC; no failed run. RADCURE modality-dependent Phase 5 analysis is explicitly blocked.
-- Clean full-cohort IPCW Brier means: HANCOCK B2 `0.1460`, B5 `0.1276`, B6 `0.1289`; TCGA-HNSC B2 `0.2422`, B5 `0.2482`, B6 `0.2442`.
-- Primary B7 selective clean Brier/coverage: HANCOCK `0.1177` / `0.9016`; TCGA-HNSC `0.2324` / `0.9038`. These are selective metrics on non-abstained patients, not ordinary full-cohort improvements.
-- Prespecified acceptance checks: **7 of 8 passed**. HANCOCK clean same-subset B7-vs-B6 Brier noninferiority failed (`+0.01550`, margin `+0.01000`); this was not used to switch the primary gate.
-- Complete modality dropout produced 100% fallback at the 100% profile and exactly reproduced B2 Brier in both studies.
-- Row-permutation negative control degraded B6 Brier from `0.1289` to `0.1530` in HANCOCK and `0.2442` to `0.2791` in TCGA-HNSC. The primary gate's fallback/abstain response rose only from `0.167` to `0.174` and `0.181` to `0.202`, respectively, indicating incomplete detection of semantic modality misalignment.
-- Exploratory worst-group flagging found 2 of 85 seed/group evaluations above the 0.03 Brier-regret threshold; both were TCGA-HNSC age `>=65` evaluations (n=34) at seeds 29 and 71.
-- No calibration-outcome threshold optimization or outcome-guided gate-weight switching was performed.
+- Evaluation cohorts: RADCURE n=626; HANCOCK n=152; GSE65858 n=244; GSE41613 n=97.
+- RADCURE B6: Brier `0.0980`, AUC `0.7838`. B7 coverage `93.3%`; on the same retained subset B7 was worse than B6 for Brier (`+0.00382`, 95% CI `+0.00084` to `+0.00718`).
+- HANCOCK B6: Brier `0.1122`, AUC `0.8476`. B7 coverage `82.9%`; B7-vs-B6 Brier difference `+0.01058` (95% CI `-0.00947` to `+0.03186`).
+- GSE65858: B7 reduced Brier relative to B6 (`-0.00812`) but was substantially worse than B2 (`+0.07294`), showing external calibration failure of transcriptomic fusion.
+- GSE41613 is sensitivity evidence only; its B2 comparator was constant/non-discriminating.
+- Original RADCURE radiomics did not clearly outperform shuffled or randomized controls; no radiomics-specific signal claim is supported.
+- Primary 90% gate coverage: RADCURE `93.3%`, HANCOCK `82.9%`, GSE65858 `94.3%`, GSE41613 `100%`.
+- Decision curves did not show a consistent B7 advantage over B6.
 
-## Frozen configuration and governance
+## Governance state
 
-1. `configs/analysis_freeze.yaml` is `FROZEN` and records exact hashes of decision files plus the aggregate Phase 6 cohort-set manifest.
-2. The frozen primary configuration remains `full_equal_weight_90`; learned-weight and 80%/100% profiles are sensitivity analyses.
-3. `test_unseal.approved` remains `false`; the locked evaluator refuses execution without a separate approval token and matching hashes.
-4. Phase 6 outcome sets are represented only by cohort name, role, count, and one ordered-ID-set SHA-256 digest; no individual identifiers or outcomes are present in tracked manifests.
-5. Patient-level Phase 5 traces are confined to Git-ignored `results/predictions/phase5/`.
+1. `phase6_outcomes_seen=true`.
+2. `phase6_outcome_access_state=CONSUMED_FOR_LOCKED_EVALUATION`.
+3. The one-time authorization was consumed on 2026-08-08.
+4. Registered Phase 6 decision files and cohort digests pass hash verification.
+5. No Phase 6 outcome-guided retuning, recalibration or threshold switching was performed.
+6. Patient-level Phase 6 predictions are confined to Git-ignored `results/predictions/phase6/`.
 
-## Scientific interpretation limits
+## Binding interpretation limits
 
-- Phase 5 provides **development-stage simulated-shift and missingness evidence**, not proof of real-world distribution-shift robustness.
-- External validation, prospective validation, clinical utility, treatment impact, and deployment-ready thresholds remain unestablished.
-- The HANCOCK clean noninferiority failure and TCGA-HNSC older-group flags must be reported without post hoc configuration switching.
-- The weak gate response to row permutation is a material limitation and motivates explicit alignment/integrity checks and Phase 6 external evaluation.
+The project supports retrospective locked, OOD and external evaluation statements. It does **not** establish prospective validation, universal shift robustness, a deployable gate threshold, clinical utility, treatment benefit, a single universal model or radiomics-specific biological signal.
+
+Phase 5 limitations remain visible: one HANCOCK noninferiority check failed, row permutation was weakly detected and two exploratory older-patient subgroup flags occurred.
 
 ## Verification status
 
-- Canonical Phase 5 run: 10 successful study/seed runs, 0 failures, 1 blocked RADCURE entry.
-- Full project unit tests: **64 passed**; two dependency deprecation warnings only.
-- Phase 5 targeted Ruff and Python compilation checks: passed.
-- Locked evaluation refusal: passed with `test_unseal.approved=false`.
-- Patient traces: 10 canonical files, all Git-ignored.
-- Final checkpoint passed: every aggregate receipt hash and every analysis-freeze decision/manifest hash matches the current file.
-- Aggregate privacy checks passed: no patient/native/sample/subject/case identifier columns or recognizable TCGA/GEO identifiers were found; the sealed Phase 6 manifest contains counts and digests only.
-- Deterministic SVG regeneration passed with exact SHA-256 matches for both Phase 5 figures. All intended tracked text files decode as UTF-8; three frozen authoring files retain a UTF-8 BOM and were intentionally not rewritten after freezing.
+- Registered configuration/decision hashes: 32/32 passed.
+- Sealed manifest hash: 1/1 passed.
+- Aggregate Phase 6 output hashes: 10/10 passed.
+- Patient-level prediction files ignored: 48/48.
+- Plaintext-token and aggregate identifier scans: passed.
+- Phase 6 Python Ruff: passed.
+- Repository-wide Ruff: 267 historical findings, not auto-fixed because earlier code is frozen.
+- Tests: 90 passed at the implementation checkpoint. In the final post-consumption state, 89 passed and one frozen pre-consumption refusal test is state-obsolete; an isolated pre-consumption guard simulation passed. See `docs/audits/phase6/phase6_final_audit.md`.
 
 ## Next checkpoint
 
-Review the bilingual Phase 5 completion report and the frozen configuration. Do not run Phase 6 unless the user separately authorizes one-time locked/external evaluation after accepting the disclosed Phase 5 limitations.
+Proceed to Phase 7 only with explicit authorization. Phase 7 should finalize literature-backed Introduction/Discussion, references, model card, data/code statements, prospective validation protocol, Springer Nature LaTeX conversion and submission-quality tables/figures. Phase 6 outcomes must not be used for retuning.

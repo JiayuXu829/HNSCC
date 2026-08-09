@@ -19,6 +19,8 @@ dependencies:
   - pytest=8.4.1
   - pytest-cov=6.2.1
   - ruff=0.12.8
+  - rdata==1.1.0
+  - xarray==2026.7.0
   - pip:
       - scikit-survival==0.25.0
       - xgboost==3.0.3

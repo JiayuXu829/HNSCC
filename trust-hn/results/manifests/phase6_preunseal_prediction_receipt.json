@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0",
+  "phase": "Phase 6 outcome-free pre-unseal prediction preparation",
+  "completed_at": "2026-08-08T02:19:49+00:00",
+  "status": "COMPLETE",
+  "outcomes_loaded": false,
+  "cohorts": [
+    {
+      "cohort": "RADCURE",
+      "role": "sealed_test",
+      "patient_count": 626,
+      "ordered_id_set_sha256": "8a954d9bb913145994df80c91a2f76c309e81d3ec32652869945744310439000"
+    },
+    {
+      "cohort": "HANCOCK",
+      "role": "sealed_test",
+      "patient_count": 152,
+      "ordered_id_set_sha256": "655e61bfcafbcd01a6b9bb749a7f94bc3f1bd9ab961aef2e83e6d276295fe146"
+    },
+    {
+      "cohort": "GSE65858",
+      "role": "external_test",
+      "patient_count": 244,
+      "ordered_id_set_sha256": "ae8894e3e04be368fb7afb64a4cb07a75f2fafa4f05b541463b91c4a12136380"
+    },
+    {
+      "cohort": "GSE41613",
+      "role": "sensitivity",
+      "patient_count": 97,
+      "ordered_id_set_sha256": "f2935569e8d1363da65ffa7d67e2d33f3f356a213e88d6fbc026b267eb814b76"
+    }
+  ],
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "bootstrap_ensemble_size": 20,
+  "gate_profiles": [
+    "80",
+    "90",
+    "100"
+  ],
+  "prediction_file_count": 48,
+  "prediction_file_sha256": {
+    "results/predictions/phase6/gse41613__original__aggregate100.csv": "870a7b9f9d30edd8bfbdffb01e3310d8e57b115bd6b094f04e1d65d6fdc302f4",
+    "results/predictions/phase6/gse41613__original__aggregate80.csv": "541333d135c41579c27cce7f239f0175c4ea7e5540a599d14e4a2cbb0df9ff85",
+    "results/predictions/phase6/gse41613__original__aggregate90.csv": "583d9a157593811decec4bfd6e9d32124cf8f8db4d6e79e4561e53511c87802c",
+    "results/predictions/phase6/gse41613__original__seed101.csv": "109ec496fd95f773a1b5d472d0f4467c39cde504948e231085e3a4950ec6e61d",
+    "results/predictions/phase6/gse41613__original__seed17.csv": "e7e5e476d9d9ceb3f9187cb22fbc6593ca7928e9412ebd719843f9f33df57d8d",
+    "results/predictions/phase6/gse41613__original__seed29.csv": "fced45a3ba5cf8228e6d972ce32acf752ac4bfc197ebdc529de1c8565e756e72",
+    "results/predictions/phase6/gse41613__original__seed43.csv": "55684ba9a8868aaff2269edc95bf1e482ff24119c4abc1a4131e7a160b54cf21",
+    "results/predictions/phase6/gse41613__original__seed71.csv": "d85b0499a806654b1cdb46c2a9004d7df74daf3703addd44fcd52b33b935c954",
+    "results/predictions/phase6/gse65858__original__aggregate100.csv": "37366da912519564f053713b2227c766f823535a223c048f93a9f2978753e312",
+    "results/predictions/phase6/gse65858__original__aggregate80.csv": "ea0c6e65efabad0314e5e4e38d5c1c6f9507b59b49f121987b5194a937eeeb7d",
+    "results/predictions/phase6/gse65858__original__aggregate90.csv": "68edde64dce2784599326476c6f30bab6facd4929a56c80cf5119e0e7063d093",
+    "results/predictions/phase6/gse65858__original__seed101.csv": "09e0e20cc72aaa4d4997d4abb87b0d9a57a93a8d47fce515f83ee37c6e0f022d",
+    "results/predictions/phase6/gse65858__original__seed17.csv": "88a8578aaa271c2a9aab8ab2e1fcc324b46ad93892317235b995f14e280d245c",
+    "results/predictions/phase6/gse65858__original__seed29.csv": "9da56d0a93cf93ee0a8212ecf31d88490a7cd886438f0a0faf881a53a7e80ae6",
+    "results/predictions/phase6/gse65858__original__seed43.csv": "ea18866a1244aa95f955856fb980105eefbec7a66447a3817cdd1114ad12dc90",
+    "results/predictions/phase6/gse65858__original__seed71.csv": "f7dae10e2c54c7bf88c6a227f5c637e606621126ca7a99627f76a7e05454e4f2",
+    "results/predictions/phase6/hancock__original__aggregate100.csv": "688bf435676cb278d56923682ed3a3ff3096ec1a5e25920f8fd23e81de0d26ae",
+    "results/predictions/phase6/hancock__original__aggregate80.csv": "f47be17110bec15bb695ed1fe9496929afeb0a904a04e44db9bfbe49d565a13d",
+    "results/predictions/phase6/hancock__original__aggregate90.csv": "0b301844b592ab52b7b042b68023ae34fcac54630b1771f7f677991924b6a22f",
+    "results/predictions/phase6/hancock__original__seed101.csv": "fab9784beecf852ae5623264efb4577f077df83fdf60f919d8b52e3d3fbb52b9",
+    "results/predictions/phase6/hancock__original__seed17.csv": "137f3d0c6ded101b594b1397be177bc91599befce564708de119a295b514a7bb",
+    "results/predictions/phase6/hancock__original__seed29.csv": "ae114913376bf3b1197754217fc35f95af4b5fe23e8790eb3dcfdff26a8ec408",
+    "results/predictions/phase6/hancock__original__seed43.csv": "cbb9907209a93b18ccd0fa959b628676b7b4828c209c0bc2f334cc3066bbf60b",
+    "results/predictions/phase6/hancock__original__seed71.csv": "c1454dba9b357d01769106dec4af40506da2968bfa6b0604f5897856a84475c3",
+    "results/predictions/phase6/radcure__original__aggregate100.csv": "5594c624c5493e4aabb5edb0198667612930908c231b16682fa517d7b23bc4db",
+    "results/predictions/phase6/radcure__original__aggregate80.csv": "48fbbd9ce617b67e08ede0b4051303884eb551413dafbcb79c91d7b3bb88f503",
+    "results/predictions/phase6/radcure__original__aggregate90.csv": "7513eb5448218795f2c14eae8c0f1054ed4fd6c5d97bf5c67219ea969d75f2d0",
+    "results/predictions/phase6/radcure__original__seed101.csv": "a7141f23b3e4298902755a07ddc2138e41a6153feb1ab0b707204e90793e8f85",
+    "results/predictions/phase6/radcure__original__seed17.csv": "c16fdda51f9afbbe5db874aa2c63f1659dd27bddb8c432d4243f309f943884f1",
+    "results/predictions/phase6/radcure__original__seed29.csv": "22af067d4b01ebc92b4efeee9d001b6965ffffc348e6c12f59c19c770fe1e71a",
+    "results/predictions/phase6/radcure__original__seed43.csv": "57ede10038c6f66a29011b8b4c401cb43650e802e3785e8a343304f3dae7914b",
+    "results/predictions/phase6/radcure__original__seed71.csv": "0a151ce9e90dedde02bd6021ad94d7f7e90f842ef193aca09fb7d06f528bf22c",
+    "results/predictions/phase6/radcure__randomized_sampled_full__aggregate100.csv": "604f04afa6c4e1930f7318819cd7d4f23224b6eb4d1c3394f4cb0d49ce71f6a7",
+    "results/predictions/phase6/radcure__randomized_sampled_full__aggregate80.csv": "efb43ab288d0dc1ef0613fe5c16b6d6e71f7adbae4124f4b77d3ef661e68c517",
+    "results/predictions/phase6/radcure__randomized_sampled_full__aggregate90.csv": "b5f65a247bdef3f30b8a72b13eda7d2d5f546e844d377677f0788eee90bd27db",
+    "results/predictions/phase6/radcure__randomized_sampled_full__seed101.csv": "6e908f77e00d632b1c86f7479b884cbee7295255929fd2a1b6f5f6e1ad70e3f5",
+    "results/predictions/phase6/radcure__randomized_sampled_full__seed17.csv": "ae940e17ad2e4fc03a2300283fd3c42d76df7d248cb8c7dbe6e0375c8dbf6b14",
+    "results/predictions/phase6/radcure__randomized_sampled_full__seed29.csv": "a582f68a20ba4ad37dcd5f29f008a9861d983c57cdcbe9ac2847eefbacf0d675",
+    "results/predictions/phase6/radcure__randomized_sampled_full__seed43.csv": "2a37d72c7c1d9ba76141215065960f2efe0719554b30022439daf122e8daf528",
+    "results/predictions/phase6/radcure__randomized_sampled_full__seed71.csv": "24d122d4a002ed1dccb83c06bf0ae01d52253fb76b1f338ef753123a7dd4c929",
+    "results/predictions/phase6/radcure__shuffled_full__aggregate100.csv": "1a6ef51b06596fbd71988e65ca42a4c50eae2a3bcf97ea7e15c257135b765c4c",
+    "results/predictions/phase6/radcure__shuffled_full__aggregate80.csv": "e0a8582b28cc17ea2c7e32547bebab0d7b06db87a44542a937ef0750378e59cc",
+    "results/predictions/phase6/radcure__shuffled_full__aggregate90.csv": "4ac6ebd62d833c228f6929e0f5a2fcd5611ab7131d96a1b2acc0a08b2581e39d",
+    "results/predictions/phase6/radcure__shuffled_full__seed101.csv": "12ab489e7cac6eccf97fafb61c94e8a2c85f31c1066d452c7652fab26f86fbdf",
+    "results/predictions/phase6/radcure__shuffled_full__seed17.csv": "09992cb2f6f9eaf081ffccb9eb7a6150d2e27ca0d3304239c64c708476950bf6",
+    "results/predictions/phase6/radcure__shuffled_full__seed29.csv": "33ef0786ed622447c511b6f7f2290d8c530ac9520663323e0ef5a419bc4e9eb3",
+    "results/predictions/phase6/radcure__shuffled_full__seed43.csv": "7a5485eb3bb48a57008cfddf8966e76b4631aa31d350c6bb832cac26ea54cef9",
+    "results/predictions/phase6/radcure__shuffled_full__seed71.csv": "56d83b7a03cc1c4e0ff0fc6c24a08a880457e60461c1e1f59835246c6574ff03"
+  },
+  "aggregate_action_counts": [
+    {
+      "cohort": "RADCURE",
+      "assay": "original",
+      "gate_profile": "80",
+      "patient_count": 626,
+      "augment_count": 424,
+      "fallback_count": 103,
+      "abstain_count": 99
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "original",
+      "gate_profile": "90",
+      "patient_count": 626,
+      "augment_count": 514,
+      "fallback_count": 70,
+      "abstain_count": 42
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "original",
+      "gate_profile": "100",
+      "patient_count": 626,
+      "augment_count": 592,
+      "fallback_count": 32,
+      "abstain_count": 2
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "shuffled_full",
+      "gate_profile": "80",
+      "patient_count": 626,
+      "augment_count": 422,
+      "fallback_count": 105,
+      "abstain_count": 99
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "shuffled_full",
+      "gate_profile": "90",
+      "patient_count": 626,
+      "augment_count": 497,
+      "fallback_count": 87,
+      "abstain_count": 42
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "shuffled_full",
+      "gate_profile": "100",
+      "patient_count": 626,
+      "augment_count": 592,
+      "fallback_count": 32,
+      "abstain_count": 2
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "randomized_sampled_full",
+      "gate_profile": "80",
+      "patient_count": 626,
+      "augment_count": 426,
+      "fallback_count": 101,
+      "abstain_count": 99
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "randomized_sampled_full",
+      "gate_profile": "90",
+      "patient_count": 626,
+      "augment_count": 495,
+      "fallback_count": 89,
+      "abstain_count": 42
+    },
+    {
+      "cohort": "RADCURE",
+      "assay": "randomized_sampled_full",
+      "gate_profile": "100",
+      "patient_count": 626,
+      "augment_count": 591,
+      "fallback_count": 33,
+      "abstain_count": 2
+    },
+    {
+      "cohort": "HANCOCK",
+      "assay": "original",
+      "gate_profile": "80",
+      "patient_count": 152,
+      "augment_count": 76,
+      "fallback_count": 36,
+      "abstain_count": 40
+    },
+    {
+      "cohort": "HANCOCK",
+      "assay": "original",
+      "gate_profile": "90",
+      "patient_count": 152,
+      "augment_count": 98,
+      "fallback_count": 28,
+      "abstain_count": 26
+    },
+    {
+      "cohort": "HANCOCK",
+      "assay": "original",
+      "gate_profile": "100",
+      "patient_count": 152,
+      "augment_count": 146,
+      "fallback_count": 0,
+      "abstain_count": 6
+    },
+    {
+      "cohort": "GSE65858",
+      "assay": "original",
+      "gate_profile": "80",
+      "patient_count": 244,
+      "augment_count": 189,
+      "fallback_count": 21,
+      "abstain_count": 34
+    },
+    {
+      "cohort": "GSE65858",
+      "assay": "original",
+      "gate_profile": "90",
+      "patient_count": 244,
+      "augment_count": 226,
+      "fallback_count": 4,
+      "abstain_count": 14
+    },
+    {
+      "cohort": "GSE65858",
+      "assay": "original",
+      "gate_profile": "100",
+      "patient_count": 244,
+      "augment_count": 240,
+      "fallback_count": 0,
+      "abstain_count": 4
+    },
+    {
+      "cohort": "GSE41613",
+      "assay": "original",
+      "gate_profile": "80",
+      "patient_count": 97,
+      "augment_count": 79,
+      "fallback_count": 18,
+      "abstain_count": 0
+    },
+    {
+      "cohort": "GSE41613",
+      "assay": "original",
+      "gate_profile": "90",
+      "patient_count": 97,
+      "augment_count": 93,
+      "fallback_count": 4,
+      "abstain_count": 0
+    },
+    {
+      "cohort": "GSE41613",
+      "assay": "original",
+      "gate_profile": "100",
+      "patient_count": 97,
+      "augment_count": 97,
+      "fallback_count": 0,
+      "abstain_count": 0
+    }
+  ],
+  "patient_level_outputs_git_ignored": true
+}
