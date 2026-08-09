@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "phase": "Phase 7 outcome-free external prediction generation",
+  "analysis_label": "post hoc exploratory benchmark",
+  "completed_at": "2026-08-09T03:38:27.746825+00:00",
+  "status": "COMPLETE",
+  "outcomes_loaded": false,
+  "methods": [
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+  ],
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "patient_level_outputs_git_ignored": true,
+  "prediction_rows_by_seed": 22380,
+  "aggregate_prediction_rows": 4476,
+  "config_sha256": "a7faf0deb2f8f7f4c536751d608b48010fe46246cf4a63573780b30297bf8aaf"
+}

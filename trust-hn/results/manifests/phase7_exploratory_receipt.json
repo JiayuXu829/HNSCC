@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "phase": "Phase 7 post-hoc exploratory comparator benchmark",
+  "analysis_label": "post hoc exploratory benchmark",
+  "completed_at": "2026-08-09T03:45:35.083699+00:00",
+  "status": "COMPLETE",
+  "methods_added": [
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+  ],
+  "method_count": {
+    "total_labeled_approaches": 14,
+    "competitive_predictive_baselines_and_comparators": 10,
+    "trust_hn_methods": 2,
+    "audit_negative_controls": 2
+  },
+  "phase6_frozen_file_verification": {
+    "registered_file_count": 16,
+    "all_match": true,
+    "mismatches": []
+  },
+  "phase6_outputs_overwritten": false,
+  "trust_hn_or_gate_retuned": false,
+  "external_outcomes_used_for_tuning": false,
+  "patient_level_outputs_git_ignored": true,
+  "config_sha256": "a7faf0deb2f8f7f4c536751d608b48010fe46246cf4a63573780b30297bf8aaf",
+  "tracked_output_sha256": {
+    "results/metrics/phase7_exploratory/development_metrics_by_seed.csv": "90c86acea525ebe58bc06abb1a10844e1d460b202a25e3cdaab03d0dc163581a",
+    "results/metrics/phase7_exploratory/development_metrics_summary.csv": "e39e30f2af8e840566a4b6266a112554a422bdd309b1053c9acb370c91366e40",
+    "results/metrics/phase7_exploratory/external_benchmark_combined.csv": "18f8bbfd98565d3e68796701595fde9dd48447b8fc8f10601a5b8654916510d2",
+    "results/metrics/phase7_exploratory/external_metrics.csv": "596fd84184ace4bb7335327258ad46c8442139e609f6055322a6be50a040436d",
+    "results/metrics/phase7_exploratory/paired_comparisons.csv": "9a96b6af49d9dbaec29bfe48e9df3ba79a4c8dfde836d342f346be7219a54bac",
+    "results/figures/phase7_exploratory/development_comparison.svg": "a965760c7423ff4d58f81f9434b5f6dfd0041956c481693161f295ae5041ed18",
+    "results/figures/phase7_exploratory/external_comparator_forest.svg": "646068765511f31586260af02b7c72635155d37d787028b587f831eb062b8435"
+  }
+}
