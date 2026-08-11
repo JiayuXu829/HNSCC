@@ -1,0 +1,21 @@
+{
+  "schema_version": "8.0",
+  "status": "AUTHORIZED_PSEUDO_PRIVATE_OVERLAP_SIMULATION",
+  "analysis_label": "naive private-label simulation with known HANCOCK overlap",
+  "cohort_alias": "inner_hancock",
+  "source_path": "data/sample/hancock_135",
+  "patient_count": 135,
+  "horizon_days": 730.5,
+  "seeds": [17, 29, 43, 71, 101],
+  "model_uncertainty_bootstrap_ensemble_size": 20,
+  "metric_bootstrap_replicates": 1000,
+  "primary_gate_profile": "90",
+  "gate_coverages": [0.8, 0.9, 1.0],
+  "methods": ["B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "M0", "N0", "C1", "C2", "C3", "C4"],
+  "source_partition_composition": {"train": 88, "calibration": 17, "sealed_test": 30},
+  "bootstrap_random_state": 8201,
+  "manuscript_use": "PROHIBITED_AS_INDEPENDENT_PRIVATE_VALIDATION",
+  "independent_private_validation": false,
+  "known_cohort_overlap": true,
+  "phase2_to_phase7_outputs_must_not_be_overwritten": true
+}

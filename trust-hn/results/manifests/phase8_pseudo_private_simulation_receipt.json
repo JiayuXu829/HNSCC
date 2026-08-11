@@ -1,0 +1,71 @@
+{
+    "schema_version":  "1.0",
+    "phase":  "Phase 8 pseudo-private overlap simulation",
+    "analysis_label":  "naive private-label simulation with known HANCOCK overlap",
+    "cohort_alias":  "inner_hancock",
+    "completed_at":  "2026-08-11T08:21:23.919828+00:00",
+    "status":  "COMPLETE",
+    "patient_count":  135,
+    "source_partition_composition":  {
+                                         "train":  88,
+                                         "sealed_test":  30,
+                                         "calibration":  17
+                                     },
+    "methods":  [
+                    "B0",
+                    "B1",
+                    "B2",
+                    "B3",
+                    "B4",
+                    "B5",
+                    "B6",
+                    "B7",
+                    "M0",
+                    "N0",
+                    "C1",
+                    "C2",
+                    "C3",
+                    "C4"
+                ],
+    "seeds":  [
+                  17,
+                  29,
+                  43,
+                  71,
+                  101
+              ],
+    "model_uncertainty_bootstrap_ensemble_size":  20,
+    "metric_bootstrap_replicates":  1000,
+    "independent_private_validation":  false,
+    "known_cohort_overlap":  true,
+    "manuscript_claim_allowed":  false,
+    "external_validation_claim_allowed":  false,
+    "prospective_validation_claim_allowed":  false,
+    "clinical_utility_claim_allowed":  false,
+    "phase6_frozen_file_verification":  {
+                                            "registered_file_count":  16,
+                                            "all_match":  true,
+                                            "mismatches":  [
+
+                                                           ]
+                                        },
+    "phase6_outputs_overwritten":  false,
+    "phase7_outputs_overwritten":  false,
+    "patient_level_outputs_git_ignored":  true,
+    "config_sha256":  "1a5dfda1f30d7be611425797c55a07280979acc878987fe95ccdc34a00126a99",
+    "tracked_output_sha256":  {
+                                  "results/metrics/phase8_pseudo_private/action_summary.csv":  "faca30ff4dbe59a946791a1e43dc6213c27bf9de54832c761f146a7993a081b2",
+                                  "results/metrics/phase8_pseudo_private/bootstrap_confidence_intervals.csv":  "79e2f5972cd6b9be75c795120684d6a50c045672c82c8dc1f43105ee792ddbbf",
+                                  "results/metrics/phase8_pseudo_private/model_metrics.csv":  "4fbbd0eac78ce3930199567104a3d5cce558bf946b7653e1386bf32706097d8e",
+                                  "results/metrics/phase8_pseudo_private/paired_comparisons.csv":  "4e7154b165a5d9ea793f21c0c65b7af85102528afd09e9f627caf0aa13ae1b6f",
+                                  "results/figures/phase8_pseudo_private/action_distribution.svg":  "818487db2ba138349ca284dfe5c8d816588613d2739b0d53b8260dad97b555b6",
+                                  "results/figures/phase8_pseudo_private/calibration.svg":  "78249ded782e09a365282d8bb45ad08f3737aca8a763b64474a215ea162e31b7",
+                                  "results/figures/phase8_pseudo_private/modality_risk_distributions.svg":  "c7bc8d643a943c8becae6c3c8fb76cc934d93aef8b59d3a5dbee34359d6a4d0a",
+                                  "results/figures/phase8_pseudo_private/model_comparison.svg":  "26cfab7e06407d68b3a1e87c86794d5e913d1b4337f07fd52b622854ecf4867a",
+                                  "docs/work_stage_reports/zh-CN/2026-08-11_phase8_pseudo_private_overlap_simulation_report.md":  "6b9e74efa2a42899d85bd14fec6f6365a0058cdf660a0cdb2cc17a7826ab71df",
+                                  "docs/work_stage_reports/en/2026-08-11_phase8_pseudo_private_overlap_simulation_report.md":  "3cb887d30a81eabab5d0dbc8db5530bef01c9558dbb22e18bb0f64be72266d19"
+                              },
+    "report_interpretation_amended":  true,
+    "report_interpretation_amended_at":  "2026-08-11T08:41:01.0020156Z",
+    "public_cohort_concordance_section_added":  true
+}

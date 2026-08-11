@@ -1,3 +1,7 @@
+# Private/institutional patient-level data
+/data/private/*
+!/data/private/.gitkeep
+
 # Immutable/public source data and derived patient-level data
 /data/raw/*
 !/data/raw/.gitkeep
