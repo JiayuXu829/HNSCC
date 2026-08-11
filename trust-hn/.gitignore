@@ -44,3 +44,5 @@ Thumbs.db
 *.synctex.gz
 .runtime/
 tools/*.exe
+
+.codex/
