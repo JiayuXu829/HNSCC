@@ -1,0 +1,4 @@
+/build/*
+!/build/.gitignore
+!/build/.gitkeep
+/fig-eps-converted-to.pdf

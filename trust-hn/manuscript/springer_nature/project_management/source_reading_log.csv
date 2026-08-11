@@ -1,0 +1,288 @@
+﻿path,status,detail
+D:/medical_paper/HNSCC/docs/TRUST_HN_master_project_implementation.md,READ_TEXT,lines=1524
+D:/medical_paper/HNSCC/main_pj.pdf,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/empty.eps,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/fig-eps-converted-to.pdf,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/fig.eps,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-apacite.bst,READ_TEXT,lines=5332
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-aps.bst,READ_TEXT,lines=1531
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.aux,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.bbl,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.blg,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.fdb_latexmk,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.fls,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.log,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.out,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.pdf,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.synctex.gz,READ_BYTES,sha256 and size recorded
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-article.tex,READ_TEXT,lines=623
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-basic.bst,READ_TEXT,lines=1818
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-bibliography.bib,READ_TEXT,lines=164
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-chicago.bst,READ_TEXT,lines=1683
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-jnl.cls,READ_TEXT,lines=1803
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-mathphys-ay.bst,READ_TEXT,lines=3208
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-mathphys-num.bst,READ_TEXT,lines=3211
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-nature.bst,READ_TEXT,lines=1724
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-vancouver-ay.bst,READ_TEXT,lines=2085
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/sn-vancouver-num.bst,READ_TEXT,lines=2021
+D:/medical_paper/HNSCC/Springer_Nature_LaTeX_Template/user-manual.pdf,READ_BYTES,sha256 and size recorded
+configs/analysis_freeze.yaml,PARSED_JSON,top_level=dict
+configs/audit_specs/hancock.json,PARSED_JSON,top_level=dict
+configs/audit_specs/radcure.json,PARSED_JSON,top_level=dict
+configs/audit_specs/tcga_geo.json,PARSED_JSON,top_level=dict
+configs/base.yaml,READ_TEXT,lines=27
+configs/download_policy.json,PARSED_JSON,top_level=dict
+configs/experiments/.gitkeep,READ_BYTES,sha256 and size recorded
+configs/gdc_tcga_hnsc_cases_query.json,PARSED_JSON,top_level=dict
+configs/gdc_tcga_hnsc_star_counts_query.json,PARSED_JSON,top_level=dict
+configs/hancock.yaml,READ_TEXT,lines=79
+configs/phase1_sources.json,PARSED_JSON,top_level=dict
+configs/phase2_contract.json,PARSED_JSON,top_level=dict
+configs/phase2_governance.json,PARSED_JSON,top_level=dict
+configs/phase3_baselines.json,PARSED_JSON,top_level=dict
+configs/phase3_governance.json,PARSED_JSON,top_level=dict
+configs/phase4_governance.json,PARSED_JSON,top_level=dict
+configs/phase4_trust_hn.json,PARSED_JSON,top_level=dict
+configs/phase5_governance.json,PARSED_JSON,top_level=dict
+configs/phase5_stress_tests.json,PARSED_JSON,top_level=dict
+configs/phase6_evaluation.json,PARSED_JSON,top_level=dict
+configs/phase6_governance.json,PARSED_JSON,top_level=dict
+configs/phase7_exploratory_benchmarks.json,PARSED_JSON,top_level=dict
+configs/phase8_pseudo_private_overlap_simulation.json,PARSED_JSON,top_level=dict
+configs/radcure.yaml,READ_TEXT,lines=77
+configs/tcga_geo.yaml,READ_TEXT,lines=92
+data/manifests/gse41613/data_manifest.yaml,READ_TEXT,lines=38
+data/manifests/gse41613/license_notes.md,READ_TEXT,lines=15
+data/manifests/gse65858/data_manifest.yaml,READ_TEXT,lines=38
+data/manifests/gse65858/license_notes.md,READ_TEXT,lines=14
+data/manifests/hancock/data_manifest.yaml,READ_TEXT,lines=62
+data/manifests/hancock/license_notes.md,READ_TEXT,lines=16
+data/manifests/phase1_finalization_receipt.json,PARSED_JSON,top_level=dict
+data/manifests/radcure/data_manifest.yaml,READ_TEXT,lines=50
+data/manifests/radcure/license_notes.md,READ_TEXT,lines=14
+data/manifests/sealed/phase6_cohort_set_manifest.json,PARSED_JSON,top_level=dict
+data/manifests/source_registry.yaml,READ_TEXT,lines=94
+data/manifests/tcga_hnsc/data_manifest.yaml,READ_TEXT,lines=6817
+data/manifests/tcga_hnsc/license_notes.md,READ_TEXT,lines=15
+data/manifests/tcga_hnsc_gdc_download_summary.json,PARSED_JSON,top_level=dict
+data/manifests/templates/data_manifest.yaml,READ_TEXT,lines=20
+docs/audits/hancock/cohort_flow.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/hancock/data_dictionary.csv,PARSED_CSV,rows=0; columns=9
+docs/audits/hancock/data_manifest.yaml,READ_TEXT,lines=20
+docs/audits/hancock/endpoint_audit.md,READ_TEXT,lines=29
+docs/audits/hancock/go_no_go.md,READ_TEXT,lines=20
+docs/audits/hancock/leakage_audit.md,READ_TEXT,lines=16
+docs/audits/hancock/license_notes.md,READ_TEXT,lines=5
+docs/audits/hancock/missingness.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/hancock/split_audit.md,READ_TEXT,lines=15
+docs/audits/phase2/endpoint_audit.md,READ_TEXT,lines=34
+docs/audits/phase3/authorization.md,READ_TEXT,lines=28
+docs/audits/phase3/baseline_findings.md,READ_TEXT,lines=92
+docs/audits/phase3/leakage_audit.md,READ_TEXT,lines=30
+docs/audits/phase4/authorization.md,READ_TEXT,lines=35
+docs/audits/phase4/core_findings.md,READ_TEXT,lines=25
+docs/audits/phase4/leakage_audit.md,READ_TEXT,lines=34
+docs/audits/phase5/development_findings.md,READ_TEXT,lines=43
+docs/audits/phase5/final_configuration.md,READ_TEXT,lines=14
+docs/audits/phase5/leakage_audit.md,READ_TEXT,lines=11
+docs/audits/phase5/preanalysis_protocol.md,READ_TEXT,lines=67
+docs/audits/phase6/phase6_final_audit.md,READ_TEXT,lines=120
+docs/audits/phase6/radcure_rds_structural_audit.md,READ_TEXT,lines=26
+docs/audits/radcure/cohort_flow.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/radcure/data_dictionary.csv,PARSED_CSV,rows=0; columns=9
+docs/audits/radcure/data_manifest.yaml,READ_TEXT,lines=20
+docs/audits/radcure/endpoint_audit.md,READ_TEXT,lines=29
+docs/audits/radcure/go_no_go.md,READ_TEXT,lines=20
+docs/audits/radcure/leakage_audit.md,READ_TEXT,lines=16
+docs/audits/radcure/license_notes.md,READ_TEXT,lines=5
+docs/audits/radcure/missingness.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/radcure/split_audit.md,READ_TEXT,lines=15
+docs/audits/tcga_geo/cohort_flow.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/tcga_geo/data_dictionary.csv,PARSED_CSV,rows=0; columns=9
+docs/audits/tcga_geo/data_manifest.yaml,READ_TEXT,lines=20
+docs/audits/tcga_geo/endpoint_audit.md,READ_TEXT,lines=29
+docs/audits/tcga_geo/go_no_go.md,READ_TEXT,lines=20
+docs/audits/tcga_geo/leakage_audit.md,READ_TEXT,lines=16
+docs/audits/tcga_geo/license_notes.md,READ_TEXT,lines=5
+docs/audits/tcga_geo/missingness.csv,PARSED_CSV,rows=0; columns=7
+docs/audits/tcga_geo/split_audit.md,READ_TEXT,lines=15
+docs/checklists/en/PROBAST_AI_self_assessment.md,READ_TEXT,lines=66
+docs/checklists/en/TRIPOD_AI_self_assessment.md,READ_TEXT,lines=53
+docs/checklists/zh-CN/PROBAST_AI_self_assessment.md,READ_TEXT,lines=66
+docs/checklists/zh-CN/TRIPOD_AI_self_assessment.md,READ_TEXT,lines=53
+docs/model_card.md,READ_TEXT,lines=3
+docs/phase1_acquisition_plan.md,READ_TEXT,lines=39
+docs/plans/manuscript_project/CODEX_MANUSCRIPT_EXECUTION_BRIEF_zh-CN.md,READ_TEXT,lines=3
+docs/plans/manuscript_project/MANUSCRIPT_PROJECT_PLAN_zh-CN.md,READ_TEXT,lines=242
+docs/plans/phase7/CODEX_EXECUTION_BRIEF_zh-CN.md,READ_TEXT,lines=3
+docs/plans/phase7/phase7_paper_project_plan_en.md,READ_TEXT,lines=44
+docs/plans/phase7/phase7_paper_project_plan_zh-CN.md,READ_TEXT,lines=168
+docs/reproducibility.md,READ_TEXT,lines=3
+docs/sap.md,READ_TEXT,lines=3
+docs/work_stage_reports/en/2026-08-07_phase0_completion_report.md,READ_TEXT,lines=42
+docs/work_stage_reports/en/2026-08-07_phase1_acquisition_plan.md,READ_TEXT,lines=39
+docs/work_stage_reports/en/2026-08-07_phase1_completion_report.md,READ_TEXT,lines=144
+docs/work_stage_reports/en/2026-08-07_phase1_progress_report.md,READ_TEXT,lines=27
+docs/work_stage_reports/en/2026-08-07_phase2_completion_report.md,READ_TEXT,lines=161
+docs/work_stage_reports/en/2026-08-07_phase3_completion_report.md,READ_TEXT,lines=144
+docs/work_stage_reports/en/2026-08-07_phase4_completion_report.md,READ_TEXT,lines=156
+docs/work_stage_reports/en/2026-08-07_phase5_completion_report.md,READ_TEXT,lines=69
+docs/work_stage_reports/en/2026-08-07_project_kickoff_decision.md,READ_TEXT,lines=19
+docs/work_stage_reports/en/2026-08-07_project_status.md,READ_TEXT,lines=49
+docs/work_stage_reports/en/2026-08-08_phase6_report.md,READ_TEXT,lines=158
+docs/work_stage_reports/en/2026-08-09_phase7_comparator_completion_report.md,READ_TEXT,lines=114
+docs/work_stage_reports/en/2026-08-09_phase7_planning_report.md,READ_TEXT,lines=23
+docs/work_stage_reports/en/2026-08-11_inner_hancock_provenance_reassessment.md,READ_TEXT,lines=70
+docs/work_stage_reports/en/2026-08-11_phase8_pseudo_private_overlap_simulation_report.md,READ_TEXT,lines=72
+docs/work_stage_reports/README.md,READ_TEXT,lines=36
+docs/work_stage_reports/templates/phase8_pseudo_private_en.md,READ_TEXT,lines=57
+docs/work_stage_reports/templates/phase8_pseudo_private_zh-CN.md,READ_TEXT,lines=57
+docs/work_stage_reports/zh-CN/2026-08-07_phase0_completion_report.md,READ_TEXT,lines=42
+docs/work_stage_reports/zh-CN/2026-08-07_phase1_acquisition_plan.md,READ_TEXT,lines=39
+docs/work_stage_reports/zh-CN/2026-08-07_phase1_completion_report.md,READ_TEXT,lines=144
+docs/work_stage_reports/zh-CN/2026-08-07_phase1_progress_report.md,READ_TEXT,lines=27
+docs/work_stage_reports/zh-CN/2026-08-07_phase2_completion_report.md,READ_TEXT,lines=161
+docs/work_stage_reports/zh-CN/2026-08-07_phase3_completion_report.md,READ_TEXT,lines=144
+docs/work_stage_reports/zh-CN/2026-08-07_phase4_completion_report.md,READ_TEXT,lines=156
+docs/work_stage_reports/zh-CN/2026-08-07_phase5_completion_report.md,READ_TEXT,lines=69
+docs/work_stage_reports/zh-CN/2026-08-07_project_kickoff_decision.md,READ_TEXT,lines=19
+docs/work_stage_reports/zh-CN/2026-08-07_project_status.md,READ_TEXT,lines=50
+docs/work_stage_reports/zh-CN/2026-08-08_phase6_report.md,READ_TEXT,lines=158
+docs/work_stage_reports/zh-CN/2026-08-09_phase7_comparator_completion_report.md,READ_TEXT,lines=177
+docs/work_stage_reports/zh-CN/2026-08-09_phase7_planning_report.md,READ_TEXT,lines=23
+docs/work_stage_reports/zh-CN/2026-08-11_inner_hancock_provenance_reassessment.md,READ_TEXT,lines=74
+docs/work_stage_reports/zh-CN/2026-08-11_phase8_pseudo_private_overlap_simulation_report.md,READ_TEXT,lines=72
+paper/figure_legends.md,READ_TEXT,lines=29
+paper/manuscript.md,READ_TEXT,lines=129
+paper/references.bib,READ_TEXT,lines=1
+paper/supplement.md,READ_TEXT,lines=112
+PHASE0_REPORT.md,READ_TEXT,lines=42
+PHASE1_PROGRESS.md,READ_TEXT,lines=41
+PROJECT_STATUS.md,READ_TEXT,lines=60
+results/figures/phase2/event_distribution.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase2/kaplan_meier_development_only.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase2/missingness_heatmap.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase3/calibration_metric_comparison.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase3/decision_curve.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase3/oof_metric_comparison.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase4/action_distribution.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase4/model_comparison.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase4/risk_coverage.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase5/stress_actions.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase5/stress_brier.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase6/action_distribution.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase6/cohort_brier.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase6/decision_curve.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase6/paired_brier_differences.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase7_exploratory/development_comparison.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase7_exploratory/external_comparator_forest.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase8_pseudo_private/action_distribution.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase8_pseudo_private/calibration.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase8_pseudo_private/modality_risk_distributions.svg,PARSED_SVG_XML,well-formed XML
+results/figures/phase8_pseudo_private/model_comparison.svg,PARSED_SVG_XML,well-formed XML
+results/manifests/phase2_adapter_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase3_baseline_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase4_trust_hn_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase5_stress_freeze_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase6_locked_evaluation_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase6_preunseal_prediction_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase7_exploratory_prediction_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase7_exploratory_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/phase8_pseudo_private_simulation_receipt.json,PARSED_JSON,top_level=dict
+results/manifests/radcure_rds_structure.json,PARSED_JSON,top_level=dict
+results/metrics/phase2/cohort_flow.csv,PARSED_CSV,rows=26; columns=4
+results/metrics/phase2/composition_comparison.csv,PARSED_CSV,rows=111; columns=10
+results/metrics/phase2/event_summary_development_only.csv,PARSED_CSV,rows=6; columns=11
+results/metrics/phase2/kaplan_meier_development_only.csv,PARSED_CSV,rows=2326; columns=7
+results/metrics/phase2/missingness_summary.csv,PARSED_CSV,rows=80; columns=6
+results/metrics/phase2/table1_candidates.csv,PARSED_CSV,rows=373; columns=9
+results/metrics/phase3/calibration_metrics.csv,PARSED_CSV,rows=105; columns=13
+results/metrics/phase3/decision_curve.csv,PARSED_CSV,rows=2100; columns=8
+results/metrics/phase3/model_status.csv,PARSED_CSV,rows=108; columns=5
+results/metrics/phase3/oof_metrics.csv,PARSED_CSV,rows=105; columns=13
+results/metrics/phase3/stability_summary.csv,PARSED_CSV,rows=42; columns=18
+results/metrics/phase4/action_summary.csv,PARSED_CSV,rows=120; columns=9
+results/metrics/phase4/gate_metrics.csv,PARSED_CSV,rows=40; columns=20
+results/metrics/phase4/model_metrics.csv,PARSED_CSV,rows=60; columns=14
+results/metrics/phase4/model_status.csv,PARSED_CSV,rows=11; columns=8
+results/metrics/phase4/reliability_diagnostics.csv,PARSED_CSV,rows=360; columns=9
+results/metrics/phase4/risk_coverage.csv,PARSED_CSV,rows=220; columns=11
+results/metrics/phase4/thresholds.csv,PARSED_CSV,rows=20; columns=7
+results/metrics/phase5/acceptance_checks.csv,PARSED_CSV,rows=8; columns=5
+results/metrics/phase5/action_summary.csv,PARSED_CSV,rows=3240; columns=9
+results/metrics/phase5/detection_summary.csv,PARSED_CSV,rows=90; columns=8
+results/metrics/phase5/learned_gate_weights.csv,PARSED_CSV,rows=80; columns=5
+results/metrics/phase5/model_status.csv,PARSED_CSV,rows=11; columns=4
+results/metrics/phase5/representation_metrics.csv,PARSED_CSV,rows=45; columns=18
+results/metrics/phase5/stress_metrics.csv,PARSED_CSV,rows=1585; columns=19
+results/metrics/phase5/subgroup_metrics.csv,PARSED_CSV,rows=255; columns=17
+results/metrics/phase5/worst_group_regret.csv,PARSED_CSV,rows=85; columns=11
+results/metrics/phase5/worst_group_summary.csv,PARSED_CSV,rows=180; columns=8
+results/metrics/phase6/action_summary.csv,PARSED_CSV,rows=36; columns=6
+results/metrics/phase6/bootstrap_confidence_intervals.csv,PARSED_CSV,rows=80; columns=7
+results/metrics/phase6/cohort_metrics.csv,PARSED_CSV,rows=20; columns=14
+results/metrics/phase6/decision_curve.csv,PARSED_CSV,rows=120; columns=6
+results/metrics/phase6/paired_comparisons.csv,PARSED_CSV,rows=48; columns=9
+results/metrics/phase6/radcure_negative_controls.csv,PARSED_CSV,rows=47; columns=25
+results/metrics/phase7_exploratory/development_metrics_by_seed.csv,PARSED_CSV,rows=120; columns=18
+results/metrics/phase7_exploratory/development_metrics_summary.csv,PARSED_CSV,rows=24; columns=20
+results/metrics/phase7_exploratory/external_benchmark_combined.csv,PARSED_CSV,rows=36; columns=19
+results/metrics/phase7_exploratory/external_metrics.csv,PARSED_CSV,rows=16; columns=18
+results/metrics/phase7_exploratory/paired_comparisons.csv,PARSED_CSV,rows=128; columns=9
+results/metrics/phase8_pseudo_private/action_summary.csv,PARSED_CSV,rows=3; columns=5
+results/metrics/phase8_pseudo_private/bootstrap_confidence_intervals.csv,PARSED_CSV,rows=56; columns=7
+results/metrics/phase8_pseudo_private/model_metrics.csv,PARSED_CSV,rows=14; columns=15
+results/metrics/phase8_pseudo_private/paired_comparisons.csv,PARSED_CSV,rows=28; columns=7
+results/predictions/phase6/gse41613__original__aggregate100.csv,PARSED_CSV,rows=97; columns=16
+results/predictions/phase6/gse41613__original__aggregate80.csv,PARSED_CSV,rows=97; columns=16
+results/predictions/phase6/gse41613__original__aggregate90.csv,PARSED_CSV,rows=97; columns=16
+results/predictions/phase6/gse41613__original__seed101.csv,PARSED_CSV,rows=97; columns=66
+results/predictions/phase6/gse41613__original__seed17.csv,PARSED_CSV,rows=97; columns=66
+results/predictions/phase6/gse41613__original__seed29.csv,PARSED_CSV,rows=97; columns=66
+results/predictions/phase6/gse41613__original__seed43.csv,PARSED_CSV,rows=97; columns=66
+results/predictions/phase6/gse41613__original__seed71.csv,PARSED_CSV,rows=97; columns=66
+results/predictions/phase6/gse65858__original__aggregate100.csv,PARSED_CSV,rows=244; columns=16
+results/predictions/phase6/gse65858__original__aggregate80.csv,PARSED_CSV,rows=244; columns=16
+results/predictions/phase6/gse65858__original__aggregate90.csv,PARSED_CSV,rows=244; columns=16
+results/predictions/phase6/gse65858__original__seed101.csv,PARSED_CSV,rows=244; columns=66
+results/predictions/phase6/gse65858__original__seed17.csv,PARSED_CSV,rows=244; columns=66
+results/predictions/phase6/gse65858__original__seed29.csv,PARSED_CSV,rows=244; columns=66
+results/predictions/phase6/gse65858__original__seed43.csv,PARSED_CSV,rows=244; columns=66
+results/predictions/phase6/gse65858__original__seed71.csv,PARSED_CSV,rows=244; columns=66
+results/predictions/phase6/hancock__original__aggregate100.csv,PARSED_CSV,rows=152; columns=16
+results/predictions/phase6/hancock__original__aggregate80.csv,PARSED_CSV,rows=152; columns=16
+results/predictions/phase6/hancock__original__aggregate90.csv,PARSED_CSV,rows=152; columns=16
+results/predictions/phase6/hancock__original__seed101.csv,PARSED_CSV,rows=152; columns=68
+results/predictions/phase6/hancock__original__seed17.csv,PARSED_CSV,rows=152; columns=68
+results/predictions/phase6/hancock__original__seed29.csv,PARSED_CSV,rows=152; columns=68
+results/predictions/phase6/hancock__original__seed43.csv,PARSED_CSV,rows=152; columns=68
+results/predictions/phase6/hancock__original__seed71.csv,PARSED_CSV,rows=152; columns=68
+results/predictions/phase6/radcure__original__aggregate100.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__original__aggregate80.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__original__aggregate90.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__original__seed101.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__original__seed17.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__original__seed29.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__original__seed43.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__original__seed71.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__randomized_sampled_full__aggregate100.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__randomized_sampled_full__aggregate80.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__randomized_sampled_full__aggregate90.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__randomized_sampled_full__seed101.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__randomized_sampled_full__seed17.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__randomized_sampled_full__seed29.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__randomized_sampled_full__seed43.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__randomized_sampled_full__seed71.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__shuffled_full__aggregate100.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__shuffled_full__aggregate80.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__shuffled_full__aggregate90.csv,PARSED_CSV,rows=626; columns=16
+results/predictions/phase6/radcure__shuffled_full__seed101.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__shuffled_full__seed17.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__shuffled_full__seed29.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__shuffled_full__seed43.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase6/radcure__shuffled_full__seed71.csv,PARSED_CSV,rows=626; columns=68
+results/predictions/phase7_exploratory/development_predictions.csv,PARSED_CSV,rows=52960; columns=7
+results/predictions/phase7_exploratory/external_predictions_aggregate.csv,PARSED_CSV,rows=4476; columns=6
+results/predictions/phase7_exploratory/external_predictions_by_seed.csv,PARSED_CSV,rows=22380; columns=6
+results/predictions/phase8_pseudo_private/inner_hancock_predictions_aggregate.csv,PARSED_CSV,rows=135; columns=33
+results/predictions/phase8_pseudo_private/inner_hancock_predictions_by_seed.csv,PARSED_CSV,rows=675; columns=18
