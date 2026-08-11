@@ -1,0 +1,542 @@
+[
+  {
+    "patient_id": "002",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "015",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "018",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "027",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "035",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "037",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "045",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "050",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "060",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "061",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "062",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "066",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "069",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "072",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "073",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "078",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "082",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "086",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "088",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "089",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "091",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "094",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "103",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "109",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "115",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "120",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "124",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "137",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "141",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "155",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "161",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "166",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "170",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "176",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "179",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "180",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "186",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "206",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "209",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "220",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "222",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "230",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "238",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "250",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "252",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "255",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "259",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "262",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "263",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "275",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "277",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "279",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "280",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "283",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "286",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "292",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "296",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "299",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "306",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "314",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "315",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "323",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "327",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "330",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "337",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "341",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "352",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "353",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "354",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "355",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "362",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "368",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "372",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "383",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "392",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "406",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "410",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "414",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "424",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "433",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "443",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "445",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "447",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "448",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "452",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "458",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "464",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "475",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "477",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "486",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "487",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "508",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "511",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "519",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "524",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "539",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "548",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "552",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "557",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "558",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "561",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "564",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "566",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "580",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "584",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "585",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "588",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "589",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "607",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "608",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "613",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "615",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "646",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "654",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "655",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "660",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "666",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "670",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "672",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "675",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "681",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "692",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "694",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "698",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "699",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "703",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "712",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "714",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "724",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "725",
+    "dataset": "test"
+  },
+  {
+    "patient_id": "746",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "751",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "752",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "755",
+    "dataset": "training"
+  },
+  {
+    "patient_id": "762",
+    "dataset": "training"
+  }
+]

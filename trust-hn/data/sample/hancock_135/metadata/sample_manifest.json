@@ -1,0 +1,538 @@
+{
+  "schema_version": "1.0",
+  "sample_name": "hancock_135",
+  "generated_at_utc": "2026-08-11T06:49:28.760430+00:00",
+  "source_version_root": "data/interim/hancock/git-521b99b03a94008b28df5c3df4aa5f82aa14b25a",
+  "selection": {
+    "method": "simple random sample without replacement from all 763 clinical patient IDs",
+    "random_generator": "Python random.Random (Mersenne Twister)",
+    "seed": 20260811,
+    "source_patient_count": 763,
+    "sample_patient_count": 135,
+    "selected_patient_ids_sorted": [
+      "002",
+      "015",
+      "018",
+      "027",
+      "035",
+      "037",
+      "045",
+      "050",
+      "060",
+      "061",
+      "062",
+      "066",
+      "069",
+      "072",
+      "073",
+      "078",
+      "082",
+      "086",
+      "088",
+      "089",
+      "091",
+      "094",
+      "103",
+      "109",
+      "115",
+      "120",
+      "124",
+      "137",
+      "141",
+      "155",
+      "161",
+      "166",
+      "170",
+      "176",
+      "179",
+      "180",
+      "186",
+      "206",
+      "209",
+      "220",
+      "222",
+      "230",
+      "238",
+      "250",
+      "252",
+      "255",
+      "259",
+      "262",
+      "263",
+      "275",
+      "277",
+      "279",
+      "280",
+      "283",
+      "286",
+      "292",
+      "296",
+      "299",
+      "306",
+      "314",
+      "315",
+      "323",
+      "327",
+      "330",
+      "337",
+      "341",
+      "352",
+      "353",
+      "354",
+      "355",
+      "362",
+      "368",
+      "372",
+      "383",
+      "392",
+      "406",
+      "410",
+      "414",
+      "424",
+      "433",
+      "443",
+      "445",
+      "447",
+      "448",
+      "452",
+      "458",
+      "464",
+      "475",
+      "477",
+      "486",
+      "487",
+      "508",
+      "511",
+      "519",
+      "524",
+      "539",
+      "548",
+      "552",
+      "557",
+      "558",
+      "561",
+      "564",
+      "566",
+      "580",
+      "584",
+      "585",
+      "588",
+      "589",
+      "607",
+      "608",
+      "613",
+      "615",
+      "646",
+      "654",
+      "655",
+      "660",
+      "666",
+      "670",
+      "672",
+      "675",
+      "681",
+      "692",
+      "694",
+      "698",
+      "699",
+      "703",
+      "712",
+      "714",
+      "724",
+      "725",
+      "746",
+      "751",
+      "752",
+      "755",
+      "762"
+    ]
+  },
+  "field_preservation": {
+    "json": "Original object keys and values retained for selected patients; list order follows source files.",
+    "csv": "Original headers, column order, and source cell strings retained for selected rows.",
+    "npz": "Original arrays retained unchanged for selected patient keys.",
+    "natural_missingness": "Missing source modalities are preserved and listed in coverage."
+  },
+  "official_split_counts": {
+    "dataset_split_in.json": {
+      "test": 25,
+      "training": 110
+    },
+    "dataset_split_out.json": {
+      "test": 30,
+      "training": 105
+    },
+    "dataset_split_Oropharynx.json": {
+      "test": 57,
+      "training": 78
+    },
+    "dataset_split_treatment_outcome.json": {
+      "test": 19,
+      "training": 116
+    }
+  },
+  "coverage": {
+    "clinical_data.json": {
+      "rows": 135,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "pathological_data.json": {
+      "rows": 135,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "blood_data.json": {
+      "rows": 4182,
+      "patients_present": 126,
+      "patients_missing": [
+        "089",
+        "141",
+        "155",
+        "209",
+        "222",
+        "286",
+        "414",
+        "443",
+        "448"
+      ]
+    },
+    "TMA_celldensity_measurements.csv": {
+      "rows": 1072,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "features/blood.csv": {
+      "rows": 126,
+      "patients_present": 126,
+      "patients_missing": [
+        "089",
+        "141",
+        "155",
+        "209",
+        "222",
+        "286",
+        "414",
+        "443",
+        "448"
+      ]
+    },
+    "features/clinical.csv": {
+      "rows": 135,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "features/icd_codes.csv": {
+      "rows": 124,
+      "patients_present": 124,
+      "patients_missing": [
+        "045",
+        "230",
+        "252",
+        "299",
+        "477",
+        "486",
+        "564",
+        "589",
+        "703",
+        "746",
+        "755"
+      ]
+    },
+    "features/pathological.csv": {
+      "rows": 135,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "features/targets.csv": {
+      "rows": 135,
+      "patients_present": 135,
+      "patients_missing": []
+    },
+    "features/tma_cell_density.csv": {
+      "rows": 133,
+      "patients_present": 133,
+      "patients_missing": [
+        "027",
+        "448"
+      ]
+    },
+    "features/tma_tile_dtr_256_CD163.npz": {
+      "members": 133,
+      "patients_present": 133,
+      "patients_missing": [
+        "524",
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_CD3.npz": {
+      "members": 130,
+      "patients_present": 130,
+      "patients_missing": [
+        "275",
+        "445",
+        "539",
+        "694",
+        "699"
+      ]
+    },
+    "features/tma_tile_dtr_256_CD56.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_CD68.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_CD8.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_HE.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_MHC1.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    },
+    "features/tma_tile_dtr_256_PDL1.npz": {
+      "members": 134,
+      "patients_present": 134,
+      "patients_missing": [
+        "694"
+      ]
+    }
+  },
+  "files": [
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/blood.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 23349,
+      "sha256": "c23c3f9c7e8b55888ee96f51fc001988310839bceddf7ab0a010a2b4979b6bf1",
+      "rows_or_members": 126,
+      "unique_patient_ids": 126
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/clinical.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 2089,
+      "sha256": "c5e3bd6716ad974952edeee97ce1ffe467f2d2c7358b5ed30ec0fd7c3fbb8c8d",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/icd_codes.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 10627,
+      "sha256": "71d7963714f15b4d33c20e8758c9019e434ac28bd53abe81ca20f7012758ca4a",
+      "rows_or_members": 124,
+      "unique_patient_ids": 124
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/pathological.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 5443,
+      "sha256": "38897ff3a67343de8cc5aef1ce3c0c4476d0922662639a9d7b0a28d1314077f0",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/targets.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 5550,
+      "sha256": "a29849b3fe9a101077cf5886faaf4b05f1654a391d65cf1b95cace6393a79ac2",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_cell_density.csv",
+      "role": "preextracted_feature_table",
+      "bytes": 5598,
+      "sha256": "f5fb90537ce7ec4c274d3765e35702a3466faf80de906ff3235e215b67521fe1",
+      "rows_or_members": 133,
+      "unique_patient_ids": 133
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_CD163.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 278423,
+      "sha256": "3ae5e4e47f9595ee2020675a49c3eea6a1557b852064ff6519bcb6eeb7b9833e",
+      "rows_or_members": 133,
+      "unique_patient_ids": 133
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_CD3.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 272222,
+      "sha256": "9f8031f9f0f65d19c4fa52ccdcce0b706baba4cfcffa4b9a33329ab6568cb691",
+      "rows_or_members": 130,
+      "unique_patient_ids": 130
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_CD56.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 280483,
+      "sha256": "24f45bbfcc3c6f984caccc1d14d4148a019951a1efc95827250534aa31c7d3c5",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_CD68.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 278783,
+      "sha256": "e2cfa6261295724e45dd8babe29b1131bbf98275c6e1be86774857bb3aef6516",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_CD8.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 280382,
+      "sha256": "f34b10805a3fdb2603f51d54114dd1656c709b8c4825ac0f81ff96783c538a0f",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_HE.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 280594,
+      "sha256": "4c7972691488ab389b202fcce9cb56e2b71335cc0a93f83667590bdbc574f667",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_MHC1.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 280786,
+      "sha256": "0d21a66bd7a472d6b493fff5e20444306054fa367c2d54e70e096f237c7d8326",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "HANCOCK_MultimodalDataset/features/tma_tile_dtr_256_PDL1.npz",
+      "role": "preextracted_tma_embedding",
+      "bytes": 280452,
+      "sha256": "8d7d913a8747d1ffbd5a8856ea8c3eed73a7f26be6a20fd85217fc022339448e",
+      "rows_or_members": 134,
+      "unique_patient_ids": 134
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/DataDictionary_blood.csv",
+      "role": "field_dictionary",
+      "bytes": 3308,
+      "sha256": "0418388900ed4755120ba4cb7fd1691097c33a3af4a949b1441f08de4ebe2df7"
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/DataDictionary_clinical.csv",
+      "role": "field_dictionary",
+      "bytes": 3623,
+      "sha256": "21f2f26eccdf533e4fda876bf246c645c579871cff884599e74a4556722b338c"
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/DataDictionary_pathological.csv",
+      "role": "field_dictionary",
+      "bytes": 1954,
+      "sha256": "adeefcdc2fdb0f86a598653bc69237f8ba9f4a9348ccae876ca3846ea2501d59"
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/dataset_split_Oropharynx.json",
+      "role": "official_split",
+      "bytes": 7875,
+      "sha256": "32cc6087fa4757d51c2ff29bb463ed7222150fb7f49ab3e930ce26b830715b56",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/dataset_split_in.json",
+      "role": "official_split",
+      "bytes": 8003,
+      "sha256": "03f08b6bf7de91d798af7891efe93e4baea6cada8cd0640a6ddbcf297a124206",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/dataset_split_out.json",
+      "role": "official_split",
+      "bytes": 7983,
+      "sha256": "7e55ad89d68ade34ca5c70208b5d95eeb97ce86e46ee9779e63bd99c6b3e5294",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/DataSplits_DataDictionaries/dataset_split_treatment_outcome.json",
+      "role": "official_split",
+      "bytes": 18282,
+      "sha256": "411f064e55cc002285476096190444949c3e4e843bb02e2dc619584b4566e484",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/StructuredData/blood_data.json",
+      "role": "structured_patient_data",
+      "bytes": 1136975,
+      "sha256": "349437cb4c0c15fb21c9b26a049234e2761f856759f6faf467e7397ac062efbc",
+      "rows_or_members": 4182,
+      "unique_patient_ids": 126
+    },
+    {
+      "relative_path": "Hancock_Dataset/StructuredData/blood_data_reference_ranges.json",
+      "role": "field_reference_metadata",
+      "bytes": 9538,
+      "sha256": "e31f8d71a095da72209979d56e00844701e2d9e8f47dbd966d0f4bf6eb6ef8a3"
+    },
+    {
+      "relative_path": "Hancock_Dataset/StructuredData/clinical_data.json",
+      "role": "structured_patient_data",
+      "bytes": 156559,
+      "sha256": "54cbb6bd66b505193fb29d52e9e2a652d1fa3952435a0a5b0b76af31c4c13f72",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/StructuredData/pathological_data.json",
+      "role": "structured_patient_data",
+      "bytes": 88746,
+      "sha256": "b1804abd0036251c27153402bebdf1d4f59b08167307b0a92a2bc3ad1e9a3c31",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "Hancock_Dataset/TMA_CellDensityMeasurements/TMA_celldensity_measurements.csv",
+      "role": "raw_tma_cell_density",
+      "bytes": 92172,
+      "sha256": "2d3ed9cef20ce52e43b8d498028f638a9fa8dce3a942d635fc9bf16f2b33c4bd",
+      "rows_or_members": 1072,
+      "unique_patient_ids": 135
+    },
+    {
+      "relative_path": "metadata/license_notes.md",
+      "role": "license_and_citation_notes",
+      "bytes": 1148,
+      "sha256": "a3fa24fce977a138c2e9d3621c021d21c8559b4185bc3f0696231e48d83ee0dd"
+    },
+    {
+      "relative_path": "metadata/patient_ids.txt",
+      "role": "sample_patient_id_inventory",
+      "bytes": 540,
+      "sha256": "d983444eae2f7ab914fee5eef61fe06a920345125ba36f96a258484886044ee1",
+      "rows_or_members": 135,
+      "unique_patient_ids": 135
+    }
+  ]
+}
