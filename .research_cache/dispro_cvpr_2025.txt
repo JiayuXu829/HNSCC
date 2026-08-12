@@ -1,0 +1,903 @@
+                       This CVPR paper is the Open Access version, provided by the Computer Vision Foundation.
+                                    Except for this watermark, it is identical to the accepted version;
+                              the final published version of the proceedings is available on IEEE Xplore.
+
+
+
+
+     Distilled Prompt Learning for Incomplete Multimodal Survival Prediction
+
+     Yingxue Xu1 Fengtao Zhou1 Chenyu Zhao1 Yihui Wang1 Can Yang2 Hao Chen1B
+          1
+            Department of Computer Science and Engineering, 2 Department of Mathematics
+                       The Hong Kong University of Science and Technology
+                 {yxueb,fzhouaf,cyzhao,ywangrm}@connect.ust.hk, {macyang,jhc}@ust.hk
+
+
+
+                        Abstract                                                    Observed Modality                          Modality-common Knowledge
+                                                                                                                               Modality-specific Knowledge of
+                                                                                    Missing Modality                           Missing modality
+
+The integration of multimodal data including pathology im-
+ages and gene profiles is widely applied in precise sur-
+vival prediction. Despite recent advances in multimodal
+survival models, collecting complete modalities for multi-
+modal fusion still poses a significant challenge, hindering
+                                                                                                                                                 Distribution of
+their application in clinical settings. Current approaches                                                       Retrieved sample
+                                                                                                                                                 Missing modality
+                                                                             (a) Generation-based        (b) Retrieval-based               (c) Ours
+tackling incomplete modalities often fall short, as they typ-             Imputation & Imputation-free       Imputation
+ically compensate for only a limited part of the knowledge
+                                                                       Figure 1. Insights for existing incomplete multimodal learning and
+of missing modalities. To address this issue, we propose
+                                                                       comparison to the proposed method. (a) Generation-based Impu-
+a Distilled Prompt Learning framework (DisPro) to utilize              tation and Imputation-free approaches, (b) Retrieved-based Impu-
+the strong robustness of Large Language Models (LLMs)                  tation and (c) Ours.
+to missing modalities, which employs two-stage prompting
+for compensation of comprehensive information for miss-                pectation of having full access to complete modalities for
+ing modalities. In the first stage, Unimodal Prompting                 integration is not always achievable, especially in clinical
+(UniPro) distills the knowledge distribution of each modal-            scenarios, due to various factors such as the cost of data
+ity, preparing for supplementing modality-specific knowl-              gathering and privacy issues. For example, acquiring ge-
+edge of the missing modality in the subsequent stage. In               nomic data still comes at a high cost due to the technology
+the second stage, Multimodal Prompting (MultiPro) lever-               and infrastructure required for gene sequencing, especially
+ages available modalities as prompts for LLMs to infer the             in underdeveloped areas [43]. Inevitably, it is challenging
+missing modality, which provides modality-common infor-                to adapt previously established multimodal survival mod-
+mation. Simultaneously, the unimodal knowledge acquired                els [30, 42] to real-world clinical settings. As a result, build-
+in the first stage is injected into multimodal inference to            ing a multimodal survival model that is robust to incomplete
+compensate for the modality-specific knowledge of the miss-            modalities data is an urgent issue for clinical practice.
+ing modality. Extensive experiments covering various miss-
+ing scenarios demonstrated the superiority of the proposed                Currently, mainstream approaches addressing incom-
+method. The code is available at https://github.                       plete modalities issues include imputation-based and
+com/Innse/DisPro.                                                      imputation-free methods [8, 34]. The former approaches
+                                                                       aim to impute the missing modality based on observed
+                                                                       modalities, primarily achieved in two ways including gener-
+1. Introduction                                                        ation [3, 23, 29] and retrieval [4, 40]. In terms of generation-
+                                                                       based imputation, generative models are typically employed
+Multimodal Survival Prediction typically incorporates                  for synthesizing features or raw data of missing modalities
+pathology slides and genomic data complementary to each                from available modalities. As shown in Fig. 1 (a), these
+other for precise prognosis analysis. Pathology data can               methods usually can only impute modality-common infor-
+provide qualitative morphological insights, while quantita-            mation, as the modality-specific information unique to the
+tive molecular information can be obtained from genomic                missing modality cannot be generated out of thin air. More-
+data [5, 35, 36]. Despite progress [5, 10, 36] in multimodal           over, the goal of retrieval-based imputation methods is to fill
+survival analysis, these models typically require complete             in missing modalities by seeking the most similar sample of
+modalities data for reliable performance. However, the ex-             the missing modality from the training set. This way tends
+
+
+
+                                                                5102
+to compensate only a limited part of modality-common and                knowledge in stage 1, we propose UniPro Distillation to en-
+modality-specific information, as shown in Fig. 1 (b). The              force the inferred representations of missing modalities to
+reason is that an individual sample exhibits considerable               get as close as possible to the learned unimodal prompts of
+randomness and is challenging to fully capture the unique               the corresponding class. Additionally, to assist in learning
+knowledge inherent in the missing modality.                             modality-common knowledge from WSIs and genes with
+    Unlike imputation-based approaches, imputation-free                 high information redundancy [30, 42], we propose UniPro
+approaches [8, 34] primarily focus on how to minimize                   Scoring to re-use UniPro as a grader to select discriminative
+performance degradation resulting from missing modali-                  and relevant tokens. As a result, both common and specific
+ties. These approaches make great efforts to learn ro-                  information are compensated for missing modalities under
+bust multimodal representations that are less sensitive to              the collaboration of uni- and multimodal prompts, thus mit-
+missing modalities by capturing modality-invariant infor-               igating performance declines led by incomplete modalities.
+mation. Recently, with the rise of Large Language Models                   It is worth noting that DisPro is proposed as a frame-
+(LLMs) [1, 20, 33], the researcher [17] attempts to lever-              work for addressing missing modality issues by leveraging
+age the strong robustness of LLMs benefit from extensive                LLMs’ power based on prompts, capable of generalizing to
+training data to alleviate performance decreases caused by              a wider range of domains. The contributions of this work
+incomplete modalities. They design some sophisticated                   are summarized as follows:
+prompts to inform LLMs of different distributions of inputs.            • We propose a Distilled Prompt Learning (DisPro) frame-
+However, they only capture modality-common information                    work for incomplete multimodal survival prediction,
+as well (Fig. 1a), ignoring distinct modality-specific knowl-             where LLMs’ robustness to incomplete modalities is ex-
+edge of the missing modality. As such, existing methods                   plored under two-stage prompting.
+still struggle to effectively incorporate the learning of both          • We propose two-stage prompt learning including Uni-
+common and specific knowledge of missing modalities.                      modal Prompting and Multimodal Prompting to compen-
+    Based on these insights, to bridge the aforementioned                 sate for both modality-specific and modality-common in-
+gap, we propose a Distilled Prompt Learning (DisPro)                      formation of missing modalities, respectively.
+framework to unlock LLMs’ robustness to incomplete                      • Extensive experiments on five benchmark survival predic-
+modalities, which aims to simultaneously compensate for                   tion datasets are conducted, which demonstrates signifi-
+both specific and common information of missing modal-                    cantly superior to state-of-the-art approaches.
+ities. It comprises two-stage prompt learning including
+Unimodal Prompting (UniPro) and Multimodal Prompting                    2. Related Work
+(MultiPro) for capturing modality-specific and modality-
+common information of missing modalities, respectively.                 2.1. Incomplete Multimodal Learning
+    In the first stage, to prepare for supplementing modality-          As stated above, incomplete multimodal learning [43] can
+specific information of missing modalities, we first learn              be categorized into two types: imputation-based [4, 12,
+the knowledge distribution of the missing modality by dis-              38] and imputation-free methods [21, 25]. For exam-
+tilling unimodal knowledge into a set of learnable uni-                 ple, with the success of the diffusion model [7], the re-
+modal prompts for each modality from all remaining sam-                 search [23] attempted to apply it to MRI synthesis for miss-
+ples available of this modality. Specifically, inspired by              ing modalities. Instead of generating raw modality data,
+CoOp [44], a set of learnable prompts for different classes             SMIL [22] leveraged Bayesian meta-learning to impute fea-
+is employed to learn knowledge about how to describe dif-               tures of missing modalities. For retrieval-based approaches,
+ferent categories of an individual modality. For example, in            M3Care [40] filled in the missing modalities by retriev-
+survival prediction, learned prompts can be intuitively in-             ing the most similar samples from the training set. On
+terpreted as how different risk groups will reflect in patho-           the other hand, imputation-free approaches provided more
+logical morphology or gene expression profiles. However,                flexible solutions, which aim to enhance the robustness of
+due to the huge size (e.g., 100,000 × 100,000) of pathologi-            fusion and alleviate performance decrease. [8] proposed
+cal WSIs, we cannot simply apply CoOp designed for small                a segmentation-based regularizer to reduce the sensitivity
+natural images to WSIs. Therefore, in UniPro, we extend                 to missing modalities. MUSE [34] utilized patients’ rela-
+CoOp into the multiple instance learning (MIL) paradigm                 tionships based on graph networks to perform contrastive
+that is commonly used for large-scale WSIs [11, 13, 37].                learning for improving the robustness to missing modali-
+    In the second stage, to capture modality-common in-                 ties. GTP-4o [19] proposed modality-prompted heteroge-
+formation for missing modalities, we leverage available                 neous graph to embed each modality into a unified space
+modalities as multimodal prompts of LLMs to infer repre-                and complete missing modality through a graph prompt-
+sentations of missing modalities using LLMs’ strong infer-              ing mechanism. Recently, MAP [17] proposed missing-
+ence ability. Simultaneously, to inject the learned unimodal            aware prompts to unlock the robustness of LLMs to missing
+
+
+
+                                                                 5103
+modalities by indicating LLMs different missing scenarios.                  In survival prediction, the goal is to estimate the risk
+However, these methods typically supplemented modality-                 probability of an outcome event taking place before a spe-
+common knowledge for missing modalities.                                cific time. However, this event may not always be ob-
+                                                                        served, resulting in a right-censored occurrence. Therefore,
+2.2. Multimodal Survival Prediction                                     cn ∈ {0, 1} is used to denote censorship status indicat-
+With the success of digital pathology [18, 24, 41] and                  ing whether the outcome event is right-censored (i.e., alive)
+sequencing techniques [26, 31], pathology and genomic                   (c = 1) or not (c = 0) (i.e., dead), and tn ∈ R+ represents
+data are commonly integrated to analyze survival outcomes,              the overall survival time (in months). These two compo-
+which have proven the superiority on precision in previous              nents make up its set of labels Y n = (cn , tn ). Following
+works [5, 36]. MCAT [5] proposed to leverage the inter-                 the previous setting [5, 36], the continuous survival time
+actions across modalities to guide the learning of pathol-              would be discretized into I t time intervals corresponding
+ogy data. Based on this work, MOTCat [36] further lever-                to I t risk bands. As a result, the label set (cn , tn ) can be
+aged optimal transport to capture global structure consis-              re-written as yn , resulting in 2I t labels.
+tency across modalities. In parallel, CMTA [10] investi-                    Given a set of predicted hazard probabilities hn across
+gated the intrinsic cross-modal interactions and potential              all time intervals, the hazard probability h(j)
+                                                                                                                     n represents the
+complementary information by cross-modal translation and                probability of death event occurring at the j-th time inter-
+alignment. From the perspective of information bottle-                  val. Then, the cumulative survival probability for each time
+neck, PIBD [42] proposed a prototypical information bottle-             interval can be estimated as follows:
+neck for the MIL setting to select discriminative instances                                            j
+and disentangle multimodal knowledge for redundancy re-
+                                                                                                       Y
+                                                                                             Sn(j) =       (1 − hn(z) )              (1)
+duction. Similarly, MMP [30] utilized Gaussian Mixture                                                 z=1
+Model to summarize morphological prototypes and biolog-
+                                                                        Following previous works [36, 42], given the ground truth
+ical pathway prototypes for these two modalities. However,
+                                                                        time interval τ , we use the NLL loss [39] for survival pre-
+all these methods assume all modalities available, inevitably
+                                                                        diction, where N is the sample number of the training set:
+leading to the difficulty of employment in clinical settings.
+                                                                                       N
+                                                                                       X
+3. Method                                                                  Lsurv = −       [cn log Sn(τ ) + (1 − cn ) log Sn(τ −1)
+                                                                                       n=1                                           (2)
+This work aims to explore LLMs’ robustness to incomplete
+                                                                                                             + (1 − cn ) log h(τ
+                                                                                                                              n ]
+                                                                                                                                 )
+modalities by two-stage prompting, Unimodal Prompting
+(UniPro) and Multimodal Prompting (MultiPro), which
+                                                                        3.2. Stage 1: Unimodal Prompting (UniPro)
+capture modality-specific and modality-common informa-
+                                                                                                        M
+tion, respectively. The overview framework of the proposed              Given a WSI X pn = {xpn,i }i=1
+                                                                                                     p
+                                                                                                       or a bag of genomic path-
+method is shown in Fig. 2. First, we will introduce the prob-                                M
+                                                                        ways X gn = {xgn,i }i=1g
+                                                                                                 , we formulate their learning process
+lem formulation in Sec. 3.1. Then, we will detail the process           as a MIL task. Inspired by CoOp [44] employing a CLIP-
+of UniPro and MultiPro in Sec. 3.2 and 3.3, respectively.               style architecture, we adapt it to the MIL setting to learn
+                                                                        how to characterize each modality using a set of learnable
+3.1. Problem Formulation
+                                                                        prompts for modality-specific knowledge.
+Given a multimodal dataset consisting of M = 2 modal-                       In terms of pathological WSIs data, following the com-
+ities, we use a 2-tuple X n = (X pn , X gn ) to represent the           mon setting of the WSI processing [28], as shown in the
+i-th patient data, where X pn and X gn are pathology and ge-            UniPro-P of Fig 2, we first employ a pretrained and frozen
+nomic data, respectively. In particular, we use the notation
+                                                          p
+                                                                        patch encoder gE (·) to embed every patch images xpn,i from
+of tilde hat to indicate the modality is missing, e.g., X
+                                                        f .
+                                                          n             a WSI into an instance-level embedding pin = gE (xpn,i ) ∈
+    Following the conventional setting for pathological                 Rd , where d is the patch feature dimension. To align
+WSIs and genomic pathways in previous works [14, 42],                   pathology features with the text space, we apply an adapter
+we formulate a WSI X pn and a set of genomic pathways                   fp (·) for each patch feature to get the aligned patch feature
+X gn as the “bag” of instances in MIL paradigm. We de-                  pin = fp (gE (xpn,i )) ∈ RD , implemented by a linear layer
+                      Mp
+note X pn = {xpn,i }i=1    where each instance xpn,i refers to          followed by ReLU [2].
+a patch image cropped from the WSI X pn and Mp is the                       Text-wise, the input comprises three components:
+patch number of this WSI. Similarly, the bag of genomic                 pathology context tokens, prefix tokens and classname to-
+                                                Mg
+pathways can be formulated as X gn = {xgn,i }i=1    , in which          kens. For classname tokens [C]1...s , we map every time in-
+               g
+an instance xn,i represents a pathway consisting of various             terval of overall survival into a unique description, such as
+gene expression values.                                                 “median risk”, and denote the censorship status by “alive”
+
+
+
+                                                                 5104
+                                                                                        Stage 1: Unimodal Prompting (UniPro)
+                                                                                                                                                                                   2
+                                               Patch Images                                                                                                                    GNG1
+                                                                      This is a pathology slide image                                                                                                                                      These are gene expression
+
+                                Patching
+                                                                                                                                                                                     GNB5
+
+
+
+
+                                                                                                                                                                                                  Gene
+                                                                      from the patient with overall                                                                          TLX2                                                          profiles from the patient with
+                                                                      survival of {median risk, dead}                                                                                                                                      overall survival of {high risk, dead}
+
+
+
+
+                                                                                                                                                                                        N
+                                                                                                                                                                              AK
+
+
+
+
+                                                                                                                                                                                       JU
+                                                                                                                                                                                T2
+
+
+
+     Whole Slide Image                                                                                                                                                      Grouping
+                                              Patch Encoder                             Tokenizer                                                                                                                                                            Tokenizer
+
+
+
+
+                                                                                                                                                                                                                      Pathways
+                                                                                                                                                                                              …
+         UniPro for Pathology
+
+
+
+
+                                                                                                                                           UniPro for Genomics
+                                                  …
+
+
+
+
+                                                                                                                                               (UniPro-G)
+              (UniPro-P)
+
+
+
+
+                                                Adapter                      Large Language Model                                                                      Gene Encoder                                                                 Large Language Model
+
+                                                                                           {low risk, alive}   0.02                                                                                                                                                {low risk, alive}       0.02
+
+
+
+
+                                                                                                                                                                                                                                           #class
+                                                                    #class
+                                                  …                                        {median risk, dead} 0.72                                                             …                                                                                  {median risk, dead} 0.03
+
+
+
+                                                                                    …
+
+
+
+
+                                                                                                                                                                                                                                                        …
+                                                                                           {high risk, dead}   0.11                                                                                                                                                {high risk, dead}       0.81
+
+
+
+                                                                                                               b.
+                    Finetune
+
+
+
+
+         a.                                      …                 JUN       GNB5   GNB5   AKT2   TLX2                Ground-truth textual                                                               Pathology&Genomic
+                                                                                                                      class representation                                                                       textual
+                                                                                                                                                                                                         class representation                             …                        …
+                                                Adapter                  Gene Encoder
+
+
+
+
+                                                                                                                                                                                                           Self- Scoring
+                                                                                                                           Self- Scoring
+                                                  …
+    b.                                                                              …                           …
+
+
+
+
+                                                                                                                                                                                              …
+      UniPro                                                                                                                                                           =                                                                   +                       ⊕                         =
+
+
+
+
+                                                                                                                                                                                                                                                                                                         TopK
+                                                                                                                                                                                       TopK
+      Scoring
+                                             + + + + + + +
+                                                                                                                                                                                                                                                                         Top-K Max-Pooling
+                                                                                                                                               Training
+                    c.                                Large Language Model                                            UniPro Scoring                                                                                                                Inference
+
+                                                                                                               d.2.
+
+
+
+
+                                                                                                                                                                                                                     UniPro Distillation
+                                                                                                                                                                                                                                                    Pathology Feature                  Genomic
+                                                                                                                                                                                                                                                    Token                              Feature Token
+                                                                                                                                                                 Large Language Model
+                                                 Low Risk
+                                Classifier
+
+
+
+
+                                                                                                                                                                                                                                                    Pathology                          Genomic
+                                                                                                                                                                                                                                                    Context Token
+                                                                           UniPro                                                                                          {low risk, alive}         0.02
+                                                                                                                                                                                                                                                                                       Context Token
+
+                                                 High Risk               Distillation                                                                                                                                                               Pathology                          Genomic
+                                                                                                                                                    #class
+
+
+
+
+                                                                                                                                                                           {median risk, dead} 0.86                                                 PlaceHolder                        PlaceHolder
+                                                                                                                                                                   …
+
+
+
+
+                                                                                                                                                                           {high risk, dead}         0.11                                           [CLS] Token                        [CLS] Representation
+             d.1.                                                 d.2.
+                                                                                                                                                         maximize the similarity                                                                    Prefix Token                       Classname Token
+         Stage 2: Multimodal Prompting (MultiPro)                                                                                                        with ground-truth class
+
+Figure 2. Overview of DisPro. Stage 1: Unimodal Prompting aims to distill the knowledge distribution for each modality and prepare
+to supplement modality-specific knowledge for the missing modality. Stage 2: Multimodal Prompting utilizes the available modality as
+prompts to infer the representations of the missing one, compensating for modality-common knowledge. Simultaneously, the learned
+UniPro of Stage 1 supervises the learning of imputed representations to compensate for modality-specific knowledge. UniPro Scoring
+re-uses learned prompts to assist the LLM in capturing modality-common knowledge by selecting discriminative and relevant tokens.
+
+or “dead”. The prefix tokens [PREFIX]1...m briefly de-                                                                                          in which j ∈ [1, 2I t ] and prefix tokens are shared across
+scribe the modality, e.g., “This is a pathology slide image                                                                                     all risk bands. By forwarding T (j)
+                                                                                                                                                                                 p of each class to the text
+from the patient with overall survival of [C]1...s ”. Pre-                                                                                      encoder T (·) (i.e., LLM), we can obtain a global textual
+fix and classname tokens are obtained using a frozen Tok-                                                                                                             (j)
+                                                                                                                                                class representation tp ∈ RD for every class.
+enizer pretrained on a large-scale biomedical corpus to em-
+bed these words. To learn how to describe the modality for                                                                                          In the MIL setting, to obtain the predicted probability for
+a specific risk band (class), we attach a set of learnable con-                                                                                 each class, we can use topK patches to produce the slide-
+text tokens [P ]1...k to prefix and classname tokens:                                                                                           level prediction based on similarity scores. To this end, we
+                                                                                                                                                first compute the similarity score between every instance
+ T p = [P ]1 . . . [P ]k [PREFIX]1 . . . [PREFIX]m [C]1 . . . [C]s (3)                                                                          and every class:
+where k, m and s are the token numbers of pathology con-
+text tokens, prefix words and classname words, respectively.
+                                                                                                                                                                                                                 s(i,j)  i    (j)
+                                                                                                                                                                                                                  n,p = pn · tp                                                                                 (5)
+Each token is a vector with the same dimension D as word
+embeddings of the LLM (i.e., 768 for BERT). In this way,
+we can design input tokens for each risk band:
+                                                                                                                                                As a result, we can get a similarity matrix Sn,p ∈
+T (j)
+          (j)         (j)                            (j)        (j)
+  p = [P ]1 . . . [P ]k [PREFIX]1 . . . [PREFIX]m [C]1 . . . [C]s                                                                               RMp ×2I t for a WSI. Then, we apply a TopK max-pooling
+                                                                                                                    (4)                         operator h(·) to obtain the slide-level predictions, depend-
+
+
+
+                                                                                                                           5105
+ing on top-K similarities for each class:                                    UniPro Scoring. The score of every feature token is deter-
+                  "K            K               K
+                                                               #             mined by three parts: relevance scores estimated by UniPro-
+                 1 X (i,1) X (i,2)             X     (i,2I t )               P and UniPro-G, and self-scoring, as shown in Fig. 2.
+   h(Sn,p ) =            ŝ   ,    ŝ    ,...,     ŝn,p
+                K i=1 n,p i=1 n,p              i=1
+                                                                                                                                 Mp
+                                                                                 Given a set of pathology feature tokens {pin }i=1  , to ob-
+                                                                (6)          tain discriminative tokens, we compute the similarity score
+where ŝn,p is the sorted sn,p in a descending order across                    (i,τ )
+                                                                             sn,p between the ground-truth textual class representa-
+all instances. Next, we can get a set of hazard probabilities                         (τ )
+                                                                             tion of tp and each feature token pin by re-using Eq. 5.
+hpn across all time intervals through a sigmoid function.                                                                               (i,τ )
+                                                                             Through the sigmoid function, we can get the score sn,p
+                   hpn = Sigmoid(h(Sn,p ))                     (7)           estimated by UniPro-P. To capture cross-modal modality-
+                                                                             common information for better compensation of missing
+By computing the survival loss according to Eq. 2 and back-                                                               (i,τ )
+                                                                             modality, we similarly obtain the score sn,g estimated by
+forwarding gradients, we can optimize the modality adapter
+                                                                             UniPro-G. Since textual class representations of UniPro are
+and learnable prompts consisting of context tokens.
+                                                                             fixed once finishing the training of stage 1, the selected to-
+    Similarly, we acquire the set of hazard probabilities hgn
+                                                                             kens will also become fixed accordingly. To make it diverse
+for genomic pathways and optimize its learnable prompts
+                                                                             while dynamically adapting to the current input, we employ
+T g and gene encoder fg (·). Here we use the subscript p and
+                                                                             a learnable self-scoring mechanism implemented by atten-
+g to represent pathology and genomic data. Every pathway                                                         (i)
+is also encoded into a D-dimensional embedding.                              tion layers [13] to assign a score an,p for each feature token.
+                                                                                                          (i)
+                                                                             In the end, the final score sn,# for each feature token can be
+3.3. Stage 2: Multimodal Prompting (MultiPro)                                computed by their summarization:
+In this stage, we aim to leverage LLMs’ strong inference                                        (i)
+ability and robustness to missing modalities to predict the                                  sn,# = s(i,τ )  (i,τ )  (i)
+                                                                                                     n,p + sn,g + an,p              (8)
+representation of missing modalities, as shown in the Mul-                   For the inference phase when the ground-truth class cannot
+tiPro of Fig. 2.                                                             be accessed, we compute similarity scores with all textual
+   To simplify explanations, we take the example input                       class representations and apply Top-K max-pooling to de-
+of pathology available and genomics being missing. By                        termine which class j these tokens belong to:
+prompting the LLM with available pathology data, the Bert-                                                 (j)    (j)
+style LLM can capture modality-common knowledge for                                         τ = arg max h(Sn,p ⊕ Sn,g )                         (9)
+                                                                                                       j∈[1,2I t ]
+genomics due to its nature of self-attention. To compensate
+                                                                             where ⊕ refers to the element-wise addition and h(·) can be
+for modality-specific knowledge, we re-use the unimodal
+                                                                             computed by Eq. 6.
+prompts T g learned in stage 1 with all remaining samples
+                                                                                By selecting feature tokens with the top-Kp largest
+available of genomics data to supervise the learning of im-                                                               Kp
+puted representations, where unimodal prompts character-                     scores, we can get the input tokens {pin }i=1    for available
+ize the knowledge distribution of an individual modality.                    pathology modality. Then, we employ a set of learnable
+   To this end, we first need to construct an interleaved in-                tokens to act as placeholders [Hp ]1...Kp and [Hg ]1...Kg for
+put for the learning of modality-common information. To                      pathology and genomic data, where Kp and Kg are their
+fully leverage the capabilities of LLMs, every modality are                  token number of the input for the LLM in stage 2, respec-
+supposed to be embedded into the aligned text space. Con-                    tively. They are initialized with modality indicators. For the
+sequently, we re-use the aligned modality adapter or en-                     available pathology, we add the selected tokens to its place-
+                                                                                                                               Kp
+coder learned in the first stage to embed each modality, and                 holders, leading to the input of pathology {p̂in }i=1 . At last,
+we continue to finetune them in the second stage. Note that                  we concatenate them with placeholders of the missing ge-
+the LLM used in stage 2 is the same as the one in stage 1. As                nomics as well as a [CLS] token, resulting in the final input
+                                                           Mp
+a result, we can get a bag of aligned feature tokens {pin }i=1               being forwarded into a LLM T (·):
+         Mg
+or {gin }i=1 for pathology and genomic data, respectively.                                                                      K
+                                                                              [CLS][p̂n ]1...Kp [g̃n ]1...Kg = T ([CLS]||{p̂in }i=1
+                                                                                                                                  p
+                                                                                                                                    ||[Hg ]1...Kg )
+                                      Mg
+Here we assume genomic data {g̃in }i=1    is missing.                                                                                           (10)
+   Due to the limitation of input length for general LLMs                    UniPro Distillation. To inject modality-specific knowl-
+(e.g., 512 for Bert-style LLMs) and high information re-                     edge for the compensation of missing modality, we utilize
+dundancy in WSIs or genomic pathways [30, 42], more                          UniPro to supervise this process, where UniPro has learned
+discriminative and relevant feature tokens are expected to                   the knowledge distribution regarding the missing modality
+be selected for better capturing modality-common knowl-                      based on other observed samples in stage 1.
+edge. Therefore, we propose a UniPro Scoring module by                          Given the output (Eq. 10) of the LLM in stage 2, we
+re-using UniPro as a grader to estimate a relevance score for                take the part of the missing modality [g̃n ]1...Kg and compute
+each feature token.                                                          similarity scores h̃g between [g̃n ]1...Kg and the textual class
+
+
+
+                                                                      5106
+representation by Eq. 5 - 7. By substituting [g̃n ]1...Kg into              pathology and genomics data) to serve as the upper bound
+the survival loss function of Eq. 2, we can supervise the                   of current complete modality approaches. Then the average
+learning of compensation for the missing modality:                          performances on all missing combinations are demonstrated
+                                                                            under the total training missing rate of 60%, evaluated on
+              Ñg
+              X                                                             three inference scenarios. Details on various combinations
+   Lgud = −         [cn log Sn(τ ) + (1 − cn ) log Sn(τ −1)                 are shown in Fig. 3 and we discuss them in Sec. 4.3. Lastly,
+              n=1
+                                                              (11)
+                                                                            we investigate the upper bound of each model tailored to in-
+                                                    g,(τ )
+                              + (1 − cn ) log h̃n ]                         complete modalities by training them with all data (without
+                                                                            missing data).
+where Ñg is the number of missing genomic modalities
+across all data pairs. Similarly, we can get the loss func-                    From results in Tab. 1, we observed that (1) When ap-
+tion Lpud when the pathology modality is missing. Lastly,                   plying 60% training missing rate, DisPro consistently out-
+[CLS] token is used for calculating the loss function for                   performed SOTAs across five datasets by a large margin
+survival prediction Lcls                                                    (on average, +1.76% for pathology only, +1.57% for ge-
+                      surv in stage 2, and the final loss can
+be combined linearly with coefficient factors α1 and α2 :                   nomics only and 2.33% for complete data). This indicates
+                                                                            the superiority of DisPro over the incomplete SOTA meth-
+                              p        g
+              L = Lcls
+                   surv + α1 Lud + α2 Lud                     (12)          ods. (2) When testing on the complete scenario, on 3 out
+                                                                            of 5 datasets and overall, DisPro even surpassed the SOTA
+4. Experiments                                                              multimodal survival model (SurvPath) trained on all data.
+                                                                            Notably, DisPro achieved this while only utilizing incom-
+4.1. Datasets and Settings                                                  plete training data with a 60% missing rate. It suggests that
+Datasets. To demonstrate the efficacy of the proposed                       harnessing the powerful capabilities of LLMs is a promis-
+method, we conducted a series of experiments across five                    ing solution for addressing the classical question of sur-
+public cancer datasets sourced from The Cancer Genome                       vival analysis. (3) When using complete training data, Dis-
+Atlas (TCGA) 1 . The case number of each dataset is demon-                  Pro consistently performed best on average for various test
+strated next to the dataset name in Tab. 1. Regarding ge-                   scenarios as well (2.28% on pathology only, 1.33% on ge-
+nomic data, we follow the grouping of biological pathways                   nomics only and 2.57% on complete test data). Under the
+provided by [14] and remove genes absent in the cBioPor-                    same condition, DisPro further increased by 1.31% com-
+tal 2 database, resulting in 330 pathways. More details of                  pared with the SOTA complete multimodal method, fur-
+datasets can be found in supplementary materials.                           ther demonstrating the strong power of LLMs. (4) In con-
+Evaluation Settings on Incomplete Modalities. Follow-                       trast to unimodal methods trained on full unimodal datasets,
+ing the common setting in previous works [22, 32], to sys-                  DisPro, using only incomplete multimodal data with a
+tematically assess performances on various missing set-                     60% missing rate, achieved superior or similar performance
+tings, we first manually construct a series of missing sce-                 when inferring from individual modalities. This showcases
+narios under different missing ratios by randomly dropping                  DisPro’s efficient utilization of multimodal data.
+them for training sets on samples with complete modal-
+ity pairs. Specifically, we set a total missing rate (60%)                  4.3. Ablation Study
+for two modalities and then construct 5 combinations for                    Component Validation. In Tab. 2, we ablate each com-
+pathology and genomics, i.e., {(0%, 60%), (20%, 40%),                       ponent in our method to investigate their effectiveness. (1)
+(30%, 30%), (40%, 20%), (60%, 0%)}. For inference, all                      To demonstrate how the LLM performs on missing modal-
+methods are evaluated on three scenarios: pathology only,                   ities without any prompts, we establish a baseline by em-
+genomics only, and complete modalities. All experiments                     ploying a linear classifier head on the same LLM and ran-
+are conducted on 5-fold cross-validation following previous                 domly selecting feature tokens for its input. Results show
+works [5, 36] in survival prediction, and the concordance in-               that the performance significantly decreased by 2.62% on
+dex (C-Index) and its standard deviation (std) are reported                 pathology only, 1.55% on genomics only and 2.05% on
+to evaluate performances. The LLM is implemented by                         complete test data. This indicates the importance of ap-
+BioBERT-v1.2 [16]. The supplementary materials contain                      propriate prompts for LLMs. (2) When supplementing
+more experiment results and details on the implementation.                  modality-specific information for missing modalities, the
+4.2. Comparisons with SOTAs                                                 performance (+UD) consistently improves on all datasets
+                                                                            and increases by around +1% on various inference set-
+We first present unimodal approaches, and SOTA mul-                         tings, which validates the effectiveness of compensating for
+timodal methods trained with complete modalities (all                       modality-specific knowledge of the missing modality. (3)
+  1 https://portal.gdc.cancer.gov/                                          When reusing UniPro to select relevant tokens (+US), the
+  2 https://www.cbioportal.org/                                             performance increased by about +1% overall, which bene-
+
+
+
+                                                                     5107
+                  Test
+    Training                                        BLCA            BRCA         COADREAD            LUAD             UCEC
+                  P   G   Methods                                                                                                   Avg
+    MiRate                                          (372)           (1007)         (533)             (443)            (478)
+                          †TransMIL [28]        0.5903±0.025     0.6671±0.054    0.6093±0.018     0.6195±0.035    0.6978±0.046     0.6368
+                          †CoOp BioBert [44]    0.6014±0.047     0.6784±0.032    0.6681±0.026     0.6543±0.052    0.6791±0.085     0.6563
+                          †SNN [15]             0.6831±0.040     0.6567±0.038    0.6312±0.058     0.6379±0.071    0.7267±0.073     0.6671
+            N/A           †CoOp BioBert [44]    0.6712±0.036     0.6922±0.035    0.6743±0.048     0.6514±0.065    0.7171±0.060     0.6812
+                          ‡MOTCat [36]          0.6274±0.046     0.6721±0.038    0.6501±0.035     0.6753±0.043    0.7207±0.074     0.6691
+                          ‡SurvPath [14]        0.6572±0.027     0.7071±0.039    0.7079±0.048     0.6798±0.049    0.7391±0.065     0.6982
+                  •   ◦   COM [27]              0.6024±0.013     0.6740±0.011    0.6779±0.014     0.6336±0.011    0.6985±0.012     0.6573
+                  •   ◦   M3Care [40]           0.6208±0.014     0.6690±0.018    0.6570±0.023     0.6219±0.007    0.7031±0.012     0.6543
+                  •   ◦   HGCN [9]              0.5999±0.009     0.6831±0.012    0.6792±0.009     0.6465±0.005    0.7011±0.007     0.6620
+                  •   ◦   MUSE [34]             0.6207±0.013     0.6514±0.014    0.6547±0.009     0.6354±0.012    0.7048±0.023     0.6534
+                  •   ◦   MAP [17]              0.5918±0.012     0.6278±0.006    0.5965±0.017     0.6489±0.020    0.6929±0.021     0.6316
+                  •   ◦   DisPro (Ours)         0.6319±0.014     0.6895±0.011    0.6880±0.010     0.6612±0.014    0.7272±0.018     0.6796
+                  ◦   •   COM [27]              0.6415±0.016     0.6653±0.018    0.6593±0.030     0.6456±0.008    0.7105±0.007     0.6645
+                  ◦   •   M3Care [40]           0.6420±0.015     0.6642±0.029    0.6491±0.008     0.6462±0.012    0.7032±0.013     0.6609
+                  ◦   •   HGCN [9]              0.6225±0.008     0.6729±0.009    0.6752±0.015     0.6418±0.015    0.7015±0.010     0.6628
+      60%         ◦   •   MUSE [34]             0.6299±0.012     0.6427±0.025    0.6391±0.023     0.6462±0.010    0.6893±0.027     0.6494
+                  ◦   •   MAP [17]              0.5937±0.016     0.6269±0.006    0.5971±0.017     0.6442±0.009    0.6934±0.018     0.6311
+                  ◦   •   DisPro (Ours)         0.6547±0.012     0.6841±0.018    0.6804±0.024     0.6548±0.012    0.7271±0.017     0.6802
+                  •   •   COM [27]              0.6192±0.013     0.6846±0.009    0.6874±0.005     0.6548±0.012    0.7136±0.016     0.6719
+                  •   •   M3Care [40]           0.6513±0.005     0.6951±0.024    0.6698±0.016     0.6491±0.013    0.7288±0.011     0.6788
+                  •   •   HGCN [9]              0.6332±0.006     0.6907±0.012    0.6861±0.017     0.6545±0.011    0.7077±0.008     0.6745
+                  •   •   MUSE [34]             0.6207±0.012     0.6555±0.013    0.6539±0.012     0.6415±0.008    0.7164±0.013     0.6576
+                  •   •   MAP [17]              0.5906±0.013     0.6277±0.004    0.5990±0.016     0.6625±0.008    0.6901±0.018     0.6340
+                  •   •   DisPro (Ours)         0.6638±0.006     0.7219±0.015    0.7029±0.016     0.6741±0.007    0.7476±0.020     0.7021
+                  •   ◦   COM [27]              0.6154±0.041     0.6871±0.027    0.6925±0.044     0.6427±0.046    0.6806±0.061     0.6637
+                  •   ◦   M3Care [40]           0.6268±0.024     0.6775±0.016    0.6850±0.052     0.6299±0.038    0.6964±0.061     0.6631
+                  •   ◦   HGCN [9]              0.6055±0.048     0.6716±0.022    0.6734±0.048     0.6421±0.052    0.6915±0.053     0.6568
+                  •   ◦   MUSE [34]             0.6208±0.026     0.6767±0.040    0.6710±0.041     0.6253±0.041    0.7099±0.063     0.6607
+                  •   ◦   MAP [17]              0.6205±0.033     0.6300±0.053    0.5930±0.065     0.6662±0.055    0.6925±0.064     0.6404
+                  •   ◦   DisPro (Ours)         0.6315±0.028     0.6945±0.044    0.7216±0.028     0.6747±0.052    0.7104±0.056     0.6865
+                  ◦   •   COM [27]              0.6681±0.030     0.6966±0.047    0.6770±0.024     0.6454±0.050    0.7095±0.059     0.6793
+                  ◦   •   M3Care [40]           0.6706±0.039     0.6611±0.040    0.6563±0.021     0.6512±0.061    0.7047±0.060     0.6688
+                  ◦   •   HGCN [9]              0.6233±0.033     0.6807±0.023    0.6777±0.037     0.6421±0.045    0.7091±0.043     0.6666
+       0%         ◦   •   MUSE [34]             0.6256±0.029     0.6401±0.024    0.6208±0.030     0.6547±0.075    0.6824±0.039     0.6447
+                  ◦   •   MAP [17]              0.6093±0.026     0.6305±0.051    0.5842±0.065     0.6653±0.045    0.6841±0.064     0.6347
+                  ◦   •   DisPro (Ours)         0.6745±0.039     0.6996±0.028    0.7000±0.021     0.6751±0.068    0.7140±0.060     0.6926
+                  •   •   COM [27]              0.6376±0.043     0.7087±0.024    0.6990±0.045     0.6659±0.034    0.7112±0.051     0.6845
+                  •   •   M3Care [40]           0.6605±0.023     0.6808±0.041    0.6768±0.026     0.6740±0.046    0.7359±0.033     0.6856
+                  •   •   HGCN [9]              0.6365±0.021     0.7058±0.033    0.7136±0.025     0.6692±0.050    0.7017±0.044     0.6854
+                  •   •   MUSE [34]             0.6282±0.039     0.7017±0.020    0.6693±0.042     0.6248±0.040    0.7237±0.062     0.6695
+                  •   •   MAP [17]              0.6034±0.026     0.6328±0.049    0.5895±0.063     0.6904±0.047    0.6827±0.065     0.6398
+                  •   •   DisPro (Ours)         0.6719±0.051     0.7358±0.051    0.7553±0.021     0.6767±0.041    0.7169±0.071     0.7113
+
+Table 1. C-Index of Comparison to SOTA models. “MiRate” represents Missing Rate. “P” and “G” indicate Pathology and Genomics,
+respectively. ◦ and • mean the missing modality and the available modality, respectively. † and ‡ indicate using unimodal and complete
+multimodal data, respectively, while the rest are for missing modalities. The best results are in bold. The second-best results are underlined.
+
+fits from the assistance of US in learning modality-common                 mance superiority in various missing settings over other in-
+knowledge from WSIs and genes with high redundancy.                        complete multimodal approaches by a clear margin.
+Various Missing Scenarios. To illustrate how incomplete                    5. Conclusion
+multimodal approaches handle varying missing settings, we
+display different combinations of training missing rates for               This work proposed a Distilled Prompt Learning (DisPro)
+each inference scenario, as shown in Fig. 3. Results show-                 framework to unlock the potential of LLMs for incom-
+case that DisPro achieved considerably consistent perfor-                  plete multimodal learning by two-stage prompting, in which
+
+
+
+                                                                    5108
+                                            Test                 Modules
+                                                                                                      BLCA                                       BRCA                       COADREAD                                          LUAD                                      UCEC
+              Variants                   P        G             US               UD                                                                                                                                                                                                                    Avg
+                                                                                                      (372)                                      (1007)                       (533)                                           (443)                                     (478)
+       baseline                          •         ◦                                           0.6068±0.021                              0.6668±0.006                       0.6583±0.012                              0.6270±0.018                                0.7081±0.019                      0.6534
+        + UD                             •         ◦                              ✓            0.6213±0.010                              0.6829±0.008                       0.6740±0.022                              0.6327±0.018                                0.7152±0.011                      0.6652
+        + US                             •         ◦             ✓                             0.6285±0.021                              0.6884±0.016                       0.6653±0.026                              0.6546±0.013                                0.7203±0.007                      0.6714
+     DisPro (full)                       •         ◦             ✓                ✓            0.6319±0.014                              0.6895±0.011                       0.6880±0.010                              0.6612±0.014                                0.7272±0.018                      0.6796
+       baseline                          ◦         •                                           0.6435±0.016                              0.6605±0.033                       0.6601±0.018                              0.6467±0.016                                0.7127±0.007                      0.6647
+        + UD                             ◦         •                              ✓            0.6473±0.017                              0.6836±0.014                       0.6707±0.022                              0.6420±0.020                                0.7226±0.013                      0.6732
+        + US                             ◦         •             ✓                             0.6452±0.020                              0.6666±0.017                       0.6763±0.023                              0.6471±0.023                                0.7151±0.009                      0.6701
+     DisPro (full)                       ◦         •             ✓                ✓            0.6547±0.012                              0.6841±0.018                       0.6804±0.024                              0.6548±0.012                                0.7271±0.017                      0.6802
+       baseline                          •         •                                           0.6522±0.010                              0.7075±0.012                       0.6785±0.020                              0.6541±0.009                                0.7157±0.003                      0.6816
+        + UD                             •         •                              ✓            0.6585±0.007                              0.7194±0.013                       0.6963±0.009                              0.6635±0.014                                0.7250±0.012                      0.6926
+        + US                             •         •             ✓                             0.6593±0.008                              0.7125±0.010                       0.7005±0.018                              0.6717±0.007                                0.7274±0.010                      0.6943
+     DisPro (full)                       •         •             ✓                ✓            0.6638±0.006                              0.7219±0.015                       0.7029±0.016                              0.6741±0.007                                0.7476±0.020                      0.7021
+
+Table 2. C-Index of Ablation Study on the Setting of 60% Training Missing Rate.“US” and “UD” refer to the UniPro Scoring and
+UniPro Distillation modules, respectively. “P” and “G” indicate Pathology and Genomics, respectively. ◦ means the modality is missing,
+while • refers to the available modality.
+                                                                                                     MUSE               M3Care                      HGCN           COM               MAP                   DisPro (Ours)
+                         Eval on WSI for BLCA                                         Eval on WSI for BRCA                                       Eval on WSI for COADREAD                                      Eval on WSI for LUAD                                          Eval on WSI for UCEC
+             0.65                                                                                                                                                                                                                                                0.76
+                                                                          0.70                                                         0.70                                                         0.68
+             0.64                                                                                                                                                                                                                                                0.74
+             0.63                                                                                                                      0.68                                                         0.67
+                                                                          0.68                                                                                                                      0.66
+             0.62                                                                                                                      0.66                                                                                                                      0.72
+   C-Index
+
+
+
+
+                                                                C-Index
+
+
+
+
+                                                                                                                             C-Index
+
+
+
+
+                                                                                                                                                                                          C-Index
+
+
+
+
+                                                                                                                                                                                                                                                       C-Index
+             0.61                                                         0.66                                                         0.64                                                         0.65
+                                                                                                                                                                                                    0.64                                                         0.70
+             0.60                                                                                                                      0.62
+             0.59                                                         0.64                                                                                                                      0.63                                                         0.68
+             0.58                                                                                                                      0.60                                                         0.62
+             0.57                                                         0.62                                                         0.58                                                                                                                      0.66
+                                                                                                                                                                                                    0.61
+                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %
+                 I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %
+               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0
+               Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O
+                      WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios                                       WSI-Omics Missing Ratios                                   WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios
+                       Eval on Omics for BLCA                             0.70
+                                                                                    Eval on Omics for BRCA                                      Eval on Omics for COADREAD                                    Eval on Omics for LUAD                                      Eval on Omics for UCEC
+                                                                                                                                                                                                    0.67
+             0.66                                                                                                                      0.70                                                                                                                      0.74
+                                                                          0.68                                                         0.68                                                         0.66
+             0.64
+                                                                                                                                       0.66                                                         0.65                                                         0.72
+                                                                          0.66
+   C-Index
+
+
+
+
+                                                                C-Index
+
+
+
+
+                                                                                                                             C-Index
+
+
+
+
+                                                                                                                                                                                          C-Index
+
+
+
+
+                                                                                                                                                                                                                                                       C-Index
+             0.62
+                                                                                                                                       0.64                                                         0.64                                                         0.70
+             0.60                                                         0.64                                                         0.62                                                         0.63                                                         0.68
+             0.58                                                                                                                      0.60
+                                                                          0.62                                                                                                                      0.62
+                                                                                                                                       0.58                                                                                                                      0.66
+                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %
+                 I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %
+               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0
+               Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O
+                     WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios                                         WSI-Omics Missing Ratios                                 WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios
+                    Eval on WSI+Omics for BLCA                                   Eval on WSI+Omics for BRCA                                   Eval on WSI+Omics for COADREAD                               Eval on WSI+Omics for LUAD                                   Eval on WSI+Omics for UCEC
+                                                                          0.74                                                                                                                      0.68                                                         0.78
+             0.66                                                                                                                      0.72
+                                                                          0.72                                                         0.70                                                                                                                      0.76
+                                                                                                                                                                                                    0.67
+             0.64                                                         0.70                                                         0.68                                                                                                                      0.74
+                                                                                                                                                                                                    0.66
+   C-Index
+
+
+
+
+                                                                C-Index
+
+
+
+
+                                                                                                                             C-Index
+
+
+
+
+                                                                                                                                                                                          C-Index
+
+
+
+
+                                                                                                                                                                                                                                                       C-Index
+
+
+
+
+             0.62                                                         0.68                                                         0.66                                                                                                                      0.72
+                                                                                                                                       0.64                                                         0.65
+             0.60                                                         0.66                                                                                                                                                                                   0.70
+                                                                                                                                       0.62
+                                                                          0.64                                                         0.60                                                         0.64                                                         0.68
+             0.58
+                                                                          0.62                                                         0.58                                                         0.63                                                         0.66
+                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %                               %         %         %        %
+                 I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %                               I: 0% % 20 % 30 % 40 % I: 60 %
+               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0               WSics:60WSI:ics:40WSI:ics:30WSI:ics:20WSmics:0
+               Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O                     Om      Om        Om        Om         O
+                      WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios                                       WSI-Omics Missing Ratios                                   WSI-Omics Missing Ratios                                     WSI-Omics Missing Ratios
+
+
+                              Figure 3. Performance on various combinations under 60% training missing rate for different test scenarios.
+
+
+Unimodal Prompting (UniPro) and Multimodal Prompt-                                                                                                                 ing modalities. To inject the specific knowledge of missing
+ing (MultiPro) were proposed for supplementing modality-                                                                                                           modalities, the distilled prompts in UniPro are used to su-
+specific and modality-common knowledge for missing                                                                                                                 pervise the learning of imputing representations for miss-
+modalities. In the first stage, UniPro extended CoOp into                                                                                                          ing modalities, leading to more comprehensive knowledge
+the MIL setting and distilled knowledge distribution to a set                                                                                                      compensation in incomplete multimodal learning. Exten-
+of learnable prompts for each modality, which prepped for                                                                                                          sive experiments on five cancer benchmark datasets demon-
+compensation of modality-specific knowledge. In the sec-                                                                                                           strated the effectiveness of the proposed method over state-
+ond stage, considering available modalities as prompts, we                                                                                                         of-the-art approaches.
+leveraged an LLM to impute common knowledge for miss-
+
+
+
+                                                                                                                                                       5109
+Acknowledgement                                                                   glioma segmentation. In Medical Image Computing and
+                                                                                  Computer Assisted Intervention–MICCAI 2021: 24th Inter-
+This work was supported by the National Natural Sci-                              national Conference, Strasbourg, France, September 27–
+ence Foundation of China (No. 62202403), Hong Kong                                October 1, 2021, Proceedings, Part VII 24, pages 442–452.
+Innovation and Technology Commission (Project No.                                 Springer, 2021. 2
+MHP/002/22 and ITCPD/17-9), and Research Grants                              [13] Maximilian Ilse, Jakub Tomczak, and Max Welling.
+Council of the Hong Kong Special Administrative Re-                               Attention-based deep multiple instance learning. In Inter-
+gion, China (Project No. R6003-22 and C4024-22GF).                                national conference on machine learning, pages 2127–2136.
+                                                                                  PMLR, 2018. 2, 5
+                                                                             [14] Guillaume Jaume, Anurag Vaidya, Richard J Chen, Drew FK
+References                                                                        Williamson, Paul Pu Liang, and Faisal Mahmood. Model-
+ [1] Som S Biswas. Role of chat gpt in public health. Annals of                   ing dense multimodal interactions between biological path-
+     biomedical engineering, 51(5):868–869, 2023. 2                               ways and histology for survival prediction. In Proceedings of
+                                                                                  the IEEE/CVF Conference on Computer Vision and Pattern
+ [2] Jason Brownlee. A gentle introduction to the rectified linear
+                                                                                  Recognition, pages 11579–11590, 2024. 3, 6, 7, 1
+     unit (relu). Machine learning mastery, 6, 2019. 3, 1
+                                                                             [15] Günter Klambauer, Thomas Unterthiner, Andreas Mayr, and
+ [3] Agisilaos Chartsias, Thomas Joyce, Mario Valerio Giuf-
+                                                                                  Sepp Hochreiter. Self-normalizing neural networks. Ad-
+     frida, and Sotirios A Tsaftaris. Multimodal mr synthesis via
+                                                                                  vances in neural information processing systems, 30, 2017.
+     modality-invariant latent representation. IEEE transactions
+                                                                                  7, 1
+     on medical imaging, 37(3):803–814, 2017. 1
+                                                                             [16] Jinhyuk Lee, Wonjin Yoon, Sungdong Kim, Donghyeon
+ [4] Jiayi Chen and Aidong Zhang. Hgmf: heterogeneous graph-
+                                                                                  Kim, Sunkyu Kim, Chan Ho So, and Jaewoo Kang. Biobert:
+     based fusion for multimodal data with incompleteness. In
+                                                                                  a pre-trained biomedical language representation model for
+     Proceedings of the 26th ACM SIGKDD international confer-
+                                                                                  biomedical text mining. Bioinformatics, 36(4):1234–1240,
+     ence on knowledge discovery & data mining, pages 1295–
+                                                                                  2020. 6, 1
+     1305, 2020. 1, 2
+                                                                             [17] Yi-Lun Lee, Yi-Hsuan Tsai, Wei-Chen Chiu, and Chen-Yu
+ [5] Richard J Chen, Ming Y Lu, Wei-Hung Weng, Tiffany Y                          Lee. Multimodal prompting with missing modalities for vi-
+     Chen, Drew FK Williamson, Trevor Manz, Maha Shady,                           sual recognition. In Proceedings of the IEEE/CVF Confer-
+     and Faisal Mahmood. Multimodal co-attention transformer                      ence on Computer Vision and Pattern Recognition, pages
+     for survival prediction in gigapixel whole slide images. In                  14943–14952, 2023. 2, 7, 3
+     Proceedings of the IEEE/CVF International Conference on
+                                                                             [18] Bin Li, Yin Li, and Kevin W Eliceiri. Dual-stream multiple
+     Computer Vision, pages 4015–4025, 2021. 1, 3, 6
+                                                                                  instance learning network for whole slide image classifica-
+ [6] Richard J Chen, Tong Ding, Ming Y Lu, Drew FK                                tion with self-supervised contrastive learning. In Proceed-
+     Williamson, Guillaume Jaume, Andrew H Song, Bowen                            ings of the IEEE/CVF conference on computer vision and
+     Chen, Andrew Zhang, Daniel Shao, Muhammad Shaban,                            pattern recognition, pages 14318–14328, 2021. 3
+     et al. Towards a general-purpose foundation model for                   [19] Chenxin Li, Xinyu Liu, Cheng Wang, Yifan Liu, Weihao Yu,
+     computational pathology. Nature Medicine, 30(3):850–862,                     Jing Shao, and Yixuan Yuan. Gtp-4o: Modality-prompted
+     2024. 1                                                                      heterogeneous graph learning for omni-modal biomedical
+ [7] Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu,                     representation. In European conference on computer vision,
+     and Mubarak Shah. Diffusion models in vision: A survey.                      pages 168–187. Springer, 2024. 2
+     IEEE Transactions on Pattern Analysis and Machine Intelli-              [20] Chunyuan Li, Cliff Wong, Sheng Zhang, Naoto Usuyama,
+     gence, 45(9):10850–10869, 2023. 2                                            Haotian Liu, Jianwei Yang, Tristan Naumann, Hoifung Poon,
+ [8] Yuhang Ding, Xin Yu, and Yi Yang. Rfnet: Region-aware                        and Jianfeng Gao. Llava-med: Training a large language-
+     fusion network for incomplete multi-modal brain tumor seg-                   and-vision assistant for biomedicine in one day. Advances in
+     mentation. In Proceedings of the IEEE/CVF international                      Neural Information Processing Systems, 36, 2024. 2
+     conference on computer vision, pages 3975–3984, 2021. 1,                [21] Han Liu, Yubo Fan, Hao Li, Jiacheng Wang, Dewei Hu, Can
+     2                                                                            Cui, Ho Hin Lee, Huahong Zhang, and Ipek Oguz. Mod-
+ [9] Hou et al. Hybrid graph convolutional network with online                    drop++: A dynamic filter network with intra-subject co-
+     masked autoencoder for robust multimodal cancer survival                     training for multiple sclerosis lesion segmentation with miss-
+     prediction. IEEE Transactions on Medical Imaging, 2023. 7                    ing modalities. In International Conference on Medical Im-
+[10] Zhou et al. Cross-modal translation and alignment for sur-                   age Computing and Computer-Assisted Intervention, pages
+     vival analysis. In ICCV, pages 21485–21494, 2023. 1, 3                       444–453. Springer, 2022. 2
+[11] Michael Gadermayr and Maximilian Tschuchnig. Multi-                     [22] Mengmeng Ma, Jian Ren, Long Zhao, Sergey Tulyakov,
+     ple instance learning for digital pathology: A review of the                 Cathy Wu, and Xi Peng. Smil: Multimodal learning with
+     state-of-the-art, limitations & future potential. Computerized               severely missing modality. In Proceedings of the AAAI Con-
+     Medical Imaging and Graphics, page 102337, 2024. 2                           ference on Artificial Intelligence, pages 2302–2310, 2021. 2,
+[12] Mohammad Hamghalam, Alejandro F Frangi, Baiying Lei,                         6
+     and Amber L Simpson. Modality completion via gaus-                      [23] Xiangxi Meng, Kaicong Sun, Jun Xu, Xuming He, and Ding-
+     sian process prior variational autoencoders for multi-modal                  gang Shen. Multi-modal modality-masked diffusion network
+
+
+
+
+                                                                      5110
+     for brain mri synthesis with random modality missing. IEEE                    IEEE/CVF International Conference on Computer Vision,
+     Transactions on Medical Imaging, 2024. 1, 2                                   pages 21241–21251, 2023. 1, 3, 6, 7
+[24] Muhammad Khalid Khan Niazi, Anil V Parwani, and                          [37] Shu Yang, Yihui Wang, and Hao Chen. Mambamil: En-
+     Metin N Gurcan. Digital pathology and artificial intelli-                     hancing long sequence modeling with sequence reordering
+     gence. The lancet oncology, 20(5):e253–e261, 2019. 3                          in computational pathology. In International Conference on
+[25] Zhenyuan Ning, Denghui Du, Chao Tu, Qianjin Feng, and                         Medical Image Computing and Computer-Assisted Interven-
+     Yu Zhang. Relation-aware shared representation learning                       tion, pages 296–306. Springer, 2024. 2
+     for cancer prognosis analysis with auxiliary clinical variables          [38] Yixiao Yuan, Yawen Huang, and Yi Zhou. Rethinking a uni-
+     and incomplete multi-modality data. IEEE Transactions on                      fied generative adversarial model for mri modality comple-
+     Medical Imaging, 41(1):186–198, 2021. 2                                       tion. In International Conference on Medical Image Com-
+[26] Fatih Ozsolak and Patrice M Milos. Rna sequencing: ad-                        puting and Computer-Assisted Intervention, pages 143–153.
+     vances, challenges and opportunities. Nature reviews genet-                   Springer, 2023. 2
+     ics, 12(2):87–98, 2011. 3                                                [39] Shekoufeh Gorgi Zadeh and Matthias Schmid. Bias in cross-
+[27] Shuwei Qian and Chongjun Wang. Com: Contrastive                               entropy-based training of deep survival networks. IEEE
+     masked-attention model for incomplete multimodal learning.                    transactions on pattern analysis and machine intelligence,
+     Neural Networks, 162:443–455, 2023. 7                                         43(9):3126–3137, 2020. 3
+[28] Zhuchen Shao, Hao Bian, Yang Chen, Yifeng Wang, Jian                     [40] Chaohe Zhang, Xu Chu, Liantao Ma, Yinghao Zhu, Yasha
+     Zhang, Xiangyang Ji, et al. Transmil: Transformer based                       Wang, Jiangtao Wang, and Junfeng Zhao. M3care: Learn-
+     correlated multiple instance learning for whole slide image                   ing with missing modalities in multimodal healthcare data.
+     classification. Advances in neural information processing                     In Proceedings of the 28th ACM SIGKDD Conference on
+     systems, 34:2136–2147, 2021. 3, 7                                             Knowledge Discovery and Data Mining, pages 2418–2428,
+[29] Anmol Sharma and Ghassan Hamarneh. Missing mri pulse                          2022. 1, 2, 7
+     sequence synthesis using multi-modal generative adversar-                [41] Hongrun Zhang, Yanda Meng, Yitian Zhao, Yihong Qiao,
+     ial network. IEEE transactions on medical imaging, 39(4):                     Xiaoyun Yang, Sarah E Coupland, and Yalin Zheng. Dtfd-
+     1170–1183, 2019. 1                                                            mil: Double-tier feature distillation multiple instance learn-
+[30] Andrew H Song, Richard J Chen, Guillaume Jaume,                               ing for histopathology whole slide image classification. In
+     Anurag Jayant Vaidya, Alexander Baras, and Faisal Mah-                        Proceedings of the IEEE/CVF conference on computer vi-
+     mood. Multimodal prototyping for cancer survival predic-                      sion and pattern recognition, pages 18802–18812, 2022. 3
+     tion. In Forty-first International Conference on Machine                 [42] Yilan Zhang, Yingxue Xu, Jianqi Chen, Fengying Xie, and
+     Learning, 2024. 1, 2, 3, 5                                                    Hao Chen. Prototypical information bottlenecking and dis-
+[31] Rory Stark, Marta Grzelak, and James Hadfield. Rna se-                        entangling for multimodal cancer survival prediction. In The
+     quencing: the teenage years. Nature Reviews Genetics, 20                      Twelfth International Conference on Learning Representa-
+     (11):631–656, 2019. 3                                                         tions, 2024. 1, 2, 3, 5
+[32] Hu Wang, Yuanhong Chen, Congbo Ma, Jodie Avery, Louise                   [43] Huajun Zhou, Fengtao Zhou, Chenyu Zhao, Yingxue Xu,
+     Hull, and Gustavo Carneiro. Multi-modal learning with                         Luyang Luo, and Hao Chen. Multimodal data integration for
+     missing modality via shared-specific feature modelling. In                    precision oncology: Challenges and future directions. arXiv
+     Proceedings of the IEEE/CVF Conference on Computer Vi-                        preprint arXiv:2406.19611, 2024. 1, 2
+     sion and Pattern Recognition, pages 15878–15887, 2023. 6                 [44] Kaiyang Zhou, Jingkang Yang, Chen Change Loy, and Ziwei
+[33] Tianyu Wu, Shizhu He, Jingping Liu, Siqi Sun, Kang Liu,                       Liu. Learning to prompt for vision-language models. In-
+     Qing-Long Han, and Yang Tang. A brief overview of chat-                       ternational Journal of Computer Vision, 130(9):2337–2348,
+     gpt: The history, status quo and potential future develop-                    2022. 2, 3, 7
+     ment. IEEE/CAA Journal of Automatica Sinica, 10(5):1122–
+     1136, 2023. 2
+[34] Zhenbang Wu, Anant Dadu, Nicholas Tustison, Brian
+     Avants, Mike Nalls, Jimeng Sun, and Faraz Faghri. Multi-
+     modal patient representation learning with missing modali-
+     ties and labels. In The Twelfth International Conference on
+     Learning Representations, 2024. 1, 2, 7
+[35] Conghao Xiong, Hao Chen, Hao Zheng, Dong Wei, Yefeng
+     Zheng, Joseph JY Sung, and Irwin King. Mome: Mixture
+     of multimodal experts for cancer survival prediction. In In-
+     ternational Conference on Medical Image Computing and
+     Computer-Assisted Intervention, pages 318–328. Springer,
+     2024. 1
+[36] Yingxue Xu and Hao Chen. Multimodal optimal transport-
+     based co-attention transformer with global structure con-
+     sistency for survival prediction. In Proceedings of the
+
+
+
+
+                                                                       5111
+
