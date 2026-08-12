@@ -1,211 +1,214 @@
 # TRUST-HN WP2 Argument Map
 
-**Version date:** 2026-08-12  
-**Status:** WP2 planning artifact; not manuscript prose.  
-**Evidence interface:** `evidence_map.csv` and bilingual WP1 claim matrices are binding.  
-**Approval boundary:** no full prose, figure production, or WP3+ work is authorized by this document.
+**Version date:** 2026-08-12
+**Status:** story-driven WP2 planning artifact; not manuscript prose.
+**Evidence interface:** `evidence_map.csv` and the bilingual WP1 claim matrices are binding.
+**Approval boundary:** this document does not authorize full prose, figure production, changes to `main.tex`, or WP3+ work.
 
 ## 1. Provisional titles and short title
 
 ### Leading title (provisional)
 
-**Clinical anchoring and reliability-aware multimodal prognostic modelling across heterogeneous head and neck cancer data ecosystems**
+**TRUST-HN: Reliability-aware multimodal prognostic modelling reveals cohort-dependent gains and failure boundaries in head and neck cancer**
 
 ### Alternative title A (provisional)
 
-**Cohort-dependent multimodal prognosis and reliability gating in head and neck squamous cell carcinoma**
+**TRUST-HN: Clinical anchoring and reliability gating for multimodal prognosis across heterogeneous HNSCC data ecosystems**
 
 ### Alternative title B (provisional)
 
-**Reliability-aware fallback and abstention reveal limits of multimodal prognosis across heterogeneous HNSCC cohorts**
+**TRUST-HN: When multimodal prognostic information helps—and fails—across heterogeneous head and neck cancer cohorts**
 
 ### Short title (provisional)
 
-**Reliability-aware multimodal HNSCC prognosis**
+**TRUST-HN multimodal prognosis**
+
+### Why TRUST-HN belongs in the title
+
+- TRUST-HN names the complete scientific framework: clinical anchoring, conditional incremental fusion, reliability assessment, fallback, and abstention. It is not merely the label of B6 or B7.
+- Naming the framework improves identity and discoverability, but the subtitle must immediately state the actual finding—cohort-dependent gains and failure boundaries—so that “TRUST” is not misread as a claim of universal trustworthiness.
+- The title therefore combines **framework identity** with a **restrained empirical conclusion**, rather than advertising a universally superior model.
 
 ### Title guardrails
 
-- Do not use unqualified ?trustworthy,? ?robust,? ?validated,? ?clinically useful,? or ?deployment-ready.?
-- Titles remain provisional until Results, Discussion, figures/tables, and Abstract are stabilized.
-- Phase 7 and Phase 8 methods/results must not drive an apparently confirmatory title.
+- Do not use unqualified “trustworthy,” “robust,” “validated,” “clinically useful,” or “deployment-ready.”
+- Do not frame TRUST-HN as a performance champion.
+- Phase 7 is always **post hoc exploratory** and cannot drive a confirmatory title.
+- Phase 8 is excluded from the current main-text narrative and title.
 
 ## 2. Primary research question
 
-In retrospective HNSCC data ecosystems with different modality availability and distribution shifts, can a clinical-anchor-plus-incremental-fusion framework characterize when additional modalities improve 24-month overall-survival prediction and use reliability-aware AUGMENT/FALLBACK/ABSTAIN behaviour to expose?rather than conceal?failure of forced multimodal fusion?
+Across heterogeneous retrospective HNSCC data ecosystems, **when does multimodal information add credible prognostic value beyond a clinical anchor, when does transfer fail, and can reliability-aware fallback or abstention make those conditions auditable rather than conceal the failure of forced fusion?**
 
 ### Secondary questions
 
-1. How do B2 (clinical anchor), B6 (full incremental fusion), and B7 (reliability-gated selective prediction) behave in prespecified locked, OOD, cross-platform external, and restricted sensitivity settings?
-2. Does B7 preserve performance relative to B6 on the **identical non-abstained subset**, and at what coverage?
-3. Do negative controls, development stress tests, and exploratory decision curves support modality specificity, general robustness, or clinical utility?
-4. Do Phase 7 **post hoc exploratory** comparators reveal a universally superior modelling strategy?
-5. What failure boundaries must be resolved before prospective evaluation or deployment-oriented threshold selection?
+1. Under prespecified Phase 6 locked, OOD, cross-platform external, and restricted sensitivity conditions, where did B6 show favourable incremental point estimates relative to B2, and where did it fail?
+2. What did B7 reveal through coverage and AUGMENT/FALLBACK/ABSTAIN behaviour, and did it improve prediction on the **identical non-abstained subset**?
+3. Do development stress tests, radiomics negative controls, and exploratory decision curves support stronger interpretations of modality specificity, universal robustness, or clinical utility?
+4. Do Phase 7 **post hoc exploratory** comparators preserve the same ranking across ecosystems?
+5. Which evidence boundaries must be resolved before prospective evaluation or deployment-oriented threshold selection?
 
-## 3. One-sentence answer to be defended
+## 3. Central thesis and one-sentence answer
 
-Across heterogeneous HNSCC data ecosystems, multimodal prognostic gains and reliability-gating behaviour were strongly cohort dependent; reliability-aware fallback and abstention exposed failure modes of forced fusion, but current retrospective evidence did not establish universal robustness, deployable thresholds, or clinical utility.
+### Central thesis
 
-## 4. Contribution hierarchy
+**Multimodal information is not intrinsically superior to clinical information; its prognostic value is conditional on the data ecosystem and transfer setting. TRUST-HN contributes an auditable way to express that conditionality by anchoring predictions clinically and making augmentation, fallback, and abstention explicit.**
 
-### Primary contribution
+### One-sentence answer to be defended
 
-A transparent and auditable reliability framework that combines a clinical anchor, incremental/residual multimodal fusion, reliability assessment, and algorithmic AUGMENT/FALLBACK/ABSTAIN outputs while making coverage and failure boundaries explicit.
+Across heterogeneous HNSCC data ecosystems, multimodal prognostic gains were conditional rather than universal: TRUST-HN made success and failure conditions visible through clinical anchoring, reliability-aware fallback, and abstention, while the retrospective evidence remained insufficient for universal robustness, deployable thresholds, or clinical utility.
 
-### Empirical contribution
+## 4. The scientific story, not an experiment inventory
 
-A prespecified Phase 6 retrospective evaluation showing relatively favourable B6 transfer in RADCURE and HANCOCK alongside substantial cross-platform calibration failure in GSE65858 and restricted, uncertain evidence in GSE41613.
+The paper begins from a translational problem rather than from the model catalogue. In multimodal prognosis, adding data sources can improve prediction, but it can also import missingness, shortcut signals, and platform-specific calibration error. The scientifically relevant question is therefore not “How many modalities can be fused?” or “Which model tops one leaderboard?” It is **when additional modalities provide credible incremental information beyond a stable clinical reference**.
+
+TRUST-HN addresses this question by treating the clinical model as an anchor. B6 represents forced incremental fusion: it asks whether added modality information can improve on that anchor. Phase 6 first supplies encouraging evidence—B6 has favourable retrospective point estimates in RADCURE and HANCOCK. The story then turns at GSE65858, where cross-platform transfer produces substantial Brier and calibration failure despite the richer model. This failure is not an appendix result; it is the observation that gives the framework its scientific necessity.
+
+B7 is then introduced as a response to forced-fusion risk, not as a guaranteed accuracy upgrade. Its scientific value is that it makes the system’s behaviour inspectable through coverage and AUGMENT/FALLBACK/ABSTAIN outputs. The paired results show why the distinction matters: gating is worse than B6 in RADCURE, uncertain in HANCOCK and GSE41613, and improves over B6 in GSE65858 while remaining clearly worse than the clinical anchor B2. Thus, the gate exposes conditional reliability but does not manufacture universal superiority.
+
+The final part of the story actively tries to falsify overinterpretation. The failed Phase 5 check, seed-specific subgroup warnings, radiomics negative controls, and exploratory DCA prevent favourable discrimination from being re-labelled as modality-specific biology, universal shift robustness, or clinical utility. Phase 7 post hoc exploratory comparators further change rank across ecosystems. The conclusion is therefore not that TRUST-HN “wins,” but that **conditional fusion should be judged relative to a clinical anchor, with explicit coverage, fallback, abstention, and failure boundaries**.
+
+## 5. Contribution hierarchy
+
+### Primary scientific contribution
+
+A clinical-anchor formulation of multimodal prognosis in which added modalities are evaluated as **conditional incremental information**, not assumed improvements.
 
 ### Reliability contribution
 
-A selective-prediction analysis showing that B7 changed coverage and action distributions but did not consistently outperform B6 on identical non-abstained subsets.
+An auditable selective-prediction interface that exposes non-abstained coverage and AUGMENT/FALLBACK/ABSTAIN behaviour, while requiring direct B7 comparisons on the identical non-abstained subset.
+
+### Empirical contribution
+
+Prespecified Phase 6 retrospective evidence that juxtaposes favourable B6 point estimates in RADCURE and HANCOCK with substantial cross-platform failure in GSE65858 and restricted sensitivity evidence in GSE41613.
 
 ### Falsification contribution
 
-Negative controls, stress tests, and exploratory DCA constrain interpretation: observed discrimination cannot be equated with radiomics-specific biological signal, universal robustness, clinical utility, or deployment readiness.
+Development stress tests, subgroup warnings, radiomics negative controls, and exploratory DCA define what the performance results cannot establish.
 
 ### Comparative contribution
 
-Phase 7 **post hoc exploratory** comparators demonstrate cohort-dependent rankings and no universal winner; strong performance in one ecosystem can coexist with calibration failure in another.
+Phase 7 **post hoc exploratory** comparators show ecosystem-dependent rankings and no universal winner.
 
 ### Governance contribution
 
-A strict separation of frozen/prespecified Phase 6 evidence, post hoc exploratory Phase 7 evidence, and Phase 8 known-overlap workflow/bias simulation.
+A strict separation between prespecified Phase 6 evidence and Phase 7 post hoc exploratory evidence. Phase 8 is not part of the current main-text argument.
 
-## 5. Main argument chain
+## 6. Main argument chain
 
-| Node | Claim | Primary support | Mandatory counterevidence/qualifier | Planned paragraphs |
+| Node | Scientific move | Primary support | Counterevidence or qualifier | Planned paragraphs |
 |---|---|---|---|---|
-| A1 | Additional modalities may add prognostic information but create missingness, shortcut, and platform-shift risks. | Conceptual framing; cohort/modality heterogeneity in C01 and C18 | Do not imply that every modality is beneficial or biologically specific. | `INT-01`, `INT-02`, `DIS-02` |
-| A2 | TRUST-HN operationalizes clinical anchoring, incremental/residual fusion, reliability assessment, and selective output behaviour. | C18; governance `GOV-ANCHOR-001`?`GOV-ANCHOR-004` | Separate models were trained for different ecosystems; this is not one universal shared-parameter HNSCC model. | `INT-03`, `MET-03`, `MET-04` |
-| A3 | B6 showed favourable retrospective transfer relative to the clinical-anchor point estimates in RADCURE and HANCOCK. | C03?C04; `P6-ABS-R002-*`, `P6-ABS-R005-*`, `P6-ABS-R007-*`, `P6-ABS-R010-*` | Absolute B2/B6 contrasts are descriptive unless a corresponding paired comparison is cited; results do not cover all institutions or shifts. | `RES-03`, `DIS-02` |
-| A4 | Cross-platform GSE65858 exposed major calibration failure and worse Brier scores for fusion than B2. | C05; `P6-ABS-R012-IPCW-BRIER`, `P6-ABS-R015-IPCW-BRIER`, `P6-ABS-R016-IPCW-BRIER`, calibration rows | Discrimination must never be reported without calibration and Brier evidence in this cohort. | `RES-04`, `DIS-04` |
-| A5 | B7 produced cohort-dependent coverage and AUGMENT/FALLBACK/ABSTAIN actions, but did not consistently improve on B6. | C07?C10; `P6-ACTION-*`; `P6-PAIR-R002`, `R005`, `R008`, `R011` | Every B7 performance statement must report coverage and use the identical non-abstained subset for direct comparison. Actions are algorithmic outputs, not clinical recommendations. | `RES-05`, `DIS-03` |
-| A6 | Development stress tests and radiomics negative controls prevent a simple universal-robustness or modality-specificity interpretation. | C11?C13; `P5-CHECK-R002`?`R009`; `P5-FLAG-R055`, `R071`; `P6-NEG-PAIR-R017`?`R048` | Phase 5 is development-only; negative controls do not prove absence of all signal, but do not support a clear original-radiomics advantage. | `RES-02`, `RES-06`, `DIS-05` |
-| A7 | Exploratory DCA did not show a consistent B7 advantage over B6. | C14; `P6-DCA-R022`?`R031`, `R052`?`R061`, `R082`?`R091`, `R112`?`R121` | DCA is retrospective and exploratory; it does not establish clinical utility, patient benefit, or deployable thresholds. | `RES-07`, `DIS-07` |
-| A8 | Strong Phase 7 comparators were cohort dependent; no universal winner existed. | C15?C17; `P7-EXT-R003-*`, `P7-EXT-R007-*`, `P7-EXT-R011-*`, `P7-EXT-R012-*`; paired rows | Every occurrence must be labelled **post hoc exploratory**; do not merge with Phase 6 confirmatory framing. | `RES-08`, `DIS-06` |
-| A9 | Phase 8 is useful only as a known-overlap workflow and bias demonstration. | C19; `GOV-ANCHOR-007`?`011`; selected `P8-*` rows | Not independent, private, institutional, external, or prospective validation; supplementary-only by default. | `MET-09`, `DIS-07`, Supplement |
-| A10 | The evidence supports an auditable framework with explicit boundaries, not deployment readiness. | C20 synthesis | Preserve positive, negative, and inconsistent findings together. | `ABS-05`, `DIS-01`, `DIS-07` |
+| A1 | More modalities create an opportunity for incremental prognostic information but also create transfer and calibration risks. | Cohort and modality heterogeneity in C01 and C18 | Do not assume multimodal superiority or modality-specific biology. | `INT-01`, `INT-02`, `DIS-02` |
+| A2 | TRUST-HN evaluates added information relative to a clinical anchor and makes reliability actions explicit. | C18; `GOV-ANCHOR-001`, `GOV-ANCHOR-002`, `GOV-ANCHOR-003`, `GOV-ANCHOR-004` | Ecosystems use separate fitted parameters; this is a common principle, not one universal shared-parameter model. | `INT-03`, `MET-03`, `MET-04`, `MET-05` |
+| A3 | The cohort roles form a prespecified test of conditional multimodal value under increasingly difficult transfer conditions. | C01, C02; `P2-FLOW-R014`, `P2-FLOW-R015`, `P2-FLOW-R016`, `P2-FLOW-R021`, `P2-FLOW-R022`, `P2-FLOW-R023`, `P2-FLOW-R026`, `P2-FLOW-R027` | Retrospective design; cohort roles must remain distinct. | `RES-01`, `MET-01`, `MET-02` |
+| A4 | B6 shows favourable retrospective point estimates in RADCURE and HANCOCK. | C03, C04; `P6-ABS-R002-IPCW-BRIER`, `P6-ABS-R005-IPCW-BRIER`, `P6-ABS-R007-IPCW-BRIER`, `P6-ABS-R010-IPCW-BRIER` | Descriptive within-cohort contrasts do not automatically prove superiority. | `RES-02`, `DIS-01` |
+| A5 | GSE65858 reveals that multimodal transfer can fail through severe calibration and Brier degradation. | C05; `P6-ABS-R012-IPCW-BRIER`, `P6-ABS-R015-IPCW-BRIER`, `P6-ABS-R015-CALIBRATION-IN-THE-LARGE`, `P6-ABS-R015-CALIBRATION-SLOPE`, `P6-ABS-R016-IPCW-BRIER` | Calibration failure must accompany any discrimination result. | `RES-02`, `DIS-04` |
+| A6 | GSE41613 supplies only a restricted HPV-negative OSCC sensitivity boundary. | C06; `P6-ABS-R017-IPCW-BRIER`, `P6-ABS-R020-IPCW-BRIER`, `P6-ABS-R021-IPCW-BRIER`, `P6-PAIR-R011`, `P6-PAIR-R012` | n=97; not general HNSCC external validation. | `RES-02`, `DIS-06` |
+| A7 | B7 makes forced-fusion risk observable through coverage and actions. | C07, C10; `P6-ABS-R006-IPCW-BRIER`, `P6-ABS-R011-IPCW-BRIER`, `P6-ABS-R016-IPCW-BRIER`, `P6-ABS-R021-IPCW-BRIER`, `P6-ACTION-*` | Algorithmic outputs only; not clinical decisions or safety interventions. | `RES-03`, `DIS-03` |
+| A8 | Reliability gating does not guarantee better accuracy. | C08, C09; `P6-PAIR-R002`, `P6-PAIR-R005`, `P6-PAIR-R008`, `P6-PAIR-R009`, `P6-PAIR-R011` | Compare on identical non-abstained subsets and co-report coverage. | `RES-03`, `DIS-03` |
+| A9 | Falsification analyses reject stronger mechanistic, robustness, and utility interpretations. | C11–C14; `P5-CHECK-R002`, `P5-FLAG-R055`, `P5-FLAG-R071`, `P6-NEG-PAIR-R025`, `P6-NEG-PAIR-R029`, `P6-DCA-*` | Development-only, multiplicity-prone, or exploratory evidence as applicable. | `RES-04`, `DIS-05` |
+| A10 | Phase 7 post hoc exploratory methods reproduce ecosystem-dependent rankings. | C15–C17; `P7-EXT-R003-IPCW-BRIER`, `P7-EXT-R007-IPCW-BRIER`, `P7-EXT-R011-IPCW-BRIER`, `P7-EXT-R012-IPCW-BRIER`, `P7-PAIR-R014`, `P7-PAIR-R046`, `P7-PAIR-R086` | No confirmatory universal-best-model claim. | `RES-05`, `DIS-05` |
+| A11 | The defensible conclusion is conditional fusion with explicit failure boundaries, not universal multimodal superiority. | C20 synthesis of C03–C18 | No prospective validity, deployable threshold, clinical utility, or patient-benefit claim. | `ABS-04`, `DIS-01`, `DIS-06` |
 
-## 6. Quantitative anchors for the main narrative
+## 7. Results narrative arc
 
-### RADCURE ? prespecified locked retrospective test
+### RES-01 — Heterogeneous ecosystems form a prespecified test of conditional multimodal value
 
-- B2: Brier 0.1091, Uno C 0.7078, 24-month AUC 0.7145 (`P6-ABS-R002-IPCW-BRIER`, `P6-ABS-R002-UNO-C`, `P6-ABS-R002-AUC-HORIZON`).
-- B6: Brier 0.0980, Uno C 0.7740, AUC 0.7838 (`P6-ABS-R005-IPCW-BRIER`, `P6-ABS-R005-UNO-C`, `P6-ABS-R005-AUC-HORIZON`).
-- B7: coverage 0.9329 (584/626); B7-vs-B6 Brier difference +0.00382 (95% CI +0.00084 to +0.00718); B7-vs-B2 ?0.00489 (?0.00795 to ?0.00193) on the identical non-abstained subset (`P6-PAIR-R002`, `P6-PAIR-R003`).
+Establish the cohort roles and explain why same-platform locked testing, retrospective OOD testing, cross-platform external testing, and restricted sensitivity testing jointly interrogate one hypothesis. This paragraph is not a sample-size inventory; its function is to set up escalating transfer difficulty.
 
-### HANCOCK ? prespecified retrospective OOD sealed test
+### RES-02 — Multimodal fusion gains in RADCURE and HANCOCK but fails in GSE65858
 
-- B2: Brier 0.1393, Uno C 0.7476, AUC 0.7864 (`P6-ABS-R007-IPCW-BRIER`, `P6-ABS-R007-UNO-C`, `P6-ABS-R007-AUC-HORIZON`).
-- B6: Brier 0.1122, Uno C 0.8281, AUC 0.8476 (`P6-ABS-R010-IPCW-BRIER`, `P6-ABS-R010-UNO-C`, `P6-ABS-R010-AUC-HORIZON`).
-- B7: coverage 0.8289 (126/152); B7-vs-B6 +0.01058 (?0.00947 to +0.03186); B7-vs-B2 ?0.00723 (?0.01612 to +0.00022) on the identical non-abstained subset (`P6-PAIR-R005`, `P6-PAIR-R006`).
+Place positive and failure evidence in the same narrative unit. The reader first sees favourable B6 point estimates in RADCURE and HANCOCK, then encounters the central GSE65858 cross-platform Brier/calibration failure. End with the narrow GSE41613 sensitivity boundary. The unit answers: **multimodal value is conditional on ecosystem**.
 
-### GSE65858 ? prespecified retrospective external cross-platform test
+### RES-03 — Reliability gating makes forced-fusion risk visible but does not guarantee superiority
 
-- B2 Brier 0.1964; B6 Brier 0.2725, calibration-in-the-large ?1.494, slope 0.599; B7 Brier 0.2672, calibration-in-the-large ?1.548, slope 0.560 with coverage 0.9426 (230/244).
-- B7-vs-B6 ?0.00812 (?0.01584 to ?0.00183), but B7-vs-B2 +0.07294 (+0.04250 to +0.10389), on the identical non-abstained subset (`P6-PAIR-R008`, `P6-PAIR-R009`).
-- Interpretation: gating modestly improved Brier relative to forced B6 among covered patients, yet both fusion approaches remained substantially worse calibrated/scored than B2.
+Report coverage and action distributions before paired performance. Then show that B7 is worse than B6 in RADCURE, uncertain in HANCOCK and GSE41613, and better than B6 in GSE65858 but still worse than B2. The unit answers: **gating improves auditability, not necessarily accuracy**.
 
-### GSE41613 ? restricted retrospective HPV-negative OSCC sensitivity cohort
+### RES-04 — Falsification analyses limit mechanistic, robustness, and clinical interpretations
 
-- n=97; B7 coverage 1.0.
-- B2 was constant/non-discriminating (Uno C and AUC 0.5); B7-vs-B6 Brier ?0.01314 (?0.03153 to +0.00215) and B7-vs-B2 ?0.00632 (?0.04051 to +0.03008), both uncertain (`P6-PAIR-R011`, `P6-PAIR-R012`).
-- Interpretation must remain sensitivity-only and cannot support general HNSCC external validity.
+Combine the failed Phase 5 check, seed-specific subgroup warnings, radiomics negative controls, and exploratory DCA into one argumentative unit. Each analysis blocks a different overclaim; none is presented as an unrelated side experiment.
 
-## 7. Counterevidence and negative-result ledger
+### RES-05 — Phase 7 post hoc exploratory comparators reproduce ecosystem-dependent rankings
 
-| Counterevidence | Required interpretation | Forbidden over-interpretation | Planned paragraphs |
+Use only the contrasts necessary to show that C2 performs strongly in RADCURE/HANCOCK but fails in GSE65858, whereas C3 improves on B6 in GSE65858 without surpassing B2. The unit closes the empirical arc: **there is no universal winner across ecosystems**.
+
+## 8. Counterevidence integration rules
+
+| Favourable observation | Counterevidence that must appear with it | Defensible interpretation |
+|---|---|---|
+| B6 improves descriptive point estimates in RADCURE/HANCOCK | GSE65858 Brier and calibration failure | Incremental value is ecosystem dependent |
+| B7 can fallback or abstain | B7 is worse than B6 in RADCURE and uncertain in two cohorts | Gate behaviour is auditable, not automatically superior |
+| B7 improves over B6 in GSE65858 | B7 remains worse than B2 | Partial mitigation does not rescue failed multimodal transfer |
+| Radiomics models discriminate | Original-vs-shuffled/randomized CIs cross zero | Modality-specific biological signal is unsupported |
+| Decision curves can be plotted | B7 often lies below B6 and analyses are retrospective exploratory | No clinical-utility or deployable-threshold claim |
+| C2 or C3 performs strongly in one cohort | Rank reverses in another ecosystem | No universal winner |
+
+## 9. Threat-to-validity table
+
+| Threat | Relevant evidence | Required mitigation in writing | Residual boundary |
 |---|---|---|---|
-| HANCOCK Phase 5 clean B7-vs-B6 Brier check failed: +0.01550 against ?0.01. | One of eight prespecified development checks failed; gating was not uniformly benign even before locked evaluation. | ?The gate passed all stress tests? or ?proved safe.? | `RES-02`, `DIS-03` |
-| TCGA-HNSC age ?65 seed-level flags (n=34; seeds 29 and 71). | Exploratory, small, multiple-comparison and seed-specific warning. | Fairness, subgroup validity, or causal claim. | `RES-02`, Supplement |
-| GSE65858 B6/B7 calibration failure. | Cross-platform transcriptomic transfer can dominate apparent discrimination. | Robust cross-platform validity. | `RES-04`, `DIS-04` |
-| B7 worse than B6 in RADCURE paired Brier and uncertain in HANCOCK. | Selective behaviour does not guarantee better accuracy. | Universal B7 superiority. | `RES-05`, `DIS-03` |
-| Radiomics original-vs-shuffled/randomized Brier CIs cross zero. | No clear original-radiomics advantage in these controls. | Proof of radiomics-specific biology or proof that radiomics is always useless. | `RES-06`, `DIS-05` |
-| B7 DCA below B6 at 10/10 RADCURE, 10/10 HANCOCK, and 8/10 GSE65858 thresholds. | No consistent exploratory curve advantage. | Clinical utility, patient benefit, or deployable threshold. | `RES-07` |
-| Phase 7 C2 strong in RADCURE/HANCOCK but failed in GSE65858; C3 improved vs B6 there but B2 remained lower. | Rankings depend on ecosystem and calibration. | Universal winner or confirmatory superiority. | `RES-08`, `DIS-06` |
-| C4 equalled B5 externally. | Added comparator structure did not yield incremental external benefit in this implementation. | Universal irrelevance of the underlying modality or architecture. | `RES-08`, Supplement |
-| Phase 8 includes 88 training, 17 calibration, and 30 prior-test overlaps. | Workflow/bias demonstration only. | Independent validation. | Supplement; at most a brief boundary statement in `DIS-07` |
+| Retrospective selection and censoring | Phase 6 cohorts | Preserve cohort roles and IPCW/CI reporting | No prospective validity |
+| Platform shift | GSE65858 | Report calibration-in-the-large and slope with discrimination | No cross-platform robustness claim |
+| Selective-prediction denominator change | B7 | Co-report coverage; identical non-abstained subset | No comparison across unequal patient subsets |
+| Model-selection multiplicity | Phase 7 | Same-paragraph post hoc exploratory label | Requires independent confirmation |
+| Small restricted sensitivity cohort | GSE41613 | HPV-negative OSCC sensitivity analysis label | Not general HNSCC evidence |
+| Subgroup multiplicity and small cells | Phase 5 | Seed-specific exploratory wording | No fairness or causal inference |
+| Threshold dependence | B7 and DCA | Put full threshold profiles in Supplement | No safe or deployable threshold |
+| Ecosystem-specific fitting | Across cohorts | State separate fitting by ecosystem | Not one universal shared-parameter model |
 
-## 8. Threat-to-validity map
-
-| Threat | Where it enters | Mitigation/diagnostic | Residual limitation |
-|---|---|---|---|
-| Retrospective selection and dataset shift | All cohorts | Prespecified roles, sealed tests, explicit ecosystem labels | Cannot establish prospective validity or real-world benefit |
-| Cross-platform transcriptomic shift | TCGA-HNSC to GSE65858 | External cross-platform test; calibration reporting | No evidence that the present mapping/calibration generalizes to other platforms |
-| Missing modalities and selective coverage | B7 | Coverage, action rates, identical non-abstained-subset comparisons | Selective evaluation can change case mix; abstention handling is not clinically validated |
-| Shortcut/non-specific radiomic signal | RADCURE | Shuffled and randomized negative controls | Controls are finite and do not fully establish biological mechanism |
-| Model-selection multiplicity | Phase 7 | Explicit post hoc exploratory label; cohort-wise reporting | Comparative ranking may be optimistic and requires independent confirmation |
-| Small restricted sensitivity cohort | GSE41613 | Sensitivity-only label; CIs | n=97 HPV-negative OSCC cannot represent general HNSCC |
-| Subgroup multiplicity and small cells | Phase 5 | Exploratory flagging; seed-level disclosure | No confirmatory fairness inference |
-| Threshold dependence | B7 and DCA | 80/90/100% sensitivity analyses in Supplement | No deployable or safe threshold established |
-| Data overlap | Phase 8 | Explicit overlap counts and separate reporting | Cannot estimate independent institutional generalization |
-| Ecosystem-specific parameters | Across cohorts | Declare separate training by ecosystem | Does not yield one universal shared-parameter HNSCC model |
-
-## 9. Main-text versus Supplement boundary
+## 10. Main-text versus Supplement boundary
 
 ### Main text
 
-1. Research question, clinical-anchor rationale, and reliability-aware architecture.
-2. Cohort roles and sample flow.
-3. Phase 6 frozen/prespecified governance.
-4. Core B2/B6/B7 absolute results in RADCURE, HANCOCK, GSE65858, and restricted GSE41613 sensitivity analysis.
-5. B7 90% profile coverage, action distribution, and identical non-abstained-subset paired comparisons.
-6. GSE65858 calibration failure as a central failure boundary.
-7. The failed HANCOCK Phase 5 check and concise stress-test qualification.
-8. Key radiomics negative-control conclusion.
-9. Exploratory DCA summary with explicit no-clinical-utility boundary.
-10. Limited Phase 7 post hoc exploratory comparator synthesis demonstrating no universal winner.
-11. Mixed overall conclusion.
+1. Conditional-value research question and clinical-anchor rationale.
+2. Cohort roles and prespecified Phase 6 governance.
+3. Core B2/B6 evidence showing both favourable transfer and GSE65858 failure.
+4. B7 primary 90% coverage, action distribution, and identical non-abstained-subset comparisons.
+5. Concise falsification synthesis: Phase 5 failure, subgroup warning, radiomics negative controls, and exploratory DCA.
+6. Minimal Phase 7 **post hoc exploratory** comparisons needed to demonstrate ecosystem-dependent ranking.
+7. Mixed conclusion centred on auditability and failure boundaries.
 
 ### Supplement
 
-1. Full B0?B7, M0/N0, and C1?C4 model definitions and results.
-2. All development seeds, hyperparameters, calibration details, and training diagnostics.
-3. Complete cohort flow, modality availability, missingness, exclusions, and endpoint accounting.
-4. Full 80/90/100% gate profiles and action tables.
-5. Complete negative controls, stress tests, ablations, and subgroup results.
-6. All DCA thresholds and curves.
-7. Full Phase 7 post hoc exploratory comparator tables and paired bootstrap results.
-8. Entire Phase 8 `inner_hancock` known-overlap workflow and bias simulation, including overlap composition.
-9. Software environment, commands, model card, and TRIPOD+AI/PROBAST+AI/STROBE materials.
+1. Full B0–B7, M0/N0, and C1–C4 model definitions and results.
+2. Seeds, hyperparameters, calibration details, training diagnostics, and complete cohort flow.
+3. Full 80/90/100% gate profiles and action tables.
+4. Complete stress tests, subgroup audits, negative controls, DCA thresholds, and Phase 7 post hoc exploratory comparisons.
+5. Software environment, commands, model card, and reporting checklists.
 
-### Phase 8 rule
+### Phase 8 boundary
 
-Phase 8 is supplementary-only by default. A future main-text sentence may only state that a known-overlap simulation was performed to demonstrate workflow and bias sensitivity; it must not present the exercise as validation.
+Phase 8 is excluded from the current Abstract, Introduction, Results, Discussion, Methods, title, and main-display plan. If a later supplementary version is explicitly approved, it may appear only as a **known-overlap workflow and bias simulation**, explicitly **not validation**. It does not support any current main-text claim.
 
-## 10. Paragraph-to-argument crosswalk
+## 11. Paragraph-to-argument crosswalk
 
 | Paragraph | Function | Argument nodes | Principal claims |
 |---|---|---|---|
-| `ABS-01`?`ABS-05` | Condense background, design, main mixed results, limits, conclusion | A1?A10 | C01?C20 synthesis |
-| `INT-01` | Clinical and modelling problem | A1 | Conceptual |
-| `INT-02` | Why reliability and failure reporting matter | A1, A6 | C11?C14 |
-| `INT-03` | TRUST-HN design logic | A2 | C18 |
-| `INT-04` | Study objective and hypotheses | A3?A10 | C02, C20 |
-| `RES-01` | Cohorts and governance | A2 | C01?C02 |
-| `RES-02` | Development readiness and stress tests | A6 | C11?C12 |
-| `RES-03` | RADCURE/HANCOCK B6 transfer | A3 | C03?C04 |
-| `RES-04` | Cross-platform failure and sensitivity boundary | A4 | C05?C06 |
-| `RES-05` | B7 coverage/actions/paired comparisons | A5 | C07?C10 |
-| `RES-06` | Radiomics negative controls | A6 | C13 |
-| `RES-07` | Exploratory DCA | A7 | C14 |
-| `RES-08` | Post hoc comparators and model ranking | A8 | C15?C17 |
-| `DIS-01` | Principal findings | A3?A10 | C20 |
-| `DIS-02` | Meaning of B6 gains | A3 | C03?C04 |
-| `DIS-03` | Meaning and limits of gating | A5 | C07?C11 |
-| `DIS-04` | Cross-platform calibration failure | A4 | C05 |
-| `DIS-05` | Negative controls and specificity | A6 | C12?C13 |
-| `DIS-06` | Comparator ranking and no universal winner | A8 | C15?C18 |
-| `DIS-07` | Strengths, limitations, translation conditions, conclusion | A7?A10 | C14, C19, C20 |
-| `MET-01`?`MET-09` | Design, cohorts, models, reliability, evaluation, governance | A2?A9 | C01?C19 |
+| `ABS-01`–`ABS-04` | Gap, design, mixed result, restrained conclusion | A1–A11 | C01–C18, C20 synthesis |
+| `INT-01` | Why “more modalities” is the wrong default question | A1 | Conceptual |
+| `INT-02` | Clinical anchor and conditional incremental value | A1, A2 | C18 |
+| `INT-03` | TRUST-HN reliability logic | A2 | C18 |
+| `INT-04` | Objective and hypotheses | A3–A11 | C02, C20 |
+| `RES-01` | Ecosystems as one prespecified transfer test | A2, A3 | C01, C02, C18 |
+| `RES-02` | Positive transfer, central failure, sensitivity boundary | A4–A6 | C03–C06 |
+| `RES-03` | Coverage, actions, and conditional gate performance | A7, A8 | C07–C10 |
+| `RES-04` | Integrated falsification | A9 | C11–C14 |
+| `RES-05` | Post hoc comparator rank reversal | A10 | C15–C17 |
+| `DIS-01` | Central finding | A4–A11 | C20 |
+| `DIS-02` | Meaning of clinical anchoring | A1–A4 | C03, C04, C18 |
+| `DIS-03` | Meaning and limits of gating | A7, A8 | C07–C11 |
+| `DIS-04` | Cross-platform calibration bottleneck | A5 | C05 |
+| `DIS-05` | Why falsification and rank reversal matter | A9, A10 | C11–C17 |
+| `DIS-06` | Strengths, limitations, next steps, conclusion | A11 | C18, C20 |
+| `MET-01`–`MET-08` | Design, cohorts, models, reliability, evaluation, falsification, exploratory comparisons | A2–A10 | C01–C18 |
 
-## 11. Non-negotiable language constraints
+## 12. Non-negotiable language constraints
 
-- Phase 6: ?prespecified retrospective locked/OOD/external evaluation,? never prospective.
+- Phase 6: “prespecified retrospective locked/OOD/external evaluation,” never prospective.
 - Phase 7: every substantive mention includes **post hoc exploratory**.
-- Phase 8: ?known-overlap workflow and bias simulation,? explicitly **not validation**.
-- B7: report coverage with absolute performance and use the identical non-abstained subset for paired comparisons.
-- GSE41613: ?restricted retrospective HPV-negative OSCC sensitivity analysis.?
-- DCA: ?retrospective exploratory curve behaviour?; no clinical-utility or patient-benefit claim.
+- B7: report coverage with absolute performance and compare directly only on the identical non-abstained subset.
+- GSE41613: “restricted retrospective HPV-negative OSCC sensitivity analysis.”
+- DCA: “retrospective exploratory curve behaviour”; no clinical-utility, treatment-benefit, or patient-benefit claim.
 - AUGMENT/FALLBACK/ABSTAIN: algorithmic outputs only.
-- The final narrative must preserve favourable, negative, and inconsistent results together.
+- The paper must preserve favourable, negative, and inconsistent findings in the same scientific narrative.
+- Phase 8 is not part of the current main-body plan.
