@@ -20,6 +20,9 @@ This is the independent manuscript workspace required by the execution brief. Th
 - `tools/verify_evidence_freeze.py`: repeatable frozen-evidence integrity check.
 - `tools/generate_wp1_evidence.py`: deterministic generator for the WP1 evidence map.
 - `tools/validate_wp1.py`: source-locator, claim-boundary, denominator, CI, and Git-boundary validation for WP1.
+- `tools/validate_wp2.py`: bilingual outline structure, evidence/claim ID, high-risk wording, Results-interface, and Git-boundary validation for WP2.
+- `project_management/argument_map.md`: provisional titles, research question, contribution hierarchy, argument/counterevidence chain, validity threats, and main/Supplement boundary.
+- `project_management/paper_outline_zh-CN.md` and `paper_outline_en.md`: synchronized paragraph-level plans for Abstract, Introduction, Results, Discussion, and Methods.
 - `build/`: LaTeX build output.
 
 ## Build commands
