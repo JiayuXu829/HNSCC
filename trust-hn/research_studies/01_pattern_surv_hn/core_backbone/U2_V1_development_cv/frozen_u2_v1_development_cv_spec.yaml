@@ -1,0 +1,116 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U2/V1_development_cross_validation
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-14'
+analysis_label: post_lock_exploratory
+population:
+  cohort: HANCOCK_official_training
+  eligibility: postoperative_duration_days_gt_0
+  expected_n: 610
+  expected_events: 173
+  official_test_outcomes: sealed
+  external_outcomes: sealed_and_unused
+endpoint:
+  duration: days_to_last_information_minus_days_to_first_treatment
+  event: survival_status_equals_deceased
+  horizon_days: 730.5
+clinical_anchor:
+  model: U1.2_V0_extended_postoperative_clinical_pathological_elastic_net_cox
+  frozen_spec: ../U1_2_V0_clinical_anchor/frozen_v0_spec.yaml
+  reference_oof: results/predictions/pattern_surv_hn/U1_2_V0/v0_repeated_nested_oof_predictions.csv
+  reference_oof_sha256: B58C713DA7D98546AED8B581BD942A1DA3F81ED7FBF28053051AFE59FDFEF141
+  reuse_outer_fold_assignments: true
+  reuse_outer_fold_selected_candidate: true
+  refit_inside_each_training_fold: true
+  validation_outcomes_used_for_anchor_fit: false
+cross_fitting:
+  outer_folds: 5
+  outer_repetition_seeds:
+  - 17
+  - 29
+  - 43
+  - 71
+  - 101
+  inner_folds: 3
+  stratification: event_indicator_only
+  patient_prediction_coverage_per_seed: exactly_once
+architecture:
+  inherits: ../U1_3_V1_smoke/frozen_v1_smoke_spec.yaml
+  model: Clinical_Residual_Deep_Sets_Cox
+  parameter_count: 3225
+  pooling: masked_mean
+  residual_formula: eta_fused_equals_eta_clinical_plus_delta_eta
+  zero_initialize_final_residual_head: true
+  exact_empty_set_fallback: true
+modality_inputs:
+  order:
+  - blood
+  - icd
+  - tma
+  active_definition: contract_modality_usable_equals_true
+  status_source: U1.1_contract
+  quality_features:
+  - missing_fraction
+  - observed_fraction
+  preprocessing: training_fold_median_standardization_plus_missing_indicator
+  preprocessor_fit_ids: corresponding_training_fold_only
+  input_dimensions:
+    blood: 32
+    icd: 80
+    tma: 8
+inner_selection:
+  objective: minimum_mean_inner_fold_IPCW_Brier_at_730_5_days
+  secondary: maximum_mean_inner_fold_Uno_C
+  deterministic_tie_breakers:
+  - larger_residual_penalty
+  - fewer_optimization_steps
+  residual_penalty_grid:
+  - 0.01
+  - 0.1
+  checkpoint_steps:
+  - 0
+  - 25
+  - 50
+  - 100
+  - 200
+  architecture_search_allowed: false
+  broad_sweep_allowed: false
+optimization:
+  framework: PyTorch_2.12.1_cpu
+  device: cpu
+  dtype: float64
+  optimizer: Adam
+  learning_rate: 0.003
+  weight_decay: 0.0001
+  gradient_clip_norm: 5.0
+  batching: full_outer_or_inner_training_fold
+  loss: mean_negative_Breslow_Cox_plus_residual_score_L2
+  deterministic_algorithms: true
+  checkpoint_writing: false
+absolute_risk:
+  method: training_fold_Breslow_baseline_hazard
+  training_outcomes_only: true
+  validation_outcomes_used: false
+evaluation:
+  paired_reference: V0
+  metrics:
+  - Harrell_C
+  - Uno_C_24m
+  - cumulative_dynamic_AUC_24m
+  - IPCW_Brier_24m
+  - IPCW_logistic_calibration_in_the_large_24m
+  - IPCW_logistic_calibration_slope_24m
+  pattern_field: acquisition_pattern
+  pattern_metric_support:
+    minimum_n: 30
+    minimum_events: 10
+  coverage: 1.0
+governance:
+  patient_oof_root: results/predictions/pattern_surv_hn/U2_V1
+  tracked_outputs: aggregate_only
+  official_test_outcomes_access_allowed: false
+  external_outcome_access_allowed: false
+  V2_allowed: false
+  calibration_bridge_allowed: false
+  router_allowed: false

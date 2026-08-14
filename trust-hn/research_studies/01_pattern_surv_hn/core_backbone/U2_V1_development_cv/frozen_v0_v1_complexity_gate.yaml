@@ -1,0 +1,44 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U2/V0_vs_V1_complexity_gate
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-14'
+analysis_label: post_lock_exploratory
+delta_convention: V1_minus_V0_for_error_metrics_and_V1_minus_V0_for_discrimination
+coverage_gate:
+  required_V0_coverage: 1.0
+  required_V1_coverage: 1.0
+  tolerance: 0.0
+structural_gate:
+  exact_empty_set_residual_max_abs_error: 0.0
+  exact_clinical_fallback_max_abs_error: 0.0
+  parameter_ceiling: 50000
+safety_gate:
+  mean_delta_IPCW_Brier_24m_maximum: 0.005
+  supported_pattern_worst_Brier_regret_maximum: 0.02
+  mean_absolute_CITL_deterioration_maximum: 0.1
+  mean_absolute_calibration_slope_error_deterioration_maximum: 0.15
+incremental_value_gate:
+  qualifying_paths:
+  - name: probability_error
+    mean_delta_IPCW_Brier_24m_maximum: -0.002
+    required_seed_direction: delta_IPCW_Brier_24m_less_than_0
+    minimum_supporting_seeds: 3
+  - name: discrimination
+    mean_delta_Uno_C_24m_minimum: 0.01
+    required_seed_direction: delta_Uno_C_24m_greater_than_0
+    minimum_supporting_seeds: 3
+  at_least_one_path_required: true
+decision_rule:
+  V1_EARNS_COMPLEXITY: coverage_and_structural_and_safety_and_incremental_value_all_pass
+  V1_DOES_NOT_EARN_COMPLEXITY: otherwise_retain_V0_as_core_backbone
+  result_adaptive_threshold_changes_allowed: false
+claim_boundary:
+  supports_if_passed: internal_development_evidence_that_V1_earns_comparison_against_V0
+  does_not_support:
+  - official_test_confirmation
+  - external_generalization
+  - transportability
+  - calibration_bridge_benefit
+  - routing_benefit
+  - clinical_utility

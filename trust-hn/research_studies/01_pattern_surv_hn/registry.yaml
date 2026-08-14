@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U1_4_V1_TRAINABLE_SMOKE_COMPLETE_AWAITING_APPROVAL
-current_step: U1.4/V1 trainable implementation
-next_allowed_step: U1_4_V1_TRAINABLE_SMOKE_APPROVAL_ONLY
+status: U2_V1_DEVELOPMENT_CV_COMPLETE_AWAITING_APPROVAL
+current_step: U2/V1 development cross-validation and V0-vs-V1 complexity gate
+next_allowed_step: U2_V1_DEVELOPMENT_CV_APPROVAL_ONLY
 study_governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -45,11 +45,21 @@ approvals:
     request_file: approvals/U1_3_V1_SMOKE_APPROVED.md
     authorization: U1_4_V1_TRAINABLE_SYNTHETIC_SMOKE_ONLY
   U1_4_V1_TRAINABLE_SMOKE:
+    status: approved
+    started_on: '2026-08-14'
+    completed_on: '2026-08-14'
+    approved_on: '2026-08-14'
+    approved_by: Researcher (chat approval)
+    approval_text: "审批 U1.4/V1 trainable smoke，进入 U2/V1 development cross-validation 与 V0-vs-V1 complexity gate；继续封存 official-test 和外部结局。"
+    request_file: approvals/U1_4_V1_TRAINABLE_SMOKE_APPROVED.md
+    authorization: U2_V1_DEVELOPMENT_CV_AND_FROZEN_COMPLEXITY_GATE_ONLY
+  U2_V1_DEVELOPMENT_CV:
     status: complete_awaiting_approval
     started_on: '2026-08-14'
     completed_on: '2026-08-14'
-    approval_request: approvals/U1_4_V1_TRAINABLE_SMOKE_APPROVAL_PENDING.md
-    authorization_scope: trainable_pytorch_synthetic_optimization_only_no_patient_CV
+    approval_request: approvals/U2_V1_DEVELOPMENT_CV_APPROVAL_PENDING.md
+    frozen_decision: V1_DOES_NOT_EARN_COMPLEXITY
+    authorization_scope: approval_only_no_V2_calibration_router_official_test_or_external_outcomes
   U1:
     status: not_requested
   pytorch_dependency:
@@ -139,6 +149,8 @@ frozen_file_integrity_baseline:
   U1_3_smoke_frozen_key_paths_modified: 0
   verified_after_U1_4_trainable_smoke_by_registered_file_guard: true
   U1_4_trainable_smoke_frozen_key_paths_modified: 0
+  verified_after_U2_development_cv_by_registered_file_guard: true
+  U2_development_cv_frozen_key_paths_modified: 0
 patient_level_output_policy:
   allowed_root: trust-hn/results/predictions/pattern_surv_hn
   research_study_directory_patient_outputs_forbidden: true
@@ -232,4 +244,53 @@ U1_4_V1_TRAINABLE_SMOKE_outputs:
     phase6_registered_file_guard: 1_passed
     full_repository: 134_passed_1_known_frozen_phase6_state_failure
     ruff_U1_4_scope: passed
+  frozen_phase3_to_phase6_key_paths_modified: 0
+
+U2_V1_DEVELOPMENT_CV_outputs:
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/v1_development_cv.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_v1_development_cv.py
+  frozen_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1_development_cv/frozen_u2_v1_development_cv_spec.yaml
+  frozen_spec_sha256: 32A5FA433B03D8A80B7D0E2676A6DB1FFC30FE602F09A4A1E0B1336CB85AD4C4
+  frozen_complexity_gate: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1_development_cv/frozen_v0_v1_complexity_gate.yaml
+  frozen_complexity_gate_sha256: 70F79547E6452DF8D9F45C3881A2970EA1C27EFB47AC5C2961FEF3EA16220FA3
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1_development_cv/aggregate_u2_v1_development_cv_audit.json
+  aggregate_audit_sha256: 4066C2F0CD3D58061EDA15CD5CDBF7902F0BCA5E4B906D494F82596D4CFFFD1A
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U2_V1_development_cv_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-14_step_U2_V1_development_cv.md
+  patient_oof: trust-hn/results/predictions/pattern_surv_hn/U2_V1/v1_repeated_nested_oof_predictions.csv
+  patient_oof_tracked: false
+  patient_oof_rows: 3050
+  patient_oof_sha256: 81F2369B5469167139D2A1B85F549E89690449A40A0A8878864F098B920134CE
+  eligible_n: 610
+  events: 173
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  inner_folds: 3
+  parameter_count: 3225
+  coverage_V0: 1.0
+  coverage_V1: 1.0
+  fallback_residual_max_abs_error: 0.0
+  fallback_fused_max_abs_error: 0.0
+  mean_delta_IPCW_Brier_24m: 0.0018010425046148637
+  supported_pattern_worst_Brier_regret: 0.02377912321762632
+  mean_absolute_CITL_deterioration: 0.003924228483601919
+  mean_absolute_calibration_slope_error_deterioration: 0.21307523723149666
+  mean_delta_Uno_C_24m: 0.002116049958308985
+  complexity_gate_decision: V1_DOES_NOT_EARN_COMPLEXITY
+  retained_core_backbone: V0
+  deterministic_rerun_oof_sha256_match: true
+  deterministic_rerun_normalized_aggregate_payload_match: true
+  official_test_outcomes_evaluated: false
+  external_outcomes_used: false
+  V2_trained: false
+  calibration_bridge_trained: false
+  router_labels_created: false
+  router_trained: false
+  tests:
+    targeted_U1_through_U2: 40_passed
+    related_phase2_phase3: 23_passed
+    phase6_registered_file_guard: 1_passed
+    full_repository: 140_passed_1_known_frozen_phase6_state_failure
+    pip_check: passed
+    ruff_U2_scope: passed
   frozen_phase3_to_phase6_key_paths_modified: 0
