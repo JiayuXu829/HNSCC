@@ -1,0 +1,79 @@
+﻿schema_version: '0.1'
+stage_id: U1_2_V0
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-14'
+analysis_label: post_lock_exploratory
+model:
+  id: V0
+  name: extended_postoperative_clinical_pathological_elastic_net_cox
+  role: safety_anchor_and_primary_clinical_baseline
+population:
+  cohort: HANCOCK_official_training
+  eligibility: postoperative_duration_days_gt_0
+  expected_n: 610
+  expected_events: 173
+endpoint:
+  duration: days_to_last_information_minus_days_to_first_treatment
+  event: survival_status_equals_deceased
+  horizon_days: 730.5
+features:
+  numeric:
+    - age_at_initial_diagnosis
+  categorical:
+    - sex
+    - smoking_status
+    - primary_tumor_site
+    - grading
+    - hpv_association_p16
+    - resection_status
+    - pT_stage
+    - pN_stage
+  prohibited:
+    - primarily_metastasis
+    - adjuvant_treatment
+    - outcome_or_followup_fields
+    - recurrence_progression_or_metastasis_fields
+    - post_prediction_variables
+preprocessing:
+  fit_within_each_training_fold_only: true
+  numeric: median_imputation_standardization_and_missing_indicator
+  categorical: explicit_missing_unknown_and_training_fold_one_hot
+cross_fitting:
+  outer_folds: 5
+  outer_repetition_seeds: [17, 29, 43, 71, 101]
+  inner_folds: 3
+  stratification: event_indicator_only
+  patient_prediction_coverage_per_seed: exactly_once
+hyperparameter_selection:
+  objective: minimize_mean_inner_fold_IPCW_Brier_at_730_5_days
+  deterministic_tie_breakers:
+    - maximize_mean_inner_fold_Uno_C
+    - smaller_alpha
+    - smaller_l1_ratio
+  alpha_grid: [0.005, 0.01, 0.05, 0.1]
+  l1_ratio_grid: [0.1, 0.5, 0.9]
+  max_iter: 100000
+  tolerance: 1.0e-7
+baseline_hazard:
+  method: CoxnetSurvivalAnalysis_training_fold_baseline
+  training_data_only: true
+evaluation:
+  primary_horizon_days: 730.5
+  metrics:
+    - Harrell_C
+    - Uno_C
+    - cumulative_dynamic_AUC_24m
+    - IPCW_Brier_24m
+    - IPCW_logistic_calibration_in_the_large_24m
+    - IPCW_logistic_calibration_slope_24m
+  pattern_field: acquisition_pattern
+  pattern_metric_support:
+    minimum_n: 20
+    minimum_events: 5
+  small_patterns: counts_and_events_only_descriptive
+governance:
+  official_test_outcomes: sealed_and_unused
+  external_outcomes: unused
+  patient_level_output_root: results/predictions/pattern_surv_hn/U1_2_V0
+  tracked_outputs: aggregate_only
+  next_step_not_authorized: V1

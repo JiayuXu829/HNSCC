@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U1_1_COMPLETE_AWAITING_APPROVAL
-current_step: U1.1
-next_allowed_step: U1_1_APPROVAL_ONLY
+status: U1_2_V0_COMPLETE_AWAITING_APPROVAL
+current_step: U1.2/V0
+next_allowed_step: U1_2_V0_APPROVAL_ONLY
 study_governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -19,10 +19,19 @@ approvals:
     approved_on: '2026-08-13'
     approval_text: "\u5ba1\u6279\u8fdb\u5165U1.1"
   U1_1:
-    status: pending
-    request_file: approvals/U1_1_APPROVAL_PENDING.md
+    status: approved
+    request_file: approvals/U1_1_APPROVED.md
     completed_on: '2026-08-13'
-    authorization_if_approved: U1_2_V0_ONLY
+    approved_on: '2026-08-14'
+    approved_by: Researcher (chat approval)
+    approval_text: "审批 U1.1，进入 U1.2/V0。"
+    authorization: U1_2_V0_ONLY
+  U1_2_V0:
+    status: complete_awaiting_approval
+    started_on: '2026-08-14'
+    completed_on: '2026-08-14'
+    approval_request: approvals/U1_2_V0_APPROVAL_PENDING.md
+    authorization_scope: extended_clinical_pathological_elastic_net_cox_only
   U1:
     status: not_requested
   pytorch_dependency:
@@ -115,3 +124,24 @@ U1_1_outputs:
   stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-13_step_U1_1_postoperative_hancock_data_contract.md
   model_training_performed: false
   patient_level_artifacts_written: false
+U1_2_V0_outputs:
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/v0_clinical_anchor.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_v0.py
+  frozen_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_2_V0_clinical_anchor/frozen_v0_spec.yaml
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_2_V0_clinical_anchor/aggregate_v0_audit.json
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U1_2_V0_clinical_anchor_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-14_step_U1_2_V0_clinical_anchor.md
+  patient_oof: trust-hn/results/predictions/pattern_surv_hn/U1_2_V0/v0_repeated_nested_oof_predictions.csv
+  patient_oof_tracked: false
+  patient_oof_rows: 3050
+  patient_oof_sha256: B58C713DA7D98546AED8B581BD942A1DA3F81ED7FBF28053051AFE59FDFEF141
+  official_test_outcomes_evaluated: false
+  external_outcomes_used: false
+  router_trained: false
+  V1_or_V2_trained: false
+  tests:
+    targeted_U1_1_U1_2: 18_passed
+    related_phase2_phase3: 23_passed
+    full_repository: 118_passed_1_known_frozen_phase6_legacy_failure
+  frozen_phase3_to_phase6_key_paths_modified: 0
+  dependency_files_modified: false

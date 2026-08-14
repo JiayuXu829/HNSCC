@@ -1,0 +1,12 @@
+﻿# LaTeX build intermediates
+*.aux
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+preview_page*.png
+
+# Keep the compiled delivery PDF
+!main.pdf

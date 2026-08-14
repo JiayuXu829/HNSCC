@@ -1,0 +1,353 @@
+﻿% Springer Nature manuscript draft for PATTERN-Surv-HN
+% Living draft generated 14 August 2026. Replace all \TBD{} fields before submission.
+\documentclass[pdflatex,sn-nature]{sn-jnl}
+\usepackage{graphicx,multirow,amsmath,amssymb,amsfonts,xcolor,booktabs,array,tabularx,makecell,enumitem,url,float,placeins}
+\definecolor{draftred}{RGB}{170,25,25}
+\definecolor{softblue}{RGB}{232,241,250}
+\newcommand{\TBD}[1]{\textcolor{draftred}{\textbf{[TBD: #1]}}}
+\newcommand{\methodname}{PATTERN-Surv-HN}
+\newcommand{\placeholderbox}[2]{\fbox{\begin{minipage}[c][#2][c]{0.94\textwidth}\centering\small\textbf{Figure framework placeholder}\\[6pt]#1\end{minipage}}}
+\hypersetup{hypertexnames=false}
+\raggedbottom
+\begin{document}
+\title[Clinically anchored survival learning in HNSCC]{Clinically anchored survival learning from incomplete and unreliable multimodal evidence in head and neck cancer}
+\author*[1]{\fnm{First} \sur{Author}}\email{corresponding.author@institution.edu}
+\author[1]{\fnm{Second} \sur{Author}}
+\author[2]{\fnm{Third} \sur{Author}}
+\affil*[1]{\orgdiv{Department of \TBD{department}}, \orgname{\TBD{institution}}, \orgaddress{\city{\TBD{city}}, \country{\TBD{country}}}}
+\affil[2]{\orgdiv{Department of \TBD{department}}, \orgname{\TBD{institution}}, \orgaddress{\city{\TBD{city}}, \country{\TBD{country}}}}
+\abstract{Multimodal prognostic models commonly assume that every observed modality is informative and that missing inputs can be approximated by random masking. In clinical oncology, however, modalities are selectively acquired, incompletely measured, corrupted, or shifted across platforms, so compulsory fusion can make absolute risk less reliable. We introduce \methodname, a clinically anchored survival-learning framework that adds residual evidence from an unordered set of available modalities, separately adapts risk ranking and absolute-risk calibration, and routes predictions to fusion, clinical fallback, ranking only, or abstention. The study is designed around postoperative head and neck squamous cell carcinoma, using HANCOCK for natural missingness, TCGA--GEO transfer for cross-platform calibration, RADCURE for shortcut and negative-control experiments, and a future outcome-untouched cohort for confirmation. The completed clinical-pathological anchor was evaluated by repeated nested cross-fitting in 610 HANCOCK development patients with 173 deaths. Its mean 24-month IPCW Brier score was 0.1247, Uno's C was 0.6442, time-dependent AUC was 0.6620, calibration-in-the-large was $-0.0037$, and calibration slope was 0.9367. Full fusion, routing, calibration-transfer and external-confirmation results remain prospectively specified rather than inferred. This framework reframes multimodal prediction as conditional evidence use: fuse when added information is credible, retain a stable clinical prediction when it is not, and avoid reporting unsupported probabilities.}
+\keywords{head and neck squamous cell carcinoma, multimodal learning, survival analysis, missing modalities, calibration, selective prediction, trustworthy artificial intelligence}
+\maketitle
+\noindent\colorbox{softblue}{\parbox{0.96\textwidth}{\textbf{Living-manuscript status (14 August 2026).} Only the HANCOCK data contract and clinical-pathological V0 anchor have completed the current workflow. Red \TBD{} fields require frozen analysis or author metadata. Previously outcome-seen cohorts are post-lock exploratory and are not newly untouched validation.}}
+
+\section{Introduction}
+Head and neck squamous cell carcinoma (HNSCC) is not a single prognostic entity. Anatomical site, tumour and nodal burden, human papillomavirus-related biology, smoking exposure, pathological features, treatment selection and host condition jointly shape survival. Large molecular studies have shown heterogeneous genomic and transcriptomic phenotypes that are not captured by stage alone \cite{tcga2015,liu2018,wichmann2015,lohavanichbutr2013}. This motivates models combining clinical, pathological, imaging, blood, tissue-microenvironment and molecular information. Recent resources and models, including HANCOCK, RADCURE and radiotherapy-oriented HNSCC fusion studies, make such analyses increasingly feasible \cite{dorrich2025,tian2025,welch2024}.
+
+The usual computational formulation nevertheless differs from clinical reality. Many models are developed on complete cases or an artificially harmonised matrix. At deployment, one patient may have clinical and pathology data only, another may also have blood measurements, and a third may have tissue-microarray or imaging features. Missingness can reflect workflow, eligibility, tissue availability, assay failure or treatment pathway rather than random deletion. An input can also be present but unreliable: a blood panel may be internally incomplete, radiomics may encode tumour volume or scanner processing, and a transcriptomic score may preserve ranking while its absolute-risk scale fails after transfer from RNA sequencing to microarray. Treating all observed modalities as equally trustworthy therefore conflates availability with evidential value.
+
+Classical Cox models provide interpretable, censoring-aware estimation but generally require a fixed covariate vector \cite{cox1972,breslow1974}. Random survival forests and neural survival models accommodate non-linearity but do not by themselves determine whether an additional modality should be used \cite{ishwaran2008,katzman2018,lee2018}. Missing-modality approaches reconstruct absent representations, distil complete-modality teachers, use prompts or modality dropout; recent work has improved incomplete multimodal survival prediction in benchmark settings \cite{xu2025,zheng2026}. Yet masking complete samples does not reproduce naturally selected modality patterns, unseen combinations, acquired-but-unusable data, platform-dependent calibration, or a modality predictive for the wrong reason.
+
+A second gap is the tendency to equate discrimination with clinically valid probability. Concordance and time-dependent AUC measure ranking, whereas a statement such as ``24-month mortality risk is 35\%'' also requires a transportable baseline hazard and calibration relationship. A model can retain discrimination under domain shift while becoming systematically overconfident. Calibration is therefore not cosmetic: it determines whether a score supports absolute-risk communication or only relative stratification \cite{graf1999,uno2011,stegyerberg2010,vancalster2019}.
+
+A third gap concerns safety comparisons. Selective models can appear more accurate because they abstain on difficult patients, while average performance can hide severe failure in a rare modality pattern. Evaluation must retain fallback patients in the full-coverage estimand, compare selective policies on the same retained patients, report coverage by subgroup and pattern, and quantify worst-pattern regret relative to a clinical model. Negative controls are needed to test whether added value is specific to the intended modality rather than dimensionality, volume, centre or missingness \cite{geirhos2020,oakdenrayner2020,roberts2021}.
+
+We therefore propose \methodname, a clinically anchored, reliability-calibrated set survival framework. It begins with a postoperative clinical-pathological anchor. Available non-clinical modalities form an unordered set and may contribute only a residual correction. A calibration bridge separates ranking from absolute risk, while a strictly cross-fitted router chooses \textsc{Fuse}, \textsc{Fallback}, \textsc{Rank-only} or \textsc{Abstain}. The study asks whether the model remains useful under natural and unseen combinations; whether probability can be recovered with limited target events; whether it fails safely when a modality is present but non-informative; and whether frozen decisions transport to an outcome-untouched cohort. We hypothesise not that complex fusion always wins, but that conditional evidence use reduces clinically important failure without sacrificing full-population accountability.
+
+\section{Results}
+\subsection{Study architecture and analysis status}
+The intended-use population comprises adults with HNSCC whose prognosis is estimated immediately after definitive surgery and standard pathology review, before adjuvant treatment is used as a predictor. Overall survival is measured from the first treatment date to the last information date; death from any cause is the event, and 730.5 days is the primary horizon. HANCOCK is the main development ecosystem, with clinical-pathological variables and optional blood, International Classification of Diseases (ICD) and tissue-microarray (TMA) cell-density information \cite{dorrich2025}. Table~\ref{tab:cohorts} separates development, post-lock exploratory and future confirmatory roles.
+
+At the manuscript date, the data contract and V0 anchor are complete. Residual set fusion, calibration bridge, value routing, corruption studies and outcome-untouched confirmation have not been executed. The remaining analyses are therefore represented as prespecified, auditable result slots rather than invented findings.
+
+\begin{table*}[t]
+\caption{Cohorts, intended roles and claim boundaries.}\label{tab:cohorts}
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\begin{tabular}{llllll}
+\toprule
+Cohort & Prediction setting & Size/events & Modalities & Primary role & Governance/claim boundary \\
+\midrule
+HANCOCK training & Postoperative & 610/173 & Clinical-pathological, blood, ICD, TMA & Development, nested cross-fitting, natural-pattern and corruption studies & PATTERN development; official-test outcomes not used for V0 \\
+HANCOCK official test & Postoperative & 152/40 & Same ecosystem & Fixed held-out exploratory evaluation & Outcomes seen in Phase 6; post-lock exploratory \\
+TCGA-HNSC & Cohort-specific OS & \TBD{count} & Clinical, RNA-seq & Transcriptomic source development & Source model only; timing differences explicit \\
+GSE65858 & Retrospective external & 244/78 & Clinical, microarray & Ranking--calibration transfer & Outcome-seen; post-lock exploratory \\
+GSE41613 & Oral-cavity sensitivity & 97/51 & Clinical, microarray & Sensitivity analysis & Outcome-seen; restricted case mix \\
+RADCURE & Pretreatment radiotherapy & 626/110 & Clinical, volume, CT radiomics & Shortcut/invalid-modality replication & Outcome-seen; mechanism study \\
+Future external/temporal & Frozen postoperative use & \TBD{cohort} & Anchor plus optional modality & Final confirmation & Must remain outcome-untouched until complete freeze \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+\begin{figure*}[t]\centering
+\placeholderbox{\textbf{a}, postoperative prediction time and permitted information; \textbf{b}, clinical anchor $\eta_c$; \textbf{c}, modality tokens with missing modalities omitted; \textbf{d}, residual fusion $\eta_f=\eta_c+\Delta\eta$; \textbf{e}, pattern/domain calibration bridge; \textbf{f}, \textsc{Fuse}, \textsc{Fallback}, \textsc{Rank-only} and \textsc{Abstain}.}{5.4cm}
+\caption{Clinical problem and PATTERN-Surv-HN architecture. Final artwork should show fallback as an exact computational path.}\label{fig:architecture}
+\end{figure*}
+
+\subsection{Natural availability defines a set-valued prediction problem}
+The full HANCOCK resource contains 763 patients. The official training split contains 611 patients, of whom one was excluded for non-positive postoperative duration, leaving 610 patients and 173 deaths for development. A deterministic contract allocated 489 observations to training and 122 to calibration, while the official test set of 152 remained outside V0 development.
+
+For blood, 693 patients had acquired data, 683 had usable data, 70 were absent and 10 were acquired but unusable. Among usable blood records, 604 were complete and 79 internally partial. Across blood, ICD and TMA, raw acquired-pattern counts for binary codes 001, 010, 011, 100, 101, 110 and 111 were 7, 4, 59, 1, 43, 22 and 627. Usable-pattern counts were 8, 5, 67, 1, 42, 21 and 619. Thus, acquisition is not proof of model-ready information, and separate models are infeasible for several rare combinations.
+
+\begin{figure*}[t]\centering
+\placeholderbox{UpSet-style display: count and event count by usable pattern; marginal availability of blood, ICD and TMA; the seven observed combinations; acquired-but-unusable and partial blood annotations; development/test partitions. Colour should encode usability, not outcome.}{5.2cm}
+\caption{Natural acquisition and usability patterns in HANCOCK. Final artwork will add development-only event counts and outcome-blind quality indicators.}\label{fig:patterns}
+\end{figure*}
+
+\subsection{The clinical-pathological anchor provides the completed safety reference}
+The anchor used age, sex, smoking, primary site, grade, p16, resection, pathological T category and pathological N category. Adjuvant treatment and post-prediction variables were prohibited. An elastic-net Cox model used five seeds, five outer folds and three inner folds. All imputation, coding, scaling, penalty selection and Breslow baseline estimation were confined to the training fold. Repeated out-of-fold predictions covered 3,050 patient-seed instances without official-test outcomes.
+
+Mean 24-month IPCW Brier score was $0.1247\pm0.0015$. Harrell concordance was $0.6230\pm0.0144$, Uno 24-month concordance was $0.6442\pm0.0138$, and 24-month AUC was $0.6620\pm0.0144$. Calibration-in-the-large was $-0.0037\pm0.0149$ and calibration slope was $0.9367\pm0.0792$. Two formal reruns produced identical out-of-fold hashes. These findings indicate moderate internal discrimination and approximately acceptable average calibration, sufficient to operationalise V0 as a post-lock exploratory fallback reference. They do not establish multimodal benefit, missing-modality robustness, external generalisation or clinical utility.
+
+\begin{table}[t]
+\caption{Completed repeated nested cross-fitting of the HANCOCK V0 anchor.}\label{tab:v0}
+\centering\small
+\begin{tabular}{lcc}\toprule Metric & Mean & SD across seeds \\
+\midrule IPCW Brier at 24 months & 0.1247 & 0.0015 \\
+Harrell C & 0.6230 & 0.0144 \\
+Uno C at 24 months & 0.6442 & 0.0138 \\
+Time-dependent AUC & 0.6620 & 0.0144 \\
+Calibration-in-the-large & $-0.0037$ & 0.0149 \\
+Calibration slope & 0.9367 & 0.0792 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\subsection{Primary full-coverage comparison is defined before fusion results}
+The primary estimand is the 24-month IPCW Brier difference between the complete PATTERN policy and prespecified conventional late-fusion comparator C3. Patients routed to clinical fallback remain in the numerator and denominator using their anchor probability. Rank-only or abstained observations follow the frozen policy and cannot disappear from a full-coverage claim. The co-primary safety estimand is the largest pattern-specific excess Brier score relative to the anchor.
+
+A publishable positive interpretation requires a clinically relevant full-coverage improvement with confidence intervals excluding unacceptable harm and non-inferior worst-pattern regret. If Deep Sets or Set Transformer does not outperform C3, that negative finding will be reported and architectural superiority will not be claimed.
+
+\begin{table*}[t]
+\caption{Primary HANCOCK full-coverage comparison. Red fields require frozen analysis.}\label{tab:mainresults}
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}\toprule
+Model/policy & Brier$_{24}$ & IBS & Uno C$_{24}$ & AUC$_{24}$ & Cal. int. & Cal. slope & Interpretation \\
+\midrule
+KM constant risk & \TBD{value} & \TBD{} & -- & -- & \TBD{} & -- & Outcome-frequency reference \\
+V0 clinical anchor & 0.1247$\pm$0.0015 & \TBD{} & 0.6442$\pm$0.0138 & 0.6620$\pm$0.0144 & $-0.0037$ & 0.9367 & Completed internal OOF \\
+C3 late fusion & \TBD{CI} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & Primary comparator \\
+Deep Sets residual & \TBD{CI} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & Minimum set model \\
+Set Transformer residual & \TBD{CI} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & Complexity only if justified \\
+PATTERN policy & \TBD{CI} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & Routing and fallback included \\
+\bottomrule\end{tabular}}
+\end{table*}
+
+\subsection{Natural, unseen and corrupted patterns test different failures}
+Natural-pattern analysis quantifies performance in combinations generated by routine acquisition and usability. Seen/unseen experiments hold out one supported combination during training and test compositional generalisation. Corruption experiments retain availability while degrading content through noise, location/scale shift, within-feature permutation, across-patient permutation or modality replacement. A model can handle an absent token yet still trust a corrupted present token; the experiments are therefore not interchangeable.
+
+The principal robustness display will report full-to-subset degradation, seen--unseen gaps, calibration and safety regret. Pattern-specific estimates will ordinarily require at least 30 patients and 10 events; rarer cells will be pooled hierarchically or described without definitive claims. The decisive criterion is whether the policy avoids materially exceeding the anchor in its worst supported pattern.
+
+\begin{figure*}[t]\centering
+\placeholderbox{Columns: natural patterns, block dropout/MCAR/MAR-like missingness, leave-one-pattern-out unseen combinations, and corruption. Rows: Brier$_{24}$ difference versus anchor, calibration slope, full-to-subset degradation and action distribution. Include paired 95\% CIs and a no-harm margin.}{5.5cm}
+\caption{Robustness to incomplete and unreliable modality sets. All estimates are \TBD{frozen analysis}.}\label{fig:robustness}
+\end{figure*}
+
+\begin{table*}[t]
+\caption{Pattern and stress-scenario reporting matrix.}\label{tab:robustness}
+\centering\scriptsize
+\resizebox{\textwidth}{!}{\begin{tabular}{lllllll}\toprule
+Scenario & Population & $n$/events & $\Delta$Brier$_{24}$ vs anchor & Cal. slope & Fallback/abstain & Interpretation \\
+\midrule
+Natural complete & HANCOCK & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Natural incomplete & Supported cells/pooled & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Unseen combination & Leave-one-pattern-out & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Block dropout & Complete cases minus one input & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+MAR-like missingness & Covariate-dependent masking & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Corrupted present modality & Noise/shift/permutation & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Worst supported pattern & Prespecified maximum regret & \TBD{} & \TBD{} & \TBD{} & \TBD{} & Co-primary safety estimand \\
+\bottomrule\end{tabular}}
+\end{table*}
+
+\subsection{Ranking transport and probability transport are evaluated separately}
+TCGA-HNSC to GSE65858 and GSE41613 transfer is a mechanism study of cross-platform failure rather than untouched validation. A source ranking representation will be frozen, then probability recovery examined with zero target events and calibration samples containing 5, 10, 20 and 40 events. Strategies include the source Breslow baseline, target baseline hazard, intercept-only, intercept-plus-slope, isotonic calibration and the hierarchical bridge. Both GEO outcomes were previously examined, so all results remain post-lock exploratory.
+
+A useful model may preserve concordance while source probabilities are unusable. The correct output is then \textsc{Rank-only}, not a precise unsupported probability. Figure~\ref{fig:calibration} will plot discrimination, Brier score, calibration slope and the fraction eligible for full-risk reporting as target events accumulate. Improvement at small event counts will be interpreted with uncertainty and effective sample size \cite{riley2020,riley2024}.
+
+\begin{figure*}[t]\centering
+\placeholderbox{\textbf{a}, source RNA-seq versus target microarray score distributions; \textbf{b}, retained discrimination despite calibration failure; \textbf{c}, Brier and calibration slope at 0, 5, 10, 20 and 40 target events; \textbf{d}, full-risk/rank-only/fallback fractions; \textbf{e}, calibration plots.}{5.4cm}
+\caption{Separating transport of ranking from transport of absolute risk. Results are \TBD{post-lock exploratory frozen analysis}.}\label{fig:calibration}
+\end{figure*}
+
+\subsection{Negative controls test specificity of observed modalities}
+RADCURE provides a complementary failure mode: a radiomic vector exists but apparent performance may derive from tumour volume, centre, preprocessing or high-dimensional structure. The replication compares clinical only, volume only, clinical plus volume, radiomics only, clinical plus radiomics and full fusion with patient-permuted radiomics, Gaussian random features, volume-matched random controls, and scaled/corrupted radiomics. The question is whether the learned increment is more specific than appropriate negative controls.
+
+Earlier frozen project analyses found that original RADCURE radiomics did not clearly outperform shuffled or randomised controls, while gating did not consistently improve forced fusion. These observations motivated this protocol but do not show that the untrained PATTERN router succeeds. The new analysis is supportive only if the router reduces use of invalid controls without suppressing reproducible real-modality value, on matched patients rather than through denominator changes.
+
+\begin{figure*}[t]\centering
+\placeholderbox{\textbf{a}, performance of real radiomics, volume, permuted radiomics, Gaussian features and volume-matched controls; \textbf{b}, paired increment over the anchor; \textbf{c}, router actions; \textbf{d}, error versus uncertainty; \textbf{e}, leave-one-modality sensitivity.}{5.2cm}
+\caption{Present-but-invalid modality controls and router behaviour. Values are \TBD{post-lock exploratory replication}.}\label{fig:controls}
+\end{figure*}
+
+\subsection{Selective prediction is judged at matched coverage}
+Risk--coverage curves will be reported at 100\%, 95\%, 90\% and 80\% coverage. Every lower-coverage comparison will evaluate the candidate and comparator on the identical retained patients. Coverage will be stratified by age, sex, site, p16 and modality pattern so that lower error cannot be achieved by disproportionately excluding a clinically important group. Actions will be accompanied by event counts and calibration uncertainty.
+
+\begin{figure*}[t]\centering
+\placeholderbox{\textbf{a}, matched-subset error--coverage curves; \textbf{b}, worst-pattern regret versus coverage; \textbf{c}, subgroup coverage; \textbf{d}, action flow; \textbf{e}, final frozen performance in the outcome-untouched cohort. Remove panel e and narrow claims if no eligible cohort is obtained.}{5.4cm}
+\caption{Selective prediction, safety regret and confirmatory validation. Values are \TBD{frozen analysis}.}\label{fig:coverage}
+\end{figure*}
+
+\section{Discussion}
+This study is designed around a simple clinical proposition: additional data should modify a stable prediction only when their incremental evidence is credible. That differs from maximising an average C-index under a complete-modality matrix. In HNSCC, the operational problem includes naturally missing tests, internally incomplete measurements, combinations absent from training, platform-dependent probability scales and apparently informative high-dimensional controls. \methodname treats these as related forms of uncertain evidence.
+
+The completed V0 analysis establishes the first component. The postoperative anchor achieved moderate discrimination and near-unit average calibration slope in repeated nested cross-fitting. Its role is not to be declared clinically sufficient or externally valid. It provides a reference for every eligible patient, defines residual learning and makes fallback testable. Without a stable anchor, a router chooses only between differently unstable models.
+
+The residual construction constrains the claim. The fused score is $\eta_c+\Delta\eta$, so optional modalities explain information beyond the anchor rather than relearn the outcome. Exact fallback when no usable token is present prevents numerical drift from masquerading as clinical-only prediction. Set encoding avoids assigning meaning to modality order and permits combinations not enumerated as separate models. Yet permutation invariance is not robustness: a set model may still overfit rare patterns or trust corrupted tokens, hence the unseen-combination and present-but-invalid tests.
+
+Separating ranking from probability is central. Baseline hazard, event incidence, follow-up and assay calibration can shift independently of rank ordering. The \textsc{Rank-only} action makes this visible. An explicit relative-risk statement is more honest than a precisely formatted probability unsupported by target calibration. Conversely, a flexible calibrator fitted to few events may improve apparent fit but remain unstable, so event-budget curves must include uncertainty.
+
+Negative controls raise the evidential standard. If real radiomics perform no better than patient-permuted or random features after accounting for clinical variables and volume, specificity has not been demonstrated. A reliable router should react, but it must not be trained on final external outcomes. Cross-fitted value labels, corruption probes and a separately frozen confirmation cohort are therefore integral, not optional decoration.
+
+Several outcomes would change the final interpretation. If C3 matches the set models, we will prefer the simpler comparator. If fusion improves average Brier score but harms a supported pattern, the safety hypothesis fails. If routing lowers error only by reducing coverage, matched-subset and subgroup analyses will expose the trade-off. If ranking transfers but calibration cannot be restored, conclusions will be limited to stratification. Without an untouched cohort, the study can support a post-lock exploratory framework but not strong external-generalisation claims.
+
+Strengths include explicit prediction time and prohibited post-treatment variables; cross-fitted preprocessing, model selection and router supervision; distinction between missing, unusable and corrupted inputs; full-population primary estimands; negative controls; and emphasis on paired effect sizes with uncertainty. Reporting follows TRIPOD+AI, with PROBAST+AI structuring bias and applicability assessment \cite{collins2024,moons2025}.
+
+Limitations are substantial. All current cohorts are retrospective and differ in eligibility, treatment era, outcome construction and platform. Natural patterns may encode selection processes that cannot be fully adjusted. Several patterns are too rare for independent evaluation. V0 is internal and post-lock exploratory. RADCURE and both GEO cohorts are outcome-seen and cannot serve as new confirmation. Calibration requires enough target events, and action thresholds lack prospective workflow validation. Decision-curve analysis describes potential net benefit but cannot establish clinical utility without a defined decision and impact study \cite{vickers2006}. No clinician interaction, patient acceptability, workload, fairness-impact or prospective silent-deployment study has occurred.
+
+Translation should proceed in stages: freeze a parsimonious model and thresholds; confirm technical and calibration performance in an outcome-untouched temporal or external cohort; perform prospective silent validation with real-time missingness and quality logging; predefine responses to fallback, rank-only and abstention; then evaluate decision impact. Until then, \methodname is a reliability-oriented research framework, not a deployable medical device.
+
+\section{Methods}
+\subsection{Study design and reporting framework}
+We designed a retrospective, multi-cohort prognostic modelling study with separately governed development and a required future confirmatory stage. The protocol label is \texttt{post\_lock\_exploratory}, because outcomes in several project cohorts had been accessed before the unified method was specified. Frozen Phase 3--6 configurations, implementations and aggregate results are not modified. Patient-level predictions are stored only in Git-ignored directories; manuscript tables derive from aggregate artefacts. Reporting will follow TRIPOD+AI and use PROBAST+AI for appraisal \cite{collins2024,moons2025}.
+
+\subsection{Clinical question, intended use and target population}
+The primary question is whether postoperative overall-survival risk can use optional multimodal evidence only when it improves reliability over a clinical-pathological anchor. Prediction occurs immediately after definitive surgery and pathology review. The model is not currently intended to recommend adjuvant therapy. Anchor predictors are age, sex, smoking, site, grade, p16, resection, pathological T and pathological N. Adjuvant treatment, downstream outcomes and post-prediction measurements are excluded.
+
+For patient $i$, let $T_i$ be event time, $C_i$ censoring time, $Y_i=\min(T_i,C_i)$ observed duration and $\delta_i=I(T_i\leq C_i)$ the event indicator. In HANCOCK,
+\begin{align}
+Y_i&=\text{days to last information}_i-\text{days to first treatment}_i,\\
+\delta_i&=I(\text{survival status}_i=\text{deceased}).
+\end{align}
+Non-positive durations are excluded. The primary horizon is $t^*=730.5$ days and the primary prediction is all-cause mortality risk by $t^*$.
+
+\subsection{Cohorts and role separation}
+HANCOCK is the primary ecosystem for natural missingness and set learning \cite{dorrich2025}. Its official training subset provides $n=610$ eligible development patients after one exclusion. The 152-patient official test was outcome-seen earlier and may be evaluated only after freezing, labelled post-lock exploratory.
+
+TCGA-HNSC supplies source RNA-sequencing and clinical outcomes \cite{tcga2015,liu2018}. GSE65858 and GSE41613 supply microarray ecosystems with different case mix and platforms \cite{wichmann2015,lohavanichbutr2013}. They study ranking--probability separation, not untouched validation. RADCURE supplies clinical, tumour-volume and CT radiomic analyses \cite{welch2024}. A final cohort must match the postoperative intended use, remain outcome-untouched and have enough events for prespecified estimates. Dataset-specific eligibility, follow-up and ethics language will be reproduced from primary sources.
+
+\subsection{Modality availability, usability and quality}
+For optional modality $m$, we distinguish acquisition $a_{im}$, usability $u_{im}$ and quality vector $q_{im}$. Acquisition means a source record or assay exists. Usability means the frozen preprocessing contract can produce valid input. Quality can include outcome-blind fraction missing, out-of-range counts, assay completeness and distance from training distributions. A content token exists only if $u_{im}=1$; missing modalities do not contribute a zero vector because zero may be a valid observed value.
+\begin{equation}
+\mathcal{M}_i=\{m:u_{im}=1\}.
+\end{equation}
+The natural pattern is the usability tuple across blood, ICD and TMA. Acquired-but-unusable status is retained for routing. Counts and quality distributions are computed without outcomes.
+
+\subsection{Clinical-pathological anchor}
+The anchor is an elastic-net Cox proportional-hazards model. After fold-specific preprocessing,
+\begin{equation}
+\eta_{c,i}=f_c(x_{c,i})=x_{c,i}^{\mathsf T}\hat\beta_c.
+\end{equation}
+The partial-likelihood objective follows Cox \cite{cox1972}. Twelve prespecified penalty/mixing candidates are selected in three-fold inner cross-validation within five outer folds for seeds 17, 29, 43, 71 and 101. Encoding, imputation, scaling and category handling are training-fold only. A training-fold Breslow estimator gives
+\begin{equation}
+\hat S_c(t\mid x_{c,i})=\exp\{-\hat H_{0,c}(t)\exp(\eta_{c,i})\},\quad
+\hat R_c(t)=1-\hat S_c(t\mid x_{c,i}),
+\end{equation}
+where $\hat H_{0,c}$ is cumulative baseline hazard \cite{breslow1974}. Table~\ref{tab:v0} reports repeated out-of-fold estimates.
+
+\subsection{Residual set survival backbone}
+Each usable optional modality is processed by a modality-specific adapter $g_m$ mapping content to 64 dimensions. A token combines content, learned modality identity, acquisition/usability status, quality and allowed domain metadata:
+\begin{equation}
+z_{im}=g_m(x_{im})+e_m+h(a_{im},u_{im},q_{im},d_i).
+\end{equation}
+The minimum model is Deep Sets \cite{zaheer2017},
+\begin{equation}
+h_i=\rho\left(\sum_{m\in\mathcal{M}_i}\phi(z_{im})\right).
+\end{equation}
+The candidate complex model is a lightweight Set Transformer with dimension 64, two attention blocks, four heads, feed-forward dimension 128 and token dropout 0.20 \cite{lee2019}. Escalation is allowed only if the simpler model has a reproducible limitation.
+
+The residual correction is $\Delta\eta_i=r(h_i,\eta_{c,i})$ and
+\begin{equation}
+\eta_{f,i}=\eta_{c,i}+\Delta\eta_i.
+\end{equation}
+The primary objective is negative Cox partial log likelihood. The anchor is initially frozen; joint fine-tuning is sensitivity analysis. If $\mathcal{M}_i=\varnothing$, the implementation must return exactly $\eta_f=\eta_c$ and the same survival curve within numerical tolerance. Unit tests assess fallback, arbitrary subsets, token permutation invariance and exclusion of outcome-derived metadata.
+
+\subsection{Survival probability and calibration bridge}
+A training-fold Breslow baseline maps continuous score to source-domain probability. Target-domain calibration is represented at horizon $t$ as
+\begin{equation}
+\operatorname{logit}R^*_{i,t}=\alpha_{0,t}+\alpha_{p(i),t}+\alpha_{d(i),t}
++\beta_{p(i),d(i),t}\operatorname{logit}R_{i,t},
+\end{equation}
+where $p(i)$ and $d(i)$ denote pattern and domain. Hierarchical shrinkage pulls sparse terms toward a global intercept and slope. Small cells receive intercept-only or global calibration. If minimum support or calibration-uncertainty criteria fail, the router cannot output full probability and chooses \textsc{Rank-only}, \textsc{Fallback} or \textsc{Abstain}.
+
+Strategies are compared at 0, 5, 10, 20 and 40 target events: source Breslow, target baseline, intercept-only, intercept and slope, isotonic calibration, and the bridge. Effective sample sizes, events and uncertainty are reported. Primary calibration measures are calibration-in-the-large and slope, supplemented by plots and Brier score.
+
+\subsection{Cross-fitted value and reliability router}
+The router estimates whether fused evidence is expected to improve an individual prediction without using that individual's outcome to create its training label. For censoring-adjusted proper loss $L$,
+\begin{equation}
+y_{\mathrm{value},i}=L(\hat R_{c,i},Y_i,\delta_i)-L(\hat R_{f,i},Y_i,\delta_i),
+\end{equation}
+where both predictions are out of fold. Router covariates include pattern frequency, internal missingness, acquisition/usability mismatch, modality and representation OOD scores, ensemble disagreement, $|\hat R_f-\hat R_c|$, leave-one-modality sensitivity, calibration uncertainty and shortcut probes. They exclude outcome-derived variables and test-performance summaries.
+
+A frozen policy maps these to four actions:
+\begin{itemize}[leftmargin=*]
+\item \textsc{Fuse}: report calibrated fused probability and ranking when evidence, calibration and value criteria pass;
+\item \textsc{Fallback}: report the anchor probability when optional evidence is absent, unreliable or expected to harm;
+\item \textsc{Rank-only}: report relative risk or risk group without absolute probability when ranking is supported but calibration is not;
+\item \textsc{Abstain}: withhold automated output when neither fused nor clinical output meets frozen requirements.
+\end{itemize}
+Thresholds are selected only within development/calibration data with complexity penalties and minimum cell support. Official-test, GEO and RADCURE outcomes cannot tune the router.
+
+\subsection{Comparators}
+The benchmark distinguishes gains from representation, residual anchoring, calibration and routing (Table~\ref{tab:models}). Classical comparators are Kaplan--Meier constant risk, conventional Cox, elastic-net anchor and random survival forest. Fusion comparators are modality-only Cox, concatenation elastic-net Cox, prior residual fusion B6, prior gate B7, cross-fitted score-level late fusion C3 and missing-aware direct fusion C4. Missing-data baselines include zero/mean imputation, missing indicators, modality dropout and separate models for sufficiently large patterns. Deep Sets and Set Transformer are tested with and without residual anchoring. Missingness-only, modality permutation and random-feature controls probe shortcuts.
+
+\begin{table*}[t]
+\caption{Prespecified models and the question answered by each comparison.}\label{tab:models}
+\centering\small
+\begin{tabularx}{\textwidth}{p{2.8cm}p{4.2cm}X}\toprule
+Family & Definition & Scientific question \\
+\midrule
+KM/clinical/V0 & Constant risk, Cox, elastic-net clinical-pathological anchor & Does complexity improve on outcome frequency and routine data? \\
+RSF/neural survival & Random survival forest, DeepSurv-like Cox, discrete-time sensitivity head & Are gains generic non-linearity rather than multimodal design? \\
+Direct fusion & Concatenation with imputation, indicators, C4 & Does set modelling improve over a fixed vector? \\
+Late/residual fusion & C3 score-level and prior B6 residual fusion & Does the new backbone beat strong simple/prior comparators? \\
+Pattern-specific & Separate model for sufficiently large patterns & Is compositional sharing better than independent models? \\
+Set models & Deep Sets/Set Transformer with and without anchoring & Are invariance, residualisation and attention necessary? \\
+PATTERN policy & Set backbone, bridge and four-action router & Does conditional use improve full coverage and worst-pattern safety? \\
+Negative controls & Missingness-only, permuted, Gaussian and volume-matched features & Is value specific to intended evidence? \\
+\bottomrule\end{tabularx}
+\end{table*}
+
+\subsection{Missingness, unseen combinations and corruption}
+Natural patterns are analysed first. Simulated missingness includes block dropout, missing completely at random at several rates and MAR-like mechanisms conditioned on permitted baseline variables. Unseen-combination experiments exclude one supported pattern while retaining its constituent modalities elsewhere, testing compositional generalisation rather than unseen feature domains.
+
+Corruption leaves a modality marked acquired and applies additive Gaussian noise scaled to training dispersion, location/scale shifts, within-patient feature permutation, across-patient modality permutation, Gaussian replacement and, for imaging, volume-matched random controls. Severity levels are fixed without test outcomes. Performance degradation, uncertainty and routing are traced with severity.
+
+\subsection{Primary and secondary estimands}
+The primary full-coverage estimand is
+\begin{equation}
+\Delta\mathrm{Brier}_{24}=\mathrm{Brier}_{24}(\text{PATTERN policy})-\mathrm{Brier}_{24}(\text{C3}).
+\end{equation}
+Fallback patients contribute clinical risk; negative values favour PATTERN. Co-primary worst-pattern clinical regret is
+\begin{equation}
+\mathcal{R}_{\mathrm{worst}}=\max_{p\in\mathcal{P}_{\mathrm{supported}}}
+\{\mathrm{Brier}_{24}(\text{PATTERN},p)-\mathrm{Brier}_{24}(\text{clinical},p)\}.
+\end{equation}
+Supported patterns are prespecified as at least 30 patients and 10 events unless a more conservative rule is frozen before comparison.
+
+Secondary estimands are Harrell C, Uno C, cumulative/dynamic AUC, integrated Brier, calibration-in-the-large, calibration slope, full-to-subset degradation, seen--unseen gap, error--uncertainty association, actions and risk--coverage. Decision-curve analysis is exploratory potential utility only \cite{vickers2006}.
+
+\subsection{Censoring, metric estimation and inference}
+IPCW metrics use a censoring distribution estimated from relevant training/reference data with frozen weight truncation. Brier score follows established censoring-adjusted estimation \cite{graf1999}; Uno concordance reduces sensitivity to censoring \cite{uno2011}. Calibration slope uses a horizon-appropriate censoring-aware estimator. Exact software versions will be archived.
+
+Comparisons use 2,000 paired patient-level bootstrap replicates. Patients, not prediction rows, are resampled. For repeated cross-fitting, seed aggregation precedes primary paired intervals so repeated predictions from one patient are not independent. We report effect differences and 95\% intervals according to a frozen simulation check. Interpretation is hierarchical: primary full-coverage and worst-pattern estimands, secondary performance/calibration, then ablations/mechanisms. $P$ values, if any, are secondary.
+
+\subsection{Selective prediction and matched coverage}
+Selective performance is reported at 100\%, 95\%, 90\% and 80\% coverage and continuously. At each coverage, candidate and comparator are evaluated on the identical retained subset. Coverage, events, pattern composition and clinical subgroup composition are reported together. Insufficient-event subgroups receive uncertainty without definitive fairness claims.
+
+\subsection{Ablations and stopping rules}
+Ablations remove clinical residualisation, quality/status features, pattern terms, domain terms, hierarchical shrinkage, calibration uncertainty, value supervision, leave-one-modality sensitivity, exact fallback and token dropout. Complexity is retained only after reproducible improvement without worse safety regret. Development stops instead of model shopping when C3 matches the set model within a no-material-benefit margin, negative controls match real modality, router value is not associated with error, or calibration cannot be supported at available events.
+
+\subsection{Sample-size considerations}
+Available development size is constrained by public data. Effective information is reported through patients, events, censoring, pattern support and calibration events, with degrees of freedom and shrinkage limited accordingly. Future untouched-validation size will be calculated before outcome access for precision of Brier difference, calibration slope and key pattern estimates, following development and external-validation guidance \cite{riley2020,riley2024}. Inadequately precise cohorts will be labelled feasibility studies.
+
+\subsection{Reproducibility and governance}
+Fixed seeds are 17, 29, 43, 71 and 101. Cohorts are configuration controlled and each frozen stage has immutable receipts. Two V0 reruns produced identical out-of-fold SHA256 hashes. Patient identifiers and predictions are excluded from version control; only aggregate metrics, manifests and audits are tracked. Each stage records the analysis label, prior outcome access, external-outcome tuning status and frozen-file integrity. New methods use an isolated namespace and cannot modify Phase 3--6 assets.
+
+\subsection{Use of generative artificial intelligence assistance}
+A large-language-model-assisted coding and writing tool was used to help organise the initial manuscript scaffold, edit language and check the LaTeX build. It was not treated as an author and did not independently generate, select or validate study results. All scientific statements, citations, analyses and final wording must be verified and approved by the named authors, who retain full accountability. \TBD{Before submission, revise this disclosure to match the exact tools, versions, dates and permitted journal wording.}
+\subsection{Ethics}
+This work uses retrospective datasets under original governance and access conditions; no participants were newly recruited. The final submission will reproduce dataset-specific review-board approval, consent, waiver and data-use language from primary publications and repositories. \TBD{Confirm whether local secondary analysis requires ethics review/exemption and provide identifier.} No patient/public involvement has been documented for model design; this will be stated if unchanged.
+
+\section*{Data availability}
+HANCOCK, TCGA-HNSC, GSE65858, GSE41613 and RADCURE are available subject to source conditions \cite{dorrich2025,tcga2015,wichmann2015,lohavanichbutr2013,welch2024}. The final statement will list accessions, versions, download dates and controlled-access boundaries. Patient-level predictions will not enter version control or be redistributed contrary to source terms. Aggregate tables needed for claims will accompany the archived release. \TBD{Add repository links and accession/version table.}
+
+\section*{Code availability}
+The configuration-driven \texttt{trust-hn} repository contains tests, immutable receipts and aggregate-only reporting. A public release will include preprocessing contracts, model code, frozen configurations, environment locks and scripts regenerating aggregates from lawfully obtained data. \TBD{Create archival release/DOI; add licence and hardware/runtime.}
+
+\section*{Acknowledgements}
+\TBD{Funding, grants, data contributors, collaborators and computing resources.}
+
+\section*{Author contributions}
+\TBD{Complete CRediT roles for all authors.}
+
+\section*{Competing interests}
+The authors declare \TBD{no competing interests / specify}.
+
+\section*{Additional information}
+\textbf{Supplementary information:} reporting checklist, cohort contract, hyperparameters, model card, calibration plots, pattern estimates, negative controls and reproducibility receipts will be supplied.\\
+\textbf{Correspondence:} \TBD{corresponding author}.\\
+\textbf{Provenance and peer review:} \TBD{journal completion}.
+
+\bibliography{references}
+\end{document}
+
+
+
