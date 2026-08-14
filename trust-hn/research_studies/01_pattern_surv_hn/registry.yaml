@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U1_2_V0_COMPLETE_AWAITING_APPROVAL
-current_step: U1.2/V0
-next_allowed_step: U1_2_V0_APPROVAL_ONLY
+status: U1_3_V1_SMOKE_COMPLETE_AWAITING_APPROVAL
+current_step: U1.3/V1 smoke implementation
+next_allowed_step: U1_3_V1_SMOKE_APPROVAL_ONLY
 study_governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -27,11 +27,20 @@ approvals:
     approval_text: "审批 U1.1，进入 U1.2/V0。"
     authorization: U1_2_V0_ONLY
   U1_2_V0:
+    status: approved
+    started_on: '2026-08-14'
+    completed_on: '2026-08-14'
+    approved_on: '2026-08-14'
+    approved_by: Researcher (chat approval)
+    approval_text: "\u5ba1\u6279 U1.2/V0\uff0c\u8fdb\u5165 U1.3/V1 smoke implementation\u3002"
+    request_file: approvals/U1_2_V0_APPROVED.md
+    authorization: U1_3_V1_SMOKE_ONLY
+  U1_3_V1_SMOKE:
     status: complete_awaiting_approval
     started_on: '2026-08-14'
     completed_on: '2026-08-14'
-    approval_request: approvals/U1_2_V0_APPROVAL_PENDING.md
-    authorization_scope: extended_clinical_pathological_elastic_net_cox_only
+    approval_request: approvals/U1_3_V1_SMOKE_APPROVAL_PENDING.md
+    authorization_scope: synthetic_structural_smoke_only_no_training
   U1:
     status: not_requested
   pytorch_dependency:
@@ -112,6 +121,8 @@ frozen_file_integrity_baseline:
   verified_after_U1_1: true
   U1_1_inventory_count: 377
   U1_1_manifest_sha256: 01FD176E338BFF4B09EB23E4DFA5CA455D77091161AE89AD3A9356D60BBB2D10
+  verified_after_U1_3_smoke_by_path_guard: true
+  U1_3_smoke_frozen_key_paths_modified: 0
 patient_level_output_policy:
   allowed_root: trust-hn/results/predictions/pattern_surv_hn
   research_study_directory_patient_outputs_forbidden: true
@@ -145,3 +156,29 @@ U1_2_V0_outputs:
     full_repository: 118_passed_1_known_frozen_phase6_legacy_failure
   frozen_phase3_to_phase6_key_paths_modified: 0
   dependency_files_modified: false
+U1_3_V1_SMOKE_outputs:
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/v1_deep_sets_smoke.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_v1_smoke.py
+  frozen_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_3_V1_smoke/frozen_v1_smoke_spec.yaml
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_3_V1_smoke/aggregate_v1_smoke_audit.json
+  aggregate_audit_sha256: 84F875B385933A12CFFE10A0786373648BB6B1D7CF15E0E8C4476C89B5F46731
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U1_3_V1_smoke_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-14_step_U1_3_V1_smoke.md
+  framework: numpy_reference_no_new_dependency
+  synthetic_rows: 7
+  structural_checks: 10_passed
+  parameter_count: 3225
+  patient_data_used: false
+  outcomes_used: false
+  model_training_performed: false
+  formal_development_cv_performed: false
+  official_test_accessed: false
+  external_data_accessed: false
+  router_or_calibrator_used: false
+  dependency_files_modified: false
+  tests:
+    targeted_V1_smoke: 9_passed
+    targeted_U1_1_U1_2_U1_3: 27_passed
+    related_phase2_phase3: 23_passed
+    full_repository: 127_passed_1_known_frozen_phase6_legacy_failure
+  frozen_phase3_to_phase6_key_paths_modified: 0

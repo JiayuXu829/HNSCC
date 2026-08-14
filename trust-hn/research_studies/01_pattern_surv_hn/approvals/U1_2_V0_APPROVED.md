@@ -1,6 +1,9 @@
-﻿# U1.2/V0 Approval Request
+﻿# U1.2/V0 Approval Record
 
-**status:** `PENDING_RESEARCHER_APPROVAL`  
+**status:** `APPROVED`
+**approved_on:** 2026-08-14
+**approved_by:** Researcher (chat approval)
+**approval_text:** `审批 U1.2/V0，进入 U1.3/V1 smoke implementation。`  
 **completed_on:** 2026-08-14  
 **analysis_label:** `post_lock_exploratory`
 
@@ -10,14 +13,14 @@ Extended postoperative clinical-pathological elastic-net Cox safety anchor on el
 
 ## Checklist
 
-- [ ] Confirm estimand: n=610, events=173, one nonpositive postoperative duration excluded.
-- [ ] Confirm anchor variables: age, sex, smoking, primary site, grading, p16, resection, pT, pN.
-- [ ] Confirm 5 seeds × 5 outer folds × 3 inner folds and 12-candidate frozen Coxnet grid.
-- [ ] Confirm every preprocessing and baseline-survival fit occurred inside the corresponding training fold.
-- [ ] Confirm 3050 OOF rows are patient-level and git-ignored; tracked artifacts are aggregate-only.
-- [ ] Confirm official-test outcomes were not derived, exposed, or evaluated.
-- [ ] Confirm the performance interpretation is limited to internal post-lock exploratory evidence.
-- [ ] Confirm V0 is approved as the safety anchor and fallback reference.
+- [x] Confirm estimand: n=610, events=173, one nonpositive postoperative duration excluded.
+- [x] Confirm anchor variables: age, sex, smoking, primary site, grading, p16, resection, pT, pN.
+- [x] Confirm 5 seeds × 5 outer folds × 3 inner folds and 12-candidate frozen Coxnet grid.
+- [x] Confirm every preprocessing and baseline-survival fit occurred inside the corresponding training fold.
+- [x] Confirm 3050 OOF rows are patient-level and git-ignored; tracked artifacts are aggregate-only.
+- [x] Confirm official-test outcomes were not derived, exposed, or evaluated.
+- [x] Confirm the performance interpretation is limited to internal post-lock exploratory evidence.
+- [x] Confirm V0 is approved as the safety anchor and fallback reference.
 
 ## Aggregate result summary
 
@@ -47,3 +50,9 @@ Approval authorizes only **U1.3/V1 smoke implementation** of the minimum Clinica
 Suggested approval wording:
 
 > 审批 U1.2/V0，进入 U1.3/V1 smoke implementation。
+
+## Approval decision
+
+The researcher approved the U1.2/V0 safety anchor and authorized only U1.3/V1 smoke
+implementation. Formal V1 development cross-validation, V2, dependency installation,
+calibration, routing, and official-test/external outcome evaluation remained unauthorized.

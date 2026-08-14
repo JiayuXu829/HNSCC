@@ -1,0 +1,63 @@
+{
+  "all_checks_pass": true,
+  "checks": {
+    "arbitrary_subset_finite": true,
+    "cox_loss_finite": true,
+    "cox_loss_shift_invariant": true,
+    "exact_clinical_only_fallback": true,
+    "exact_zero_residual_without_active_tokens": true,
+    "identity_embeddings_distinct": true,
+    "parameter_ceiling": true,
+    "permutation_invariance": true,
+    "quality_encoding_active": true,
+    "status_encoding_active": true
+  },
+  "external_data_accessed": false,
+  "formal_development_cv_performed": false,
+  "framework": "numpy_reference_no_new_dependency",
+  "input_dimensions": {
+    "blood": 32,
+    "icd": 80,
+    "tma": 8
+  },
+  "input_modalities": [
+    "blood",
+    "icd",
+    "tma"
+  ],
+  "limitations": [
+    "Fixed deterministic reference weights; not a fitted prognostic model.",
+    "Structural smoke results do not support performance or generalization claims.",
+    "Trainable framework and optimizer remain subject to a separate dependency approval."
+  ],
+  "maximum_parameter_count": 50000,
+  "metrics": {
+    "cox_negative_partial_log_likelihood": 1.96624527407543,
+    "cox_shift_invariance_error": 2.220446049250313e-16,
+    "fallback_fused_max_abs_error": 0.0,
+    "fallback_residual_max_abs_error": 0.0,
+    "identity_embedding_min_pairwise_distance": 3.536651898927441,
+    "permutation_max_abs_error": 0.0,
+    "quality_sensitivity_max_abs_change": 0.010035496580078629,
+    "status_sensitivity_max_abs_change": 0.018951099133753924
+  },
+  "model_id": "V1",
+  "model_name": "Clinical_Residual_Deep_Sets_Cox",
+  "model_training_performed": false,
+  "official_test_accessed": false,
+  "outcomes_used": false,
+  "parameter_count": 3225,
+  "patient_level_data_used": false,
+  "patient_level_output_written": false,
+  "quality_features": [
+    "missing_fraction",
+    "observed_fraction"
+  ],
+  "router_or_calibrator_used": false,
+  "schema_version": "0.1",
+  "scope": "synthetic_structural_smoke_only_no_training",
+  "stage": "U1.3/V1 smoke implementation",
+  "study_id": "pattern_surv_hn",
+  "synthetic_rows": 7,
+  "token_dimension": 16
+}

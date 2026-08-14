@@ -1,0 +1,72 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U1.3/V1_smoke_implementation
+analysis_label: post_lock_exploratory
+model:
+  id: V1
+  name: Clinical_Residual_Deep_Sets_Cox
+  role: minimum_permutation_invariant_residual_backbone
+  implementation_kind: deterministic_numpy_structural_reference
+  trainable_model: false
+  token_dimension: 16
+  phi_hidden_dimension: 24
+  rho_hidden_dimension: 16
+  pooling: masked_mean
+  activation: tanh
+  residual_formula: eta_fused_equals_eta_clinical_plus_delta_eta
+  exact_fallback_rule: delta_eta_equals_zero_when_active_token_count_equals_zero
+  deterministic_reference_seed: 1701
+  modality_input_dimensions:
+    blood: 32
+    icd: 80
+    tma: 8
+  modality_dimension_derivation: two_channels_per_raw_feature_value_plus_missing_indicator
+  identity_encoding: learned_reference_embedding
+  status_encoding:
+    - absent
+    - acquired_unusable
+    - usable_complete
+    - usable_partial
+    - conditional_provenance
+  quality_features:
+    - missing_fraction
+    - observed_fraction
+constraints:
+  synthetic_rows_only: true
+  patient_data_allowed: false
+  outcomes_allowed: false
+  optimization_allowed: false
+  formal_development_cross_validation_allowed: false
+  new_dependency_installation_allowed: false
+  official_test_access_allowed: false
+  external_data_access_allowed: false
+  calibration_bridge_allowed: false
+  router_allowed: false
+  maximum_parameter_count: 50000
+required_checks:
+  - modality_specific_adapters
+  - modality_identity_encoding
+  - status_encoding
+  - quality_encoding
+  - arbitrary_modality_subsets
+  - input_order_permutation_invariance
+  - exact_zero_residual_without_active_tokens
+  - exact_clinical_only_fallback
+  - finite_cox_partial_likelihood
+  - cox_score_shift_invariance
+claim_boundary:
+  supports:
+    - structural_interface_feasibility
+    - deterministic_forward_pass
+    - exact_fallback_contract
+    - permutation_invariance_contract
+  does_not_support:
+    - prognostic_performance
+    - fusion_benefit
+    - calibration
+    - routing_benefit
+    - transportability
+    - external_generalization
+    - clinical_utility
+next_step_not_authorized: formal_V1_development_cross_validation
+
