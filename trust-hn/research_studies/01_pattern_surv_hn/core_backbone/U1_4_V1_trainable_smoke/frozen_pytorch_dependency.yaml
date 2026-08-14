@@ -1,0 +1,41 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U1.4/V1_trainable_implementation
+authorized_on: '2026-08-14'
+authorization_text: >-
+  审批 U1.3/V1 smoke，进入 U1.4/V1 trainable implementation，并允许在项目环境中安装和冻结 PyTorch 依赖；暂不进入正式 development CV。
+installation:
+  environment: project_local_.venv
+  python: 3.11.9
+  platform: Windows_AMD64
+  index_url: https://download.pytorch.org/whl/cpu
+  requested_requirement: torch==2.12.1
+  installed_build: 2.12.1+cpu
+  cuda_build: null
+  cuda_available: false
+rationale:
+  - The U1.4 model has only 3225 trainable parameters and does not require GPU acceleration.
+  - CPU execution reduces CUDA driver and binary-compatibility risk for the deterministic smoke.
+  - No CUDA packages are authorized or installed for this stage.
+dependency_freeze:
+  requirements_file: requirements-pytorch-cpu.txt
+  declared_requirement: torch==2.12.1
+  pyproject_modified: false
+  reason_pyproject_unchanged: preserved_phase6_registered_file_integrity
+transitive_runtime_packages:
+  filelock: 3.29.0
+  fsspec: 2026.4.0
+  Jinja2: 3.1.6
+  MarkupSafe: 3.0.3
+  mpmath: 1.3.0
+  networkx: 3.6.1
+  sympy: 1.14.0
+scope:
+  allowed:
+    - trainable_V1_implementation
+    - deterministic_synthetic_optimization_smoke
+  forbidden:
+    - patient_level_V1_training
+    - formal_development_cross_validation
+    - official_test_or_external_outcome_evaluation
+    - router_or_calibrator_implementation

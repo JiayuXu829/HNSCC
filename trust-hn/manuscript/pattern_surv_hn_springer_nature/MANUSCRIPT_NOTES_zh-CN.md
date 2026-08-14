@@ -1,4 +1,4 @@
-﻿# PATTERN-Surv-HN 论文初稿编辑说明（中文）
+# PATTERN-Surv-HN 论文初稿编辑说明（中文）
 
 ## 1. 这篇论文现在被组织成什么故事
 
@@ -109,3 +109,17 @@
 - 精确的软件、硬件和运行时间；
 - 最终生成式 AI 使用披露；
 - 所有参考文献逐条核验，尤其是最新会议论文记录。
+
+## 9. 2026-08-14 Q1/npjDM 精修更新
+
+本轮根据近期 npj Digital Medicine、MLHC/CVPR incomplete-modality survival 和医学 shortcut 文献，对稿件进行了第二轮结构性精修。主要变化：
+
+- 标题改为更明确的“clinical anchor + missing/shifted/shortcut-prone + disease”结构；
+- 故事收束为“一个框架、三个可证伪挑战、四种输出动作”；
+- Introduction 不再按三个松散不足平铺，而以“recorded data 不等于 trustworthy evidence”统领；
+- Results 按 evidence ladder 排列，标题改为信息型 claim slots；
+- HAF 被提升为 HANCOCK 上必须完成的近期直接 comparator；
+- 新增 claim gatekeeping，防止次要实验挽救失败的 primary claim；
+- Discussion 明确创新点不是新的 fusion block，而是 conditional evidence use 的可证伪临床路径；
+- 详细基准见 `Q1_NPJDM_WRITING_BENCHMARK_2026_zh-CN.md`。
+

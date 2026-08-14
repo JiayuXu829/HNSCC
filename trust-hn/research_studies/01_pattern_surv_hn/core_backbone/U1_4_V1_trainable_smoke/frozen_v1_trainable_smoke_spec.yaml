@@ -1,0 +1,58 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U1.4/V1_trainable_implementation
+analysis_label: post_lock_exploratory
+inherits_architecture_from: ../U1_3_V1_smoke/frozen_v1_smoke_spec.yaml
+runtime:
+  framework: pytorch
+  device: cpu
+  dtype: float64
+synthetic_training:
+  rows: 96
+  seed: 2901
+  patient_data_allowed: false
+  patient_outcomes_allowed: false
+optimization:
+  optimizer: Adam
+  steps: 250
+  learning_rate: 0.01
+  weight_decay: 0.0001
+  gradient_clip_norm: 5.0
+  minimum_relative_loss_reduction: 0.20
+required_checks:
+  - torch_cpu_runtime
+  - finite_initial_and_final_loss
+  - finite_nonzero_gradient
+  - parameter_update
+  - minimum_loss_reduction
+  - pretrain_permutation_invariance
+  - posttrain_permutation_invariance
+  - exact_zero_residual_without_active_tokens
+  - exact_clinical_only_fallback
+  - cox_score_shift_invariance
+  - parameter_ceiling
+constraints:
+  synthetic_optimization_only: true
+  patient_level_training_allowed: false
+  formal_development_cross_validation_allowed: false
+  official_test_access_allowed: false
+  external_data_access_allowed: false
+  checkpoint_writing_allowed: false
+  calibration_bridge_allowed: false
+  router_allowed: false
+claim_boundary:
+  supports:
+    - trainable_pytorch_implementation_feasibility
+    - gradient_flow
+    - deterministic_synthetic_optimization
+    - exact_fallback_contract_after_optimization
+    - permutation_invariance_contract_after_optimization
+  does_not_support:
+    - prognostic_performance
+    - fusion_benefit
+    - calibration
+    - routing_benefit
+    - transportability
+    - external_generalization
+    - clinical_utility
+next_step_not_authorized: formal_V1_development_cross_validation

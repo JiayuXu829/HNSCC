@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U1_3_V1_SMOKE_COMPLETE_AWAITING_APPROVAL
-current_step: U1.3/V1 smoke implementation
-next_allowed_step: U1_3_V1_SMOKE_APPROVAL_ONLY
+status: U1_4_V1_TRAINABLE_SMOKE_COMPLETE_AWAITING_APPROVAL
+current_step: U1.4/V1 trainable implementation
+next_allowed_step: U1_4_V1_TRAINABLE_SMOKE_APPROVAL_ONLY
 study_governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -36,15 +36,29 @@ approvals:
     request_file: approvals/U1_2_V0_APPROVED.md
     authorization: U1_3_V1_SMOKE_ONLY
   U1_3_V1_SMOKE:
+    status: approved
+    started_on: '2026-08-14'
+    completed_on: '2026-08-14'
+    approved_on: '2026-08-14'
+    approved_by: Researcher (chat approval)
+    approval_text: "审批 U1.3/V1 smoke，进入 U1.4/V1 trainable implementation，并允许在项目环境中安装和冻结 PyTorch 依赖；暂不进入正式 development CV。"
+    request_file: approvals/U1_3_V1_SMOKE_APPROVED.md
+    authorization: U1_4_V1_TRAINABLE_SYNTHETIC_SMOKE_ONLY
+  U1_4_V1_TRAINABLE_SMOKE:
     status: complete_awaiting_approval
     started_on: '2026-08-14'
     completed_on: '2026-08-14'
-    approval_request: approvals/U1_3_V1_SMOKE_APPROVAL_PENDING.md
-    authorization_scope: synthetic_structural_smoke_only_no_training
+    approval_request: approvals/U1_4_V1_TRAINABLE_SMOKE_APPROVAL_PENDING.md
+    authorization_scope: trainable_pytorch_synthetic_optimization_only_no_patient_CV
   U1:
     status: not_requested
   pytorch_dependency:
-    status: not_requested
+    status: approved_and_frozen
+    approved_on: '2026-08-14'
+    build: 2.12.1+cpu
+    device: cpu
+    requirements_file: core_backbone/U1_4_V1_trainable_smoke/requirements-pytorch-cpu.txt
+    pyproject_modified: false
 immutable_references:
   unified_proposal:
     path: docs/HNSCC_PATTERNSurv_HN_unified_Q1_research_proposal.md
@@ -107,7 +121,7 @@ U0_decision_log:
   status: approved
   decision: ICD_conditional_with_provenance_disclosure
 known_blockers_and_conditions:
-- PyTorch_pycox_torchtuples_not_installed
+- pycox_torchtuples_not_installed_not_required_for_custom_PyTorch_Cox_loss
 - ICD_raw_text_not_present_locally
 - preextracted_blood_csv_has_whole_cohort_preprocessing
 - official_HANCOCK_test_has_only_pattern_111
@@ -123,6 +137,8 @@ frozen_file_integrity_baseline:
   U1_1_manifest_sha256: 01FD176E338BFF4B09EB23E4DFA5CA455D77091161AE89AD3A9356D60BBB2D10
   verified_after_U1_3_smoke_by_path_guard: true
   U1_3_smoke_frozen_key_paths_modified: 0
+  verified_after_U1_4_trainable_smoke_by_registered_file_guard: true
+  U1_4_trainable_smoke_frozen_key_paths_modified: 0
 patient_level_output_policy:
   allowed_root: trust-hn/results/predictions/pattern_surv_hn
   research_study_directory_patient_outputs_forbidden: true
@@ -181,4 +197,39 @@ U1_3_V1_SMOKE_outputs:
     targeted_U1_1_U1_2_U1_3: 27_passed
     related_phase2_phase3: 23_passed
     full_repository: 127_passed_1_known_frozen_phase6_legacy_failure
+  frozen_phase3_to_phase6_key_paths_modified: 0
+U1_4_V1_TRAINABLE_SMOKE_outputs:
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/v1_trainable_smoke.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_v1_trainable_smoke.py
+  frozen_training_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_4_V1_trainable_smoke/frozen_v1_trainable_smoke_spec.yaml
+  frozen_dependency: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_4_V1_trainable_smoke/frozen_pytorch_dependency.yaml
+  requirements: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_4_V1_trainable_smoke/requirements-pytorch-cpu.txt
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_4_V1_trainable_smoke/aggregate_v1_trainable_smoke_audit.json
+  aggregate_audit_sha256: 12C3E6F85AFDFA99FC9898AC843EAD439B9A5D2AF4F4085D9260C5D168807C34
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U1_4_V1_trainable_smoke_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-14_step_U1_4_V1_trainable_smoke.md
+  framework: pytorch_2_12_1_cpu
+  synthetic_rows: 96
+  optimization_steps: 250
+  checks: 12_passed
+  parameter_count: 3225
+  initial_cox_loss: 3.607239196355591
+  final_cox_loss: 0.6055617046367969
+  relative_loss_reduction: 0.8321259911877764
+  patient_data_used: false
+  real_outcomes_used: false
+  patient_level_output_written: false
+  model_checkpoint_written: false
+  formal_development_cv_performed: false
+  official_test_accessed: false
+  external_data_accessed: false
+  router_or_calibrator_used: false
+  pyproject_modified: false
+  tests:
+    targeted_U1_4: 7_passed
+    targeted_U1_1_U1_2_U1_3_U1_4: 34_passed
+    related_phase2_phase3: 23_passed
+    phase6_registered_file_guard: 1_passed
+    full_repository: 134_passed_1_known_frozen_phase6_state_failure
+    ruff_U1_4_scope: passed
   frozen_phase3_to_phase6_key_paths_modified: 0

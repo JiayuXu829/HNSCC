@@ -8,6 +8,7 @@ This directory contains a submission-oriented **living manuscript draft** for an
 - `references.bib` — working bibliography; verify every author list, title, issue/page and recent conference record before submission.
 - `main.pdf` — compiled preview.
 - `MANUSCRIPT_NOTES_zh-CN.md` — Chinese editorial rationale, completed evidence, placeholders and next actions.
+- `Q1_NPJDM_WRITING_BENCHMARK_2026_zh-CN.md` — 2026 benchmark of title, narrative, section and experiment organisation in recent npj Digital Medicine and related papers.
 - `sn-jnl.cls`, `sn-nature.bst` — copied from the local Springer Nature template.
 - `figures/` — reserved for final standalone figure files.
 
@@ -47,7 +48,7 @@ RADCURE, HANCOCK official test, GSE65858 and GSE41613 have previously outcome-se
 ## Before journal submission
 
 1. Replace every red `TBD` field.
-2. Verify all references against primary sources; the 2026 MIDL record is explicitly provisional.
+2. Verify all references against primary sources before submission. The Zheng et al. 2026 record has been corrected to the 8th Machine Learning for Healthcare Conference, PMLR volume 298, pages 1373--1396.
 3. Add final standalone figure files and replace boxed placeholders.
 4. Add a participant-flow figure and supplementary cohort contract.
 5. Complete TRIPOD+AI checklist and PROBAST+AI self-assessment.
@@ -55,3 +56,5 @@ RADCURE, HANCOCK official test, GSE65858 and GSE41613 have previously outcome-se
 7. Add exact data/code archive links, ethics language, CRediT roles, funding and competing interests.
 8. Update the generative-AI disclosure with exact tools/versions and the journal policy current at submission.
 9. For final Nature Portfolio eJP submission, follow the journal portal's current LaTeX packaging instructions; if requested, embed the generated `.bbl` reference list into the single main `.tex` file.
+
+
