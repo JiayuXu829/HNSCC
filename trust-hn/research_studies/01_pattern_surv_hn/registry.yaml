@@ -1,10 +1,9 @@
-schema_version: "0.1"
+schema_version: '0.1'
 study_id: pattern_surv_hn
-registered_on: "2026-08-13"
-status: AWAITING_U0_APPROVAL
-current_step: U0
-next_allowed_step: U0_RESEARCHER_APPROVAL_ONLY
-
+registered_on: '2026-08-13'
+status: U1_1_COMPLETE_AWAITING_APPROVAL
+current_step: U1.1
+next_allowed_step: U1_1_APPROVAL_ONLY
 study_governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -12,16 +11,22 @@ study_governance:
   external_outcomes_used_for_tuning: false
   patient_level_outputs_git_ignored: true
   tracked_outputs_aggregate_only: true
-
 approvals:
   U0:
+    status: approved
+    request_file: approvals/U0_APPROVED.md
+    approved_by: Researcher (chat approval)
+    approved_on: '2026-08-13'
+    approval_text: "\u5ba1\u6279\u8fdb\u5165U1.1"
+  U1_1:
     status: pending
-    request_file: approvals/U0_APPROVAL_PENDING.md
-    approved_by: null
-    approved_on: null
-  U1: {status: not_requested}
-  pytorch_dependency: {status: not_requested}
-
+    request_file: approvals/U1_1_APPROVAL_PENDING.md
+    completed_on: '2026-08-13'
+    authorization_if_approved: U1_2_V0_ONLY
+  U1:
+    status: not_requested
+  pytorch_dependency:
+    status: not_requested
 immutable_references:
   unified_proposal:
     path: docs/HNSCC_PATTERNSurv_HN_unified_Q1_research_proposal.md
@@ -46,39 +51,67 @@ immutable_references:
     sha256: DBB6BCA68D434D1C6678F0101FE5D6C5F25D1CD0A2389C2264E6C064E9446795
     tracked: false
     contains_patient_level_data: true
-
 outcome_seen_cohorts:
-  - {cohort: RADCURE, role: post_lock_mechanism_replication_only}
-  - {cohort: HANCOCK_official_test, role: post_lock_complete_pattern_replication_only}
-  - {cohort: GSE65858, role: post_lock_platform_shift_replication_only}
-  - {cohort: GSE41613, role: post_lock_sensitivity_only}
-
+- cohort: RADCURE
+  role: post_lock_mechanism_replication_only
+- cohort: HANCOCK_official_test
+  role: post_lock_complete_pattern_replication_only
+- cohort: GSE65858
+  role: post_lock_platform_shift_replication_only
+- cohort: GSE41613
+  role: post_lock_sensitivity_only
 U0_decision_log:
-  - {id: U0-D01, status: proposed_pending_approval, decision: postoperative_pre_adjuvant_prediction_time}
-  - {id: U0-D02, status: proposed_pending_approval, decision: extended_clinical_pathological_Cox_anchor}
-  - {id: U0-D03, status: proposed_pending_approval, decision: pathology_is_anchor_not_additional_modality}
-  - {id: U0-D04, status: proposed_pending_approval, decision: blood_ICD_TMA_primary_varying_modalities}
-  - {id: U0-D05, status: proposed_pending_approval, decision: unseen_pattern_n20_events5}
-  - {id: U0-D06, status: proposed_pending_approval, decision: exclude_nonpositive_postoperative_duration_with_sensitivity}
-  - {id: U0-D07, status: proposed_pending_approval, decision: V1_Deep_Sets_precedes_V2_Set_Transformer}
-  - {id: U0-D08, status: proposed_pending_approval, decision: global_calibration_with_support_gated_pattern_adjustment}
-  - {id: U0-D09, status: proposed_pending_approval, decision: ICD_conditional_with_provenance_disclosure}
-
+- id: U0-D01
+  status: approved
+  decision: postoperative_pre_adjuvant_prediction_time
+- id: U0-D02
+  status: approved
+  decision: extended_clinical_pathological_Cox_anchor
+- id: U0-D03
+  status: approved
+  decision: pathology_is_anchor_not_additional_modality
+- id: U0-D04
+  status: approved
+  decision: blood_ICD_TMA_primary_varying_modalities
+- id: U0-D05
+  status: approved
+  decision: unseen_pattern_n20_events5
+- id: U0-D06
+  status: approved
+  decision: exclude_nonpositive_postoperative_duration_with_sensitivity
+- id: U0-D07
+  status: approved
+  decision: V1_Deep_Sets_precedes_V2_Set_Transformer
+- id: U0-D08
+  status: approved
+  decision: global_calibration_with_support_gated_pattern_adjustment
+- id: U0-D09
+  status: approved
+  decision: ICD_conditional_with_provenance_disclosure
 known_blockers_and_conditions:
-  - PyTorch_pycox_torchtuples_not_installed
-  - ICD_raw_text_not_present_locally
-  - preextracted_blood_csv_has_whole_cohort_preprocessing
-  - official_HANCOCK_test_has_only_pattern_111
-  - one_nonpositive_postoperative_followup
-  - confirmatory_external_claim_requires_future_outcome_unseen_cohort
-
+- PyTorch_pycox_torchtuples_not_installed
+- ICD_raw_text_not_present_locally
+- preextracted_blood_csv_has_whole_cohort_preprocessing
+- official_HANCOCK_test_has_only_pattern_111
+- one_nonpositive_postoperative_followup
+- confirmatory_external_claim_requires_future_outcome_unseen_cohort
 frozen_file_integrity_baseline:
   phase3_to_phase6_inventory_count: 377
   manifest_sha256: 01FD176E338BFF4B09EB23E4DFA5CA455D77091161AE89AD3A9356D60BBB2D10
   manifest_location: temporary_untracked_audit_manifest
   expected_after_U0: unchanged
-
+  verified_after_U1_1: true
+  U1_1_inventory_count: 377
+  U1_1_manifest_sha256: 01FD176E338BFF4B09EB23E4DFA5CA455D77091161AE89AD3A9356D60BBB2D10
 patient_level_output_policy:
   allowed_root: trust-hn/results/predictions/pattern_surv_hn
   research_study_directory_patient_outputs_forbidden: true
   tracked_outputs: aggregate_only
+U1_1_outputs:
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/hancock_contract.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_contract.py
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_1_data_contract/aggregate_contract_audit.json
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U1_1_postoperative_hancock_contract_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-13_step_U1_1_postoperative_hancock_data_contract.md
+  model_training_performed: false
+  patient_level_artifacts_written: false

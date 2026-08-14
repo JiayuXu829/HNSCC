@@ -1,0 +1,878 @@
+"""Independent postoperative HANCOCK contract for PATTERN-Surv-HN.
+
+This module deliberately does not reuse or modify the frozen Phase 2 HANCOCK
+adapter or Phase 3 feature loader.  It exposes patient-level data in memory only;
+tracked reports must contain aggregate summaries exclusively.
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+from collections.abc import Iterable, Mapping, Sequence
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+from trust_hn.data.contracts import DataContractError
+from trust_hn.data.contracts_v2 import SplitRole, deterministic_development_split
+
+ANCHOR_NUMERIC_FEATURES: tuple[str, ...] = ("age_at_initial_diagnosis",)
+ANCHOR_CATEGORICAL_FEATURES: tuple[str, ...] = (
+    "sex",
+    "smoking_status",
+    "primary_tumor_site",
+    "grading",
+    "hpv_association_p16",
+    "resection_status",
+    "pT_stage",
+    "pN_stage",
+)
+ANCHOR_FEATURES = ANCHOR_NUMERIC_FEATURES + ANCHOR_CATEGORICAL_FEATURES
+
+BLOOD_FEATURES: tuple[str, ...] = (
+    "Leukocytes [#/volume] in Blood",
+    "Hemoglobin [Mass/volume] in Blood",
+    "Platelets [#/volume] in Blood",
+    "Erythrocytes [#/volume] in Blood",
+    "Hematocrit [Volume Fraction] of Blood",
+    "Erythrocyte mean corpuscular hemoglobin [Entitic mass]",
+    "Erythrocyte mean corpuscular volume [Entitic volume]",
+    "Erythrocyte mean corpuscular hemoglobin concentration [Mass/volume]",
+    "Erythrocyte distribution width [Ratio]",
+    "Platelet mean volume [Entitic volume] in Blood",
+    "Granulocytes [#/volume] in Blood",
+    "Eosinophils [#/volume] in Blood",
+    "Basophils [#/volume] in Blood",
+    "Lymphocytes [#/volume] in Blood",
+    "Monocytes [#/volume] in Blood",
+    "Platelet distribution width [Entitic volume] in Blood by Automated count",
+)
+TMA_FEATURES: tuple[str, ...] = ("cd3_z", "cd3_inv", "cd8_z", "cd8_inv")
+ICD_FEATURES: tuple[str, ...] = (
+    "c020", "c021", "c022", "c028", "c029", "c048", "c051", "c052",
+    "c058", "c068", "c090", "c091", "c098", "c099", "c100", "c102",
+    "c108", "c109", "c111", "c130", "c131", "c132", "c138", "c139",
+    "c148", "c320", "c321", "c322", "c323", "c328", "c329", "c770",
+    "c778", "c800", "d000", "d370", "d380", "r590", "r599", "t810",
+)
+
+PROHIBITED_PREDICTORS: frozenset[str] = frozenset(
+    {
+        "survival_status",
+        "survival_status_with_cause",
+        "days_to_last_information",
+        "recurrence",
+        "days_to_recurrence",
+        "progress_1",
+        "days_to_progress_1",
+        "progress_2",
+        "days_to_progress_2",
+        "metastasis_1_locations",
+        "days_to_metastasis_1",
+        "metastasis_2_locations",
+        "days_to_metastasis_2",
+        "metastasis_3_locations",
+        "days_to_metastasis_3",
+        "metastasis_4_locations",
+        "days_to_metastasis_4",
+        "adjuvant_treatment_intent",
+        "adjuvant_radiotherapy",
+        "adjuvant_radiotherapy_modality",
+        "adjuvant_systemic_therapy",
+        "adjuvant_systemic_therapy_modality",
+        "adjuvant_radiochemotherapy",
+        "first_treatment_intent",
+        "first_treatment_modality",
+        "days_to_first_treatment",
+    }
+)
+
+BLOOD_TIMING_MIN_DAYS = 0.0
+BLOOD_TIMING_MAX_DAYS = 14.0
+DEVELOPMENT_SPLIT_SALT = "TRUST-HN:HANCOCK:OOD:phase2:v1"
+POSTOPERATIVE_ENDPOINT_NAME = "postoperative_overall_survival"
+POSTOPERATIVE_INDEX_DATE = "first_treatment_or_definitive_surgery"
+
+
+class ModalityStatus(str, Enum):
+    ABSENT = "absent"
+    ACQUIRED_UNUSABLE = "acquired_unusable"
+    USABLE_COMPLETE = "usable_complete"
+    USABLE_PARTIAL = "usable_partial"
+    CONDITIONAL_PROVENANCE = "conditional_provenance"
+
+
+@dataclass(frozen=True)
+class ModalityRecord:
+    acquired: bool
+    usable: bool
+    status: ModalityStatus
+    available_feature_count: int
+    total_feature_count: int
+    missing_fraction: float
+    quality_flags: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class PatientContractRecord:
+    native_id: str
+    split_role: SplitRole
+    official_partition: str
+    eligible: bool
+    exclusion_reason: str | None
+    endpoint_name: str
+    index_date_definition: str
+    duration_days: float | None
+    event: int | None
+    outcome_sealed: bool
+    anchor_available: bool
+    blood: ModalityRecord
+    icd: ModalityRecord
+    tma: ModalityRecord
+    acquisition_pattern: str
+    usable_pattern: str
+    provenance: tuple[str, ...]
+
+
+@dataclass
+class HancockContract:
+    records: tuple[PatientContractRecord, ...]
+    anchor: pd.DataFrame
+    blood: pd.DataFrame
+    icd: pd.DataFrame
+    tma: pd.DataFrame
+    blood_timing: pd.DataFrame
+    source_paths: Mapping[str, Path]
+
+    @property
+    def ids(self) -> tuple[str, ...]:
+        return tuple(record.native_id for record in self.records)
+
+    def record_by_id(self) -> dict[str, PatientContractRecord]:
+        return {record.native_id: record for record in self.records}
+
+    def patient_frame(self, *, include_identifiers: bool = True) -> pd.DataFrame:
+        rows: list[dict[str, object]] = []
+        for record in self.records:
+            row = {
+                "native_id": record.native_id,
+                "split_role": record.split_role.value,
+                "official_partition": record.official_partition,
+                "eligible": record.eligible,
+                "exclusion_reason": record.exclusion_reason,
+                "endpoint_name": record.endpoint_name,
+                "index_date_definition": record.index_date_definition,
+                "duration_days": record.duration_days,
+                "event": record.event,
+                "outcome_sealed": record.outcome_sealed,
+                "anchor_available": record.anchor_available,
+                "blood_acquired": record.blood.acquired,
+                "blood_usable": record.blood.usable,
+                "blood_status": record.blood.status.value,
+                "blood_available_feature_count": record.blood.available_feature_count,
+                "blood_missing_fraction": record.blood.missing_fraction,
+                "icd_acquired": record.icd.acquired,
+                "icd_usable": record.icd.usable,
+                "icd_status": record.icd.status.value,
+                "icd_available_feature_count": record.icd.available_feature_count,
+                "icd_missing_fraction": record.icd.missing_fraction,
+                "tma_acquired": record.tma.acquired,
+                "tma_usable": record.tma.usable,
+                "tma_status": record.tma.status.value,
+                "tma_available_feature_count": record.tma.available_feature_count,
+                "tma_missing_fraction": record.tma.missing_fraction,
+                "acquisition_pattern": record.acquisition_pattern,
+                "usable_pattern": record.usable_pattern,
+            }
+            if not include_identifiers:
+                row.pop("native_id")
+            rows.append(row)
+        return pd.DataFrame(rows)
+
+    def aggregate_summary(self) -> dict[str, object]:
+        frame = self.patient_frame(include_identifiers=False)
+        eligible = frame[frame["eligible"]]
+        development = eligible[eligible["split_role"].isin(["train", "calibration"])]
+        split_counts: list[dict[str, object]] = []
+        for role, group in frame.groupby("split_role", dropna=False):
+            exposed_events = group["event"].dropna()
+            split_counts.append(
+                {
+                    "split_role": str(role),
+                    "n": len(group),
+                    "eligible": int(group["eligible"].sum()),
+                    "outcomes_sealed": int(group["outcome_sealed"].sum()),
+                    "events_exposed": (
+                        int(exposed_events.sum()) if not exposed_events.empty else None
+                    ),
+                }
+            )
+        acquisition_patterns = self._pattern_summary(frame, "acquisition_pattern")
+        usable_patterns = self._pattern_summary(frame, "usable_pattern")
+        return {
+            "records": len(frame),
+            "eligible": int(frame["eligible"].sum()),
+            "excluded": int((~frame["eligible"]).sum()),
+            "outcome_sealed": int(frame["outcome_sealed"].sum()),
+            "development_eligible": len(development),
+            "development_events": int(development["event"].fillna(0).sum()),
+            "split_counts": split_counts,
+            "modality_counts": {
+                modality: {
+                    "acquired": int(frame[f"{modality}_acquired"].sum()),
+                    "usable": int(frame[f"{modality}_usable"].sum()),
+                    "status_counts": {
+                        str(status): int(count)
+                        for status, count in frame[f"{modality}_status"]
+                        .value_counts()
+                        .sort_index()
+                        .items()
+                    },
+                }
+                for modality in ("blood", "icd", "tma")
+            },
+            "acquisition_patterns": acquisition_patterns,
+            "usable_patterns": usable_patterns,
+            "anchor_missing_cells": int(self.anchor.isna().sum().sum()),
+            "blood_missing_cells_among_rows": int(self.blood.isna().sum().sum()),
+            "tma_missing_cells_among_rows": int(self.tma.isna().sum().sum()),
+            "icd_missing_cells_among_rows": int(self.icd.isna().sum().sum()),
+        }
+
+    @staticmethod
+    def _pattern_summary(frame: pd.DataFrame, column: str) -> list[dict[str, object]]:
+        rows: list[dict[str, object]] = []
+        for (role, pattern), group in frame.groupby(["split_role", column], dropna=False):
+            rows.append(
+                {
+                    "split_role": str(role),
+                    "pattern": str(pattern),
+                    "n": len(group),
+                    "eligible": int(group["eligible"].sum()),
+                    "events_exposed": (
+                        int(group["event"].dropna().sum())
+                        if group["event"].notna().any()
+                        else None
+                    ),
+                    "outcomes_sealed": int(group["outcome_sealed"].sum()),
+                }
+            )
+        return sorted(rows, key=lambda row: (row["split_role"], row["pattern"]))
+
+
+@dataclass(frozen=True)
+class ContractValidationReport:
+    records: int
+    eligible: int
+    excluded: int
+    sealed: int
+    development_outcomes_exposed: int
+    prohibited_predictor_overlap: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class PreprocessedBlock:
+    values: np.ndarray
+    missing_indicators: np.ndarray
+    feature_names: tuple[str, ...]
+
+
+class FoldBoundBlockPreprocessor:
+    """Median/standardization preprocessor that can only be fit on declared training IDs."""
+
+    def __init__(
+        self,
+        features: Sequence[str],
+        *,
+        add_missing_indicators: bool = True,
+        allowed_fit_ids: Iterable[str] | None = None,
+    ):
+        self.features = tuple(features)
+        self.add_missing_indicators = add_missing_indicators
+        self.allowed_fit_ids = (
+            None
+            if allowed_fit_ids is None
+            else frozenset(str(value).strip() for value in allowed_fit_ids)
+        )
+        self.fit_ids_: tuple[str, ...] = ()
+        self.medians_: pd.Series | None = None
+        self.means_: pd.Series | None = None
+        self.scales_: pd.Series | None = None
+
+    @staticmethod
+    def _normalise_ids(ids: Iterable[str]) -> tuple[str, ...]:
+        values = tuple(str(value).strip() for value in ids)
+        if not values or any(not value for value in values):
+            raise DataContractError("fit/transform IDs must be non-empty strings")
+        if len(values) != len(set(values)):
+            raise DataContractError("fit/transform IDs must be unique")
+        return values
+
+    def fit(self, frame: pd.DataFrame, training_ids: Iterable[str]) -> FoldBoundBlockPreprocessor:
+        ids = self._normalise_ids(training_ids)
+        if self.allowed_fit_ids is not None:
+            disallowed = sorted(set(ids) - self.allowed_fit_ids)
+            if disallowed:
+                raise DataContractError(
+                    f"preprocessor fit includes {len(disallowed)} non-training IDs"
+                )
+        missing_ids = sorted(set(ids) - set(frame.index.astype(str)))
+        if missing_ids:
+            raise DataContractError(f"training IDs absent from modality frame: {len(missing_ids)}")
+        subset = frame.loc[list(ids), list(self.features)].apply(pd.to_numeric, errors="coerce")
+        medians = subset.median(axis=0).fillna(0.0).astype(float)
+        filled = subset.fillna(medians)
+        means = filled.mean(axis=0).astype(float)
+        scales = filled.std(axis=0, ddof=0).astype(float)
+        scales = scales.mask(~np.isfinite(scales) | scales.lt(1e-12), 1.0)
+        self.fit_ids_ = ids
+        self.medians_ = medians
+        self.means_ = means
+        self.scales_ = scales
+        return self
+
+    def transform(self, frame: pd.DataFrame, ids: Iterable[str]) -> PreprocessedBlock:
+        if self.medians_ is None or self.means_ is None or self.scales_ is None:
+            raise RuntimeError("preprocessor must be fit before transform")
+        ordered_ids = self._normalise_ids(ids)
+        aligned = frame.reindex(list(ordered_ids))[list(self.features)]
+        numeric = aligned.apply(pd.to_numeric, errors="coerce")
+        missing = numeric.isna().to_numpy(dtype=float)
+        values = ((numeric.fillna(self.medians_) - self.means_) / self.scales_).to_numpy(
+            dtype=float
+        )
+        if not np.isfinite(values).all():
+            raise DataContractError("preprocessing produced non-finite values")
+        if self.add_missing_indicators:
+            matrix = np.column_stack([values, missing])
+            names = self.features + tuple(f"{name}__missing" for name in self.features)
+        else:
+            matrix = values
+            names = self.features
+        return PreprocessedBlock(values=matrix, missing_indicators=missing, feature_names=names)
+
+    def fit_transform(
+        self, frame: pd.DataFrame, training_ids: Iterable[str]
+    ) -> PreprocessedBlock:
+        ids = self._normalise_ids(training_ids)
+        return self.fit(frame, ids).transform(frame, ids)
+
+
+class FoldBoundMixedPreprocessor:
+    """Fold-bound mixed-type preprocessing for the clinical-pathological anchor."""
+
+    MISSING_LEVEL = "__MISSING__"
+    UNKNOWN_LEVEL = "__UNKNOWN__"
+
+    def __init__(
+        self,
+        *,
+        numeric: Sequence[str],
+        categorical: Sequence[str],
+        allowed_fit_ids: Iterable[str] | None = None,
+    ):
+        self.numeric = tuple(numeric)
+        self.categorical = tuple(categorical)
+        self.allowed_fit_ids = (
+            None
+            if allowed_fit_ids is None
+            else frozenset(str(value).strip() for value in allowed_fit_ids)
+        )
+        self.fit_ids_: tuple[str, ...] = ()
+        self.numeric_medians_: dict[str, float] = {}
+        self.numeric_means_: dict[str, float] = {}
+        self.numeric_scales_: dict[str, float] = {}
+        self.category_levels_: dict[str, tuple[str, ...]] = {}
+        self.feature_names_: tuple[str, ...] = ()
+
+    @staticmethod
+    def _normalise_ids(ids: Iterable[str]) -> tuple[str, ...]:
+        return FoldBoundBlockPreprocessor._normalise_ids(ids)
+
+    @classmethod
+    def _clean_category(cls, series: pd.Series) -> pd.Series:
+        values = series.astype("string").str.strip()
+        return values.mask(values.isna() | values.eq(""), cls.MISSING_LEVEL).fillna(
+            cls.MISSING_LEVEL
+        )
+
+    def fit(self, frame: pd.DataFrame, training_ids: Iterable[str]) -> FoldBoundMixedPreprocessor:
+        ids = self._normalise_ids(training_ids)
+        if self.allowed_fit_ids is not None:
+            disallowed = sorted(set(ids) - self.allowed_fit_ids)
+            if disallowed:
+                raise DataContractError(
+                    f"preprocessor fit includes {len(disallowed)} non-training IDs"
+                )
+        missing_ids = sorted(set(ids) - set(frame.index.astype(str)))
+        if missing_ids:
+            raise DataContractError(f"training IDs absent from anchor frame: {len(missing_ids)}")
+        subset = frame.loc[list(ids)]
+        names: list[str] = []
+        for column in self.numeric:
+            raw = pd.to_numeric(subset[column], errors="coerce")
+            median = float(raw.median()) if raw.notna().any() else 0.0
+            filled = raw.fillna(median).astype(float)
+            mean = float(filled.mean())
+            scale = float(filled.std(ddof=0))
+            if not np.isfinite(scale) or scale < 1e-12:
+                scale = 1.0
+            self.numeric_medians_[column] = median
+            self.numeric_means_[column] = mean
+            self.numeric_scales_[column] = scale
+            names.extend((column, f"{column}__missing"))
+        for column in self.categorical:
+            cleaned = self._clean_category(subset[column])
+            levels = sorted(set(cleaned.astype(str)) | {self.MISSING_LEVEL, self.UNKNOWN_LEVEL})
+            self.category_levels_[column] = tuple(levels)
+            names.extend(f"{column}=={level}" for level in levels)
+        self.fit_ids_ = ids
+        self.feature_names_ = tuple(names)
+        return self
+
+    def transform(self, frame: pd.DataFrame, ids: Iterable[str]) -> PreprocessedBlock:
+        if not self.fit_ids_:
+            raise RuntimeError("preprocessor must be fit before transform")
+        ordered_ids = self._normalise_ids(ids)
+        aligned = frame.reindex(list(ordered_ids))
+        columns: list[np.ndarray] = []
+        missing_columns: list[np.ndarray] = []
+        for column in self.numeric:
+            raw = pd.to_numeric(aligned[column], errors="coerce")
+            missing = raw.isna().to_numpy(dtype=float)
+            filled = raw.fillna(self.numeric_medians_[column]).to_numpy(dtype=float)
+            values = (filled - self.numeric_means_[column]) / self.numeric_scales_[column]
+            columns.extend((values, missing))
+            missing_columns.append(missing)
+        for column in self.categorical:
+            cleaned = self._clean_category(aligned[column]).astype(str)
+            known = set(self.category_levels_[column])
+            cleaned = cleaned.where(cleaned.isin(known), self.UNKNOWN_LEVEL)
+            missing_columns.append(cleaned.eq(self.MISSING_LEVEL).to_numpy(dtype=float))
+            for level in self.category_levels_[column]:
+                columns.append(cleaned.eq(level).to_numpy(dtype=float))
+        values = np.column_stack(columns).astype(float, copy=False)
+        missing = np.column_stack(missing_columns).astype(float, copy=False)
+        if not np.isfinite(values).all():
+            raise DataContractError("mixed preprocessing produced non-finite values")
+        return PreprocessedBlock(
+            values=values,
+            missing_indicators=missing,
+            feature_names=self.feature_names_,
+        )
+
+    def fit_transform(
+        self, frame: pd.DataFrame, training_ids: Iterable[str]
+    ) -> PreprocessedBlock:
+        ids = self._normalise_ids(training_ids)
+        return self.fit(frame, ids).transform(frame, ids)
+
+
+class HancockContractBuilder:
+    """Build the U1.1 patient x modality contract from locally licensed HANCOCK files."""
+
+    def __init__(
+        self,
+        project_root: Path,
+        *,
+        calibration_fraction: float = 0.20,
+    ):
+        self.project_root = Path(project_root).resolve()
+        self.calibration_fraction = calibration_fraction
+        base = self.project_root / "data/interim/hancock"
+        self.source_paths: dict[str, Path] = {
+            "clinical": self._unique_source(base, "clinical_data.json"),
+            "pathological": self._unique_source(base, "pathological_data.json"),
+            "blood_raw": self._unique_source(base, "blood_data.json"),
+            "blood_reference": self._unique_source(base, "blood_data_reference_ranges.json"),
+            "icd_preextracted": self._unique_source(base, "features/icd_codes.csv"),
+            "tma_preextracted": self._unique_source(base, "features/tma_cell_density.csv"),
+            "targets": self._unique_source(base, "features/targets.csv"),
+            "official_split": self._unique_source(base, "dataset_split_out.json"),
+        }
+
+    @staticmethod
+    def _unique_source(base: Path, pattern: str) -> Path:
+        matches = sorted(base.rglob(pattern))
+        if len(matches) != 1:
+            raise FileNotFoundError(
+                f"expected one HANCOCK source for {pattern}, found {len(matches)}"
+            )
+        return matches[0]
+
+    @staticmethod
+    def _read_json_rows(path: Path) -> list[dict[str, object]]:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        if not isinstance(payload, list):
+            raise DataContractError(f"expected JSON list: {path.name}")
+        return payload
+
+    @staticmethod
+    def _read_csv(path: Path) -> pd.DataFrame:
+        return pd.read_csv(path, dtype={"patient_id": "string"})
+
+    def build(self) -> HancockContract:
+        clinical_rows = self._read_json_rows(self.source_paths["clinical"])
+        pathological_rows = self._read_json_rows(self.source_paths["pathological"])
+        split_rows = self._read_json_rows(self.source_paths["official_split"])
+        targets = self._read_csv(self.source_paths["targets"])
+
+        clinical = self._indexed_json_frame(clinical_rows, "clinical")
+        pathological = self._indexed_json_frame(pathological_rows, "pathological")
+        targets = self._indexed_frame(targets, "targets")
+        official = {
+            str(row["patient_id"]).strip(): str(row["dataset"]).strip().casefold()
+            for row in split_rows
+        }
+        master_ids = tuple(clinical.index.astype(str))
+        self._require_exact_ids(master_ids, pathological.index.astype(str), "pathological")
+        self._require_exact_ids(master_ids, targets.index.astype(str), "targets")
+        self._require_exact_ids(master_ids, official, "official split")
+
+        anchor = pd.DataFrame(index=clinical.index.copy())
+        for column in ("age_at_initial_diagnosis", "sex", "smoking_status"):
+            anchor[column] = clinical[column]
+        for column in ANCHOR_CATEGORICAL_FEATURES[2:]:
+            anchor[column] = pathological[column]
+        # HANCOCK's dictionary names this field grading_hpv: HPV-positive
+        # oropharyngeal carcinoma is intentionally ungraded.
+        anchor["grading"] = anchor["grading"].replace(
+            {"hpv_association_p16": "HPV_OSCC"}
+        )
+        anchor.index.name = "patient_id"
+
+        blood, blood_acquired, blood_timing = self._reconstruct_blood(master_ids)
+        icd = self._indexed_frame(self._read_csv(self.source_paths["icd_preextracted"]), "ICD")
+        tma = self._indexed_frame(self._read_csv(self.source_paths["tma_preextracted"]), "TMA")
+        self._require_columns(icd, ICD_FEATURES, "ICD")
+        self._require_columns(tma, TMA_FEATURES, "TMA")
+        icd = icd.loc[:, list(ICD_FEATURES)].apply(pd.to_numeric, errors="coerce")
+        tma = tma.loc[:, list(TMA_FEATURES)].apply(pd.to_numeric, errors="coerce")
+
+        development_ids = [
+            native_id for native_id in master_ids if official[native_id] == "training"
+        ]
+        split_map = deterministic_development_split(
+            development_ids, self.calibration_fraction, DEVELOPMENT_SPLIT_SALT
+        )
+        records: list[PatientContractRecord] = []
+        for native_id in master_ids:
+            official_partition = official[native_id]
+            if official_partition == "test":
+                split_role = SplitRole.SEALED_TEST
+            elif official_partition == "training":
+                split_role = split_map[native_id]
+            else:
+                raise DataContractError(f"unexpected official partition: {official_partition}")
+
+            if split_role == SplitRole.SEALED_TEST:
+                # Do not derive, inspect, or expose official-test outcomes in U1.1.
+                eligible = True
+                exclusion_reason = None
+                outcome_sealed = True
+                duration_out: float | None = None
+                event_out: int | None = None
+            else:
+                duration, event = derive_postoperative_endpoint(
+                    clinical.loc[native_id, "days_to_last_information"],
+                    clinical.loc[native_id, "days_to_first_treatment"],
+                    clinical.loc[native_id, "survival_status"],
+                )
+                eligible = duration > 0
+                exclusion_reason = None if eligible else "nonpositive_postoperative_duration"
+                outcome_sealed = False
+                duration_out = duration
+                event_out = event
+
+            blood_record = self._modality_record(
+                native_id,
+                blood,
+                total_features=len(BLOOD_FEATURES),
+                acquired=native_id in blood_acquired,
+                conditional=False,
+                base_flags=("raw_0_to_14_days_before_first_treatment",),
+            )
+            icd_record = self._modality_record(
+                native_id,
+                icd,
+                total_features=len(ICD_FEATURES),
+                acquired=native_id in icd.index,
+                conditional=True,
+                base_flags=(
+                    "preextracted_countvectorizer_vocabulary_fit_on_available_corpus",
+                    "prediction_time_provenance_pending",
+                ),
+            )
+            tma_record = self._modality_record(
+                native_id,
+                tma,
+                total_features=len(TMA_FEATURES),
+                acquired=native_id in tma.index,
+                conditional=False,
+                base_flags=("postoperative_pathology_time",),
+            )
+            acquisition_pattern = self._pattern(blood_record, icd_record, tma_record, "acquired")
+            usable_pattern = self._pattern(blood_record, icd_record, tma_record, "usable")
+            records.append(
+                PatientContractRecord(
+                    native_id=native_id,
+                    split_role=split_role,
+                    official_partition=official_partition,
+                    eligible=eligible,
+                    exclusion_reason=exclusion_reason,
+                    endpoint_name=POSTOPERATIVE_ENDPOINT_NAME,
+                    index_date_definition=POSTOPERATIVE_INDEX_DATE,
+                    duration_days=duration_out,
+                    event=event_out,
+                    outcome_sealed=outcome_sealed,
+                    anchor_available=True,
+                    blood=blood_record,
+                    icd=icd_record,
+                    tma=tma_record,
+                    acquisition_pattern=acquisition_pattern,
+                    usable_pattern=usable_pattern,
+                    provenance=tuple(
+                        path.relative_to(self.project_root).as_posix()
+                        for path in self.source_paths.values()
+                    ),
+                )
+            )
+
+        contract = HancockContract(
+            records=tuple(records),
+            anchor=anchor,
+            blood=blood,
+            icd=icd,
+            tma=tma,
+            blood_timing=blood_timing,
+            source_paths=dict(self.source_paths),
+        )
+        validate_hancock_contract(contract)
+        return contract
+
+    @staticmethod
+    def _indexed_json_frame(rows: list[dict[str, object]], label: str) -> pd.DataFrame:
+        return HancockContractBuilder._indexed_frame(pd.DataFrame(rows), label)
+
+    @staticmethod
+    def _indexed_frame(frame: pd.DataFrame, label: str) -> pd.DataFrame:
+        if "patient_id" not in frame.columns:
+            raise DataContractError(f"{label} lacks patient_id")
+        result = frame.copy()
+        result["patient_id"] = result["patient_id"].astype("string").str.strip()
+        if result["patient_id"].isna().any() or result["patient_id"].eq("").any():
+            raise DataContractError(f"{label} has empty patient_id")
+        if result["patient_id"].duplicated().any():
+            raise DataContractError(f"{label} has duplicate patient_id")
+        return result.set_index("patient_id", drop=True)
+
+    @staticmethod
+    def _require_exact_ids(
+        expected: Iterable[str], observed: Iterable[str], label: str
+    ) -> None:
+        expected_set = {str(value) for value in expected}
+        observed_set = {str(value) for value in observed}
+        if expected_set != observed_set:
+            raise DataContractError(
+                f"{label} patient coverage differs: missing={len(expected_set-observed_set)}, "
+                f"extra={len(observed_set-expected_set)}"
+            )
+
+    @staticmethod
+    def _require_columns(frame: pd.DataFrame, columns: Sequence[str], label: str) -> None:
+        missing = [column for column in columns if column not in frame.columns]
+        if missing:
+            raise DataContractError(f"{label} missing required columns: {missing}")
+
+    def _reconstruct_blood(
+        self, master_ids: Sequence[str]
+    ) -> tuple[pd.DataFrame, set[str], pd.DataFrame]:
+        raw = pd.DataFrame(self._read_json_rows(self.source_paths["blood_raw"]))
+        required = {"patient_id", "LOINC_name", "value", "days_before_first_treatment"}
+        if not required.issubset(raw.columns):
+            raise DataContractError(f"raw blood lacks columns: {sorted(required-set(raw.columns))}")
+        raw["patient_id"] = raw["patient_id"].astype("string").str.strip()
+        raw["days_before_first_treatment"] = pd.to_numeric(
+            raw["days_before_first_treatment"], errors="coerce"
+        )
+        timed = raw[raw["days_before_first_treatment"].between(
+            BLOOD_TIMING_MIN_DAYS, BLOOD_TIMING_MAX_DAYS, inclusive="both"
+        )].copy()
+        blood_acquired = set(timed["patient_id"].dropna().astype(str))
+        selected = timed[timed["LOINC_name"].isin(BLOOD_FEATURES)].copy()
+        selected["value"] = pd.to_numeric(selected["value"], errors="coerce")
+        duplicate_pairs = selected.duplicated(["patient_id", "LOINC_name"], keep=False)
+        if duplicate_pairs.any():
+            raise DataContractError(
+                "raw blood has duplicate patient-feature rows inside the prespecified timing window"
+            )
+        wide = selected.pivot(index="patient_id", columns="LOINC_name", values="value")
+        wide = wide.reindex(index=list(master_ids), columns=list(BLOOD_FEATURES))
+        wide.index.name = "patient_id"
+        rows_with_selected_assay = set(selected["patient_id"].dropna().astype(str))
+        wide = wide.loc[wide.index.isin(rows_with_selected_assay)].copy()
+        timing = (
+            timed.groupby("patient_id", as_index=True)["days_before_first_treatment"]
+            .agg(["min", "max", "median", "count"])
+            .rename(columns={"count": "record_count"})
+        )
+        timing.index = timing.index.astype(str)
+        timing.index.name = "patient_id"
+        if not blood_acquired.issubset(set(master_ids)):
+            raise DataContractError("raw blood includes patient IDs outside the clinical master")
+        return wide, blood_acquired, timing
+
+    @staticmethod
+    def _modality_record(
+        native_id: str,
+        frame: pd.DataFrame,
+        *,
+        total_features: int,
+        acquired: bool,
+        conditional: bool,
+        base_flags: tuple[str, ...],
+    ) -> ModalityRecord:
+        if native_id in frame.index:
+            values = frame.loc[native_id]
+            if isinstance(values, pd.DataFrame):
+                raise DataContractError("modality frame contains duplicate patient ID")
+            available = int(pd.Series(values).notna().sum())
+        else:
+            available = 0
+        usable = available > 0
+        if not acquired:
+            status = ModalityStatus.ABSENT
+        elif not usable:
+            status = ModalityStatus.ACQUIRED_UNUSABLE
+        elif conditional:
+            status = ModalityStatus.CONDITIONAL_PROVENANCE
+        elif available < total_features:
+            status = ModalityStatus.USABLE_PARTIAL
+        else:
+            status = ModalityStatus.USABLE_COMPLETE
+        flags = list(base_flags)
+        if acquired and not usable:
+            flags.append("no_prespecified_numeric_feature_available")
+        elif usable and available < total_features:
+            flags.append("within_modality_missingness_present")
+        return ModalityRecord(
+            acquired=acquired,
+            usable=usable,
+            status=status,
+            available_feature_count=available,
+            total_feature_count=total_features,
+            missing_fraction=float((total_features - available) / total_features),
+            quality_flags=tuple(flags),
+        )
+
+    @staticmethod
+    def _pattern(
+        blood: ModalityRecord,
+        icd: ModalityRecord,
+        tma: ModalityRecord,
+        attribute: str,
+    ) -> str:
+        return "".join(str(int(bool(getattr(record, attribute)))) for record in (blood, icd, tma))
+
+
+def derive_postoperative_endpoint(
+    days_to_last_information: object,
+    days_to_first_treatment: object,
+    survival_status: object,
+) -> tuple[float, int]:
+    try:
+        duration = float(days_to_last_information) - float(days_to_first_treatment)
+    except (TypeError, ValueError) as exc:
+        raise DataContractError(
+            "postoperative endpoint requires numeric follow-up and treatment days"
+        ) from exc
+    event = int(str(survival_status).strip().casefold() == "deceased")
+    return duration, event
+
+
+def validate_hancock_contract(contract: HancockContract) -> ContractValidationReport:
+    records = list(contract.records)
+    if not records:
+        raise DataContractError("HANCOCK contract is empty")
+    ids = [record.native_id for record in records]
+    if len(ids) != len(set(ids)):
+        raise DataContractError("HANCOCK contract patient IDs are not unique")
+    if tuple(contract.anchor.index.astype(str)) != tuple(ids):
+        raise DataContractError("anchor row order must exactly match contract records")
+    for label, frame, features in (
+        ("anchor", contract.anchor, ANCHOR_FEATURES),
+        ("blood", contract.blood, BLOOD_FEATURES),
+        ("ICD", contract.icd, ICD_FEATURES),
+        ("TMA", contract.tma, TMA_FEATURES),
+    ):
+        missing = [column for column in features if column not in frame.columns]
+        if missing:
+            raise DataContractError(f"{label} missing required columns: {missing}")
+        overlap = set(frame.columns) & PROHIBITED_PREDICTORS
+        if overlap:
+            raise DataContractError(f"{label} includes prohibited predictors: {sorted(overlap)}")
+        if frame.index.duplicated().any():
+            raise DataContractError(f"{label} contains duplicate patient IDs")
+        if not set(frame.index.astype(str)).issubset(set(ids)):
+            raise DataContractError(f"{label} contains IDs outside the master contract")
+
+    for record in records:
+        if record.split_role == SplitRole.SEALED_TEST:
+            if (
+                not record.outcome_sealed
+                or record.duration_days is not None
+                or record.event is not None
+            ):
+                raise DataContractError("official test outcome exposure is forbidden by default")
+        else:
+            if record.outcome_sealed or record.duration_days is None or record.event is None:
+                raise DataContractError("development outcome must be present and unsealed")
+        if record.event not in (None, 0, 1):
+            raise DataContractError("event must be binary or sealed")
+        if record.eligible and record.exclusion_reason is not None:
+            raise DataContractError("eligible record has exclusion reason")
+        if not record.eligible and record.exclusion_reason != "nonpositive_postoperative_duration":
+            raise DataContractError("excluded record lacks the frozen U0 exclusion reason")
+        if record.acquisition_pattern != "".join(
+            str(int(x)) for x in (record.blood.acquired, record.icd.acquired, record.tma.acquired)
+        ):
+            raise DataContractError("acquisition pattern is inconsistent with modality flags")
+        if record.usable_pattern != "".join(
+            str(int(x)) for x in (record.blood.usable, record.icd.usable, record.tma.usable)
+        ):
+            raise DataContractError("usable pattern is inconsistent with modality flags")
+
+    exposed = sum(
+        record.split_role != SplitRole.SEALED_TEST
+        and record.duration_days is not None
+        and record.event is not None
+        for record in records
+    )
+    return ContractValidationReport(
+        records=len(records),
+        eligible=sum(record.eligible for record in records),
+        excluded=sum(not record.eligible for record in records),
+        sealed=sum(record.outcome_sealed for record in records),
+        development_outcomes_exposed=exposed,
+        prohibited_predictor_overlap=(),
+    )
+
+
+def write_aggregate_audit_json(contract: HancockContract, path: Path) -> None:
+    """Write aggregate-only audit output; patient identifiers are never serialized."""
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    payload = contract.aggregate_summary()
+    destination.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def read_csv_ids(path: Path) -> set[str]:
+    """Small provenance helper used by tests/audits without exposing identifiers."""
+    with Path(path).open("r", encoding="utf-8-sig", newline="") as handle:
+        return {str(row["patient_id"]).strip() for row in csv.DictReader(handle)}
+
+

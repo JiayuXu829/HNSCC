@@ -1,16 +1,15 @@
-schema_version: "0.1"
+﻿schema_version: '0.1'
 study_id: pattern_surv_hn
-study_title: "PATTERN-Surv-HN: clinically anchored survival learning from incomplete and unreliable multimodal evidence"
-protocol_stage: U0
-status: DRAFT_AWAITING_RESEARCHER_APPROVAL
-created_on: "2026-08-13"
+study_title: 'PATTERN-Surv-HN: clinically anchored survival learning from incomplete and unreliable multimodal
+  evidence'
+protocol_stage: U1.1
+status: FROZEN_AFTER_U0_APPROVAL
+created_on: '2026-08-13'
 binding_after_approval: true
-
 source_proposal:
   path: docs/HNSCC_PATTERNSurv_HN_unified_Q1_research_proposal.md
   sha256: AA8AB578C142D54A87872DFA3B540BCF8BC6AAB94234C366018503466230110C
   git_commit: 781c1eb
-
 governance:
   analysis_label: post_lock_exploratory
   phase6_outcomes_already_seen: true
@@ -22,25 +21,20 @@ governance:
   no_model_training_in_U0: true
   no_download_or_dependency_installation_in_U0: true
   outcome_seen_cohorts:
-    - RADCURE
-    - HANCOCK_official_test
-    - GSE65858
-    - GSE41613
-  interpretation_limit: >-
-    Outcome-seen cohorts are not new untouched locked validation and cannot be used
+  - RADCURE
+  - HANCOCK_official_test
+  - GSE65858
+  - GSE41613
+  interpretation_limit: Outcome-seen cohorts are not new untouched locked validation and cannot be used
     for model, threshold, calibration, preprocessing, or claim selection.
-
-central_scientific_claim: >-
-  Do not fuse every available modality by default. Use a stable clinical anchor,
-  estimate patient-specific incremental evidence value, fuse reliable evidence,
-  fall back from harmful evidence, report ranking only when absolute-risk calibration
-  is unsupported, and abstain when neither output is supportable.
-
+central_scientific_claim: Do not fuse every available modality by default. Use a stable clinical anchor,
+  estimate patient-specific incremental evidence value, fuse reliable evidence, fall back from harmful
+  evidence, report ranking only when absolute-risk calibration is unsupported, and abstain when neither
+  output is supportable.
 primary_clinical_use_case:
   population: surgically_managed_HNSCC_in_HANCOCK
-  prediction_time: >-
-    Immediately after definitive surgery and standard pathology review and before
-    the adjuvant treatment decision is used as a predictor.
+  prediction_time: Immediately after definitive surgery and standard pathology review and before the adjuvant
+    treatment decision is used as a predictor.
   time_origin: first_treatment_or_definitive_surgery
   endpoint_name: postoperative_overall_survival
   duration_definition: days_to_last_information_minus_days_to_first_treatment
@@ -48,73 +42,63 @@ primary_clinical_use_case:
   primary_horizon_days: 730.5
   exclude_nonpositive_duration: true
   anticipated_exclusion_count_aggregate: 1
-  exclusion_rule: >-
-    Exclude postoperative duration less than or equal to zero from the primary model,
-    report the aggregate count, and run diagnosis-origin OS as a sensitivity analysis.
+  exclusion_rule: Exclude postoperative duration less than or equal to zero from the primary model, report
+    the aggregate count, and run diagnosis-origin OS as a sensitivity analysis.
   prohibited_predictors:
-    - adjuvant_radiotherapy
-    - adjuvant_radiochemotherapy
-    - adjuvant_systemic_therapy
-    - adjuvant_treatment_intent
-    - any_variable_recorded_after_prediction_time
-
+  - adjuvant_radiotherapy
+  - adjuvant_radiochemotherapy
+  - adjuvant_systemic_therapy
+  - adjuvant_treatment_intent
+  - any_variable_recorded_after_prediction_time
 sensitivity_use_case:
   name: diagnosis_origin_minimal_anchor
   time_origin: initial_diagnosis
   endpoint_duration: days_to_last_information
-  restriction: >-
-    Postoperative pathology and TMA cannot be used at a diagnosis-time prediction
-    point; other modalities require timestamp confirmation.
-
+  restriction: Postoperative pathology and TMA cannot be used at a diagnosis-time prediction point; other
+    modalities require timestamp confirmation.
 clinical_anchor:
   primary_name: extended_postoperative_clinical_pathological_elastic_net_cox
   role: safety_anchor_not_a_modality_token
   variables:
-    - age_at_initial_diagnosis
-    - sex
-    - smoking_status
-    - primary_tumor_site
-    - grading
-    - hpv_association_p16
-    - resection_status
-    - pT_stage
-    - pN_stage
+  - age_at_initial_diagnosis
+  - sex
+  - smoking_status
+  - primary_tumor_site
+  - grading
+  - hpv_association_p16
+  - resection_status
+  - pT_stage
+  - pN_stage
   preprocessing: fit_within_each_training_fold_only
   baseline_hazard: Breslow_fit_on_corresponding_training_data_only
-  exact_fallback_requirement: >-
-    With no additional token, PATTERN must equal the clinical-anchor score and
+  exact_fallback_requirement: With no additional token, PATTERN must equal the clinical-anchor score and
     survival curve within a frozen numerical tolerance.
   excluded_candidate_variables:
     primarily_metastasis: pending_semantic_and_sparsity_review_sensitivity_only
-
 modality_boundary:
   anchor_always_present:
-    - clinical
-    - standard_postoperative_pathology
+  - clinical
+  - standard_postoperative_pathology
   primary_varying_modalities_in_mask_order:
-    - blood
-    - ICD
-    - TMA_cell_density
+  - blood
+  - ICD
+  - TMA_cell_density
   pattern_encoding: blood_ICD_TMA_three_bit_mask
   pathology_as_additional_modality: false
-  rationale: >-
-    Pathology is part of the postoperative standard-of-care anchor and cannot also
-    be counted as incremental evidence.
-
+  rationale: Pathology is part of the postoperative standard-of-care anchor and cannot also be counted
+    as incremental evidence.
 modality_contract:
   blood:
     timing: pre_or_perioperative_0_to_14_days_before_first_treatment
     primary_source: raw_blood_data_json
-    primary_preprocessing: >-
-      Reconstruct without cohort-wide imputation; fit imputation, scaling, feature
+    primary_preprocessing: Reconstruct without cohort-wide imputation; fit imputation, scaling, feature
       filtering, and outlier handling within each training fold.
     preextracted_csv_role: audited_sensitivity_only
   ICD:
     timing: conditional_pending_prediction_time_provenance_confirmation
     available_source: preextracted_icd_codes_csv_only
-    limitation: >-
-      CountVectorizer vocabulary with min_df=3 was fit over the available corpus;
-      raw text is absent locally, so fold-specific reconstruction is unavailable.
+    limitation: CountVectorizer vocabulary with min_df=3 was fit over the available corpus; raw text is
+      absent locally, so fold-specific reconstruction is unavailable.
     primary_role: conditional_with_explicit_provenance_limitation
     strict_fold_pure_sensitivity: exclude_ICD
   TMA_cell_density:
@@ -122,75 +106,113 @@ modality_contract:
     row_absence_is_modality_absence: true
     within_row_missingness_is_internal_feature_missingness: true
     preprocessing: fold_specific_imputation_scaling_and_missing_indicators
-
 natural_pattern_audit:
   all_763:
-    "001": {n: 7, events: 4}
-    "010": {n: 4, events: 0}
-    "011": {n: 60, events: 23}
-    "100": {n: 1, events: 0}
-    "101": {n: 43, events: 13}
-    "110": {n: 22, events: 7}
-    "111": {n: 626, events: 166}
+    '001':
+      n: 7
+      events: 4
+    '010':
+      n: 4
+      events: 0
+    '011':
+      n: 60
+      events: 23
+    '100':
+      n: 1
+      events: 0
+    '101':
+      n: 43
+      events: 13
+    '110':
+      n: 22
+      events: 7
+    '111':
+      n: 626
+      events: 166
   official_training_611:
-    "001": {n: 7, events: 4}
-    "010": {n: 4, events: 0}
-    "011": {n: 60, events: 23}
-    "100": {n: 1, events: 0}
-    "101": {n: 43, events: 13}
-    "110": {n: 22, events: 7}
-    "111": {n: 474, events: 126}
+    '001':
+      n: 7
+      events: 4
+    '010':
+      n: 4
+      events: 0
+    '011':
+      n: 60
+      events: 23
+    '100':
+      n: 1
+      events: 0
+    '101':
+      n: 43
+      events: 13
+    '110':
+      n: 22
+      events: 7
+    '111':
+      n: 474
+      events: 126
   official_test_152:
-    "111": {n: 152, events: 40}
-  implication: >-
-    Official test cannot evaluate natural missing-pattern generalization; it is only
-    a post-lock complete-pattern OOD replication.
-
+    '111':
+      n: 152
+      events: 40
+  implication: Official test cannot evaluate natural missing-pattern generalization; it is only a post-lock
+    complete-pattern OOD replication.
 split_and_model_selection:
   development_population: HANCOCK_official_training
   development_n_before_postoperative_exclusion: 611
   existing_deterministic_split_for_reference:
-    train: {n: 489, events: 135}
-    calibration: {n: 122, events: 38}
+    train:
+      n: 489
+      events: 135
+    calibration:
+      n: 122
+      events: 38
   primary_new_evaluation: nested_cross_fitting_within_official_training
   outer_folds: 5
-  outer_repetition_seeds: [17, 29, 43, 71, 101]
+  outer_repetition_seeds:
+  - 17
+  - 29
+  - 43
+  - 71
+  - 101
   inner_folds: 3
   all_preprocessing_inside_training_fold: true
   oof_predictions_required_for:
-    - method_comparison
-    - calibration_bridge
-    - router_value_labels
-    - router_training
+  - method_comparison
+  - calibration_bridge
+  - router_value_labels
+  - router_training
   official_test_role: post_lock_complete_pattern_replication_only
-
 unseen_pattern_rule:
   eligibility_basis: official_training_before_model_performance_is_seen
   minimum_n: 20
   minimum_total_events: 5
-  qualifying_missing_patterns: ["011", "101", "110"]
-  descriptive_only_patterns: ["001", "010", "100"]
-  complete_pattern_reference: "111"
-  evaluation_design: >-
-    Remove all patients with one qualifying exact mask from backbone fitting and
-    hyperparameter selection, then evaluate the frozen model on that unseen mask.
+  qualifying_missing_patterns:
+  - '011'
+  - '101'
+  - '110'
+  descriptive_only_patterns:
+  - '001'
+  - '010'
+  - '100'
+  complete_pattern_reference: '111'
+  evaluation_design: Remove all patients with one qualifying exact mask from backbone fitting and hyperparameter
+    selection, then evaluate the frozen model on that unseen mask.
   unsupported_combinations: prespecified_simulated_block_dropout
   no_outcome_dependent_pattern_selection: true
-
 missingness_and_corruption_scenarios:
   primary:
-    - natural_missingness
-    - exact_unseen_pattern_holdout
-    - whole_modality_block_dropout
+  - natural_missingness
+  - exact_unseen_pattern_holdout
+  - whole_modality_block_dropout
   secondary:
-    - MCAR_modality_dropout
-    - MAR_like_dropout_from_prediction_time_covariates_only
-    - feature_noise
-    - scale_and_location_shift
-    - patient_permutation_negative_control
+  - MCAR_modality_dropout
+  - MAR_like_dropout_from_prediction_time_covariates_only
+  - feature_noise
+  - scale_and_location_shift
+  - patient_permutation_negative_control
   simulated_missingness_must_not_depend_on_outcome: true
   formulas_must_be_frozen_before_execution: true
-
 backbone_candidates:
   V0:
     name: extended_postoperative_clinical_pathological_elastic_net_cox
@@ -205,31 +227,28 @@ backbone_candidates:
     self_attention_blocks: 2
     attention_heads: 4
     feed_forward_dimension: 128
-    modality_token_dropout: 0.20
+    modality_token_dropout: 0.2
     pooling: clinical_query_attention
     residual_formula: eta_fused_equals_eta_clinical_plus_delta_eta
-    selection_rule: >-
-      Retain V2 only if it stably improves over V1 on prespecified full-coverage
-      probability or worst/unseen-pattern safety without material calibration harm.
+    selection_rule: Retain V2 only if it stably improves over V1 on prespecified full-coverage probability
+      or worst/unseen-pattern safety without material calibration harm.
   V3:
     name: PATTERN_Surv_HN_full
     components:
-      - selected_V1_or_V2_backbone
-      - pattern_domain_calibration_bridge
-      - cross_fitted_incremental_value_router
-
+    - selected_V1_or_V2_backbone
+    - pattern_domain_calibration_bridge
+    - cross_fitted_incremental_value_router
 required_comparators:
-  - V0_clinical_anchor
-  - direct_fusion_elastic_net_Cox
-  - C3_cross_fitted_score_level_late_fusion
-  - C4_missing_aware_direct_fusion_Cox
-  - modality_dropout_MLP_Cox
-  - separate_model_per_sufficient_pattern
-  - Deep_Sets_Cox
-  - Set_Transformer_Cox
-  - missingness_only_negative_control
-  - patient_permuted_modality_negative_control
-
+- V0_clinical_anchor
+- direct_fusion_elastic_net_Cox
+- C3_cross_fitted_score_level_late_fusion
+- C4_missing_aware_direct_fusion_Cox
+- modality_dropout_MLP_Cox
+- separate_model_per_sufficient_pattern
+- Deep_Sets_Cox
+- Set_Transformer_Cox
+- missingness_only_negative_control
+- patient_permuted_modality_negative_control
 primary_estimands:
   full_coverage_delta_brier_24:
     formula: Brier24_PATTERN_policy_minus_Brier24_C3
@@ -240,32 +259,36 @@ primary_estimands:
     formula: max_pattern_Brier24_PATTERN_minus_Brier24_V0
     favorable_direction: nonpositive_or_reduced_vs_unconditional_fusion
   no_selective_subset_substitution: true
-
 secondary_metrics:
-  discrimination: [Uno_C_index, Harrell_C_index, time_dependent_AUC_24m]
+  discrimination:
+  - Uno_C_index
+  - Harrell_C_index
+  - time_dependent_AUC_24m
   probability_and_calibration:
-    - IPCW_Brier_24m
-    - integrated_Brier_score
-    - calibration_in_the_large
-    - calibration_slope
-    - pattern_stratified_calibration
+  - IPCW_Brier_24m
+  - integrated_Brier_score
+  - calibration_in_the_large
+  - calibration_slope
+  - pattern_stratified_calibration
   robustness_and_safety:
-    - full_to_subset_degradation
-    - seen_unseen_pattern_gap
-    - matched_coverage_risk
-    - risk_coverage_curve
-    - subgroup_coverage
-    - uncertainty_error_association
-    - decision_curve_analysis
-
+  - full_to_subset_degradation
+  - seen_unseen_pattern_gap
+  - matched_coverage_risk
+  - risk_coverage_curve
+  - subgroup_coverage
+  - uncertainty_error_association
+  - decision_curve_analysis
 calibration_policy:
   default: global_cross_fitted_calibrator
   unrestricted_pattern_specific_calibration: forbidden
-  pattern_intercept_minimum_support: {n: 50, total_events: 15}
-  pattern_slope_minimum_support: {n: 100, total_events: 25}
+  pattern_intercept_minimum_support:
+    n: 50
+    total_events: 15
+  pattern_slope_minimum_support:
+    n: 100
+    total_events: 25
   support_evaluated_on_development_OOF_only: true
   insufficient_support_action: global_calibration_or_RANK_ONLY_per_frozen_rule
-
 router_policy:
   training_label_source: strictly_cross_fitted_censoring_aware_loss_difference
   in_sample_self_labeling_forbidden: true
@@ -275,11 +298,9 @@ router_policy:
     FALLBACK: clinical_anchor_predicted_safer
     RANK_ONLY: ranking_usable_but_absolute_risk_not_supported
     ABSTAIN: neither_safe_absolute_risk_output_supported
-  note: >-
-    ABSTAIN cannot be used merely to delete difficult patients and improve reported
-    performance; matched-coverage comparison is mandatory.
+  note: ABSTAIN cannot be used merely to delete difficult patients and improve reported performance; matched-coverage
+    comparison is mandatory.
   threshold_selection: development_cross_fitting_and_calibration_only
-
 stage_sequence:
   U0: protocol_and_data_contract_audit
   U1: postoperative_contract_plus_V0_V1_implementation_and_tests
@@ -290,16 +311,16 @@ stage_sequence:
   U6: cross_fitted_value_router
   U7: frozen_development_statistics_and_go_no_go
   U8: post_lock_replications_and_future_untouched_external_confirmation
-
 output_paths:
   tracked_aggregate_reports: trust-hn/research_studies/01_pattern_surv_hn/reports
   tracked_audits: trust-hn/research_studies/01_pattern_surv_hn/audits
   patient_level_predictions: trust-hn/results/predictions/pattern_surv_hn
   patient_outputs_inside_research_directory_forbidden: true
-
 stop_rules:
-  - stop_complexity_if_V1_does_not_improve_prespecified_safety_or_probability_metrics
-  - choose_V1_if_V2_is_not_stably_better
-  - do_not_train_router_if_OOF_incremental_value_is_not_predictable
-  - do_not_claim_biology_if_real_modalities_do_not_exceed_negative_controls
-  - do_not_claim_confirmatory_external_generalization_without_new_outcome_unseen_cohort
+- stop_complexity_if_V1_does_not_improve_prespecified_safety_or_probability_metrics
+- choose_V1_if_V2_is_not_stably_better
+- do_not_train_router_if_OOF_incremental_value_is_not_predictable
+- do_not_claim_biology_if_real_modalities_do_not_exceed_negative_controls
+- do_not_claim_confirmatory_external_generalization_without_new_outcome_unseen_cohort
+approved_on: '2026-08-13'
+approved_by: Researcher (chat approval)
