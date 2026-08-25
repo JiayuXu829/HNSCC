@@ -1,0 +1,10 @@
+﻿metric,V0_mean,V1R_mean,delta_V1R_minus_V0,positive_interpretation
+IPCW Brier at 24 months,0.124745,0.124338,-0.000407,lower probabilistic error
+Uno C at 24 months,0.644239,0.665542,+0.021303,improved censoring-aware discrimination
+Time-dependent AUC at 24 months,0.662022,0.682511,+0.020488,improved time-specific discrimination
+Harrell C,0.623021,0.633710,+0.010690,improved overall ranking
+Coverage,1.000000,1.000000,0.000000,full coverage preserved
+Empty-set residual error,0.000000,0.000000,0.000000,exact clinical fallback preserved
+Worst supported-pattern Brier regret,0.000000,+0.009848,+0.009848,within prespecified safety boundary
+Uno-C improving seeds,0,5,+5,consistent direction across all five seeds
+Parameter count,0,3225,+3225,complexity retained after positive development gate

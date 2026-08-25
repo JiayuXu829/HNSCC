@@ -1,0 +1,37 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U2-R0/common_candidate_selection_and_stopping_rules
+status: FROZEN_BEFORE_CANDIDATE_EXECUTION
+frozen_on: '2026-08-18'
+primary_reference: V0
+candidate_order: [R1_CARS, R2_CCADS, R3_NE_GRME, R4_CC_RST]
+common_gate:
+  reuse_without_relaxation: ../U2_V1_development_cv/frozen_v0_v1_complexity_gate.yaml
+  sha256: 70F79547E6452DF8D9F45C3881A2970EA1C27EFB47AC5C2961FEF3EA16220FA3
+selection_rule:
+  provisional_backbone: first_candidate_in_frozen_order_passing_all_common_gate_components
+  if_candidate_fails: retain_current_backbone_and_stop_for_researcher_approval
+  automatic_progression_to_next_candidate: false
+  later_challenge_after_first_pass: requires_separately_frozen_superiority_gate
+multiplicity_control:
+  best_observed_candidate_selection: prohibited
+  threshold_relaxation: prohibited
+  seed_selection: prohibited
+  acquisition_pattern_selection: prohibited
+  repeated_unregistered_hyperparameter_search: prohibited
+stopping_rules:
+  no_incremental_signal_in_R1: >-
+    Do not assume a larger neural network will solve the problem; review modality-specific signal,
+    censoring support, and prediction-time feature validity before authorizing R2.
+  safety_failure: retain_V0_and_require_researcher_decision
+  calibration_failure: retain_V0_and_require_researcher_decision
+  first_full_pass: freeze_as_provisional_backbone_and_stop_before_any_official_or_external_evaluation
+claim_boundary:
+  development_pass_supports: internal_development_evidence_that_candidate_earns_complexity_over_V0
+  does_not_support:
+    - official_test_confirmation
+    - external_generalization
+    - transportability
+    - final_value_router_benefit
+    - calibration_bridge_benefit
+    - clinical_utility

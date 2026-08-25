@@ -87,6 +87,7 @@ class U2Spec:
     inner_folds: int
     residual_penalty_grid: tuple[float, ...]
     checkpoint_steps: tuple[int, ...]
+    residual_scale_grid: tuple[float, ...]
     learning_rate: float
     weight_decay: float
     gradient_clip_norm: float
@@ -107,6 +108,7 @@ class U2Spec:
             tuple(int(v) for v in cross["outer_repetition_seeds"]), int(cross["inner_folds"]),
             tuple(float(v) for v in select["residual_penalty_grid"]),
             tuple(int(v) for v in select["checkpoint_steps"]),
+            tuple(float(v) for v in select.get("residual_scale_grid", [1.0])),
             float(optim["learning_rate"]), float(optim["weight_decay"]),
             float(optim["gradient_clip_norm"]), int(support["minimum_n"]),
             int(support["minimum_events"]), int(population["expected_n"]),
@@ -126,6 +128,12 @@ class U2Spec:
             raise ValueError("checkpoint_steps must start at zero")
         if tuple(sorted(set(self.checkpoint_steps))) != self.checkpoint_steps:
             raise ValueError("checkpoint_steps must be unique and increasing")
+        if not self.residual_scale_grid or any(
+            scale <= 0 or scale > 1 for scale in self.residual_scale_grid
+        ):
+            raise ValueError("residual scales must be in (0, 1]")
+        if tuple(sorted(set(self.residual_scale_grid))) != self.residual_scale_grid:
+            raise ValueError("residual scales must be unique and increasing")
         if self.learning_rate <= 0 or self.weight_decay < 0 or self.gradient_clip_norm <= 0:
             raise ValueError("invalid optimizer settings")
 
@@ -151,6 +159,7 @@ class CoxLossPlan:
 class SelectedV1Candidate:
     residual_penalty: float
     optimization_steps: int
+    residual_scale: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -384,16 +393,27 @@ def _inner_select_v1(
             checkpoints = set(spec.checkpoint_steps)
             for step in range(max_steps + 1):
                 if step in checkpoints:
-                    train_score, _, _ = _predict_model(model, train_inputs)
-                    valid_score, _, _ = _predict_model(model, valid_inputs)
-                    valid_risk = breslow_risk_at_horizon(
-                        train_time, train_event, train_score, valid_score, spec.horizon_days
-                    )
-                    values[(penalty, step)].append(
-                        evaluate_predictions(
-                            train_y, valid_y, valid_score, valid_risk, spec.horizon_days
+                    train_score, train_residual, _ = _predict_model(model, train_inputs)
+                    valid_score, valid_residual, _ = _predict_model(model, valid_inputs)
+                    train_clinical = train_score - train_residual
+                    valid_clinical = valid_score - valid_residual
+                    for residual_scale in spec.residual_scale_grid:
+                        if residual_scale == 1.0:
+                            scaled_train_score = train_score
+                            scaled_valid_score = valid_score
+                        else:
+                            scaled_train_score = train_clinical + residual_scale * train_residual
+                            scaled_valid_score = valid_clinical + residual_scale * valid_residual
+                        valid_risk = breslow_risk_at_horizon(
+                            train_time, train_event, scaled_train_score, scaled_valid_score,
+                            spec.horizon_days,
                         )
-                    )
+                        values[(penalty, step, residual_scale)].append(
+                            evaluate_predictions(
+                                train_y, valid_y, scaled_valid_score, valid_risk,
+                                spec.horizon_days,
+                            )
+                        )
                 if step == max_steps:
                     break
                 model.train()
@@ -406,12 +426,13 @@ def _inner_select_v1(
                 optimizer.step()
 
     rows = []
-    for (penalty, steps), metrics in sorted(values.items()):
+    for (penalty, steps, residual_scale), metrics in sorted(values.items()):
         brier = np.asarray([row["ipcw_brier_24m"] for row in metrics], float)
         uno = np.asarray([row["uno_c_24m"] for row in metrics], float)
         rows.append({
             "residual_penalty": float(penalty),
             "optimization_steps": float(steps),
+            "residual_scale": float(residual_scale),
             "mean_inner_ipcw_brier_24m": float(np.mean(brier)),
             "mean_inner_uno_c_24m": (
                 float(np.mean(uno[np.isfinite(uno)])) if np.isfinite(uno).any() else -math.inf
@@ -423,10 +444,11 @@ def _inner_select_v1(
         raise RuntimeError("no V1 candidate completed all inner folds")
     winner = min(valid_rows, key=lambda row: (
         row["mean_inner_ipcw_brier_24m"], -row["mean_inner_uno_c_24m"],
-        -row["residual_penalty"], row["optimization_steps"],
+        -row["residual_penalty"], row["residual_scale"], row["optimization_steps"],
     ))
     selected = SelectedV1Candidate(
-        float(winner["residual_penalty"]), int(winner["optimization_steps"])
+        float(winner["residual_penalty"]), int(winner["optimization_steps"]),
+        float(winner["residual_scale"]),
     )
     return selected, rows
 
@@ -528,7 +550,9 @@ def development_cross_fit(
                 anchor_candidate, v0_spec, architecture, spec,
                 repetition_seed * 100 + outer_fold + 1,
             )
-            selection_counter[(selected.residual_penalty, selected.optimization_steps)] += 1
+            selection_counter[(
+                selected.residual_penalty, selected.optimization_steps, selected.residual_scale
+            )] += 1
             train_clinical, valid_clinical, valid_v0_risk, anchor_audit = (
                 _fit_anchor_for_split(
                     contract, train_ids, valid_ids, event[train_idx], time[train_idx],
@@ -558,10 +582,16 @@ def development_cross_fit(
                 valid_clinical, valid_modalities, time[valid_idx], event[valid_idx]
             )
             fitted = _fit_v1(architecture, train_inputs, spec, selected)
-            train_fused, _, _ = _predict_model(fitted.model, train_inputs)
+            train_fused, train_residual, _ = _predict_model(fitted.model, train_inputs)
             valid_fused, valid_residual, valid_active_count = _predict_model(
                 fitted.model, valid_inputs
             )
+            if selected.residual_scale != 1.0:
+                train_fused = (
+                    train_fused - train_residual + selected.residual_scale * train_residual
+                )
+                valid_residual = selected.residual_scale * valid_residual
+                valid_fused = valid_clinical + valid_residual
             valid_v1_risk = breslow_risk_at_horizon(
                 time[train_idx], event[train_idx], train_fused, valid_fused,
                 spec.horizon_days,
@@ -581,6 +611,7 @@ def development_cross_fit(
                 row for row in inner_rows
                 if row["residual_penalty"] == selected.residual_penalty
                 and int(row["optimization_steps"]) == selected.optimization_steps
+                and row["residual_scale"] == selected.residual_scale
             )
             fold_audit.append({
                 "repetition_seed": repetition_seed, "outer_fold": outer_fold,
@@ -591,6 +622,10 @@ def development_cross_fit(
                 "selected_anchor_l1_ratio": anchor_candidate.l1_ratio,
                 "selected_residual_penalty": selected.residual_penalty,
                 "selected_optimization_steps": selected.optimization_steps,
+                **(
+                    {"selected_residual_scale": selected.residual_scale}
+                    if spec.residual_scale_grid != (1.0,) else {}
+                ),
                 "selected_inner_ipcw_brier_24m": best_inner["mean_inner_ipcw_brier_24m"],
                 "selected_inner_uno_c_24m": best_inner["mean_inner_uno_c_24m"],
                 "initial_training_cox_loss": fitted.initial_cox_loss,
@@ -621,11 +656,17 @@ def development_cross_fit(
                     "active_token_count": int(valid_active_count[local]),
                     "selected_residual_penalty": selected.residual_penalty,
                     "selected_optimization_steps": selected.optimization_steps,
+                    **(
+                        {"selected_residual_scale": selected.residual_scale}
+                        if spec.residual_scale_grid != (1.0,) else {}
+                    ),
                 })
             if verbose:
                 print(
                     f"seed={repetition_seed} fold={outer_fold} "
-                    f"penalty={selected.residual_penalty:g} steps={selected.optimization_steps}",
+                    f"penalty={selected.residual_penalty:g} "
+                    f"steps={selected.optimization_steps} "
+                    f"scale={selected.residual_scale:g}",
                     flush=True,
                 )
         if len(seen) != len(ids) or len(seen) != len(set(seen)) or set(seen) != set(ids):
@@ -716,9 +757,13 @@ def development_cross_fit(
         "folds": fold_audit, "per_seed_metrics": per_seed,
         "across_seed_summary": summary, "pattern_stratified_metrics": pattern_rows,
         "v1_selection_frequency": [
-            {"residual_penalty": penalty, "optimization_steps": steps,
-             "outer_fold_count": count}
-            for (penalty, steps), count in sorted(selection_counter.items())
+            {
+                "residual_penalty": penalty,
+                "optimization_steps": steps,
+                **({"residual_scale": scale} if spec.residual_scale_grid != (1.0,) else {}),
+                "outer_fold_count": count,
+            }
+            for (penalty, steps, scale), count in sorted(selection_counter.items())
         ],
         "anchor_selection_frequency": [
             {"alpha": alpha, "l1_ratio": ratio, "outer_fold_count": count}

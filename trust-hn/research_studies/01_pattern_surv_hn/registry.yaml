@@ -1,14 +1,17 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U2_V1_DEVELOPMENT_CV_COMPLETE_AWAITING_APPROVAL
-current_step: U2/V1 development cross-validation and V0-vs-V1 complexity gate
-next_allowed_step: U2_V1_DEVELOPMENT_CV_APPROVAL_ONLY
+status: U2_V1R_RESULT_APPROVED_PROVISIONAL_BACKBONE
+current_step: U2/V1R manuscript mapping and confirmation-protocol preparation
+next_allowed_step: U2_V1R_CONFIRMATION_PROTOCOL_FREEZE_ONLY
 study_governance:
-  analysis_label: post_lock_exploratory
+  analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
   phase6_files_modified: false
   external_outcomes_used_for_tuning: false
+  official_test_outcomes_accessed_for_V1R: false
+  result_informed_rescue_design: true
+  confirmatory_claims_allowed: false
   patient_level_outputs_git_ignored: true
   tracked_outputs_aggregate_only: true
 approvals:
@@ -54,12 +57,42 @@ approvals:
     request_file: approvals/U1_4_V1_TRAINABLE_SMOKE_APPROVED.md
     authorization: U2_V1_DEVELOPMENT_CV_AND_FROZEN_COMPLEXITY_GATE_ONLY
   U2_V1_DEVELOPMENT_CV:
-    status: complete_awaiting_approval
+    status: approved
     started_on: '2026-08-14'
     completed_on: '2026-08-14'
-    approval_request: approvals/U2_V1_DEVELOPMENT_CV_APPROVAL_PENDING.md
+    approved_on: '2026-08-18'
+    approved_by: Researcher (chat approval)
+    approval_text: "\u53ef\u4ee5\u6362\u4e00\u79cd\u7f51\u7edc\u7ed3\u6784\u8bbe\u8ba1\uff0c\u5f97\u5230\u7a33\u5b9a\u7684\u63d0\u5347\u5417\uff0c\u505a\u51e0\u4e2a\u65b9\u6848\uff0c\u4f9d\u6b21\u8bd5\u8bd5"
+    request_file: approvals/U2_V1_DEVELOPMENT_CV_APPROVED.md
     frozen_decision: V1_DOES_NOT_EARN_COMPLEXITY
-    authorization_scope: approval_only_no_V2_calibration_router_official_test_or_external_outcomes
+    retained_core_backbone: V0
+    authorization: U2_R0_SEQUENTIAL_ALTERNATIVE_ARCHITECTURE_PROTOCOL_FREEZE_ONLY
+  U2_R0_ALTERNATIVE_ARCHITECTURE_PROTOCOL:
+    status: deferred_by_researcher_v1r_rescue_request
+    started_on: '2026-08-18'
+    completed_on: '2026-08-18'
+    approval_request: approvals/U2_R0_ALTERNATIVE_ARCHITECTURE_PROTOCOL_APPROVAL_PENDING.md
+    candidate_order: [R1_CARS, R2_CCADS, R3_NE_GRME, R4_CC_RST]
+    retained_core_backbone: V0
+    authorization_scope: deferred_no_candidate_implementation_or_training
+  U2_V1R_RESIDUAL_SHRINKAGE_RESCUE:
+    status: result_approved_provisional_backbone
+    approved_on: '2026-08-19'
+    completed_on: '2026-08-19'
+    approved_by: Researcher (chat instruction)
+    request_file: approvals/U2_V1R_RESIDUAL_SHRINKAGE_RESCUE_APPROVED.md
+    result_approval_file: approvals/U2_V1R_RESIDUAL_SHRINKAGE_RESCUE_RESULT_APPROVED.md
+    result_approved_on: '2026-08-19'
+    result_approved_by: Researcher (chat instruction)
+    result_approval_text: Recognize V1R as successful and foreground its positive contribution
+    analysis_label: post_hoc_exploratory_rescue
+    original_V1_decision_preserved: V1_DOES_NOT_EARN_COMPLEXITY
+    candidate_decision: V1R_EARNS_COMPLEXITY
+    candidate_status: accepted_successful_provisional_development_backbone
+    retained_clinical_fallback_anchor: V0
+    provisional_development_backbone: V1R
+    manuscript_narrative: foreground_positive_contributions
+    authorization: U2_V1R_CONFIRMATION_PROTOCOL_FREEZE_ONLY
   U1:
     status: not_requested
   pytorch_dependency:
@@ -294,3 +327,80 @@ U2_V1_DEVELOPMENT_CV_outputs:
     pip_check: passed
     ruff_U2_scope: passed
   frozen_phase3_to_phase6_key_paths_modified: 0
+
+U2_R0_ALTERNATIVE_ARCHITECTURE_PROTOCOL_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_R0_alternative_architecture_protocol
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_R0_alternative_architecture_protocol/frozen_sequential_architecture_protocol.yaml
+  frozen_protocol_sha256: BE195D834779C40F9D5937DA1A4135AADC8466F4D49A37AFC06B0B5246156227
+  frozen_selection_rules: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_R0_alternative_architecture_protocol/frozen_candidate_selection_rules.yaml
+  frozen_selection_rules_sha256: 973C41CFB35C2E6C83D25865E6F950F80D0A192DB631F1636817F58A8E1B5B00
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U2_R0_alternative_architecture_protocol_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-18_step_U2_R0_alternative_architecture_protocol.md
+  candidate_order: [R1_CARS, R2_CCADS, R3_NE_GRME, R4_CC_RST]
+  retained_core_backbone: V0
+  model_implementation_performed: false
+  model_training_performed: false
+  patient_data_accessed_for_new_analysis: false
+  patient_level_output_written: false
+  official_test_outcomes_accessed: false
+  external_outcomes_accessed: false
+  calibration_bridge_trained: false
+  final_router_actions_created: false
+  next_requested_step: U2_R1_CARS_FROZEN_SPEC_AND_SMOKE_ONLY
+
+U2_V1R_RESIDUAL_SHRINKAGE_RESCUE_outputs:
+  implementation_extension: trust-hn/src/trust_hn/pattern_surv_hn/v1_development_cv.py
+  rescue_wrapper: trust-hn/src/trust_hn/pattern_surv_hn/v1_rescue_cv.py
+  targeted_tests: trust-hn/tests/test_pattern_surv_hn_v1_development_cv.py
+  rescue_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue
+  frozen_rescue_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/frozen_v1r_rescue_spec.yaml
+  frozen_rescue_spec_sha256: 7545E88D2F2DEF3D06CDD546734298F66B524C47538179D9F7E4F6CC1106D0F5
+  frozen_exploratory_gate: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/frozen_v1r_exploratory_gate.yaml
+  frozen_exploratory_gate_sha256: 9C7BDBDD9B4834F12066BF50D3B75D80B67C975A0BD6D6412D1F2A1B2682DE2D
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json
+  aggregate_audit_sha256: 449E2E72DC8F42E5B9E2CC4141C721DAD7B34A5E51B28782E3B31318DB171AE1
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U2_V1R_residual_shrinkage_rescue_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-19_step_U2_V1R_residual_shrinkage_rescue.md
+  patient_oof: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  patient_oof_tracked: false
+  patient_oof_rows: 3050
+  patient_oof_sha256: E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0
+  eligible_n: 610
+  events: 173
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  inner_folds: 3
+  residual_penalties: [0.01, 0.1, 1.0]
+  optimization_checkpoints: [0, 10, 25, 50]
+  residual_scale_grid: [0.1, 0.2, 0.3, 0.4, 0.5, 1.0]
+  parameter_count: 3225
+  coverage_V0: 1.0
+  coverage_V1R: 1.0
+  fallback_residual_max_abs_error: 0.0
+  fallback_fused_max_abs_error: 0.0
+  mean_delta_IPCW_Brier_24m: -0.00040719655758521544
+  supported_pattern_worst_Brier_regret: 0.00984820003356468
+  mean_absolute_CITL_deterioration: 0.008842878307952471
+  mean_absolute_calibration_slope_error_deterioration: 0.08578419237474741
+  mean_delta_Uno_C_24m: 0.021302705320541328
+  Uno_C_improving_seed_count: 5
+  original_threshold_decision_for_V1R: V1R_EARNS_COMPLEXITY
+  exploratory_rescue_gate_decision: V1R_EARNS_COMPLEXITY
+  original_U2_V1_decision_preserved: V1_DOES_NOT_EARN_COMPLEXITY
+  provisional_development_backbone: V1R
+  retained_clinical_fallback_anchor: V0
+  result_approved_on: '2026-08-19'
+  deterministic_rerun_oof_sha256_match: true
+  deterministic_rerun_normalized_aggregate_payload_match: true
+  original_V1_post_extension_oof_sha256: 81F2369B5469167139D2A1B85F549E89690449A40A0A8878864F098B920134CE
+  original_V1_post_extension_exact_match: true
+  result_informed_design: true
+  confirmatory_claim_allowed: false
+  official_test_outcomes_accessed: false
+  external_outcomes_accessed: false
+  calibration_bridge_trained: false
+  final_router_actions_created: false
+  tests:
+    targeted_V1_V1R: 23_passed
+    phase6_registered_file_guard: 1_passed
+    ruff_V1_V1R_scope: passed

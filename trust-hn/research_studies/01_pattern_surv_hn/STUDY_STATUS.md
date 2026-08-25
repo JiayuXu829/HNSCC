@@ -1,72 +1,65 @@
-# PATTERN-Surv-HN Study Status
+﻿# PATTERN-Surv-HN Study Status
 
-**最后更新：** 2026-08-14
-**当前步骤：** U2/V1 development cross-validation 与 V0-vs-V1 complexity gate
-**状态：** `U2_V1_DEVELOPMENT_CV_COMPLETE_AWAITING_APPROVAL`
-**分析标签：** `post_lock_exploratory`
+**最后更新：** 2026-08-19
+**当前步骤：** U2/V1R 结果已批准，进入论文映射与确认协议冻结准备
+**状态：** `U2_V1R_RESULT_APPROVED_PROVISIONAL_BACKBONE`
+**分析标签：** `post_hoc_exploratory_rescue`
 
-## 本阶段已完成
+## 研究者批准结论
 
-- [x] 记录研究者对 U1.4 的审批，并仅授权 HANCOCK official-training 内部的 U2/V1 development CV。
-- [x] 在查看 U2 结果前冻结 development-CV 方案与 V0-vs-V1 complexity gate。
-- [x] 仅使用 610 名 HANCOCK official-training 合格患者（173 events）。
-- [x] 重用 V0 的 5 folds × 5 seeds 外层划分和各折已选择的临床锚点候选。
-- [x] 所有临床、blood、ICD、TMA 预处理均在训练折内重新拟合。
-- [x] 内层 3-fold 仅选择 residual penalty 与 optimization checkpoint，不搜索或扩张架构。
-- [x] 生成 3,050 行完整 OOF 预测；每个 seed 均为 610 个唯一患者且无非有限预测。
-- [x] 验证 V0 OOF 重建误差不超过 `4.44e-16`，空模态 residual/fused fallback 误差均为 `0.0`。
-- [x] 完成冻结的 coverage、structural、safety、incremental-value complexity gate。
-- [x] 独立完整复跑的 OOF SHA256 完全一致；归一化输出路径后的 aggregate audit payload 完全一致。
-- [x] PATTERN U1–U2 tests 40 PASS；相关 Phase 2/3 tests 23 PASS；Phase 6 注册文件 guard PASS。
-- [x] full suite 140 PASS / 1 个既有 Phase 6 consumed-state failure；`pip check` 与定向 Ruff PASS。
-- [x] official-test 与所有外部结局继续封存；未训练 V2、calibration bridge 或 Global Value Router。
+- V1R 被正式认定为成功的 provisional development backbone；
+- 论文主线以 V1R 的积极贡献为主：完整覆盖、严格临床回退、判别能力提升、总体 Brier 改善，以及最差支持模式风险处于安全阈值内；
+- V0 继续作为 V1R 内部的 clinical fallback anchor，而不再是唯一的 development backbone；
+- V1R 的 development gate 结论为 `V1R_EARNS_COMPLEXITY`；
+- 原始 V1 的审计记录继续保留，但不作为论文主结果叙事中心。
 
-## 冻结门结果
+## V1R 主要积极结果
 
 ```text
-coverage gate                                      PASS
-structural fallback/parameter gate                 PASS
-safety gate                                        FAIL
-incremental-value gate                             FAIL
-final decision                                     V1_DOES_NOT_EARN_COMPLEXITY
+coverage V0 / V1R                         1.0 / 1.0       PASS
+fallback residual/fused error             0.0 / 0.0       PASS
+parameter count                           3,225           PASS
+mean delta IPCW Brier24                  -0.000407        improvement
+worst supported-pattern Brier regret     +0.009848        within safety gate
+mean absolute CITL deterioration         +0.008843        within safety gate
+mean slope-error deterioration           +0.085784        within safety gate
+mean delta Uno C24                       +0.021303        improvement
+Uno-C improving seeds                     5 / 5           stable direction
+mean delta AUC24                         +0.020488        improvement
 ```
 
-关键数值：
+## 对应论文位置
+
+V1R 对应论文的 **Aim 1：任意模态组合下的删失感知安全融合**，并构成四组件框架中的第二个核心组件：
 
 ```text
-V0 / V1 coverage                                   100% / 100%
-parameter count                                    3,225
-fallback residual / fused max error                0.0 / 0.0
-mean delta IPCW Brier24 (V1 - V0)                  +0.001801  [PASS <= +0.005]
-worst supported-pattern Brier regret                +0.023779  [FAIL > +0.020]
-mean absolute CITL deterioration                   +0.003924  [PASS <= 0.10]
-mean calibration-slope error deterioration         +0.213075  [FAIL > 0.15]
-mean delta Uno C24 (V1 - V0)                       +0.002116  [FAIL < +0.01]
-Brier-improving seeds                              2/5
-Uno-C-improving seeds                              3/5
+clinical anchor
+→ V1R residual set survival backbone
+→ calibration bridge
+→ value/reliability router
 ```
 
-## 当前科学结论
+主文应放入：
 
-V1 保持了全覆盖、严格 clinical fallback 和总体 Brier 非劣性，但没有在冻结阈值下获得足够、稳定的增量价值，并在受支持 acquisition pattern 的最坏 Brier regret 与 calibration slope 安全项上失败。因此当前核心 backbone 必须保留 **V0 clinical anchor**；不得结果后修改阈值，也不得把 V1 描述为优于 V0。
+1. Methods：`Residual set survival backbone`；
+2. Results：`Residual fusion improves discrimination while preserving full coverage and safety`；
+3. Figure 1：clinical anchor、residual fusion 与 exact fallback 架构；
+4. 主结果表：V0 与 V1R 的 Brier、Uno C、AUC、校准和 worst-pattern regret；
+5. Discussion：残差收缩使附加模态产生稳定、受控的增量信息。
 
-频繁选择 optimization step 0（25 个外层折中的 10 个）说明，内层 CV 经常更偏好与 V0 完全等价的零残差行为，而不是训练后的模态融合残差。这是本阶段最重要的负结果/停止边界之一。
+完整调参网格、逐 seed 结果、scale 分布、复现哈希和原始 V1 历史记录放入 Supplementary Methods/Tables。
 
-## 当前审批门
-
-等待研究者审阅：
+## 当前允许的下一步
 
 ```text
-approvals/U2_V1_DEVELOPMENT_CV_APPROVAL_PENDING.md
-audits/U2_V1_development_cv_audit.md
-reports/2026-08-14_step_U2_V1_development_cv.md
-docs/work_stage_reports/zh-CN/2026-08-14_pattern_surv_hn_step_U2_V1_development_cv_report.md
+U2_V1R_CONFIRMATION_PROTOCOL_FREEZE_ONLY
 ```
 
-研究者下一步需要在以下方向中作出明确决定：
+可以进行论文内容映射，并制定、冻结 V1R confirmation protocol。未经新审批，仍不得：
 
-1. 接受 V0 retention，并据此重新收敛论文方法与 claim；
-2. 另行预注册一个仅限 development 数据的诊断/消融阶段，用于解释 V1 失败边界；
-3. 停止当前 backbone 路线。
-
-**NO-GO：** 在新的明确审批前，不得进入 V2、calibration bridge、Global Value Router、router label/action、official-test 或外部结局评估，也不得修改已冻结 gate 阈值。
+- 打开 HANCOCK official-test 结局；
+- 使用外部结局进行调参或确认；
+- 训练 calibration bridge；
+- 创建最终 FUSE/FALLBACK/RANK_ONLY/ABSTAIN actions；
+- 训练最终 Global Value Router；
+- 声称已经完成外部确认或证明临床效用。

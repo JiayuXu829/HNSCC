@@ -1,0 +1,124 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U2-R0/sequential_alternative_architecture_protocol
+status: FROZEN_BEFORE_CANDIDATE_EXECUTION
+frozen_on: '2026-08-18'
+analysis_label: post_lock_exploratory
+scientific_question: >-
+  Can a prespecified sequence of lower-variance, clinical-conditioned, and null-expert fusion
+  architectures produce stable incremental survival value while preserving V0 as an exact safety
+  fallback under natural modality incompleteness?
+retained_anchor:
+  model: V0_extended_postoperative_clinical_pathological_elastic_net_Cox
+  reason: V1_DOES_NOT_EARN_COMPLEXITY
+  reference_oof: results/predictions/pattern_surv_hn/U1_2_V0/v0_repeated_nested_oof_predictions.csv
+  reference_oof_sha256: B58C713DA7D98546AED8B581BD942A1DA3F81ED7FBF28053051AFE59FDFEF141
+development_population:
+  cohort: HANCOCK_official_training
+  expected_n: 610
+  expected_events: 173
+  official_test_outcomes: sealed
+  external_outcomes: sealed_and_unused
+common_cross_fitting:
+  outer_folds: 5
+  outer_repetition_seeds: [17, 29, 43, 71, 101]
+  inner_folds: 3
+  reuse_frozen_V0_outer_assignments: true
+  patient_prediction_coverage_per_seed: exactly_once
+  all_preprocessing_fit_inside_training_fold: true
+candidate_sequence:
+  - order: 1
+    id: R1_CARS
+    name: Cross_Fitted_Clinical_Anchored_Residual_Stacking
+    role: low_variance_signal_and_architecture_diagnostic
+    neural_network: false
+    core_design:
+      - fold_bound_modality_specific_penalized_Cox_experts
+      - cross_fitted_modality_scores
+      - strongly_regularized_residual_stacker
+      - availability_masked_terms
+      - exact_zero_residual_when_no_additional_modality
+    interpretation_if_failed: no_stable_incremental_signal_extracted_by_low_variance_score_fusion
+  - order: 2
+    id: R2_CCADS
+    name: Clinical_Conditioned_Attentive_Deep_Sets
+    role: minimal_neural_replacement_for_V1
+    neural_network: true
+    provisional_parameter_ceiling: 10000
+    core_design:
+      - modality_specific_adapters
+      - clinical_score_conditioning
+      - quality_aware_masked_attention_instead_of_equal_mean_pooling
+      - bounded_residual_shrinkage_gate
+      - exact_empty_set_clinical_fallback
+    interpretation_if_failed: clinical_conditioning_and_attention_do_not_rescue_stable_value
+  - order: 3
+    id: R3_NE_GRME
+    name: Null_Expert_Gated_Residual_Mixture_of_Experts
+    role: primary_value_aware_backbone_candidate
+    neural_network: true
+    provisional_parameter_ceiling: 20000
+    core_design:
+      - separate_blood_ICD_TMA_residual_experts
+      - clinical_score_and_quality_conditioned_masked_gate
+      - exact_zero_residual_NULL_expert_available_even_when_modalities_exist
+      - bounded_convex_or_shrunk_residual_combination
+      - expert_disagreement_and_support_features
+    restriction: soft_backbone_gate_only_no_final_router_action_labels
+    interpretation_if_failed: observable_gating_features_do_not_safely_select_incremental_experts
+  - order: 4
+    id: R4_CC_RST
+    name: Clinical_Conditioned_Residual_Set_Transformer
+    role: conditional_cross_modality_interaction_candidate
+    neural_network: true
+    provisional_parameter_ceiling: 50000
+    core_design:
+      - small_single_block_set_attention
+      - clinical_query_or_context_token
+      - modality_identity_status_quality_encoding
+      - null_or_zero_residual_path
+      - exact_empty_set_clinical_fallback
+    execution_condition: >-
+      Requires separate approval and prior development evidence that modality-specific signal exists
+      but simpler stacking or gating cannot represent useful cross-modality interactions.
+sequential_rules:
+  unrestricted_architecture_search_allowed: false
+  candidate_reordering_after_result_inspection_allowed: false
+  each_candidate_requires_frozen_spec_before_implementation: true
+  each_candidate_requires_structural_and_trainable_smoke_before_patient_CV: true
+  each_smoke_stage_requires_researcher_approval_before_patient_CV: true
+  each_development_CV_requires_researcher_approval_before_next_candidate: true
+  first_candidate_to_pass_common_gate_becomes_provisional_backbone: true
+  later_candidate_may_challenge_provisional_backbone_only_with_separately_frozen_superiority_gate: true
+  failed_candidate_preserved_as_negative_result: true
+  favorable_seed_or_pattern_selection_allowed: false
+  post_result_gate_changes_allowed: false
+common_gate_reference:
+  path: ../U2_V1_development_cv/frozen_v0_v1_complexity_gate.yaml
+  sha256: 70F79547E6452DF8D9F45C3881A2970EA1C27EFB47AC5C2961FEF3EA16220FA3
+  requirements:
+    - complete_V0_and_candidate_OOF_coverage
+    - exact_structural_clinical_fallback
+    - parameter_ceiling
+    - overall_Brier_noninferiority
+    - supported_pattern_regret_safety
+    - calibration_safety
+    - prespecified_incremental_value_effect_size_and_seed_stability
+candidate_specific_freeze_required:
+  - exact_architecture_and_parameter_count
+  - candidate_hyperparameter_grid
+  - optimization_and_early_stopping
+  - loss_function
+  - absolute_risk_conversion
+  - candidate_specific_structural_checks
+  - comparison_and_stopping_decision
+governance:
+  patient_level_outputs_git_ignored: true
+  tracked_outputs_aggregate_only: true
+  official_test_outcomes_access_allowed: false
+  external_outcome_access_allowed: false
+  calibration_bridge_allowed: false
+  final_global_value_router_actions_allowed: false
+  official_or_external_model_selection_allowed: false
+  clinical_utility_claim_allowed: false
+next_step_after_approval: U2-R1_CARS_frozen_spec_and_smoke_implementation_only

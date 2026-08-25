@@ -48,6 +48,7 @@ def test_frozen_u2_spec_matches_authorized_development_protocol():
     assert spec.inner_folds == 3
     assert spec.residual_penalty_grid == (0.01, 0.1)
     assert spec.checkpoint_steps == (0, 25, 50, 100, 200)
+    assert spec.residual_scale_grid == (1.0,)
     assert spec.expected_n == 610
     assert spec.expected_events == 173
 
@@ -176,3 +177,33 @@ def test_reduced_development_cv_is_oof_complete_fold_bound_and_sealed(
     assert sealed["event"].isna().all()
     assert max(row["fallback_residual_max_abs_error"] for row in aggregate["folds"]) == 0
     assert max(row["fallback_fused_max_abs_error"] for row in aggregate["folds"]) == 0
+
+
+def test_reduced_rescue_cv_selects_fold_bound_residual_scale(contract, architecture):
+    full_u2 = U2Spec.from_yaml(ROOT / DEFAULT_SPEC_RELATIVE)
+    rescue_u2 = replace(
+        full_u2,
+        outer_folds=2,
+        outer_repetition_seeds=(17,),
+        inner_folds=2,
+        residual_penalty_grid=(0.1,),
+        checkpoint_steps=(0, 1),
+        residual_scale_grid=(0.2, 1.0),
+    )
+    full_v0 = V0Spec.from_yaml(ROOT / DEFAULT_V0_SPEC_RELATIVE)
+    reduced_v0 = replace(
+        full_v0,
+        outer_folds=2,
+        outer_repetition_seeds=(17,),
+        inner_folds=2,
+        alpha_grid=(0.01,),
+        l1_ratio_grid=(0.5,),
+    )
+    oof, aggregate = development_cross_fit(
+        contract, rescue_u2, reduced_v0, architecture, v0_reference=None
+    )
+    assert "selected_residual_scale" in oof
+    assert set(oof["selected_residual_scale"]).issubset({0.2, 1.0})
+    assert all("selected_residual_scale" in row for row in aggregate["folds"])
+    assert all("residual_scale" in row for row in aggregate["v1_selection_frequency"])
+    assert max(row["fallback_residual_max_abs_error"] for row in aggregate["folds"]) == 0
