@@ -1,0 +1,76 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R1_V1R_revised_calibration_bridge_exploration
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Explore conservative, monotone, development-only recalibration bridges for the retained raw V1R
+  absolute-risk output after the first global-plus-pattern bridge failed. The exploration must not
+  modify the V1R backbone, confirmation artifacts, paper-facing positive-results directory or
+  original U5 protocol.
+cohort:
+  source: HANCOCK_official_training
+  eligible_n: 610
+  events: 173
+  input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  outcomes_used: true
+  role: development_only_cross_fitted_candidate_screen
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: >-
+    For every held-out outer fold, fit candidate bridge parameters only on the other development
+    OOF rows in the same repetition seed and evaluate on the held-out fold.
+  no_confirmation_evaluation: true
+candidate_families:
+  identity:
+    formula: logit(p_candidate) = x_raw
+  global_intercept_shrinkage:
+    base: fit alpha with beta fixed to 1
+    formula: x_candidate = x_raw + gamma * (alpha + x_raw - x_raw)
+    gamma_grid: [0.10, 0.25, 0.50, 0.75, 1.00]
+  global_slope_shrinkage:
+    base: fit beta with alpha fixed to 0
+    formula: x_candidate = x_raw + gamma * (beta*x_raw - x_raw)
+    gamma_grid: [0.10, 0.25, 0.50, 0.75, 1.00]
+  global_full_shrinkage:
+    base: fit alpha and beta jointly
+    formula: x_candidate = x_raw + gamma * (alpha + beta*x_raw - x_raw)
+    gamma_grid: [0.10, 0.25, 0.50, 0.75, 1.00]
+  bounded_global_full:
+    base: fit alpha and beta jointly, then constrain beta to [0.75, 1.25]
+    formula: x_candidate = x_raw + gamma * (alpha + beta_bounded*x_raw - x_raw)
+    gamma_grid: [0.25, 0.50, 0.75, 1.00]
+  pattern_adjustments:
+    status: exploratory_only
+    rule: not eligible for promotion unless global candidate passes all safety gates first
+    support_gates: development_only_n50_events15_for_intercept_n100_events25_for_slope
+safety_gates:
+  coverage_must_remain: 1.0
+  no_patient_removal: true
+  monotonicity_required: beta_positive
+  global_delta_ipcw_brier_max: 0.005
+  supported_pattern_regret_max: 0.020
+  mean_absolute_citl_error_deterioration_max: 0.10
+  mean_absolute_slope_error_deterioration_max: 0.15
+promotion_rule: >-
+  A candidate may be named a development-passing bridge candidate only if it passes every safety
+  gate, has non-positive global IPCW-Brier delta or a prespecified no-harm-compatible tradeoff,
+  and improves at least one calibration diagnostic without worsening the other calibration diagnostic
+  beyond its safety boundary. Identity is retained as the fail-safe reference.
+forbidden:
+- use_confirmation_outcomes_for_candidate_selection
+- refit_or_tune_on_confirmation
+- modify_original_U5_protocol
+- modify_V1R_predictions
+- update_paper_positive_results_with_unapproved_candidate
+- train_router
+- create_clinical_actions
+- claim_clinical_utility
+- claim_deployment_readiness
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written

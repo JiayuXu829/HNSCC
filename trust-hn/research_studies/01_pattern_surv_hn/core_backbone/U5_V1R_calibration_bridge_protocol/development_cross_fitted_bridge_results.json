@@ -1,0 +1,118 @@
+{
+  "analysis": "U5/V1R development-only cross-fitted calibration bridge diagnostics",
+  "protocol": "frozen_calibration_bridge_protocol.yaml",
+  "cohort": "HANCOCK official training",
+  "eligible_n": 610,
+  "events": 173,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "outer_folds": 5,
+  "global_aggregate": {
+    "ipcw_brier_raw": 0.126636630558532,
+    "ipcw_brier_calibrated": 0.1349110134581887,
+    "delta_ipcw_brier": 0.008274382899656707,
+    "citl_raw": 0.01167998687087252,
+    "citl_calibrated": -0.028169163357339953,
+    "calibration_slope_raw": 0.8261233856146961,
+    "calibration_slope_calibrated": 0.19223790956738845,
+    "n_evaluable": 2460,
+    "events_evaluable": 415
+  },
+  "fold_aggregate_mean": {
+    "ipcw_brier_raw": 0.12691762039040122,
+    "ipcw_brier_calibrated": 0.13505877419119552,
+    "delta_ipcw_brier": 0.008141153800794275,
+    "citl_raw": 0.00393538170877589,
+    "citl_calibrated": -0.040858946186875716,
+    "calibration_slope_raw": 1.0975550126970084,
+    "calibration_slope_calibrated": 0.7746754026168792,
+    "n_evaluable": 98.4,
+    "events_evaluable": 16.6
+  },
+  "pattern_aggregate": [
+    {
+      "pattern": "001",
+      "ipcw_brier_raw": 0.19203888408759093,
+      "ipcw_brier_calibrated": 0.33023327143071046,
+      "delta_ipcw_brier": 0.13819438734311953,
+      "citl_raw": 0.7361955593544893,
+      "citl_calibrated": -0.2868823871655128,
+      "calibration_slope_raw": 2.300273721782573,
+      "calibration_slope_calibrated": 0.03188012642632149,
+      "n_evaluable": 30,
+      "events_evaluable": 10
+    },
+    {
+      "pattern": "010",
+      "ipcw_brier_raw": 0.027672988764525126,
+      "ipcw_brier_calibrated": 0.027723931164163173,
+      "delta_ipcw_brier": 5.0942399638046615e-05,
+      "citl_raw": -19.99999557720054,
+      "citl_calibrated": -19.99999557708339,
+      "calibration_slope_raw": NaN,
+      "calibration_slope_calibrated": NaN,
+      "n_evaluable": 5,
+      "events_evaluable": 0
+    },
+    {
+      "pattern": "011",
+      "ipcw_brier_raw": 0.08276211872903794,
+      "ipcw_brier_calibrated": 0.09371211388881097,
+      "delta_ipcw_brier": 0.010949995159773032,
+      "citl_raw": -0.40657857158745236,
+      "citl_calibrated": -0.015559623725849509,
+      "calibration_slope_raw": 1.6219468831979769,
+      "calibration_slope_calibrated": 0.41370960165687953,
+      "n_evaluable": 280,
+      "events_evaluable": 30
+    },
+    {
+      "pattern": "101",
+      "ipcw_brier_raw": 0.12843769067778232,
+      "ipcw_brier_calibrated": 0.14101808538718233,
+      "delta_ipcw_brier": 0.012580394709400006,
+      "citl_raw": -0.29022776733668043,
+      "citl_calibrated": -0.10118545530227861,
+      "calibration_slope_raw": 0.4535950838470504,
+      "calibration_slope_calibrated": -0.25981378086301016,
+      "n_evaluable": 200,
+      "events_evaluable": 30
+    },
+    {
+      "pattern": "110",
+      "ipcw_brier_raw": 0.23591106898930075,
+      "ipcw_brier_calibrated": 0.35465683536425774,
+      "delta_ipcw_brier": 0.11874576637495698,
+      "citl_raw": 0.8589143783090729,
+      "citl_calibrated": -0.3014739223646179,
+      "calibration_slope_raw": 0.6437580583735698,
+      "calibration_slope_calibrated": -0.08938201192613539,
+      "n_evaluable": 70,
+      "events_evaluable": 25
+    },
+    {
+      "pattern": "111",
+      "ipcw_brier_raw": 0.1282762118812784,
+      "ipcw_brier_calibrated": 0.12964564060311912,
+      "delta_ipcw_brier": 0.0013694287218407042,
+      "citl_raw": 0.03664355886503183,
+      "citl_calibrated": -0.00513185651859959,
+      "calibration_slope_raw": 0.8202615146567066,
+      "calibration_slope_calibrated": 0.785313920737521,
+      "n_evaluable": 1875,
+      "events_evaluable": 320
+    }
+  ],
+  "support_gates": {
+    "intercept_n": 50,
+    "intercept_events": 15,
+    "slope_n": 100,
+    "slope_events": 25
+  },
+  "patient_level_outputs": "stored only in runtime audit and not copied to paper-facing directory"
+}

@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U2_V1R_LOCKED_CONFIRMATION_COMPLETED
-current_step: U2/V1R locked confirmation completed; aggregate results sealed and manuscript extract updated
-next_allowed_step: independent review of aggregate confirmation result and manuscript integration
+status: U5R7_V1R_BETA09_LOGLOSS_BRIDGE_PAPER_INTEGRATION_COMPLETED
+current_step: U5R7 fixed beta 0.90 log-loss bridge development-only result integrated into manuscript and appendix candidates; raw V1R retained for confirmation
+next_allowed_step: separately freeze and approve any confirmation bridge application; no confirmation bridge result yet
 study_governance:
   analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
@@ -15,6 +15,8 @@ study_governance:
   confirmatory_claims_allowed: false
   patient_level_outputs_git_ignored: true
   tracked_outputs_aggregate_only: true
+  paper_positive_results_updated: true
+  confirmation_bridge_evaluation: not_performed
 approvals:
   U2_V1R_CONFIRMATION_PROTOCOL_FREEZE:
     status: completed
@@ -37,7 +39,7 @@ approvals:
     completed_on: '2026-08-13'
     approved_on: '2026-08-14'
     approved_by: Researcher (chat approval)
-    approval_text: "审批 U1.1，进入 U1.2/V0。"
+    approval_text: "?? U1.1??? U1.2/V0?"
     authorization: U1_2_V0_ONLY
   U1_2_V0:
     status: approved
@@ -54,7 +56,7 @@ approvals:
     completed_on: '2026-08-14'
     approved_on: '2026-08-14'
     approved_by: Researcher (chat approval)
-    approval_text: "审批 U1.3/V1 smoke，进入 U1.4/V1 trainable implementation，并允许在项目环境中安装和冻结 PyTorch 依赖；暂不进入正式 development CV。"
+    approval_text: "?? U1.3/V1 smoke??? U1.4/V1 trainable implementation??????????????? PyTorch ????????? development CV?"
     request_file: approvals/U1_3_V1_SMOKE_APPROVED.md
     authorization: U1_4_V1_TRAINABLE_SYNTHETIC_SMOKE_ONLY
   U1_4_V1_TRAINABLE_SMOKE:
@@ -63,7 +65,7 @@ approvals:
     completed_on: '2026-08-14'
     approved_on: '2026-08-14'
     approved_by: Researcher (chat approval)
-    approval_text: "审批 U1.4/V1 trainable smoke，进入 U2/V1 development cross-validation 与 V0-vs-V1 complexity gate；继续封存 official-test 和外部结局。"
+    approval_text: "?? U1.4/V1 trainable smoke??? U2/V1 development cross-validation ? V0-vs-V1 complexity gate????? official-test ??????"
     request_file: approvals/U1_4_V1_TRAINABLE_SMOKE_APPROVED.md
     authorization: U2_V1_DEVELOPMENT_CV_AND_FROZEN_COMPLEXITY_GATE_ONLY
   U2_V1_DEVELOPMENT_CV:
@@ -414,3 +416,146 @@ U2_V1R_RESIDUAL_SHRINKAGE_RESCUE_outputs:
     targeted_V1_V1R: 23_passed
     phase6_registered_file_guard: 1_passed
     ruff_V1_V1R_scope: passed
+
+
+U5_V1R_CALIBRATION_BRIDGE_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5_V1R_calibration_bridge_protocol
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5_V1R_calibration_bridge_protocol/frozen_calibration_bridge_protocol.yaml
+  frozen_protocol_sha256: 4ED5B73E7BA0265997213616916F26432730A80A2178D6F6C99B449862F54F56
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5_V1R_calibration_bridge_protocol/development_cross_fitted_bridge_results.json
+  aggregate_results_sha256: 1DAF05D7656C6C032E24D9E354CE7226609931E7B53DA1EE68A91F0B03E79476
+  fold_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5_V1R_calibration_bridge_protocol/development_cross_fitted_bridge_fold_results.csv
+  fold_results_sha256: FF0C0963B68EB2AEE071E2CC48D158A786AE1DC7EE789A3473F426581BAEBB66
+  bridge_parameters: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5_V1R_calibration_bridge_protocol/development_bridge_parameters.csv
+  bridge_parameters_sha256: F78FFCDF8E378D974D104566D4DC838CE50CF832AB4A4B8512F8D30AC912604A
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U5_V1R_calibration_bridge_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-26_step_U5_V1R_calibration_bridge_diagnostics_completed.md
+  cohort: HANCOCK_official_training
+  eligible_n: 610
+  events: 173
+  evaluable_n: 2460
+  evaluable_events: 415
+  ipcw_brier_raw: 0.126636630558532
+  ipcw_brier_calibrated: 0.1349110134581887
+  delta_ipcw_brier: 0.008274382899656707
+  citl_raw: 0.01167998687087252
+  citl_calibrated: -0.028169163357339953
+  calibration_slope_raw: 0.8261233856146961
+  calibration_slope_calibrated: 0.19223790956738845
+  coverage_preserved: true
+  no_harm_boundary: 0.005
+  no_harm_boundary_passed: false
+  calibration_slope_safety_passed: false
+  candidate_decision: CALIBRATION_BRIDGE_STOPPED_RETAIN_RAW_V1R
+  raw_v1r_retained: true
+  confirmation_bridge_evaluation_performed: false
+  confirmation_outcomes_used_for_bridge_tuning: false
+  router_labels_created: false
+  router_trained: false
+  clinical_utility_analyzed: false
+  paper_positive_results_directory_updated: false
+  deterministic_rerun_aggregate_match: true
+  independent_review_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-26_step_U5_V1R_calibration_bridge_failure_independent_review_completed.md
+
+U5R4_V1R_BOUNDED_GLOBAL_BRIDGE_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/frozen_bounded_global_bridge_candidate_protocol.yaml
+  frozen_protocol_sha256: 5E389A79309CE49E015DBF8A9EA3FA586028A5F17ECB0DDA81D81B31138A6A9C
+  runner: trust-hn/scripts/run_v1r_selected_bounded_bridge_diagnostic.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_aggregate_results.json
+  aggregate_results_sha256: C4EDDFE618F684C0B8732D40B4BE6BEBE523A2A4AFE02F3909D5C0685B0CE7F0
+  fold_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_fold_results.csv
+  fold_results_sha256: 710402619A0CB649220FA04DA21ACF4ECF18C8082CCBFEF72E5290BE0121F12D
+  pattern_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_pattern_aggregate_results.csv
+  pattern_results_sha256: 80086EDAC91B5C76B8F3E3A94A7354DBAD53B494F0B4F461A828C3E522CF0C20
+  parameters: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_parameters.csv
+  parameters_sha256: 1C969469C2E1885C310DC8875EEB1EF357ACC0DFEDB510A659989C4DC0D4B0FA
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U5R4_bounded_global_bridge_candidate_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-26_step_U5R4_bounded_global_bridge_candidate_diagnostic_completed.md
+  candidate: bounded_global_full_g0.25
+  cohort: HANCOCK_official_training_development_OOF
+  eligible_n: 610
+  events: 173
+  evaluable_n: 2460
+  evaluable_events: 415
+  ipcw_brier_raw: 0.126636630558532
+  ipcw_brier_candidate: 0.12683437736359268
+  delta_ipcw_brier: 0.00019774680506068343
+  citl_raw: 0.011680298694808466
+  citl_candidate: 0.005822613213227856
+  calibration_slope_raw: 0.8258867071770277
+  calibration_slope_candidate: 0.8292949166819198
+  worst_supported_pattern_regret: 0.0007584845396440554
+  coverage_preserved: true
+  rank_preserved: true
+  development_safe_pass: true
+  deterministic_rerun_artifact_hashes_match: true
+  confirmation_evaluation_performed: false
+  confirmation_outcomes_used_for_bridge_tuning: false
+  raw_v1r_retained: true
+  fallback_change: false
+  router_training: false
+  clinical_utility_analyzed: false
+  paper_positive_results_directory_updated: false
+
+U5R5_V1R_FIXED_SLOPE_INTERCEPT_outputs:
+  protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R5_V1R_fixed_slope_intercept_bridge_exploration/frozen_fixed_slope_intercept_bridge_exploration_protocol.yaml
+  runner: trust-hn/scripts/run_v1r_fixed_slope_intercept_bridge_exploration.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R5_V1R_fixed_slope_intercept_bridge_exploration/fixed_slope_intercept_aggregate_results.csv
+  safety_screen: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R5_V1R_fixed_slope_intercept_bridge_exploration/fixed_slope_intercept_safety_screen.csv
+  cohort: HANCOCK_official_training_development_OOF
+  candidate_count: 10
+  confirmation_evaluation_performed: false
+  paper_positive_results_directory_updated: false
+
+U5R6_V1R_CITL_SLOPE_BALANCED_outputs:
+  protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R6_V1R_citl_slope_balanced_bridge_exploration/frozen_citl_slope_balanced_bridge_exploration_protocol.yaml
+  runner: trust-hn/scripts/run_v1r_citl_slope_balanced_bridge_exploration.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R6_V1R_citl_slope_balanced_bridge_exploration/citl_slope_balanced_aggregate_results.csv
+  safety_screen: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R6_V1R_citl_slope_balanced_bridge_exploration/citl_slope_balanced_safety_screen.csv
+  cohort: HANCOCK_official_training_development_OOF
+  candidate_count: 20
+  result_informed_design: true
+  confirmation_evaluation_performed: false
+  paper_positive_results_directory_updated: false
+
+U5R7_V1R_BETA09_LOGLOSS_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/frozen_beta09_logloss_bridge_candidate_protocol.yaml
+  frozen_protocol_sha256: F21B0949A6AE6048CD4F643AC7209CA8058A7BED1A98F9F4DCC4715776FD0C80
+  runner: trust-hn/scripts/run_v1r_selected_beta09_logloss_bridge_diagnostic.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_aggregate_results.json
+  aggregate_results_sha256: DA21ABEA07CD4B59838CE1A2AE5F69F5C90E0790944FABEAF95DB17F4F32CDB2
+  fold_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_fold_results.csv
+  fold_results_sha256: 1FF8F5688F88ABF177F13FFB576120B89CAD530270A7E8A2BDEB1D3E8782B9FB
+  pattern_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_pattern_aggregate_results.csv
+  pattern_results_sha256: F9608FD97C6FA91C89F12474FA61CD8186C62B00D969191A0AE00F5348EE818B
+  parameters: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_parameters.csv
+  parameters_sha256: EDFD4427A35754EF61AC82017EA52859E6BAB53AB8B1635EE76D2BBD710993C5
+  audit_report: trust-hn/research_studies/01_pattern_surv_hn/audits/U5R7_beta09_logloss_bridge_candidate_audit.md
+  stage_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-08-26_step_U5R5_U5R6_U5R7_rank_preserving_bridge_exploration_completed.md
+  candidate: beta_0.900_logloss
+  beta: 0.9
+  cohort: HANCOCK_official_training_development_OOF
+  eligible_n: 610
+  events: 173
+  evaluable_n: 2460
+  evaluable_events: 415
+  ipcw_brier_raw: 0.126636630558532
+  ipcw_brier_candidate: 0.12678355857576806
+  delta_ipcw_brier: 0.0001469280172360643
+  citl_raw: 0.011680298694808466
+  citl_candidate: -0.0037963961329253726
+  calibration_slope_raw: 0.8258867071770277
+  calibration_slope_candidate: 0.8815519914072262
+  worst_supported_pattern_regret: 0.004175819337348785
+  coverage_preserved: true
+  rank_preserved: true
+  development_safe_pass: true
+  deterministic_rerun_hashes_match: true
+  confirmation_evaluation_performed: false
+  confirmation_outcomes_used_for_bridge_tuning: false
+  raw_v1r_retained: true
+  router_training: false
+  clinical_utility_analyzed: false
+  paper_positive_results_directory_updated: false

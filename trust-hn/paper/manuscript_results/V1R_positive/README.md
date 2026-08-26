@@ -1,29 +1,39 @@
-# V1R positive results for manuscript use
+# V1R and U5R7 results for manuscript use
 
-This directory is a publication-facing extract of the **positive V1R development results only**. It contains aggregate, non-patient-identifying values used by the manuscript narrative and the proposed framework figure. Patient-level predictions, the full audit, the original V1 failure record, and uncompleted follow-up experiments are intentionally not copied here.
+This directory is the controlled, publication-facing source of truth for the manuscript narrative. It contains aggregate-only positive development, development-bridge and locked-confirmation results, manuscript claims, section mapping and the main-figure framework. Patient-level predictions and full audit records remain outside this directory.
 
 ## Scope
 
-- Cohort: HANCOCK official training ecosystem, 610 eligible patients and 173 deaths.
-- Design: repeated nested cross-fitting, five repetition seeds (17, 29, 43, 71, 101), five outer folds and three inner folds.
-- Comparator: V0 clinical-pathological anchor.
-- Candidate: V1R shrinkage-controlled residual Deep Sets Cox, with 3,225 parameters.
-- Primary horizon: 24-month overall-survival risk (730.5 days).
-- Coverage: 100% for both V0 and V1R.
-- Exact empty-set clinical fallback: verified with zero residual and fused-score error.
+- **Backbone:** V1R shrinkage-controlled residual Deep Sets Cox around the V0 clinical-pathological anchor.
+- **Development V1R:** HANCOCK official-training ecosystem, 610 eligible patients and 173 deaths; five repetition seeds, five outer folds and three inner folds.
+- **Development bridge:** U5R7 `beta_0.900_logloss`, a fixed beta 0.90 global logit bridge with an weighted log-loss intercept, evaluated by cross-fitting on 2,460 repeated OOF rows and 415 evaluable events.
+- **Locked confirmation:** researcher-confirmed outcome-untouched HANCOCK OOD cohort, 152 patients and 40 events; 25 matched raw V0/V1R members; predictions sealed before outcome unmasking.
+- **Coverage:** 100% for V0 and V1R in both completed analyses; U5R7 preserves coverage and exact fallback.
+- **Publication rule:** foreground V1R as the fusion backbone; describe U5R7 as a development-only calibration bridge; report the locked confirmation as raw V1R only.
 
 ## Provenance
 
-The values are transcribed from:
+Development V1R values are sourced from `research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json`.
 
-`research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json`
+U5R7 values are sourced from `research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_aggregate_results.json` and summarized in `v1r_bridge_positive_results.csv/json`.
 
-The formal patient-level OOF output remains Git-ignored. Reproducibility receipt: `E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0`.
+Locked confirmation values are sourced from `research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_confirmation_protocol/aggregate_confirmation_results.json`.
 
-The analysis is internal development evidence and should not be described as confirmatory superiority, external validation, clinical utility, or deployment readiness.
+The development OOF receipt is `E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0`; the locked prediction artifact is sealed with SHA256 `E5DA83BDB3BB97C3488687C78CCF166FBD03059619DD0690E2767CAF8F393FCF`.
 
-## Manuscript source-of-truth rule
+## Claim boundary
 
-For subsequent manuscript revisions, use this directory as the controlled publication-facing source of truth for the V1R core narrative. The section-by-section interpretation and claim boundary are recorded in `v1r_paper_narrative_and_section_map.md`. The aggregate metrics are recorded in `v1r_positive_results.csv` and `v1r_positive_results.json`; manuscript-ready claims are in `v1r_manuscript_claims.md`; and the main-figure specification is in `figure1_v1r_framework.md`.
+The manuscript may describe V1R as the provisional development backbone, U5R7 as a positive development-only calibration-bridge result, and the locked raw-V1R cohort as a positive directional point-estimate signal. It must not describe U5R7 as confirmation, external calibration, definitive superiority, clinical utility, deployment readiness or external generalisation. The bootstrap intervals for the principal confirmation deltas cross zero, and U5R7 has not been applied to confirmation.
 
-The intended story is: **V0 full-coverage clinical anchor -> shrinkage-controlled V1R residual -> improved discrimination and modestly improved probabilistic accuracy -> exact fallback and bounded pattern-level regret**. Planned calibration, routing, external validation and confirmation must remain labelled as future work until separately approved result extracts are added.
+## Files
+
+- `v1r_positive_results.csv/json`: primary V1R development aggregate results;
+- `v1r_bridge_positive_results.csv/json`: U5R7 development-only aggregate bridge result;
+- `v1r_bridge_methods_and_formulae.md`: bridge formula, protocol and interpretation;
+- `v1r_bridge_paper_integration_notes.md`: approved manuscript wording and claim boundary;
+- `v1r_locked_confirmation_positive_results.csv/json`: locked raw-V1R confirmation aggregate results;
+- `v1r_manuscript_claims.md`: claims supported by V1R and U5R7 extracts;
+- `v1r_paper_narrative_and_section_map.md`: section-by-section source of truth;
+- `figure1_v1r_framework.md`: main-figure framework specification.
+
+Detailed U5R4-U5R6 parameter grids and exploration summaries are stored separately in `paper/manuscript_results/appendix_candidates/`.

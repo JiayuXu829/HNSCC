@@ -1,0 +1,52 @@
+{
+  "analysis": "U5R3 V1R Brier-optimized monotone bridge exploration",
+  "protocol": "frozen_brier_optimized_bridge_protocol.yaml",
+  "aggregate": [
+    {
+      "candidate": "brier_full_shrinkage_g0.10",
+      "delta_ipcw_brier": 7.506708558224773e-05,
+      "worst_supported_pattern_regret": 0.0005515461759223184,
+      "abs_citl_error_deterioration": -0.0022772260181240147,
+      "abs_slope_error_deterioration": -0.001811029730161784,
+      "kendall_tau": 0.9902571274594404,
+      "passes_all": true
+    },
+    {
+      "candidate": "brier_full_shrinkage_g0.25",
+      "delta_ipcw_brier": 0.0001976593944627847,
+      "worst_supported_pattern_regret": 0.0013885431526937386,
+      "abs_citl_error_deterioration": -0.005861370294119896,
+      "abs_slope_error_deterioration": -0.003441717048837667,
+      "kendall_tau": 0.9754212995566311,
+      "passes_all": true
+    },
+    {
+      "candidate": "brier_full_shrinkage_g0.50",
+      "delta_ipcw_brier": 0.0004293597542490424,
+      "worst_supported_pattern_regret": 0.00280873703815826,
+      "abs_citl_error_deterioration": -0.011069215659276061,
+      "abs_slope_error_deterioration": -0.003408920630021739,
+      "kendall_tau": 0.9498903976433012,
+      "passes_all": true
+    },
+    {
+      "candidate": "brier_full_shrinkage_g0.75",
+      "delta_ipcw_brier": 0.0006966254703065777,
+      "worst_supported_pattern_regret": 0.004259493643496287,
+      "abs_citl_error_deterioration": -0.00405809598533779,
+      "abs_slope_error_deterioration": 0.0004954022947796233,
+      "kendall_tau": 0.9236393933683135,
+      "passes_all": true
+    },
+    {
+      "candidate": "brier_full_shrinkage_g1.00",
+      "delta_ipcw_brier": 0.0010012194304747923,
+      "worst_supported_pattern_regret": 0.005739816885482862,
+      "abs_citl_error_deterioration": 0.0035493691939484824,
+      "abs_slope_error_deterioration": 0.009203975306971146,
+      "kendall_tau": 0.8963548537478054,
+      "passes_all": true
+    }
+  ],
+  "patient_level_outputs": "not written"
+}

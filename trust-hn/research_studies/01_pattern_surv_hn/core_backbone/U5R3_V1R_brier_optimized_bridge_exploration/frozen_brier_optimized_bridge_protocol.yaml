@@ -1,0 +1,56 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R3_V1R_brier_optimized_bridge_exploration
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Explore a monotone logit-affine bridge whose parameters are fitted by the prespecified IPCW Brier
+  objective rather than weighted logistic likelihood. Candidate shrinkage toward the identity is
+  evaluated in development-only cross-fitting after the prior bridge screen.
+cohort:
+  source: HANCOCK_official_training
+  eligible_n: 610
+  events: 173
+  input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  outcomes_used: true
+  role: development_only_cross_fitted_candidate_screen
+model:
+  formula: x_candidate = x_raw + gamma * (alpha_brier + beta_brier*x_raw - x_raw)
+  objective: IPCW_Brier_on_training_partition
+  beta_constraint: [0.75, 1.25]
+  gamma_grid: [0.10, 0.25, 0.50, 0.75, 1.00]
+  monotonicity_requirement: beta_effective_positive
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: >-
+    Fit bridge parameters only on the other development OOF rows within the same repetition seed;
+    evaluate only on the held-out fold. Confirmation is not read or evaluated.
+safety_gates:
+  coverage_must_remain: 1.0
+  no_patient_removal: true
+  global_delta_ipcw_brier_max: 0.005
+  supported_pattern_regret_max: 0.020
+  mean_absolute_citl_error_deterioration_max: 0.10
+  mean_absolute_slope_error_deterioration_max: 0.15
+  ranking_change_report_required: true
+promotion_rule: >-
+  No candidate is authorized for confirmation application by this exploratory screen. A later
+  protocol must explicitly decide whether ranking preservation is mandatory or whether the bridge
+  is an anchor-regularized risk-stabilization layer with ranking changes disclosed.
+forbidden:
+- use_confirmation_outcomes_for_candidate_selection
+- refit_or_tune_on_confirmation
+- modify_original_U5_protocol
+- modify_V1R_predictions
+- update_paper_positive_results_with_unapproved_candidate
+- train_router
+- create_clinical_actions
+- claim_clinical_utility
+- claim_deployment_readiness
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written

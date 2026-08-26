@@ -1,0 +1,53 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R7_V1R_beta09_logloss_bridge_candidate
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Freeze the strongest development-only Pareto candidate from U5R6: a global rank-preserving
+  fixed-slope bridge with beta=0.90 and a weighted-log-loss fitted intercept. The candidate seeks
+  smaller IPCW-Brier harm and more visible CITL/calibration-slope improvement than U5R4.
+cohort:
+  source: HANCOCK_official_training
+  input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  role: development_only_fixed_candidate_diagnostic
+formula:
+  x_raw: logit(p_v1r)
+  x_candidate: alpha_logloss + 0.90*x_raw
+  p_candidate: sigmoid(x_candidate)
+  intercept_fit: weighted_log_loss_on_nonheldout_development_folds
+properties:
+  global_only: true
+  pattern_specific_adjustments: false
+  strictly_monotone: true
+  ranking_preservation: true
+  coverage_change: false
+  fallback_change: false
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: Fit alpha only on the other development folds; evaluate on the held-out fold.
+  confirmation_evaluation: not_authorized
+safety_gates:
+  global_delta_ipcw_brier_max: 0.0005
+  supported_pattern_regret_max: 0.005
+  require_citl_improvement: true
+  require_slope_improvement: true
+  require_ranking_preservation: true
+promotion_status: Development-safe exploratory candidate only; confirmation requires separate review and freeze.
+forbidden:
+- use_confirmation_outcomes_for_candidate_selection
+- refit_or_tune_on_confirmation
+- modify_original_U5_protocol
+- modify_V1R_predictions
+- update_paper_positive_results_with_unapproved_candidate
+- train_router
+- create_clinical_actions
+- claim_clinical_utility
+- claim_deployment_readiness
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written

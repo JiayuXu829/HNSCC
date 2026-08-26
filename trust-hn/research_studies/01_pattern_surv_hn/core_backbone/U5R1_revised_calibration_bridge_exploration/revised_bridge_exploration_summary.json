@@ -1,0 +1,131 @@
+{
+  "analysis": "U5R1 V1R revised bridge development-only candidate exploration",
+  "protocol": "frozen_revised_bridge_exploration_protocol.yaml",
+  "cohort": "HANCOCK official training",
+  "candidate_count": 20,
+  "candidates": [
+    "identity",
+    "global_intercept_shrinkage_g0.10",
+    "global_intercept_shrinkage_g0.25",
+    "global_intercept_shrinkage_g0.50",
+    "global_intercept_shrinkage_g0.75",
+    "global_intercept_shrinkage_g1.00",
+    "global_slope_shrinkage_g0.10",
+    "global_slope_shrinkage_g0.25",
+    "global_slope_shrinkage_g0.50",
+    "global_slope_shrinkage_g0.75",
+    "global_slope_shrinkage_g1.00",
+    "global_full_shrinkage_g0.10",
+    "global_full_shrinkage_g0.25",
+    "global_full_shrinkage_g0.50",
+    "global_full_shrinkage_g0.75",
+    "global_full_shrinkage_g1.00",
+    "bounded_global_full_g0.25",
+    "bounded_global_full_g0.50",
+    "bounded_global_full_g0.75",
+    "bounded_global_full_g1.00"
+  ],
+  "safety_gate_count": 17,
+  "safe_candidates": [
+    "identity",
+    "global_slope_shrinkage_g0.10",
+    "global_intercept_shrinkage_g0.10",
+    "global_slope_shrinkage_g0.25",
+    "global_full_shrinkage_g0.10",
+    "global_intercept_shrinkage_g0.25",
+    "bounded_global_full_g0.25",
+    "global_full_shrinkage_g0.25",
+    "global_intercept_shrinkage_g0.50",
+    "global_intercept_shrinkage_g0.75",
+    "bounded_global_full_g0.50",
+    "global_full_shrinkage_g0.50",
+    "global_intercept_shrinkage_g1.00",
+    "bounded_global_full_g0.75",
+    "global_full_shrinkage_g0.75",
+    "bounded_global_full_g1.00",
+    "global_full_shrinkage_g1.00"
+  ],
+  "top_by_brier_delta": [
+    {
+      "candidate": "identity",
+      "delta_ipcw_brier": 0.0,
+      "worst_supported_pattern_regret": 2.7755575615628914e-17,
+      "abs_citl_error_deterioration": -1.3719945318735327e-12,
+      "abs_slope_error_deterioration": 0.0,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_slope_shrinkage_g0.10",
+      "delta_ipcw_brier": 2.2326462298410954e-05,
+      "worst_supported_pattern_regret": 7.024178907207024e-05,
+      "abs_citl_error_deterioration": -0.005380160328260572,
+      "abs_slope_error_deterioration": 0.0002819262528520605,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_intercept_shrinkage_g0.10",
+      "delta_ipcw_brier": 3.543952841378317e-05,
+      "worst_supported_pattern_regret": 9.165557186952e-05,
+      "abs_citl_error_deterioration": -0.0014853632942647427,
+      "abs_slope_error_deterioration": 0.002749987955781852,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_slope_shrinkage_g0.25",
+      "delta_ipcw_brier": 6.096211150835584e-05,
+      "worst_supported_pattern_regret": 0.00018201474339349377,
+      "abs_citl_error_deterioration": -0.009823802735767294,
+      "abs_slope_error_deterioration": 0.0010897424376635767,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_full_shrinkage_g0.10",
+      "delta_ipcw_brier": 6.236552195693079e-05,
+      "worst_supported_pattern_regret": 0.0006703120675483343,
+      "abs_citl_error_deterioration": -0.00140662921544853,
+      "abs_slope_error_deterioration": -0.0026365898849859404,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_intercept_shrinkage_g0.25",
+      "delta_ipcw_brier": 9.083001100348986e-05,
+      "worst_supported_pattern_regret": 0.00023026218694360834,
+      "abs_citl_error_deterioration": -0.003749019159678497,
+      "abs_slope_error_deterioration": 0.007044911950220389,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "bounded_global_full_g0.25",
+      "delta_ipcw_brier": 0.00014948486932014893,
+      "worst_supported_pattern_regret": 0.0014669711649864803,
+      "abs_citl_error_deterioration": -0.0037616327008681075,
+      "abs_slope_error_deterioration": -0.0030385986837835333,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_full_shrinkage_g0.25",
+      "delta_ipcw_brier": 0.00016970528979981525,
+      "worst_supported_pattern_regret": 0.0016876015346029838,
+      "abs_citl_error_deterioration": -0.0037535540840393095,
+      "abs_slope_error_deterioration": -0.0051842918835973695,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_intercept_shrinkage_g0.50",
+      "delta_ipcw_brier": 0.0001891679468562224,
+      "worst_supported_pattern_regret": 0.00046431063546847895,
+      "abs_citl_error_deterioration": -0.007616667617313896,
+      "abs_slope_error_deterioration": 0.014486300237071426,
+      "development_safe_pass": true
+    },
+    {
+      "candidate": "global_intercept_shrinkage_g0.75",
+      "delta_ipcw_brier": 0.0002951493644677561,
+      "worst_supported_pattern_regret": 0.0007022297998746929,
+      "abs_citl_error_deterioration": -0.011602786857786441,
+      "abs_slope_error_deterioration": 0.0224441067042217,
+      "development_safe_pass": true
+    }
+  ],
+  "patient_level_outputs": "not written"
+}

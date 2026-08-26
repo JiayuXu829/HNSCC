@@ -1,0 +1,100 @@
+{
+  "analysis": "U5R2 V1R anchor-preserving bridge development-only exploration",
+  "protocol": "frozen_anchor_bridge_exploration_protocol.yaml",
+  "candidate_count": 6,
+  "safe_candidates": [
+    "anchor_blend_g0.00",
+    "anchor_blend_g0.10",
+    "anchor_blend_g0.25",
+    "anchor_blend_g0.50",
+    "anchor_blend_g0.75",
+    "anchor_blend_g1.00"
+  ],
+  "aggregate": [
+    {
+      "candidate": "anchor_blend_g0.00",
+      "gamma": 0.0,
+      "delta_ipcw_brier": 0.0005078142227883109,
+      "worst_supported_pattern_regret": 0.001070140470002784,
+      "abs_citl_error_deterioration": 0.013154969515640162,
+      "abs_slope_error_deterioration": -0.10436661522977753,
+      "kendall_tau": 0.6916091417651413,
+      "patients_with_changed_rank": 2456,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    },
+    {
+      "candidate": "anchor_blend_g0.10",
+      "gamma": 0.1,
+      "delta_ipcw_brier": 0.00026562177102515405,
+      "worst_supported_pattern_regret": 0.0007457385705886832,
+      "abs_citl_error_deterioration": 0.014730769422469293,
+      "abs_slope_error_deterioration": -0.11990045778152181,
+      "kendall_tau": 0.7280010051015515,
+      "patients_with_changed_rank": 2450,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    },
+    {
+      "candidate": "anchor_blend_g0.25",
+      "gamma": 0.25,
+      "delta_ipcw_brier": -1.70428769621922e-05,
+      "worst_supported_pattern_regret": 0.00038123671379985957,
+      "abs_citl_error_deterioration": 0.015816183575019672,
+      "abs_slope_error_deterioration": -0.1291080211541782,
+      "kendall_tau": 0.7807787553272034,
+      "patients_with_changed_rank": 2453,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    },
+    {
+      "candidate": "anchor_blend_g0.50",
+      "gamma": 0.5,
+      "delta_ipcw_brier": -0.0002722264379664274,
+      "worst_supported_pattern_regret": 4.37513238096543e-05,
+      "abs_citl_error_deterioration": 0.014326268323875097,
+      "abs_slope_error_deterioration": -0.11182551017411946,
+      "kendall_tau": 0.8628975358480709,
+      "patients_with_changed_rank": 2449,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    },
+    {
+      "candidate": "anchor_blend_g0.75",
+      "gamma": 0.75,
+      "delta_ipcw_brier": -0.00026262330126844424,
+      "worst_supported_pattern_regret": -5.563700674715566e-05,
+      "abs_citl_error_deterioration": 0.008950743335246883,
+      "abs_slope_error_deterioration": -0.06380652199131598,
+      "kendall_tau": 0.9364306331147898,
+      "patients_with_changed_rank": 2427,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    },
+    {
+      "candidate": "anchor_blend_g1.00",
+      "gamma": 1.0,
+      "delta_ipcw_brier": 0.0,
+      "worst_supported_pattern_regret": 2.7755575615628914e-17,
+      "abs_citl_error_deterioration": -1.3719945318735327e-12,
+      "abs_slope_error_deterioration": 1.1102230246251565e-16,
+      "kendall_tau": 0.9999999999999999,
+      "patients_with_changed_rank": 0,
+      "passes_brier": true,
+      "passes_pattern": true,
+      "passes_citl_safety": true,
+      "passes_slope_safety": true
+    }
+  ],
+  "patient_level_outputs": "not written"
+}

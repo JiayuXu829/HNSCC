@@ -1,0 +1,47 @@
+{
+  "aggregate_metrics": {
+    "abs_citl_error_deterioration": -0.007883902561883094,
+    "abs_slope_error_deterioration": -0.05566528423019845,
+    "calibration_slope_candidate": 0.8815519914072262,
+    "calibration_slope_raw": 0.8258867071770277,
+    "citl_candidate": -0.0037963961329253726,
+    "citl_raw": 0.011680298694808466,
+    "delta_ipcw_brier": 0.0001469280172360643,
+    "events_evaluable": 415,
+    "ipcw_brier_candidate": 0.12678355857576806,
+    "ipcw_brier_raw": 0.126636630558532,
+    "n_evaluable": 2460
+  },
+  "analysis": "U5R7 fixed beta 0.90 log-loss-intercept V1R bridge development-only diagnostic",
+  "beta": 0.9,
+  "candidate": "beta_0.900_logloss",
+  "cohort": "HANCOCK official training development OOF",
+  "confirmation_evaluation_performed": false,
+  "confirmation_outcomes_used_for_bridge_tuning": false,
+  "eligible_n": 610,
+  "events": 173,
+  "intercept_mode": "logloss",
+  "outer_folds": 5,
+  "patient_level_outputs": "not written",
+  "protocol": "frozen_beta09_logloss_bridge_candidate_protocol.yaml",
+  "safety": {
+    "citl_improved": true,
+    "coverage_preserved": true,
+    "development_safe_pass": true,
+    "global_delta_ipcw_brier_max": 0.0005,
+    "passes_global_brier_gate": true,
+    "passes_supported_pattern_gate": true,
+    "rank_preserved_all_folds": true,
+    "slope_improved": true,
+    "strictly_monotone": true,
+    "supported_pattern_regret_max": 0.005
+  },
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "worst_supported_pattern_regret": 0.004175819337348785
+}

@@ -1,0 +1,36 @@
+{
+  "analysis": "U5R5 rank-preserving fixed-slope global bridge exploration",
+  "beta_grid": [
+    0.8,
+    0.825,
+    0.85,
+    0.875,
+    0.9,
+    0.925,
+    0.95,
+    0.975,
+    1.0,
+    1.025
+  ],
+  "candidate_count": 10,
+  "cohort": "HANCOCK official training development OOF",
+  "confirmation_evaluation_performed": false,
+  "confirmation_outcomes_used_for_bridge_tuning": false,
+  "pareto_candidates": [
+    {
+      "abs_citl_error_deterioration": -0.0038011437115281765,
+      "abs_slope_error_deterioration": -0.007341749136686726,
+      "beta": 0.95,
+      "candidate": "fixed_beta_0.950",
+      "citl_improved": true,
+      "delta_ipcw_brier": 0.0003688477703384929,
+      "passes_brier_strict": true,
+      "passes_pattern": true,
+      "rank_preserved": true,
+      "slope_improved": true,
+      "worst_supported_pattern_regret": 0.0034643746507730944
+    }
+  ],
+  "patient_level_outputs": "not written",
+  "protocol": "frozen_fixed_slope_intercept_bridge_exploration_protocol.yaml"
+}

@@ -1,0 +1,63 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R4_V1R_bounded_global_bridge_candidate
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Freeze the most conservative development-safe candidate from the U5R exploratory screen for an
+  independent deterministic development-only diagnostic. The candidate applies a global logit-affine
+  recalibration with beta constrained to [0.75, 1.25], then shrinks the fitted transformation 25%
+  toward the identity. No pattern-specific parameters are used.
+cohort:
+  source: HANCOCK_official_training
+  eligible_n: 610
+  events: 173
+  input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  role: development_only_cross_fitted_candidate_diagnostic
+formula:
+  x_raw: logit(p_v1r)
+  fitted_base: x_base = alpha_brier + beta_brier*x_raw
+  beta_brier_constraint: [0.75, 1.25]
+  selected_bridge: x_bridge = x_raw + 0.25*(x_base - x_raw)
+  p_bridge: sigmoid(x_bridge)
+  effective_slope: 1 + 0.25*(beta_brier - 1)
+properties:
+  global_only: true
+  pattern_specific_adjustments: false
+  strictly_monotone: true
+  ranking_preservation: true
+  coverage_change: false
+  fallback_change: false
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: >-
+    Fit alpha_brier and beta_brier only on the other development OOF rows within the same repetition
+    seed using the IPCW-Brier objective; evaluate the frozen bridge on the held-out fold.
+  confirmation_evaluation: not_authorized
+safety_gates:
+  coverage_must_remain: 1.0
+  global_delta_ipcw_brier_max: 0.005
+  supported_pattern_regret_max: 0.020
+  mean_absolute_citl_error_deterioration_max: 0.10
+  mean_absolute_slope_error_deterioration_max: 0.15
+  exact_fallback_error_max_abs: 1.0e-12
+promotion_status: >-
+  Development-safe exploratory candidate only. Confirmation application requires independent review,
+  researcher approval and a separate locked prediction-seal protocol.
+forbidden:
+- use_confirmation_outcomes_for_candidate_selection
+- refit_or_tune_on_confirmation
+- modify_original_U5_protocol
+- modify_V1R_predictions
+- update_paper_positive_results_with_unapproved_candidate
+- train_router
+- create_clinical_actions
+- claim_clinical_utility
+- claim_deployment_readiness
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written

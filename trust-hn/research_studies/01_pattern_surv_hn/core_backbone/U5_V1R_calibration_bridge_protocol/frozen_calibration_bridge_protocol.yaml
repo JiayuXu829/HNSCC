@@ -1,0 +1,106 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5_V1R_calibration_bridge_protocol
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Estimate whether a frozen global calibration bridge, with support-gated pattern adjustments,
+  improves absolute-risk calibration of V1R without changing ranking, coverage, fallback or patient
+  inclusion. This stage does not train a router and does not create FUSE/FALLBACK/RANK_ONLY/ABSTAIN actions.
+cohorts:
+  development:
+    source: HANCOCK_official_training
+    eligible_n: 610
+    events: 173
+    input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+    outcomes_used: true
+    role: fit_and_cross_fitted_evaluate_bridge
+  confirmation:
+    source: HANCOCK_OOD_TEST
+    eligible_n: 152
+    events: 40
+    input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R_confirmation
+    outcomes_used: only_after_bridge_and_prediction_artifacts_are_sealed
+    role: frozen_bridge_evaluation_only
+    tuning_allowed: false
+    refit_allowed: false
+    selective_removal_allowed: false
+endpoint:
+  horizon_days: 730.5
+  outcome: event_by_horizon_with_right_censoring
+  calibration_target: absolute_risk_at_24_months
+bridge:
+  raw_input: V1R_predicted_risk_at_horizon
+  transform: logit_probability
+  model: IPCW_weighted_logistic_recalibration
+  formula: logit(p_calibrated_i) = alpha_g + beta_g * logit(p_raw_i)
+  global_parameters: alpha_g, beta_g
+  pattern_parameters: alpha_p, beta_p only when support_gate_is_met
+  ranking_preservation: strictly_monotone_when_beta_positive
+  no_nonmonotone_transform: true
+support_gates:
+  support_is_assessed_on_development_oof_only: true
+  pattern_intercept:
+    minimum_n: 50
+    minimum_events: 15
+  pattern_slope:
+    minimum_n: 100
+    minimum_events: 25
+  insufficient_support_action: use_global_bridge
+  confirmation_pattern_support_cannot_change_rules: true
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: >-
+    For each development outer evaluation fold, fit the bridge only on the other development OOF
+    patients within the same repetition seed; evaluate on the held-out fold. No patient contributes
+    to both bridge fitting and its cross-fitted bridge evaluation.
+  development_aggregate: mean_across_patient_level_cross_fitted_predictions_and_seed_aggregates
+  confirmation_rule: apply_bridge_parameters_frozen_from_development_only
+ipcw:
+  censoring_model: Kaplan_Meier_from_bridge_training_partition_only
+  weight_truncation: none_unless_nonfinite_then_fail
+  event_horizon_definition: event_observed_by_horizon
+estimands:
+  primary:
+  - IPCW_Brier_24m_before_vs_after
+  - calibration_in_the_large_before_vs_after
+  - calibration_slope_before_vs_after
+  secondary:
+  - integrated_Brier_score_if_implemented_without_protocol_change
+  - pattern_stratified_calibration
+  - rank_correlation_raw_vs_calibrated
+  - coverage
+  - exact_empty_set_fallback_error
+safety_boundaries:
+  coverage_must_remain: 1.0
+  empty_set_fallback_error_max_abs: 1.0e-12
+  no_patient_removal: true
+  no_rank_reversal_if_global_slope_positive: true
+  no_harm_boundary_for_ipcw_brier_delta: 0.005
+  pattern_regret_boundary: 0.020
+  calibration_bridge_failure_action: retain_raw_V1R_absolute_risk_and_report_RANK_ONLY_AS_NOT_AUTHORIZED
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored
+  required:
+  - frozen_calibration_bridge_protocol.yaml
+  - protocol_sha256
+  - development_cross_fitted_bridge_results.json
+  - confirmation_frozen_bridge_results.json
+  - calibration_audit.md
+  - stage_report.md
+  - pre_outcome_unseal_receipt_if_confirmation_is_evaluated
+forbidden:
+- tune_bridge_parameters_on_confirmation_outcomes
+- fit_pattern_parameters_on_confirmation_outcomes
+- change_support_thresholds_after_reading_results
+- fit_router_labels
+- train_global_value_router
+- selective_patient_removal
+- claim_clinical_utility
+- claim_deployment_readiness
+- call_this_external_validation

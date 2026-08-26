@@ -1,0 +1,60 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R2_V1R_anchor_preserving_bridge_exploration
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-26'
+analysis_label: post_hoc_exploratory_rescue
+backbone: V1R
+anchor: V0_clinical_pathological_anchor
+purpose: >-
+  Evaluate a second, separately frozen bridge family that shrinks the V1R logit risk toward the
+  V0 clinical-pathological anchor while preserving the V1R-to-V0 ordering direction. This is a
+  development-only exploratory candidate screen and does not revise the original U5 protocol.
+cohort:
+  source: HANCOCK_official_training
+  eligible_n: 610
+  events: 173
+  input_predictions: trust-hn/results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  outcomes_used: true
+  role: development_only_cross_fitted_candidate_screen
+formula:
+  raw_v1r_logit: x_v1r = logit(p_v1r)
+  anchor_logit: x_v0 = logit(p_v0)
+  candidate: x_candidate = x_v0 + gamma * (x_v1r - x_v0)
+  gamma_grid: [0.00, 0.10, 0.25, 0.50, 0.75, 1.00]
+  ranking_note: >-
+    For gamma > 0 the transform is not a globally monotone transform of V1R alone because the
+    anchor varies by patient; therefore rank preservation is evaluated explicitly and a candidate
+    is not eligible for a rank-preserving bridge claim unless the observed rank reversals are zero.
+cross_fitting:
+  outer_folds: 5
+  repetition_seeds: [17, 29, 43, 71, 101]
+  fitting_rule: >-
+    Gamma values are frozen before execution; no parameters are fit on confirmation outcomes and no
+    confirmation cohort is evaluated in this stage.
+safety_gates:
+  coverage_must_remain: 1.0
+  no_patient_removal: true
+  global_delta_ipcw_brier_max: 0.005
+  supported_pattern_regret_max: 0.020
+  mean_absolute_citl_error_deterioration_max: 0.10
+  mean_absolute_slope_error_deterioration_max: 0.15
+  rank_reversal_report_required: true
+promotion_rule: >-
+  A candidate can only be considered for a later, separately frozen bridge protocol if it passes all
+  safety gates, its rank reversals are explicitly acceptable for the intended use, and its selection
+  is approved after independent review. No candidate is authorized for confirmation application by
+  this exploratory screen alone.
+forbidden:
+- use_confirmation_outcomes_for_candidate_selection
+- refit_or_tune_on_confirmation
+- modify_original_U5_protocol
+- modify_V1R_predictions
+- update_paper_positive_results_with_unapproved_candidate
+- train_router
+- create_clinical_actions
+- claim_clinical_utility
+- claim_deployment_readiness
+artifacts:
+  tracked: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written

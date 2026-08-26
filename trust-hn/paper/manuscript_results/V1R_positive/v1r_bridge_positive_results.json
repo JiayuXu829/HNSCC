@@ -1,0 +1,64 @@
+{
+  "stage": "U5R7",
+  "candidate": "beta_0.900_logloss",
+  "analysis": "U5R7 fixed beta 0.90 log-loss-intercept V1R bridge development-only diagnostic",
+  "cohort": "HANCOCK official training development OOF",
+  "development_only": true,
+  "cross_fitted": true,
+  "confirmation_evaluation_performed": false,
+  "confirmation_outcomes_used_for_bridge_tuning": false,
+  "eligible_n": 610,
+  "events": 173,
+  "n_evaluable": 2460,
+  "events_evaluable": 415,
+  "seeds": [
+    17,
+    29,
+    43,
+    71,
+    101
+  ],
+  "outer_folds": 5,
+  "formula": {
+    "x_raw": "logit(p_V1R)",
+    "x_candidate": "alpha_logloss + 0.90 * x_raw",
+    "p_candidate": "sigmoid(x_candidate)",
+    "alpha_fit": "weighted log-loss on non-held-out development folds"
+  },
+  "parameters": {
+    "beta": 0.9,
+    "intercept_mode": "logloss",
+    "global_only": true,
+    "pattern_specific_adjustments": false,
+    "strictly_monotone": true
+  },
+  "metrics": {
+    "ipcw_brier24_raw": 0.126636630558532,
+    "ipcw_brier24_candidate": 0.12678355857576806,
+    "delta_ipcw_brier24": 0.0001469280172360643,
+    "citl_raw": 0.011680298694808466,
+    "citl_candidate": -0.0037963961329253726,
+    "citl_absolute_error_change": -0.007883902561883094,
+    "calibration_slope_raw": 0.8258867071770277,
+    "calibration_slope_candidate": 0.8815519914072262,
+    "slope_absolute_error_change": -0.05566528423019845,
+    "worst_supported_pattern_regret": 0.004175819337348785,
+    "coverage_raw": 1.0,
+    "coverage_candidate": 1.0,
+    "ranking_preserved_all_folds": true
+  },
+  "gates": {
+    "citl_improved": true,
+    "coverage_preserved": true,
+    "development_safe_pass": true,
+    "global_delta_ipcw_brier_max": 0.0005,
+    "passes_global_brier_gate": true,
+    "passes_supported_pattern_gate": true,
+    "rank_preserved_all_folds": true,
+    "slope_improved": true,
+    "strictly_monotone": true,
+    "supported_pattern_regret_max": 0.005
+  },
+  "source_artifact": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_aggregate_results.json",
+  "claim_boundary": "Positive development-only calibration-bridge result; not confirmation, external validation, clinical utility, or deployment evidence."
+}
