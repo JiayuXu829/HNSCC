@@ -1,20 +1,30 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U2_V1R_RESULT_APPROVED_PROVISIONAL_BACKBONE
-current_step: U2/V1R manuscript mapping and confirmation-protocol preparation
-next_allowed_step: U2_V1R_CONFIRMATION_PROTOCOL_FREEZE_ONLY
+status: U2_V1R_LOCKED_CONFIRMATION_COMPLETED
+current_step: U2/V1R locked confirmation completed; aggregate results sealed and manuscript extract updated
+next_allowed_step: independent review of aggregate confirmation result and manuscript integration
 study_governance:
   analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
   phase6_files_modified: false
   external_outcomes_used_for_tuning: false
-  official_test_outcomes_accessed_for_V1R: false
+  official_test_outcomes_accessed_for_V1R: true
+  confirmation_outcomes_accessed_only_after_prediction_seal: true
   result_informed_rescue_design: true
   confirmatory_claims_allowed: false
   patient_level_outputs_git_ignored: true
   tracked_outputs_aggregate_only: true
 approvals:
+  U2_V1R_CONFIRMATION_PROTOCOL_FREEZE:
+    status: completed
+    approved_on: '2026-08-26'
+    completed_on: '2026-08-26'
+    approved_by: Researcher (chat instruction)
+    authorization: U2_V1R_LOCKED_VALIDATION_EXECUTED
+    cohort_id: HANCOCK_OOD_TEST
+    cohort_status: researcher_confirmed_outcome_untouched
+    execution_block: none_after_prediction_seal
   U0:
     status: approved
     request_file: approvals/U0_APPROVED.md

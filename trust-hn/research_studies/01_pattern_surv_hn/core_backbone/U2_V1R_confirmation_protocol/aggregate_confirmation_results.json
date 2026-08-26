@@ -1,0 +1,118 @@
+{
+  "V0": {
+    "auc_24m": 0.8010936576279801,
+    "calibration_in_the_large_24m": 0.21127000669375706,
+    "calibration_slope_24m": 1.9451263013473303,
+    "events": 40.0,
+    "harrell_c": 0.7332527206771463,
+    "ipcw_brier_24m": 0.13641183725225187,
+    "ipcw_evaluable_weight": 151.8088730906535,
+    "mean_predicted_risk_24m": 0.1639676736758584,
+    "n": 152.0,
+    "uno_c_24m": 0.7825785576765455
+  },
+  "V1R": {
+    "auc_24m": 0.8136365680548059,
+    "calibration_in_the_large_24m": 0.11648189899363745,
+    "calibration_slope_24m": 1.5012234930948178,
+    "events": 40.0,
+    "harrell_c": 0.7528415961305925,
+    "ipcw_brier_24m": 0.13124573097600542,
+    "ipcw_evaluable_weight": 151.8088730906535,
+    "mean_predicted_risk_24m": 0.17631782093771822,
+    "n": 152.0,
+    "uno_c_24m": 0.8042423883104858
+  },
+  "bootstrap": {
+    "method": "patient_level_stratified_bootstrap",
+    "replicates": 2000,
+    "seed": 20260825,
+    "summary": {
+      "auc_24m": {
+        "ci95_lower": -0.04103088513164902,
+        "ci95_upper": 0.06843811792761433,
+        "mean": 0.012725330694394068,
+        "replicates": 2000
+      },
+      "harrell_c": {
+        "ci95_lower": -0.0174227715785295,
+        "ci95_upper": 0.06119645659209944,
+        "mean": 0.019664829280440287,
+        "replicates": 2000
+      },
+      "ipcw_brier_24m": {
+        "ci95_lower": -0.012842760468050893,
+        "ci95_upper": 0.0021708097410921626,
+        "mean": -0.005222478823298823,
+        "replicates": 2000
+      },
+      "uno_c_24m": {
+        "ci95_lower": -0.025964813853084506,
+        "ci95_upper": 0.07081620735826019,
+        "mean": 0.021653785947152684,
+        "replicates": 2000
+      }
+    }
+  },
+  "cohort_id": "HANCOCK_OOD_TEST",
+  "coverage": 1.0,
+  "decision": {
+    "confirmatory_superiority_established": false,
+    "full_coverage_gate_passed": true,
+    "inference_boundary": "bootstrap_95_percent_intervals_cross_zero_for_delta_Uno_C_and_delta_Brier",
+    "key_safety_delta_brier_within_plus_0_005": true,
+    "primary_delta_uno_c_positive": true,
+    "protocol_readout": "positive_confirmation_signal_at_prespecified_point_estimate_level",
+    "supported_pattern_worst_brier_regret_within_plus_0_020": true
+  },
+  "delta_V1R_minus_V0": {
+    "auc_24m": 0.01254291042682576,
+    "calibration_in_the_large_24m": -0.09478810770011961,
+    "calibration_slope_24m": -0.4439028082525125,
+    "harrell_c": 0.01958887545344623,
+    "ipcw_brier_24m": -0.005166106276246446,
+    "mean_predicted_risk_24m": 0.012350147261859817,
+    "uno_c_24m": 0.021663830633940284
+  },
+  "evaluated_on": "2026-08-26",
+  "events": 40,
+  "governance": {
+    "calibration_bridge_trained": false,
+    "historical_phase6_discrepancy_rewritten": false,
+    "patient_level_results_tracked": false,
+    "post_unseal_refit": false,
+    "router_trained": false,
+    "selective_patient_removal": false
+  },
+  "horizon_days": 730.5,
+  "n": 152,
+  "outcomes_unsealed_after_prediction_seal": true,
+  "pattern_metrics": {
+    "pattern_field": "acquisition_pattern",
+    "patterns": {
+      "111": {
+        "delta_V1R_minus_V0": {
+          "ipcw_brier_24m": -0.005166106276246446,
+          "uno_c_24m": 0.021663830633940284
+        },
+        "events": 40,
+        "metric_support": true,
+        "n": 152
+      }
+    },
+    "supported_pattern_minimum_events": 5,
+    "supported_pattern_minimum_n": 20,
+    "supported_pattern_safety_boundary_respected": true,
+    "supported_pattern_worst_brier_regret": -0.005166106276246446
+  },
+  "pattern_summary": {
+    "111": 152
+  },
+  "predeclared_boundaries": {
+    "delta_ipcw_brier_no_harm_maximum": 0.005,
+    "full_coverage_required": true,
+    "supported_pattern_worst_brier_regret_maximum": 0.02
+  },
+  "schema_version": "0.1",
+  "stage_id": "U2_V1R_LOCKED_CONFIRMATION_EVALUATION"
+}

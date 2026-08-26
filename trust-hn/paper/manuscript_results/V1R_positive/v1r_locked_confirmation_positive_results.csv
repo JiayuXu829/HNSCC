@@ -1,0 +1,9 @@
+metric,V0,V1R,delta_V1R_minus_V0,positive_interpretation
+IPCW Brier at 24 months,0.13641183725225187,0.13124573097600542,-0.005166106276246446,lower probabilistic error
+Uno C at 24 months,0.7825785576765455,0.8042423883104858,0.021663830633940284,higher censoring-aware discrimination
+Time-dependent AUC at 24 months,0.8010936576279801,0.8136365680548059,0.01254291042682576,higher time-specific discrimination
+Harrell C,0.7332527206771463,0.7528415961305925,0.01958887545344623,higher overall ranking
+Calibration-in-the-large at 24 months,0.21127000669375706,0.11648189899363745,-0.09478810770011961,closer to zero
+Calibration slope at 24 months,1.9451263013473303,1.5012234930948178,-0.4439028082525125,closer to one
+Coverage,1.0,1.0,0.0,full coverage preserved
+Supported-pattern worst Brier regret,0.0,-0.005166106276246446,-0.005166106276246446,within +0.020 boundary

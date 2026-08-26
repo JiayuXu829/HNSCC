@@ -1,0 +1,64 @@
+{
+  "analysis": "U2_V1R locked confirmation evaluation",
+  "cohort": "HANCOCK OOD confirmation cohort",
+  "eligible_n": 152,
+  "events": 40,
+  "horizon_days": 730.5,
+  "members": 25,
+  "coverage_V0": 1.0,
+  "coverage_V1R": 1.0,
+  "V0": {
+    "ipcw_brier_24m": 0.13641183725225187,
+    "uno_c_24m": 0.7825785576765455,
+    "auc_24m": 0.8010936576279801,
+    "harrell_c": 0.7332527206771463,
+    "calibration_in_the_large_24m": 0.21127000669375706,
+    "calibration_slope_24m": 1.9451263013473303
+  },
+  "V1R": {
+    "ipcw_brier_24m": 0.13124573097600542,
+    "uno_c_24m": 0.8042423883104858,
+    "auc_24m": 0.8136365680548059,
+    "harrell_c": 0.7528415961305925,
+    "calibration_in_the_large_24m": 0.11648189899363745,
+    "calibration_slope_24m": 1.5012234930948178
+  },
+  "delta_V1R_minus_V0": {
+    "ipcw_brier_24m": -0.005166106276246446,
+    "uno_c_24m": 0.021663830633940284,
+    "auc_24m": 0.01254291042682576,
+    "harrell_c": 0.01958887545344623,
+    "calibration_in_the_large_24m": -0.09478810770011961,
+    "calibration_slope_24m": -0.4439028082525125
+  },
+  "supported_pattern_worst_brier_regret": -0.005166106276246446,
+  "bootstrap": {
+    "auc_24m": {
+      "ci95_lower": -0.04103088513164902,
+      "ci95_upper": 0.06843811792761433,
+      "mean": 0.012725330694394068,
+      "replicates": 2000
+    },
+    "harrell_c": {
+      "ci95_lower": -0.0174227715785295,
+      "ci95_upper": 0.06119645659209944,
+      "mean": 0.019664829280440287,
+      "replicates": 2000
+    },
+    "ipcw_brier_24m": {
+      "ci95_lower": -0.012842760468050893,
+      "ci95_upper": 0.0021708097410921626,
+      "mean": -0.005222478823298823,
+      "replicates": 2000
+    },
+    "uno_c_24m": {
+      "ci95_lower": -0.025964813853084506,
+      "ci95_upper": 0.07081620735826019,
+      "mean": 0.021653785947152684,
+      "replicates": 2000
+    }
+  },
+  "interpretation": "positive directional confirmation signal at point-estimate level; bootstrap intervals cross zero; definitive superiority is not claimed",
+  "provenance": "research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_confirmation_protocol/aggregate_confirmation_results.json",
+  "patient_level_data_included": false
+}

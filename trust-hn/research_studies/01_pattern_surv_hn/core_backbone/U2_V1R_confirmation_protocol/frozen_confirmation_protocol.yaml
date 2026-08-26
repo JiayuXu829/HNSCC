@@ -1,0 +1,164 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage_id: U2_V1R_CONFIRMATION_PROTOCOL
+status: FROZEN_READY_FOR_LOCKED_VALIDATION
+frozen_on: '2026-08-26'
+freeze_decision: protocol_frozen_researcher_confirmed_outcome_untouched_cohort
+created_on: '2026-08-25'
+analysis_label: pre_registered_outcome_untouched_confirmation
+purpose: >-
+  Freeze the protocol for the next experiment: evaluation of the already-approved V1R
+  provisional development backbone against the V0 clinical-pathological anchor in a
+  postoperative confirmation cohort whose outcomes remain untouched until all model,
+  preprocessing, aggregation and analysis artifacts are locked.
+
+claim_target:
+  primary: >-
+    Test whether V1R preserves or improves 24-month censoring-aware discrimination
+    relative to V0 in a frozen outcome-untouched confirmation cohort.
+  secondary: >-
+    Assess full coverage, exact empty-set fallback, 24-month probabilistic error,
+    time-dependent AUC, Harrell C, calibration and supported-pattern safety without
+    target-outcome tuning.
+  prohibited: >-
+    No claim of clinical utility, deployment readiness, transportability or superiority
+    is permitted until the protocol is approved, executed and independently reviewed.
+
+confirmation_population:
+  cohort_role: future_outcome_untouched_postoperative_confirmation_cohort
+  cohort_id: HANCOCK_OOD_TEST
+  eligibility: >-
+    Adults with HNSCC meeting the same postoperative prediction-time eligibility contract
+    as the V1R development analysis, with positive follow-up duration and the prespecified
+    overall-survival endpoint.
+  endpoint:
+    duration: days_to_last_information_minus_days_to_first_treatment
+    event: survival_status_equals_deceased
+    primary_horizon_days: 730.5
+  exclusion_after_lock: >-
+    Patients may be excluded only by the already-frozen eligibility contract or by a
+    documented data-integrity failure that is outcome-independent and approved before
+    outcome unsealing.
+  official_hancock_test: eligible_by_researcher_outcome_untouched_confirmation_on_2026_08_26
+  external_outcomes_before_lock: forbidden
+  eligibility_audit: research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_confirmation_protocol/cohort_eligibility_audit.md
+  researcher_confirmation: outcome_untouched_confirmed_in_chat_on_2026_08_26
+  cohort_snapshot_manifest: data/manifests/sealed/phase6_cohort_set_manifest.json
+  execution_block: none_after_prediction_artifact_seal
+
+locked_model_artifacts:
+  clinical_anchor:
+    name: V0
+    source_spec: research_studies/01_pattern_surv_hn/core_backbone/U1_2_V0_clinical_anchor/frozen_v0_spec.yaml
+    reference_oof_sha256: B58C713DA7D98546AED8B581BD942A1DA3F81ED7FBF28053051AFE59FDFEF141
+  candidate:
+    name: V1R
+    source_spec: research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/frozen_v1r_rescue_spec.yaml
+    source_spec_sha256: 7545E88D2F2DEF3D06CDD546734298F66B524C47538179D9F7E4F6CC1106D0F5
+    source_gate: research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/frozen_v1r_exploratory_gate.yaml
+    source_gate_sha256: 9C7BDBDD9B4834F12066BF50D3B75D80B67C975A0BD6D6412D1F2A1B2682DE2D
+    architecture: Clinical_Residual_Deep_Sets_Cox
+    parameter_count: 3225
+    residual_formula: eta_V1R_i_equals_eta_V0_i_plus_lambda_f_delta_eta_V1_i
+    optional_modalities: [blood, icd, tma]
+    exact_empty_set_fallback: true
+
+model_freeze_rules:
+  no_architecture_search: true
+  no_new_hyperparameters: true
+  no_target_outcome_tuning: true
+  no_calibration_bridge_training_before_primary_evaluation: true
+  no_router_training_before_primary_evaluation: true
+  preprocessing: training_data_only_and_frozen_before_confirmation_outcome_unseal
+  finalization_rule: >-
+    Before confirmation outcomes are unsealed, refit the locked V0 and V1R models on each of
+    the 25 development training partitions defined by five repetition seeds and five outer
+    folds. Each model must use only its already-selected inner-CV hyperparameters and the
+    frozen preprocessing contract. The 25 model artifacts, training-fold Breslow baselines,
+    prediction code and hashes must be sealed before outcome unmasking.
+  frozen_ensemble:
+    members: 25
+    construction: five_repetition_seeds_times_five_outer_folds
+    v0_and_v1r_use_matched_partitions: true
+    v1r_hyperparameters: reuse_each_outer_fold_inner_cv_selection_without_reselection
+    prediction_horizon_days: 730.5
+    risk_aggregation: arithmetic_mean_of_member_specific_24_month_risks
+    ranking_aggregation: arithmetic_mean_of_member_specific_linear_predictors
+    no_post_unseal_refit: true
+
+analysis_estimands:
+  primary:
+    name: delta_uno_c_24m
+    definition: UnoC24_V1R_minus_UnoC24_V0
+    direction: positive_favours_V1R
+    inference: paired_patient_level_bootstrap_or_equivalent_predeclared_resampling
+  key_safety:
+    name: delta_ipcw_brier_24m
+    definition: IPCW_Brier24_V1R_minus_IPCW_Brier24_V0
+    direction: negative_favours_V1R
+    no_harm_boundary: 0.005
+  secondary:
+    - delta_time_dependent_auc_24m
+    - delta_harrell_c
+    - coverage_difference
+    - empty_set_residual_and_fused_score_error
+    - calibration_in_the_large_and_calibration_slope_without_target_recalibration
+    - supported_pattern_worst_brier_regret
+
+pattern_safety:
+  supported_pattern_minimum_n: 30
+  supported_pattern_minimum_events: 10
+  worst_regret_boundary: 0.020
+  rare_pattern_policy: report_descriptively_without_confirmatory_inference
+
+uncertainty_and_reporting:
+  primary_resampling: patient_level_stratified_bootstrap
+  bootstrap_replicates: 2000
+  random_seed: 20260825
+  report: >-
+    Point estimates, paired differences, uncertainty intervals, event counts, coverage,
+    missingness/acquisition patterns, exact fallback checks, calibration summaries and all
+    protocol deviations. Do not report only favourable subsets.
+  patient_level_outputs: git_ignored
+  tracked_outputs: aggregate_only
+
+unsealing_and_governance:
+  before_outcome_unseal:
+    - approve_this_protocol
+    - identify_and_snapshot_confirmation_cohort
+    - hash_input_manifest_and_prediction_artifacts
+    - verify_model_code_and_dependency_lock
+    - generate_predictions_without_reading_confirmation_outcomes
+    - seal_prediction_outputs_and_record_hashes
+  after_prediction_seal:
+    - unseal_confirmation_outcomes
+    - run_only_the_locked_estimands_and_reports
+    - preserve_all_primary_and_safety_results
+    - obtain_independent_reproducibility_audit
+  forbidden:
+    - opening_official_test_outcomes_for_tuning
+    - changing_features_or_preprocessing_after_unseal
+    - changing_lambda_or_checkpoint_after_unseal
+    - training_calibration_or_router_using_confirmation_outcomes_before_primary_readout
+    - dropping patients because V1R performs poorly
+    - replacing a nonpositive result with a development-only rescue claim
+
+decision_framework:
+  protocol_status_before_approval: no_execution_authorized
+  after_approval:
+    success_signal: delta_uno_c_24m_greater_than_zero_with_full_coverage_and_safety_boundary_respected
+    noninferior_or_mixed: primary_signal_not_positive_but_no_harm_boundary_respected
+    failure: coverage_loss_or_safety_boundary_violation_or_material_protocol_deviation
+  interpretation: >-
+    Any result is reported as confirmation evidence relative to the frozen protocol. A positive
+    result does not automatically establish clinical utility or deployment readiness; a negative
+    result does not erase the approved V1R development result.
+
+required_artifacts:
+  - frozen_confirmation_protocol.yaml
+  - approval_record.md
+  - input_manifest.sha256
+  - locked_prediction_artifact.sha256
+  - aggregate_confirmation_results.json
+  - confirmation_audit.md
+  - stage_report.md

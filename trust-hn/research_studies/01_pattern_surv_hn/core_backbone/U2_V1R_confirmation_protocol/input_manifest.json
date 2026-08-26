@@ -1,0 +1,299 @@
+{
+  "all_test_patterns": [
+    "111"
+  ],
+  "all_test_usable_patterns": [
+    "111"
+  ],
+  "cohort_id": "HANCOCK_OOD_TEST",
+  "cohort_role": "researcher_confirmed_outcome_untouched",
+  "contract_aggregate_summary": {
+    "acquisition_patterns": [
+      {
+        "eligible": 1,
+        "events_exposed": 0,
+        "n": 1,
+        "outcomes_sealed": 0,
+        "pattern": "001",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 17,
+        "events_exposed": 8,
+        "n": 17,
+        "outcomes_sealed": 0,
+        "pattern": "011",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 5,
+        "events_exposed": 1,
+        "n": 5,
+        "outcomes_sealed": 0,
+        "pattern": "101",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 6,
+        "events_exposed": 2,
+        "n": 6,
+        "outcomes_sealed": 0,
+        "pattern": "110",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 93,
+        "events_exposed": 27,
+        "n": 93,
+        "outcomes_sealed": 0,
+        "pattern": "111",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 152,
+        "events_exposed": null,
+        "n": 152,
+        "outcomes_sealed": 152,
+        "pattern": "111",
+        "split_role": "sealed_test"
+      },
+      {
+        "eligible": 6,
+        "events_exposed": 4,
+        "n": 6,
+        "outcomes_sealed": 0,
+        "pattern": "001",
+        "split_role": "train"
+      },
+      {
+        "eligible": 4,
+        "events_exposed": 0,
+        "n": 4,
+        "outcomes_sealed": 0,
+        "pattern": "010",
+        "split_role": "train"
+      },
+      {
+        "eligible": 41,
+        "events_exposed": 15,
+        "n": 42,
+        "outcomes_sealed": 0,
+        "pattern": "011",
+        "split_role": "train"
+      },
+      {
+        "eligible": 1,
+        "events_exposed": 0,
+        "n": 1,
+        "outcomes_sealed": 0,
+        "pattern": "100",
+        "split_role": "train"
+      },
+      {
+        "eligible": 38,
+        "events_exposed": 12,
+        "n": 38,
+        "outcomes_sealed": 0,
+        "pattern": "101",
+        "split_role": "train"
+      },
+      {
+        "eligible": 16,
+        "events_exposed": 5,
+        "n": 16,
+        "outcomes_sealed": 0,
+        "pattern": "110",
+        "split_role": "train"
+      },
+      {
+        "eligible": 382,
+        "events_exposed": 99,
+        "n": 382,
+        "outcomes_sealed": 0,
+        "pattern": "111",
+        "split_role": "train"
+      }
+    ],
+    "anchor_missing_cells": 16,
+    "blood_missing_cells_among_rows": 284,
+    "development_eligible": 610,
+    "development_events": 173,
+    "eligible": 762,
+    "excluded": 1,
+    "icd_missing_cells_among_rows": 0,
+    "modality_counts": {
+      "blood": {
+        "acquired": 693,
+        "status_counts": {
+          "absent": 70,
+          "acquired_unusable": 10,
+          "usable_complete": 604,
+          "usable_partial": 79
+        },
+        "usable": 683
+      },
+      "icd": {
+        "acquired": 712,
+        "status_counts": {
+          "absent": 51,
+          "conditional_provenance": 712
+        },
+        "usable": 712
+      },
+      "tma": {
+        "acquired": 736,
+        "status_counts": {
+          "absent": 27,
+          "usable_complete": 639,
+          "usable_partial": 97
+        },
+        "usable": 736
+      }
+    },
+    "outcome_sealed": 152,
+    "records": 763,
+    "split_counts": [
+      {
+        "eligible": 122,
+        "events_exposed": 38,
+        "n": 122,
+        "outcomes_sealed": 0,
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 152,
+        "events_exposed": null,
+        "n": 152,
+        "outcomes_sealed": 152,
+        "split_role": "sealed_test"
+      },
+      {
+        "eligible": 488,
+        "events_exposed": 135,
+        "n": 489,
+        "outcomes_sealed": 0,
+        "split_role": "train"
+      }
+    ],
+    "tma_missing_cells_among_rows": 130,
+    "usable_patterns": [
+      {
+        "eligible": 1,
+        "events_exposed": 0,
+        "n": 1,
+        "outcomes_sealed": 0,
+        "pattern": "001",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 18,
+        "events_exposed": 8,
+        "n": 18,
+        "outcomes_sealed": 0,
+        "pattern": "011",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 5,
+        "events_exposed": 1,
+        "n": 5,
+        "outcomes_sealed": 0,
+        "pattern": "101",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 6,
+        "events_exposed": 2,
+        "n": 6,
+        "outcomes_sealed": 0,
+        "pattern": "110",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 92,
+        "events_exposed": 27,
+        "n": 92,
+        "outcomes_sealed": 0,
+        "pattern": "111",
+        "split_role": "calibration"
+      },
+      {
+        "eligible": 152,
+        "events_exposed": null,
+        "n": 152,
+        "outcomes_sealed": 152,
+        "pattern": "111",
+        "split_role": "sealed_test"
+      },
+      {
+        "eligible": 7,
+        "events_exposed": 4,
+        "n": 7,
+        "outcomes_sealed": 0,
+        "pattern": "001",
+        "split_role": "train"
+      },
+      {
+        "eligible": 5,
+        "events_exposed": 1,
+        "n": 5,
+        "outcomes_sealed": 0,
+        "pattern": "010",
+        "split_role": "train"
+      },
+      {
+        "eligible": 48,
+        "events_exposed": 18,
+        "n": 49,
+        "outcomes_sealed": 0,
+        "pattern": "011",
+        "split_role": "train"
+      },
+      {
+        "eligible": 1,
+        "events_exposed": 0,
+        "n": 1,
+        "outcomes_sealed": 0,
+        "pattern": "100",
+        "split_role": "train"
+      },
+      {
+        "eligible": 37,
+        "events_exposed": 12,
+        "n": 37,
+        "outcomes_sealed": 0,
+        "pattern": "101",
+        "split_role": "train"
+      },
+      {
+        "eligible": 15,
+        "events_exposed": 4,
+        "n": 15,
+        "outcomes_sealed": 0,
+        "pattern": "110",
+        "split_role": "train"
+      },
+      {
+        "eligible": 375,
+        "events_exposed": 96,
+        "n": 375,
+        "outcomes_sealed": 0,
+        "pattern": "111",
+        "split_role": "train"
+      }
+    ]
+  },
+  "n_test_eligible": 152,
+  "outcomes_present_in_contract": false,
+  "schema_version": "0.1",
+  "source_sha256": {
+    "blood_raw": "F574760CFA948762407F8260E3064C86BC101FDBFFAEA8D334017CD3D8618F0B",
+    "blood_reference": "E31F8D71A095DA72209979D56E00844701E2D9E8F47DBD966D0F4BF6EB6EF8A3",
+    "clinical": "355A53661F8E9A6B36DD7A5D66A57B650CD34CD3B87CBF7C91B4806FE7949BB4",
+    "icd_preextracted": "FC48EB70DF81CC7EF6D4EE1C37B577CF64475D4BC67DB0B4804EAC094E0AABA7",
+    "official_split": "75B42A6DBD86207A4803629C3FE580CD18103C688595350ABF13B1710EBC051F",
+    "pathological": "9595B3427087BD4922147BF40321559F024C74D52B46C9C6A698C2751EAFFAF5",
+    "targets": "C6E8674CB304B1C90D3EA55570359E79AC2353B64EC201E1501726F558C08503",
+    "tma_preextracted": "FB2468D284E29A067D5D08793DE5E52C48978410A0145671CD81381466D48B99"
+  }
+}
