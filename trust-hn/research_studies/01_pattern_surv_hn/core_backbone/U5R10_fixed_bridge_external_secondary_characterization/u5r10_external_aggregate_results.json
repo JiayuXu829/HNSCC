@@ -1,0 +1,164 @@
+{
+  "bootstrap": {
+    "method": "patient_level_stratified_bootstrap",
+    "replicates": 2000,
+    "seed": 20260827
+  },
+  "cohorts": {
+    "GSE41613": {
+      "bootstrap": {
+        "abs_citl_error_change": {
+          "ci95_lower": -0.13050653734225073,
+          "ci95_upper": -0.0993997028473283,
+          "mean": -0.1143234105424759,
+          "replicates": 2000
+        },
+        "abs_slope_error_change": {
+          "ci95_lower": -0.09800684450528038,
+          "ci95_upper": 0.15882910301181796,
+          "mean": -0.010345230766155468,
+          "replicates": 1969
+        },
+        "delta_calibration_slope": {
+          "ci95_lower": 0.022174290723735685,
+          "ci95_upper": 0.15882910301181796,
+          "mean": 0.08947372447754963,
+          "replicates": 1969
+        },
+        "delta_citl": {
+          "ci95_lower": 0.0993997028473283,
+          "ci95_upper": 0.13050653734225073,
+          "mean": 0.11438110557264713,
+          "replicates": 2000
+        },
+        "delta_ipcw_brier": {
+          "ci95_lower": -0.010730087902332834,
+          "ci95_upper": -0.0021952129294351306,
+          "mean": -0.006318958712512045,
+          "replicates": 2000
+        }
+      },
+      "point_estimate": {
+        "abs_citl_error_change": -0.11450261779257787,
+        "abs_slope_error_change": -0.08790768451304198,
+        "all_directional_checks_pass": true,
+        "alpha": -0.1450337985699547,
+        "base_definition": "legacy_phase6_B6_risk",
+        "beta": 0.9,
+        "calibration_citl_improved": true,
+        "calibration_slope_bridge": 0.8790759560651004,
+        "calibration_slope_improved": true,
+        "calibration_slope_raw": 0.7911682715520584,
+        "citl_bridge": -0.45678239517372343,
+        "citl_raw": -0.5712850129663013,
+        "cohort": "GSE41613",
+        "coverage_bridge": 1.0,
+        "coverage_raw": 1.0,
+        "delta_calibration_slope": 0.08790768451304198,
+        "delta_citl": 0.11450261779257787,
+        "delta_ipcw_brier": -0.0063574465360351495,
+        "events": 51,
+        "events_evaluable": 31,
+        "ipcw_brier_bridge": 0.19790985537484124,
+        "ipcw_brier_raw": 0.2042673019108764,
+        "mean_predicted_risk_bridge": 0.37489142920299473,
+        "mean_predicted_risk_raw": 0.3976086112279038,
+        "n": 97,
+        "n_evaluable": 97,
+        "passes_brier_nonharm_gate_0.0005": true,
+        "rank_preserved_risk": true,
+        "rank_preserved_score": true
+      },
+      "prediction_file": "results/predictions/phase6/gse41613__original__aggregate100.csv",
+      "prediction_file_sha256": "870A7B9F9D30EDD8BFBDFFB01E3310D8E57B115BD6B094F04E1D65D6FDC302F4"
+    },
+    "GSE65858": {
+      "bootstrap": {
+        "abs_citl_error_change": {
+          "ci95_lower": -0.16439088008611238,
+          "ci95_upper": -0.13775417520180253,
+          "mean": -0.1505757593839888,
+          "replicates": 2000
+        },
+        "abs_slope_error_change": {
+          "ci95_lower": -0.09699864453672605,
+          "ci95_upper": 0.11803031604456923,
+          "mean": -0.05137189287577434,
+          "replicates": 1976
+        },
+        "delta_calibration_slope": {
+          "ci95_lower": 0.017811091964623688,
+          "ci95_upper": 0.11803031604456923,
+          "mean": 0.06843973847197066,
+          "replicates": 1976
+        },
+        "delta_citl": {
+          "ci95_lower": 0.1377541752018025,
+          "ci95_upper": 0.16439088008611238,
+          "mean": 0.1505757593839888,
+          "replicates": 2000
+        },
+        "delta_ipcw_brier": {
+          "ci95_lower": -0.019002420271134843,
+          "ci95_upper": -0.012431741990612958,
+          "mean": -0.015714288096180192,
+          "replicates": 2000
+        }
+      },
+      "point_estimate": {
+        "abs_citl_error_change": -0.15031840642856675,
+        "abs_slope_error_change": -0.06763385023306356,
+        "all_directional_checks_pass": true,
+        "alpha": -0.1450337985699547,
+        "base_definition": "legacy_phase6_B6_risk",
+        "beta": 0.9,
+        "calibration_citl_improved": true,
+        "calibration_slope_bridge": 0.67633754833617,
+        "calibration_slope_improved": true,
+        "calibration_slope_raw": 0.6087036981031064,
+        "citl_bridge": -1.181249173690285,
+        "citl_raw": -1.3315675801188518,
+        "cohort": "GSE65858",
+        "coverage_bridge": 1.0,
+        "coverage_raw": 1.0,
+        "delta_calibration_slope": 0.06763385023306356,
+        "delta_citl": 0.15031840642856675,
+        "delta_ipcw_brier": -0.015697274704338904,
+        "events": 78,
+        "events_evaluable": 46,
+        "ipcw_brier_bridge": 0.20907129608369623,
+        "ipcw_brier_raw": 0.22476857078803514,
+        "mean_predicted_risk_bridge": 0.4241258414719084,
+        "mean_predicted_risk_raw": 0.45190475904161037,
+        "n": 244,
+        "n_evaluable": 211,
+        "passes_brier_nonharm_gate_0.0005": true,
+        "rank_preserved_risk": true,
+        "rank_preserved_score": true
+      },
+      "prediction_file": "results/predictions/phase6/gse65858__original__aggregate100.csv",
+      "prediction_file_sha256": "37366DA912519564F053713B2227C766F823535A223C048F93A9F2978753E312"
+    }
+  },
+  "evaluated_on": "2026-08-27",
+  "fixed_bridge": {
+    "alpha": -0.1450337985699547,
+    "beta": 0.9,
+    "parameter_source_sha256": "EDFD4427A35754EF61AC82017EA52859E6BAB53AB8B1635EE76D2BBD710993C5"
+  },
+  "governance": {
+    "cohort_selected_after_readout": false,
+    "current_v1r_external_confirmation_claim_permitted": false,
+    "current_v1r_prediction_modified": false,
+    "outcomes_already_consumed_by_legacy_phase6": true,
+    "parameters_refit_on_external_outcomes": false,
+    "patient_level_outputs_tracked": false,
+    "router_trained": false
+  },
+  "interpretation": {
+    "claim": "Fixed bridge calibration direction was reproduced on both GEO cohorts when applied to legacy Phase 6 B6 fusion risk; this is not current V1R bridge confirmation because prediction definitions are not proven equivalent.",
+    "external_direction_reproduced_on_legacy_b6": true
+  },
+  "schema_version": "0.1",
+  "stage_id": "U5R10_FIXED_BRIDGE_EXTERNAL_SECONDARY_CHARACTERIZATION"
+}

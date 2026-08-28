@@ -24,7 +24,7 @@ If no optional modality is usable, V1R returns the V0 prediction exactly; U5R7 d
 
 A full-coverage clinical-pathological anchor is necessary because optional measurements may be absent or unusable. Optional multimodal measurements can nevertheless contain incremental prognostic information. V1R introduces that information as a shrinkage-controlled residual around the clinical anchor, rather than allowing an unconstrained multimodal pathway to rewrite clinical risk. In repeated nested cross-fitting, V1R improved discrimination and primary probabilistic accuracy while preserving 100% coverage, exact clinical fallback and bounded pattern-level regret.
 
-The raw V1R absolute-risk scale showed mild under-dispersion in a separate development diagnostic. U5R7 addressed this with a fixed positive-slope global logit bridge. The bridge moved CITL toward zero and the calibration slope toward one with a small Brier penalty inside the development gate, while preserving ranking and coverage. The locked confirmation remains a raw-V1R readout; the bridge has not been evaluated in confirmation.
+The raw V1R absolute-risk scale showed mild under-dispersion in a separate development diagnostic. U5R7 addressed this with a fixed positive-slope global logit bridge. The bridge moved CITL toward zero and the calibration slope toward one with a small Brier penalty inside the development gate, while preserving ranking and coverage. The primary locked confirmation remains a raw-V1R readout. U5R8 later evaluated the frozen bridge as a secondary post-unseal validation; ranking and coverage were preserved, but Brier, CITL and slope safety gates failed, so the bridge is not promoted to confirmed external calibration.
 
 ## 3. Results carried into the manuscript
 
@@ -61,7 +61,7 @@ The raw V1R absolute-risk scale showed mild under-dispersion in a separate devel
 - Calibration-in-the-large moved 0.211270 to 0.116482; slope moved 1.945126 to 1.501223.
 - Coverage remained 100%; the only supported pattern (`111`) had Brier delta -0.005166.
 - Bootstrap intervals crossed zero for delta Uno C and delta IPCW Brier; this is a positive directional raw-V1R confirmation signal, not definitive superiority.
-- U5R7 was not applied to confirmation.
+- U5R7 was not part of the primary raw-V1R confirmation estimand; U5R8 secondary post-unseal validation did not pass bridge safety gates.
 
 ## 4. Section mapping
 
@@ -79,7 +79,7 @@ Motivate controlled incremental fusion and distinguish ranking/discrimination fr
 2. Report V1R development cross-fitting and safety/fallback checks.
 3. Report the U5R7 development-only calibration bridge, formula and gates.
 4. Report the locked raw-V1R outcome-untouched confirmation point estimates.
-5. State explicitly that U5R7 has not been evaluated in confirmation.
+5. State explicitly that U5R7 remains development-only because the later U5R8 secondary post-unseal validation did not pass its Brier, CITL and slope gates.
 
 ### Methods
 
@@ -91,7 +91,7 @@ Interpret V1R as controlled incremental value and U5R7 as a conservative develop
 
 ### Main figure and tables
 
-Figure 1 should show the anchor, usable modality set, residual encoder, shrinkage, raw V1R output, exact fallback, U5R7 development bridge and separate raw-V1R confirmation readout. The bridge-to-confirmation path should be labelled pending a separately frozen protocol. Table 1 should report development V0/V1R results; Table 2 should report U5R7 development calibration results; Table 3 should report locked raw-V1R confirmation results and bootstrap intervals.
+Figure 1 should show the anchor, usable modality set, residual encoder, shrinkage, raw V1R output, exact fallback, U5R7 development bridge and separate raw-V1R confirmation readout. The bridge-to-confirmation path should be labelled as secondary post-unseal validation with failed calibration gates; the primary confirmation path remains raw V1R. Table 1 should report development V0/V1R results; Table 2 should report U5R7 development calibration results; Table 3 should report locked raw-V1R confirmation results and bootstrap intervals.
 
 ## 5. Controlled-use rule
 

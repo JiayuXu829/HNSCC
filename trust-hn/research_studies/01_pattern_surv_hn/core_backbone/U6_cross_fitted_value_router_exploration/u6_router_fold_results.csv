@@ -1,0 +1,6 @@
+fold,train_rows,test_rows,train_observable_rows,test_unique_patients,model,mean_q_test
+1,2440,610,1960,122,standardized_logistic_regression,0.5261585207386225
+2,2440,610,1960,122,standardized_logistic_regression,0.6009102065477469
+3,2440,610,1985,122,standardized_logistic_regression,0.6525178921819108
+4,2440,610,1960,122,standardized_logistic_regression,0.5759957914095841
+5,2440,610,1975,122,standardized_logistic_regression,0.5959700441030525

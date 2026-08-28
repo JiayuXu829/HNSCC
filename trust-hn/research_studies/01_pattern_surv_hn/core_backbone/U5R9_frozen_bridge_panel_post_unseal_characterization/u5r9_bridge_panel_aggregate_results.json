@@ -1,0 +1,219 @@
+{
+  "bootstrap": {
+    "method": "patient_level_stratified_bootstrap",
+    "replicates": 2000,
+    "seed": 20260827,
+    "summary": {
+      "U5R4_bounded_global_full_g0.25": {
+        "abs_citl_error_change": {
+          "ci95_lower": -0.005461793208346945,
+          "ci95_upper": 0.0020685932972114773,
+          "mean": -0.0018582565246870355,
+          "replicates": 2000
+        },
+        "abs_slope_error_change": {
+          "ci95_lower": -0.016933722807936816,
+          "ci95_upper": 0.05607803197389149,
+          "mean": 0.034715362113870614,
+          "replicates": 1958
+        },
+        "delta_calibration_slope": {
+          "ci95_lower": 0.02155624226532007,
+          "ci95_upper": 0.05607803197389149,
+          "mean": 0.03588006786573658,
+          "replicates": 1958
+        },
+        "delta_citl": {
+          "ci95_lower": -0.0054627886489536075,
+          "ci95_upper": 0.0016116576984878733,
+          "mean": -0.0019753728450819315,
+          "replicates": 2000
+        },
+        "delta_ipcw_brier": {
+          "ci95_lower": -0.00020823593866318088,
+          "ci95_upper": 0.0005397612386302985,
+          "mean": 0.00017928309567677087,
+          "replicates": 2000
+        }
+      },
+      "U5R7_beta_0.900_logloss": {
+        "abs_citl_error_change": {
+          "ci95_lower": -0.019793863647828647,
+          "ci95_upper": 0.016937439340013887,
+          "mean": 0.0003571989104067895,
+          "replicates": 2000
+        },
+        "abs_slope_error_change": {
+          "ci95_lower": 0.03412353373174321,
+          "ci95_upper": 0.2745318778935082,
+          "mean": 0.1727940913261659,
+          "replicates": 1959
+        },
+        "delta_calibration_slope": {
+          "ci95_lower": 0.10705908052414988,
+          "ci95_upper": 0.2745318778935082,
+          "mean": 0.17704386972081557,
+          "replicates": 1959
+        },
+        "delta_citl": {
+          "ci95_lower": -0.01161569029543352,
+          "ci95_upper": 0.021739281214068668,
+          "mean": 0.0042297704320863015,
+          "replicates": 2000
+        },
+        "delta_ipcw_brier": {
+          "ci95_lower": -0.0007638444087596216,
+          "ci95_upper": 0.0028899365049497925,
+          "mean": 0.001104824618908817,
+          "replicates": 2000
+        }
+      },
+      "raw_v1r": {
+        "abs_citl_error_change": {
+          "ci95_lower": -3.478497004327785e-12,
+          "ci95_upper": 3.375599279265006e-12,
+          "mean": 2.8490781463924326e-14,
+          "replicates": 2000
+        },
+        "abs_slope_error_change": {
+          "ci95_lower": -2.801321732359696e-07,
+          "ci95_upper": 2.809973826956025e-07,
+          "mean": 4.362095222965872e-10,
+          "replicates": 1961
+        },
+        "delta_calibration_slope": {
+          "ci95_lower": -2.806669414656682e-07,
+          "ci95_upper": 2.802335548057755e-07,
+          "mean": -7.923234127833639e-10,
+          "replicates": 1961
+        },
+        "delta_citl": {
+          "ci95_lower": -3.5543908094570754e-12,
+          "ci95_upper": 3.3512748132125116e-12,
+          "mean": 5.558972017785397e-15,
+          "replicates": 2000
+        },
+        "delta_ipcw_brier": {
+          "ci95_lower": -2.7755575615628914e-17,
+          "ci95_upper": 2.7755575615628914e-17,
+          "mean": -4.371503159461554e-19,
+          "replicates": 2000
+        }
+      }
+    }
+  },
+  "candidates": [
+    {
+      "abs_citl_error_change": -1.3285761379933092e-12,
+      "abs_slope_error_change": -2.4362310613312843e-08,
+      "all_predeclared_gates_pass": true,
+      "alpha": 0.0,
+      "calibration_slope_bridge": 1.5103352286402474,
+      "calibration_slope_raw": 1.510335253002558,
+      "candidate": "raw_v1r",
+      "citl_absolute_error_improved": true,
+      "citl_bridge": 0.1567505484225921,
+      "citl_raw": 0.15675054842392067,
+      "coverage_preserved": true,
+      "delta_calibration_slope": -2.4362310613312843e-08,
+      "delta_citl": -1.3285761379933092e-12,
+      "delta_ipcw_brier": 0.0,
+      "effective_slope": 1.0,
+      "events_evaluable": 26,
+      "ipcw_brier_bridge": 0.13469741883567712,
+      "ipcw_brier_raw": 0.13469741883567712,
+      "mean_predicted_risk_bridge": 0.18013644676904442,
+      "mean_predicted_risk_raw": 0.18013644676904442,
+      "n_evaluable": 120,
+      "parameter_source": "U2_V1R_locked_confirmation",
+      "passes_global_brier_gate": true,
+      "passes_supported_pattern_gate": true,
+      "rank_preserved_risk": true,
+      "rank_preserved_score": true,
+      "slope_absolute_error_improved": true,
+      "worst_supported_pattern_brier_regret": 0.0
+    },
+    {
+      "abs_citl_error_change": -0.0019619028632960334,
+      "abs_slope_error_change": 0.03378233220106597,
+      "all_predeclared_gates_pass": false,
+      "alpha": -0.02863319431659357,
+      "calibration_slope_bridge": 1.544117585203624,
+      "calibration_slope_raw": 1.510335253002558,
+      "candidate": "U5R4_bounded_global_full_g0.25",
+      "citl_absolute_error_improved": true,
+      "citl_bridge": 0.15478864556062463,
+      "citl_raw": 0.15675054842392067,
+      "coverage_preserved": true,
+      "delta_calibration_slope": 0.03378233220106597,
+      "delta_citl": -0.0019619028632960334,
+      "delta_ipcw_brier": 0.00017014258405437244,
+      "effective_slope": 0.978121925546798,
+      "events_evaluable": 26,
+      "ipcw_brier_bridge": 0.1348675614197315,
+      "ipcw_brier_raw": 0.13469741883567712,
+      "mean_predicted_risk_bridge": 0.18024670354316932,
+      "mean_predicted_risk_raw": 0.18013644676904442,
+      "n_evaluable": 120,
+      "parameter_source": "research_studies/01_pattern_surv_hn/core_backbone/U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_parameters.csv",
+      "passes_global_brier_gate": true,
+      "passes_supported_pattern_gate": true,
+      "rank_preserved_risk": true,
+      "rank_preserved_score": true,
+      "slope_absolute_error_improved": false,
+      "worst_supported_pattern_brier_regret": 0.00017014258405437244
+    },
+    {
+      "abs_citl_error_change": 0.004193869266130662,
+      "abs_slope_error_change": 0.16781503882198923,
+      "all_predeclared_gates_pass": false,
+      "alpha": -0.1450337985699547,
+      "calibration_slope_bridge": 1.6781502918245472,
+      "calibration_slope_raw": 1.510335253002558,
+      "candidate": "U5R7_beta_0.900_logloss",
+      "citl_absolute_error_improved": false,
+      "citl_bridge": 0.16094441769005133,
+      "citl_raw": 0.15675054842392067,
+      "coverage_preserved": true,
+      "delta_calibration_slope": 0.16781503882198923,
+      "delta_citl": 0.004193869266130662,
+      "delta_ipcw_brier": 0.0010845289567504302,
+      "effective_slope": 0.9,
+      "events_evaluable": 26,
+      "ipcw_brier_bridge": 0.13578194779242755,
+      "ipcw_brier_raw": 0.13469741883567712,
+      "mean_predicted_risk_bridge": 0.17887973922491202,
+      "mean_predicted_risk_raw": 0.18013644676904442,
+      "n_evaluable": 120,
+      "parameter_source": "research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_parameters.csv",
+      "passes_global_brier_gate": false,
+      "passes_supported_pattern_gate": true,
+      "rank_preserved_risk": true,
+      "rank_preserved_score": true,
+      "slope_absolute_error_improved": false,
+      "worst_supported_pattern_brier_regret": 0.0010845289567504302
+    }
+  ],
+  "cohort_id": "HANCOCK_OOD_TEST",
+  "cohort_role": "locked_secondary_post_unseal_exploratory_characterization",
+  "evaluated_on": "2026-08-27",
+  "events": 40,
+  "governance": {
+    "candidate_panel_frozen_before_execution": true,
+    "clinical_utility_claim_permitted": false,
+    "confirmation_outcomes_used_for_selection": false,
+    "deployment_readiness_claim_permitted": false,
+    "patient_level_results_tracked": false,
+    "pattern_specific_tuning": false,
+    "raw_v1r_modified": false,
+    "refit_on_confirmation": false,
+    "router_trained": false,
+    "winner_selected_after_outcome_readout": false
+  },
+  "horizon_days": 730.5,
+  "interpretation": "post_unseal exploratory characterization only; no candidate is promoted or selected for deployment",
+  "n": 152,
+  "outcomes_were_already_unsealed_before_protocol_freeze": true,
+  "schema_version": "0.1",
+  "stage_id": "U5R9_FROZEN_BRIDGE_PANEL_POST_UNSEAL_CHARACTERIZATION"
+}

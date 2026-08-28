@@ -1,0 +1,170 @@
+{
+  "baseline": {
+    "v0_brier": 0.12496818528984002,
+    "v1r_brier": 0.12456067607702402,
+    "v1r_minus_v0": -0.0004075092128160013
+  },
+  "cross_fitting": {
+    "folds": 5,
+    "groups": "native_id",
+    "no_patient_cross_fold_leakage": true,
+    "seed": 20260827,
+    "splitter": "StratifiedGroupKFold"
+  },
+  "evaluated_on": "2026-08-27",
+  "events": 865,
+  "fixed_thresholds_reported": [
+    0.4,
+    0.5,
+    0.6
+  ],
+  "folds": [
+    {
+      "fold": 1,
+      "mean_q_test": 0.5261585207386225,
+      "model": "standardized_logistic_regression",
+      "test_rows": 610,
+      "test_unique_patients": 122,
+      "train_observable_rows": 1960,
+      "train_rows": 2440
+    },
+    {
+      "fold": 2,
+      "mean_q_test": 0.6009102065477469,
+      "model": "standardized_logistic_regression",
+      "test_rows": 610,
+      "test_unique_patients": 122,
+      "train_observable_rows": 1960,
+      "train_rows": 2440
+    },
+    {
+      "fold": 3,
+      "mean_q_test": 0.6525178921819108,
+      "model": "standardized_logistic_regression",
+      "test_rows": 610,
+      "test_unique_patients": 122,
+      "train_observable_rows": 1985,
+      "train_rows": 2440
+    },
+    {
+      "fold": 4,
+      "mean_q_test": 0.5759957914095841,
+      "model": "standardized_logistic_regression",
+      "test_rows": 610,
+      "test_unique_patients": 122,
+      "train_observable_rows": 1960,
+      "train_rows": 2440
+    },
+    {
+      "fold": 5,
+      "mean_q_test": 0.5959700441030525,
+      "model": "standardized_logistic_regression",
+      "test_rows": 610,
+      "test_unique_patients": 122,
+      "train_observable_rows": 1975,
+      "train_rows": 2440
+    }
+  ],
+  "governance": {
+    "bridge_refit": false,
+    "confirmatory_claim_permitted": false,
+    "external_outcomes_read": false,
+    "official_test_outcomes_read": false,
+    "patient_level_outputs_tracked": false,
+    "raw_v1r_prediction_modified": false,
+    "router_trained_on_confirmation": false,
+    "selective_patient_deletion": false
+  },
+  "input_prediction_artifact": "results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv",
+  "input_prediction_artifact_sha256": "E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0",
+  "interpretation": "Development-only router exploration. Any held-out OOF gain is hypothesis-generating and does not validate a router externally or establish deployment readiness.",
+  "ipcw": "censoring Kaplan-Meier estimated within each router training fold; test rows never used to fit censoring weights",
+  "n_rows": 3050,
+  "patient_cluster_bootstrap": {
+    "method": "native_id_cluster_bootstrap",
+    "replicates": 2000,
+    "seed": 20260827,
+    "summary": [
+      {
+        "delta_brier_router_minus_v0_ci95_lower": -0.0015878311246193383,
+        "delta_brier_router_minus_v0_ci95_upper": 0.0009228168807309849,
+        "delta_brier_router_minus_v1r_ci95_lower": -0.00269339294326642,
+        "delta_brier_router_minus_v1r_ci95_upper": 0.0030243281136995114,
+        "replicates": 2000,
+        "threshold": 0.4
+      },
+      {
+        "delta_brier_router_minus_v0_ci95_lower": -0.0015883818298850036,
+        "delta_brier_router_minus_v0_ci95_upper": 0.0009216869453398718,
+        "delta_brier_router_minus_v1r_ci95_lower": -0.0026950575052705054,
+        "delta_brier_router_minus_v1r_ci95_upper": 0.003026655748738174,
+        "replicates": 2000,
+        "threshold": 0.5
+      },
+      {
+        "delta_brier_router_minus_v0_ci95_lower": -0.0015821014437693913,
+        "delta_brier_router_minus_v0_ci95_upper": 0.000927097342078649,
+        "delta_brier_router_minus_v1r_ci95_lower": -0.0026962030722773077,
+        "delta_brier_router_minus_v1r_ci95_upper": 0.0030221874864899403,
+        "replicates": 2000,
+        "threshold": 0.6
+      }
+    ]
+  },
+  "policies": [
+    {
+      "delta_brier_router_minus_v0": -0.0003489366714526515,
+      "delta_brier_router_minus_v1r": 5.857254136334977e-05,
+      "evaluable_rows": 2460,
+      "fallback_rate": 0.38786885245901637,
+      "full_coverage": true,
+      "fuse_rate": 0.6121311475409836,
+      "ipcw_brier_router": 0.12461924861838737,
+      "ipcw_brier_v0_reference": 0.12496818528984002,
+      "ipcw_brier_v1r_reference": 0.12456067607702402,
+      "n_rows": 3050,
+      "policy": "FUSE_if_q_ge_0.40_else_FALLBACK",
+      "selection_rule_frozen_before_readout": true,
+      "threshold": 0.4,
+      "unique_patients": 610
+    },
+    {
+      "delta_brier_router_minus_v0": -0.0003496559684388889,
+      "delta_brier_router_minus_v1r": 5.785324437711237e-05,
+      "evaluable_rows": 2460,
+      "fallback_rate": 0.4186885245901639,
+      "full_coverage": true,
+      "fuse_rate": 0.5813114754098361,
+      "ipcw_brier_router": 0.12461852932140113,
+      "ipcw_brier_v0_reference": 0.12496818528984002,
+      "ipcw_brier_v1r_reference": 0.12456067607702402,
+      "n_rows": 3050,
+      "policy": "FUSE_if_q_ge_0.50_else_FALLBACK",
+      "selection_rule_frozen_before_readout": true,
+      "threshold": 0.5,
+      "unique_patients": 610
+    },
+    {
+      "delta_brier_router_minus_v0": -0.0003458845182251896,
+      "delta_brier_router_minus_v1r": 6.162469459081166e-05,
+      "evaluable_rows": 2460,
+      "fallback_rate": 0.4377049180327869,
+      "full_coverage": true,
+      "fuse_rate": 0.5622950819672131,
+      "ipcw_brier_router": 0.12462230077161483,
+      "ipcw_brier_v0_reference": 0.12496818528984002,
+      "ipcw_brier_v1r_reference": 0.12456067607702402,
+      "n_rows": 3050,
+      "policy": "FUSE_if_q_ge_0.60_else_FALLBACK",
+      "selection_rule_frozen_before_readout": true,
+      "threshold": 0.6,
+      "unique_patients": 610
+    }
+  ],
+  "purpose": "Development-only exploration of patient-level FUSE/FALLBACK selection between raw V1R and V0.",
+  "repeated_oof_rows_per_patient": 5,
+  "router_label": "1 if V1R individual squared error is lower than V0 on an IPCW-observable development row",
+  "schema_version": "0.1",
+  "stage": "U6_CROSS_FITTED_VALUE_ROUTER_EXPLORATION",
+  "unique_patients": 610
+}

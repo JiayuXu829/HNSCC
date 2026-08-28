@@ -1,0 +1,79 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R9_FROZEN_BRIDGE_PANEL_POST_UNSEAL_CHARACTERIZATION
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-27'
+analysis_label: post_unseal_exploratory_panel_characterization
+backbone: V1R
+purpose: >-
+  Characterize, without any outcome-dependent selection or refitting, the already frozen U5R4
+  conservative bridge and U5R7 beta=0.90 log-loss bridge on the same HANCOCK OOD TEST cohort.
+  This stage is an exhaustive secondary characterization of pre-existing candidates, not a new
+  pristine confirmation and not a promotion decision.
+cohort:
+  source: HANCOCK_OOD_TEST
+  n_expected: 152
+  outcomes_status_at_protocol_freeze: already_unsealed_by_prior_U2_V1R_confirmation_evaluation
+  role: locked_secondary_post_unseal_exploratory_characterization
+candidate_panel:
+  - id: raw_v1r
+    source: U2_V1R_locked_confirmation
+    formula: p_raw = p_V1R_raw
+  - id: U5R4_bounded_global_full_g0.25
+    source: U5R4_V1R_bounded_global_bridge_candidate/selected_bridge_parameters.csv
+    parameter_source_sha256: 1C969469C2E1885C310DC8875EEB1EF357ACC0DFEDB510A6599899C4DC0D4B0FA
+    formula: >-
+      x_bridge = mean_j[0.25*alpha_brier,j] + mean_j[0.75+0.25*beta_brier,j]*x_raw;
+      p_bridge = sigmoid(x_bridge)
+    parameter_aggregation: arithmetic_mean_over_all_25_development_fold_records
+    frozen_effective_alpha: -0.02863319431659357
+    frozen_effective_slope: 0.978121925546798
+  - id: U5R7_beta_0.900_logloss
+    source: U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_parameters.csv
+    parameter_source_sha256: EDFD4427A35754EF61AC82017EA52859E6BAB53AB8B1635EE76D2BBD710993C5
+    formula: p_bridge = sigmoid(mean_j[alpha_logloss,j] + 0.90*x_raw)
+    parameter_aggregation: arithmetic_mean_over_all_25_development_fold_records
+    frozen_effective_alpha: -0.14503379856995471
+    frozen_effective_slope: 0.9
+freeze_rules:
+  use_confirmation_outcomes_for_selection: false
+  refit_or_tune_any_candidate_on_confirmation: false
+  select_a_winner_after_reading_confirmation_metrics: false
+  pattern_specific_tuning: false
+  router_training: false
+  raw_v1r_prediction_modified: false
+  patient_removal: false
+estimands:
+  primary: candidate_minus_raw_ipcw_brier_24m
+  secondary:
+    - CITL
+    - calibration_slope
+    - supported_pattern_brier_regret
+    - exact_ranking_preservation
+    - full_coverage_preservation
+    - event_stratified_patient_bootstrap_intervals
+safety_boundaries:
+  global_delta_ipcw_brier_max: 0.0005
+  supported_pattern_regret_max: 0.005
+  require_citl_absolute_error_improvement: true
+  require_slope_absolute_error_improvement: true
+  require_exact_ranking: true
+  require_full_coverage: true
+interpretation_boundary: >-
+  Because outcomes were already unsealed before this protocol was frozen, all outputs are
+  post-unseal exploratory characterization. They cannot establish pristine external validation,
+  confirmed transportability, clinical utility, deployment readiness, or a selected production
+  bridge. Any future promotion requires a genuinely independent outcome-untouched cohort with
+  the bridge and estimands frozen before outcome access.
+uncertainty:
+  method: patient_level_stratified_bootstrap
+  replicates: 2000
+  seed: 20260827
+  stratification: event_status
+reporting:
+  tracked_outputs: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written
+  report_all_candidates: true
+  no_favourable_subset_reporting: true
+
+

@@ -31,7 +31,7 @@
 9. **Separate locked confirmation readout**
    - raw V1R only: n=152, events=40, Uno C +0.021664, Brier -0.005166, 100% coverage;
    - annotate as positive directional point-estimate evidence with bootstrap intervals crossing zero;
-   - bridge application to confirmation labelled pending a separately frozen protocol.
+   - bridge application to confirmation shown only as U5R8 secondary post-unseal validation, with failed calibration gates; raw V1R remains the primary confirmation readout.
 10. **Future modules**
    - confirmation bridge application, reliability router and clinical utility evaluation; label as planned/future.
 

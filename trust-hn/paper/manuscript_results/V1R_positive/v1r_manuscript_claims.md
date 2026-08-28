@@ -17,14 +17,14 @@
 10. U5R7 moved CITL from +0.011680 to -0.003796 and calibration slope from 0.825887 to 0.881552.
 11. The absolute CITL error improved by 0.007884 and the absolute slope error improved by 0.055665.
 12. Coverage remained 100%, ranking was preserved in all held-out folds, and worst supported-pattern Brier regret was +0.004176, below the +0.005 exploratory gate.
-13. U5R7 is a development-only calibration bridge result; it is not a confirmation result and has not been evaluated in the confirmation cohort.
+13. U5R7 is a development-only calibration bridge result; it is not a confirmed external-calibration result. A later U5R8 locked secondary post-unseal validation preserved ranking and coverage but failed the Brier, CITL and calibration-slope safety gates, so the bridge remains development-only.
 
 ## Locked confirmation claims
 
 14. In 152 outcome-untouched confirmation patients with 40 events, raw V1R retained 100% coverage and showed favourable point estimates for Uno C, IPCW Brier, time-dependent AUC, Harrell C and calibration summaries.
 15. Confirmation Uno C was 0.804242 versus 0.782579 for the anchor; confirmation IPCW Brier was 0.131246 versus 0.136412.
 16. Patient-level stratified bootstrap intervals crossed zero for the principal confirmation deltas; the appropriate wording is positive directional confirmation signal, not definitive superiority.
-17. U5R7 was not applied to confirmation and therefore contributes no confirmation claim.
+17. U5R7 was not part of the primary raw-V1R confirmation estimand. U5R8 evaluated the frozen bridge only as a secondary post-unseal validation and found no support for promoting it to confirmed calibration.
 
 ## Unified interpretation
 

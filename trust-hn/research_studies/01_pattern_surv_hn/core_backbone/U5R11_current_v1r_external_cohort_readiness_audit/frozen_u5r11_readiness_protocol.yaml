@@ -1,0 +1,76 @@
+schema_version: '0.1'
+stage: U5R11_CURRENT_V1R_EXTERNAL_COHORT_READINESS_AUDIT
+status: FROZEN_AND_COMPLETED
+frozen_on: '2026-08-27'
+analysis_label: pre_outcome_access_feasibility_audit
+purpose: Determine whether an already available cohort can support formal current-V1R
+  fixed-bridge confirmation.
+current_v1r_input_contract:
+  anchor:
+  - age_at_initial_diagnosis
+  - sex
+  - smoking_status
+  - primary_tumor_site
+  - grading
+  - hpv_association_p16
+  - resection_status
+  - pT_stage
+  - pN_stage
+  optional_modalities:
+  - blood
+  - ICD
+  - TMA_cell_density
+  prediction_definition: PATTERN-Surv-HN V1R residual-shrinkage ensemble
+  required_prediction_freeze_before_outcome_access: true
+candidate_cohorts:
+- cohort: HANCOCK_OOD_TEST
+  source_role: current-V1R compatible multimodal cohort
+  contract_compatible: true
+  outcome_untouched_for_new_confirmation: false
+  eligible_for_formal_confirmation: false
+  reason: The cohort was used in the prior locked raw-V1R confirmation and later post-unseal
+    bridge characterizations.
+- cohort: RADCURE
+  source_role: clinical plus radiomics source
+  contract_compatible: false
+  outcome_untouched_for_new_confirmation: false
+  eligible_for_formal_confirmation: false
+  reason: Available artifacts do not provide the frozen V1R blood/ICD/TMA input contract;
+    outcomes were already used in historical Phase 6.
+- cohort: GSE65858
+  source_role: transcriptomic external cohort with legacy B6 prediction
+  contract_compatible: false
+  outcome_untouched_for_new_confirmation: false
+  eligible_for_formal_confirmation: false
+  reason: Available prediction is legacy Phase 6 B6 risk rather than current V1R,
+    and outcomes were historically consumed.
+- cohort: GSE41613
+  source_role: transcriptomic sensitivity cohort with legacy B6 prediction
+  contract_compatible: false
+  outcome_untouched_for_new_confirmation: false
+  eligible_for_formal_confirmation: false
+  reason: Available prediction is legacy Phase 6 B6 risk rather than current V1R,
+    and outcomes were historically consumed.
+- cohort: TCGA-HNSC
+  source_role: primary-tumor expression plus public clinical metadata
+  contract_compatible: false
+  outcome_untouched_for_new_confirmation: not_certified
+  eligible_for_formal_confirmation: false
+  reason: Available artifacts provide expression and clinical metadata, not the frozen
+    postoperative V1R multimodal contract; no current-V1R prediction artifact exists.
+governance:
+  outcomes_read: false
+  patient_rows_read: false
+  model_trained: false
+  bridge_refit: false
+  router_trained: false
+  cohort_selected_after_outcome_readout: false
+  existing_phase6_artifacts_modified: false
+  formal_confirmation_claim_permitted: false
+decision:
+  compatible_candidates: 1
+  certified_outcome_untouched_compatible_candidates: 0
+  formal_confirmation_can_run_from_current_local_artifacts: false
+  next_required_action: Acquire or designate a genuinely new cohort with the frozen
+    V1R anchor/optional-modality contract, then seal current-V1R predictions before
+    outcome access.

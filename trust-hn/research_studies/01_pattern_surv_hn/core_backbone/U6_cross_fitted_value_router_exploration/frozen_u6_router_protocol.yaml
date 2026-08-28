@@ -1,0 +1,33 @@
+schema_version: '0.1'
+stage: U6_CROSS_FITTED_VALUE_ROUTER_EXPLORATION
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-27'
+analysis_label: development_only_exploration
+actions:
+  FUSE: use raw V1R risk
+  FALLBACK: use V0 risk
+label: IPCW-observable individual squared-error comparison; 1 means V1R lower loss
+features:
+- v0_risk_24m
+- v1_risk_24m
+- risk_delta
+- abs_risk_delta
+- active_token_count
+- acquisition_pattern
+- usable_pattern
+cross_fitting:
+  split: StratifiedGroupKFold
+  groups: native_id
+  folds: 5
+  seed: 20260827
+ipcw_training_rule: fit censoring KM within training fold only
+thresholds:
+- 0.4
+- 0.5
+- 0.6
+prohibited:
+- confirmation/external outcome access
+- bridge refit
+- patient deletion
+- winner selection after held-out readout
+- deployment claim

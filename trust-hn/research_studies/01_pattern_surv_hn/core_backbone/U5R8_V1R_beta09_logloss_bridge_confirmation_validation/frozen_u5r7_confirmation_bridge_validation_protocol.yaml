@@ -1,0 +1,87 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U5R8_V1R_BETA09_LOGLOSS_BRIDGE_LOCKED_POST_UNSEAL_VALIDATION
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-08-27'
+analysis_label: locked_secondary_post_unseal_validation
+backbone: V1R
+bridge_source: U5R7_V1R_beta09_logloss_bridge_candidate
+cohort:
+  source: HANCOCK_OOD_TEST
+  role: locked_secondary_validation_of_frozen_development_bridge
+  n_expected: 152
+  outcomes_status_at_bridge_freeze: already_unsealed_by_prior_U2_V1R_confirmation_evaluation
+  primary_confirmation_status: not_primary_confirmation
+purpose: >-
+  Evaluate, without any outcome-dependent parameter selection, whether the previously frozen
+  U5R7 development-only rank-preserving bridge retains its calibration and Brier safety properties
+  when applied to the already sealed V1R predictions in the HANCOCK OOD test cohort.
+interpretation_boundary: >-
+  This is a locked secondary post-unseal validation, not a new pristine outcome-untouched
+  confirmation and not a replacement for the preregistered raw V0 versus V1R readout.
+formula:
+  x_raw: logit(p_V1R_raw)
+  x_bridge: alpha_dev_mean + 0.90*x_raw
+  p_bridge: sigmoid(x_bridge)
+  alpha_rule: arithmetic_mean_of_all_25_U5R7_development_fold_specific_logloss_intercepts
+  alpha_dev_mean: -0.14503379856995471
+  parameter_source: U5R7 selected_bridge_parameters.csv
+  parameter_source_sha256: EDFD4427A35754EF61AC82017EA52859E6BAB53AB8B1635EE76D2BBD710993C5
+  beta: 0.90
+  intercept_objective: weighted_log_loss_on_development_only
+properties:
+  global_only: true
+  pattern_specific_adjustments: false
+  strictly_monotone: true
+  ranking_preservation: exact_for_finite_distinct_or_tied_scores
+  coverage_change: false
+  fallback_change: false
+freeze_rules:
+  use_confirmation_outcomes_for_tuning: false
+  refit_alpha_on_confirmation: false
+  select_beta_on_confirmation: false
+  pattern_specific_tuning: false
+  router_training: false
+  confirmation_refit: false
+  patient_removal: false
+  raw_v1r_prediction_unchanged: true
+estimands:
+  primary: delta_ipcw_brier_24m_bridge_minus_raw_v1r
+  secondary:
+    - citl_raw_and_bridge
+    - calibration_slope_raw_and_bridge
+    - ranking_preservation
+    - coverage_preservation
+    - supported_pattern_brier_regret
+    - patient_level_stratified_bootstrap_intervals
+safety_boundaries:
+  global_delta_ipcw_brier_max: 0.0005
+  supported_pattern_regret_max: 0.005
+  require_citl_absolute_error_improvement: true
+  require_slope_absolute_error_improvement: true
+  require_ranking_preservation: true
+  require_full_coverage: true
+uncertainty:
+  method: patient_level_stratified_bootstrap
+  replicates: 2000
+  seed: 20260827
+  stratification: event_status
+reporting:
+  tracked_outputs: aggregate_only
+  patient_level_outputs: git_ignored_or_not_written
+  report_all_primary_and_safety_results: true
+  no_favourable_subset_reporting: true
+governance:
+  u2_raw_confirmation_already_completed: true
+  u5r7_development_parameters_frozen_before_this_stage: true
+  bridge_protocol_frozen_before_this_stage_execution: true
+  confirmation_outcomes_used_for_bridge_parameter_selection: false
+  clinical_utility_claim_permitted: false
+  deployment_readiness_claim_permitted: false
+required_artifacts:
+  - frozen_u5r7_confirmation_bridge_validation_protocol.yaml
+  - u5r7_confirmation_bridge_aggregate_results.json
+  - u5r7_confirmation_bridge_pattern_results.csv
+  - u5r7_confirmation_bridge_bootstrap_results.csv
+  - u5r7_confirmation_bridge_audit.md
+  - u5r7_confirmation_bridge_hashes.json

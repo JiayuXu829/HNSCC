@@ -1,6 +1,6 @@
-# PATTERN-Surv-HN Supplementary Information: V1R development, U5R7 calibration bridge and locked confirmation
+# PATTERN-Surv-HN Supplementary Information: V1R development, U5R7 calibration bridge, U5R8 secondary validation and locked confirmation
 
-> Updated 26 August 2026. This supplement documents the aggregate results carried into the manuscript from the V1R development, U5R7 development-only bridge and locked confirmation stages. Patient-level predictions remain Git-ignored. U5R7 is exploratory development evidence and is not presented as confirmed external calibration or definitive superiority.
+> Updated 27 August 2026. This supplement documents the aggregate results carried into the manuscript from the V1R development, U5R7 development-only bridge, U5R8 locked secondary validation and locked raw-V1R confirmation stages. Patient-level predictions remain Git-ignored. U5R7 is exploratory development evidence; U5R8 did not pass its bridge safety gates and is not presented as confirmed external calibration or definitive superiority.
 
 ## Supplementary Methods S1: V1R cross-fitting
 
@@ -69,7 +69,7 @@ The bridge moved CITL closer to zero and calibration slope closer to one. Its sm
 | Calibration slope | 1.945126 | 1.501223 | -0.443903 | closer to 1 |
 | Coverage | 100% | 100% | 0 | preserved |
 
-The confirmation cohort contained 152 patients and 40 events. Patient-level stratified bootstrap used 2,000 replicates with seed 20260825. The 95% interval for delta Uno C was -0.025965 to +0.070816 and for delta IPCW Brier was -0.012843 to +0.002171; both crossed zero. The confirmation table is raw V1R only; U5R7 was not applied.
+The confirmation cohort contained 152 patients and 40 events. Patient-level stratified bootstrap used 2,000 replicates with seed 20260825. The 95% interval for delta Uno C was -0.025965 to +0.070816 and for delta IPCW Brier was -0.012843 to +0.002171; both crossed zero. The primary confirmation table is raw V1R only. In the subsequent U5R8 locked secondary post-unseal validation, the frozen U5R7 bridge changed IPCW Brier24 from 0.134697 to 0.135782 (delta +0.001085), CITL from +0.156751 to +0.160944, and calibration slope from 1.510335 to 1.678150, while preserving coverage and ranking. The global Brier, CITL and slope gates therefore failed; this readout is not a confirmed bridge result.
 
 ## Supplementary Methods S4: Estimands and safety
 
@@ -104,4 +104,4 @@ The formal V1R development patient-level OOF SHA256 was `E43BB6C0D8E2C7F9C8B22A9
 
 ## Supplementary Methods S7: Framework figure specification
 
-The main framework figure should contain: (a) clinical anchor; (b) usable blood, ICD and TMA set tokens; (c) permutation-invariant residual encoder; (d) inner-CV-selected shrinkage; (e) raw V1R fused score; (f) exact clinical fallback for an empty set; (g) completed U5R7 global monotone logit bridge labelled development-only; (h) locked raw-V1R confirmation readout; and (i) a bridge-to-confirmation path labelled pending a separately frozen protocol. Router and clinical-utility modules remain future work.
+The main framework figure should contain: (a) clinical anchor; (b) usable blood, ICD and TMA set tokens; (c) permutation-invariant residual encoder; (d) inner-CV-selected shrinkage; (e) raw V1R fused score; (f) exact clinical fallback for an empty set; (g) completed U5R7 global monotone logit bridge labelled development-only; (h) locked raw-V1R confirmation readout; and (i) a bridge-to-confirmation path labelled secondary post-unseal validation with failed calibration gates, while keeping raw V1R as the primary confirmation readout. Router and clinical-utility modules remain future work.

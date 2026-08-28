@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U5R7_V1R_BETA09_LOGLOSS_BRIDGE_PAPER_INTEGRATION_COMPLETED
-current_step: U5R7 fixed beta 0.90 log-loss bridge development-only result integrated into manuscript and appendix candidates; raw V1R retained for confirmation
-next_allowed_step: separately freeze and approve any confirmation bridge application; no confirmation bridge result yet
+status: U5R10_FIXED_BRIDGE_EXTERNAL_SECONDARY_CHARACTERIZATION_COMPLETED
+current_step: U5R10 fixed bridge applied without refit to both available GEO cohorts as post-unseal characterization on legacy Phase 6 B6 risk; positive direction reproduced, current V1R confirmation not established
+next_allowed_step: freeze current V1R prediction and bridge protocol before outcome access in a genuinely independent outcome-untouched cohort; do not promote U5R10 to current V1R confirmation
 study_governance:
   analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
@@ -16,7 +16,7 @@ study_governance:
   patient_level_outputs_git_ignored: true
   tracked_outputs_aggregate_only: true
   paper_positive_results_updated: true
-  confirmation_bridge_evaluation: not_performed
+  confirmation_bridge_evaluation: completed_locked_secondary_post_unseal_validation_failed_safety_gate
 approvals:
   U2_V1R_CONFIRMATION_PROTOCOL_FREEZE:
     status: completed
@@ -559,3 +559,152 @@ U5R7_V1R_BETA09_LOGLOSS_outputs:
   router_training: false
   clinical_utility_analyzed: false
   paper_positive_results_directory_updated: false
+
+U5R8_V1R_BETA09_LOGLOSS_BRIDGE_LOCKED_SECONDARY_VALIDATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/frozen_u5r7_confirmation_bridge_validation_protocol.yaml
+  frozen_protocol_sha256: 14C8EF983AB3AB11D961C7D5C5B3F19F90AC57B7B43A18D317AF900F296114E1
+  runner: trust-hn/scripts/run_v1r_beta09_logloss_bridge_confirmation_validation.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_aggregate_results.json
+  aggregate_results_sha256: B00B8EC5229171C9F5E85654002036F79ABEE5B505256E8795AEAF5C70D2D16B
+  pattern_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_pattern_results.csv
+  pattern_results_sha256: 06E602101A190797184D0D2F8547FBB348C4F60446F299A867EE62F76FB79205
+  bootstrap_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_bootstrap_results.csv
+  bootstrap_results_sha256: 32BE502FA9645FDD3618F4CFC6A52090E646EB37338DCCE9E87D2066FA9EB14E
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_hashes.json
+  candidate: beta_0.900_logloss
+  beta: 0.9
+  alpha_dev_mean: -0.14503379856995471
+  cohort: HANCOCK_OOD_TEST
+  n: 152
+  events: 40
+  evaluable_n: 120
+  evaluable_events: 26
+  raw_ipcw_brier: 0.13469741883567712
+  bridge_ipcw_brier: 0.13578194779242755
+  delta_ipcw_brier: 0.0010845289567504302
+  raw_citl: 0.15675054842392067
+  bridge_citl: 0.16094441769005133
+  abs_citl_error_change: 0.004193869266130662
+  raw_calibration_slope: 1.510335253002558
+  bridge_calibration_slope: 1.6781502918245472
+  abs_slope_error_change: 0.16781503882198923
+  worst_supported_pattern_brier_regret: 0.0010845289567504302
+  coverage_preserved: true
+  ranking_preserved: true
+  global_brier_gate: failed
+  citl_gate: failed
+  slope_gate: failed
+  supported_pattern_gate: passed
+  locked_secondary_validation_pass: false
+  outcomes_were_already_unsealed_before_bridge_protocol_freeze: true
+  confirmation_outcomes_used_for_bridge_parameter_selection: false
+  raw_v1r_retained: true
+  paper_positive_results_directory_updated: false
+  clinical_utility_analyzed: false
+  deployment_readiness_claimed: false
+U5R9_FROZEN_BRIDGE_PANEL_POST_UNSEAL_CHARACTERIZATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/frozen_u5r9_bridge_panel_protocol.yaml
+  runner: trust-hn/scripts/run_v1r_frozen_bridge_panel_post_unseal_characterization.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_aggregate_results.json
+  candidate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_candidate_results.csv
+  pattern_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_pattern_results.csv
+  bootstrap_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_bootstrap_results.csv
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R9_frozen_bridge_panel_post_unseal_characterization/u5r9_bridge_panel_hashes.json
+  cohort: HANCOCK_OOD_TEST
+  n: 152
+  events: 40
+  outcomes_were_already_unsealed_before_protocol_freeze: true
+  interpretation: locked_secondary_post_unseal_exploratory_characterization_only
+  raw_v1r_ipcw_brier24: 0.13469741883567712
+  u5r4_ipcw_brier24: 0.1348675614197315
+  u5r4_delta_ipcw_brier: 0.00017014258405437244
+  u5r4_citl: 0.15478864556062463
+  u5r4_calibration_slope: 1.544117585203624
+  u5r4_supported_pattern_regret: 0.00017014258405437244
+  u5r4_all_predeclared_gates_pass: false
+  u5r7_ipcw_brier24: 0.13578194779242755
+  u5r7_delta_ipcw_brier: 0.0010845289567504302
+  u5r7_citl: 0.16094441769005133
+  u5r7_calibration_slope: 1.6781502918245472
+  u5r7_supported_pattern_regret: 0.0010845289567504302
+  u5r7_all_predeclared_gates_pass: false
+  coverage_preserved: true
+  exact_ranking_preserved: true
+  confirmation_claim_permitted: false
+  clinical_utility_analyzed: false
+  deployment_readiness_claimed: false
+
+U5R10_FIXED_BRIDGE_EXTERNAL_SECONDARY_CHARACTERIZATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/frozen_u5r10_fixed_bridge_external_protocol.yaml
+  runner: trust-hn/scripts/run_v1r_fixed_bridge_external_secondary_characterization.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/u5r10_external_aggregate_results.json
+  cohort_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/u5r10_external_cohort_results.csv
+  bootstrap_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/u5r10_external_bootstrap_results.csv
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/u5r10_external_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R10_fixed_bridge_external_secondary_characterization/u5r10_external_hashes.json
+  bridge_source: U5R7_V1R_beta09_logloss_bridge_candidate
+  alpha_dev_mean: -0.14503379856995471
+  beta: 0.9
+  cohorts: [GSE65858, GSE41613]
+  base_prediction_definition: legacy_phase6_B6_risk
+  gse65858_n: 244
+  gse65858_events: 78
+  gse65858_delta_ipcw_brier: -0.015697274704338904
+  gse65858_abs_citl_error_change: -0.15031840642856675
+  gse65858_abs_slope_error_change: -0.06763385023306356
+  gse41613_n: 97
+  gse41613_events: 51
+  gse41613_delta_ipcw_brier: -0.0063574465360351495
+  gse41613_abs_citl_error_change: -0.11450261779257787
+  gse41613_abs_slope_error_change: -0.08790768451304198
+  ranking_preserved_both: true
+  coverage_preserved_both: true
+  positive_direction_reproduced_on_legacy_b6: true
+  current_v1r_external_confirmation: false
+  outcomes_already_consumed_historically: true
+  router_training: false
+  deployment_claimed: false
+
+
+
+U5R11_CURRENT_V1R_EXTERNAL_COHORT_READINESS_AUDIT_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/frozen_u5r11_readiness_protocol.yaml
+  runner: trust-hn/scripts/run_u5r11_current_v1r_external_cohort_readiness_audit.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_aggregate_results.json
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_hashes.json
+  candidate_cohorts: 5
+  current_v1r_compatible_cohorts: 1
+  certified_outcome_untouched_compatible_cohorts: 0
+  formal_confirmation_executable: false
+  outcomes_read: false
+  patient_rows_read: false
+  interpretation: no_local_cohort_can_support_formal_current_v1r_bridge_confirmation
+
+
+U6_CROSS_FITTED_VALUE_ROUTER_EXPLORATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/frozen_u6_router_protocol.yaml
+  runner: trust-hn/scripts/run_u6_cross_fitted_value_router_exploration.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_aggregate_results.json
+  policy_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_policy_results.csv
+  bootstrap_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_bootstrap_results.csv
+  fold_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_fold_results.csv
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6_cross_fitted_value_router_exploration/u6_router_hashes.json
+  development_rows: 3050
+  unique_patients: 610
+  raw_v1r_ipcw_brier: 0.12456067607702402
+  v0_ipcw_brier: 0.12496818528984002
+  router_delta_brier_vs_v0_range: [-0.0003496559684388889, -0.0003458845182251896]
+  router_coverage: 1.0
+  bootstrap_intervals_cross_zero: true
+  confirmation_claim_permitted: false
+  deployment_readiness_claimed: false
+  interpretation: development_only_hypothesis_generating_router_signal

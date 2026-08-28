@@ -1,0 +1,54 @@
+{
+  "candidate_count": 5,
+  "cohort_results": [
+    {
+      "cohort": "HANCOCK_OOD_TEST",
+      "contract_compatible": true,
+      "eligible_for_formal_confirmation": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "reason": "The cohort was used in the prior locked raw-V1R confirmation and later post-unseal bridge characterizations.",
+      "source_role": "current-V1R compatible multimodal cohort"
+    },
+    {
+      "cohort": "RADCURE",
+      "contract_compatible": false,
+      "eligible_for_formal_confirmation": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "reason": "Available artifacts do not provide the frozen V1R blood/ICD/TMA input contract; outcomes were already used in historical Phase 6.",
+      "source_role": "clinical plus radiomics source"
+    },
+    {
+      "cohort": "GSE65858",
+      "contract_compatible": false,
+      "eligible_for_formal_confirmation": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "reason": "Available prediction is legacy Phase 6 B6 risk rather than current V1R, and outcomes were historically consumed.",
+      "source_role": "transcriptomic external cohort with legacy B6 prediction"
+    },
+    {
+      "cohort": "GSE41613",
+      "contract_compatible": false,
+      "eligible_for_formal_confirmation": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "reason": "Available prediction is legacy Phase 6 B6 risk rather than current V1R, and outcomes were historically consumed.",
+      "source_role": "transcriptomic sensitivity cohort with legacy B6 prediction"
+    },
+    {
+      "cohort": "TCGA-HNSC",
+      "contract_compatible": false,
+      "eligible_for_formal_confirmation": false,
+      "outcome_untouched_for_new_confirmation": "not_certified",
+      "reason": "Available artifacts provide expression and clinical metadata, not the frozen postoperative V1R multimodal contract; no current-V1R prediction artifact exists.",
+      "source_role": "primary-tumor expression plus public clinical metadata"
+    }
+  ],
+  "compatible_candidate_count": 1,
+  "evaluated_on": "2026-08-27",
+  "formal_confirmation_executable": false,
+  "interpretation": "No locally available cohort simultaneously satisfies current V1R input compatibility and certified outcome-untouched status. U5R10 remains legacy-B6 transport characterization; a new cohort is required for formal current-V1R bridge confirmation.",
+  "outcomes_read": false,
+  "patient_rows_read": false,
+  "schema_version": "0.1",
+  "stage": "U5R11_CURRENT_V1R_EXTERNAL_COHORT_READINESS_AUDIT",
+  "untouched_compatible_candidate_count": 0
+}

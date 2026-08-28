@@ -1,0 +1,13 @@
+{
+  "data/manifests/gse41613/data_manifest.yaml": "DCE51FC6F7A69CECD1CCA7726C9296E6391737C4B9890BEC6BAA86B797A29344",
+  "data/manifests/gse65858/data_manifest.yaml": "7107D854608504DA1A0E74A11AB1C6A4E57A49D279EA8C0C9C78433BE4F0596F",
+  "data/manifests/hancock/data_manifest.yaml": "DDCEF3ECFF48FE5409EBA47BD9621FFB2D5DA057729EE57419B3923E3AF4DD52",
+  "data/manifests/radcure/data_manifest.yaml": "0F27AF317CA4771717A45D058677D2840F0C63878CAD4FDF2650AE23522C44D7",
+  "data/manifests/source_registry.yaml": "86FEADD3954B348343F16560C029B0026B91A66454C7F7F8A99E9FCAED39682D",
+  "data/manifests/tcga_hnsc/data_manifest.yaml": "F4186E44096CC77A9022D33F5713E9D4C491B394EDCE932C2131E054C293B8A1",
+  "research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/frozen_v1r_rescue_spec.yaml": "7545E88D2F2DEF3D06CDD546734298F66B524C47538179D9F7E4F6CC1106D0F5",
+  "research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/frozen_u5r11_readiness_protocol.yaml": "7B6E579F6EA4FD00831244A57152DD27CDB703DB0DBD2A90AFC459F1BB94EF13",
+  "research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_aggregate_results.json": "F7B29FD8752C67B1706001F9C7731223AFB50DC010D73815A7114207E5EE505F",
+  "research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_audit.md": "9841EAD3A26FBDF4C4F55AB0160E1C8B5EE014FD14522DBE15A31E8797BE496F",
+  "research_studies/01_pattern_surv_hn/registry.yaml": "813399C7F712386AD4EFE35ED569C5AF98A4F1D9D8AB821CD0488ADCCBC5A5F2"
+}
