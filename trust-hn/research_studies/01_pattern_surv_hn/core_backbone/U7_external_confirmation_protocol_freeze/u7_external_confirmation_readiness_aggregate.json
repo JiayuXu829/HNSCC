@@ -1,0 +1,50 @@
+{
+  "stage": "U7_CURRENT_V1R_EXTERNAL_CONFIRMATION_PROTOCOL_FREEZE",
+  "evaluated_on": "2026-09-02",
+  "local_candidate_cohorts": [
+    {
+      "cohort": "HANCOCK OOD",
+      "current_v1r_contract": true,
+      "outcome_untouched_for_new_confirmation": false,
+      "decision": "ineligible_already_consumed",
+      "note": "Used for raw V1R confirmation and post-unseal bridge characterization."
+    },
+    {
+      "cohort": "RADCURE",
+      "current_v1r_contract": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "decision": "ineligible_contract_mismatch",
+      "note": "Available artifacts lack the frozen blood/ICD/TMA current-V1R contract."
+    },
+    {
+      "cohort": "GSE65858",
+      "current_v1r_contract": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "decision": "ineligible_legacy_prediction_definition",
+      "note": "Legacy B6 risk characterization; historical outcomes already consumed."
+    },
+    {
+      "cohort": "GSE41613",
+      "current_v1r_contract": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "decision": "ineligible_legacy_prediction_definition",
+      "note": "Legacy B6 risk characterization; historical outcomes already consumed."
+    },
+    {
+      "cohort": "TCGA-HNSC",
+      "current_v1r_contract": false,
+      "outcome_untouched_for_new_confirmation": false,
+      "decision": "ineligible_no_current_v1r_prediction_contract",
+      "note": "Expression/clinical metadata without current-V1R-compatible prediction artifact."
+    }
+  ],
+  "candidate_cohorts": 5,
+  "current_v1r_compatible_cohorts": 1,
+  "new_outcome_untouched_compatible_cohorts": 0,
+  "formal_external_evaluation_executed": false,
+  "prediction_generation_executed": false,
+  "outcomes_read": false,
+  "patient_rows_read": false,
+  "decision": "protocol_frozen_pending_new_cohort",
+  "paper_narrative_position": "raw V1R directional confirmation is the last completed efficacy step; bridge portability and adaptive routing remain unconfirmed extensions"
+}

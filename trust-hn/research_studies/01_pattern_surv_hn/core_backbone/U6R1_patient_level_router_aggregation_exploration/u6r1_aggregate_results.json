@@ -1,0 +1,182 @@
+{
+  "baseline": {
+    "v0_brier": 0.12392674141558381,
+    "v1r_brier": 0.12276458774095544,
+    "v1r_minus_v0": -0.0011621536746283662
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20260828,
+    "summary": [
+      {
+        "delta_vs_v0_ci95_lower": 0.0,
+        "delta_vs_v0_ci95_upper": 0.0,
+        "delta_vs_v1r_ci95_lower": -0.001853897721318464,
+        "delta_vs_v1r_ci95_upper": 0.004220592799416572,
+        "spec": "V0_reference",
+        "threshold": null
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.004220592799416574,
+        "delta_vs_v0_ci95_upper": 0.0018538977213184633,
+        "delta_vs_v1r_ci95_lower": 0.0,
+        "delta_vs_v1r_ci95_upper": 0.0,
+        "spec": "raw_V1R_reference",
+        "threshold": null
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.0015520922173096583,
+        "delta_vs_v0_ci95_upper": 0.0008665185313388174,
+        "delta_vs_v1r_ci95_lower": -0.002002510738687388,
+        "delta_vs_v1r_ci95_upper": 0.003491438304930325,
+        "spec": "patient_aggregated_core",
+        "threshold": 0.4
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.001572404118599859,
+        "delta_vs_v0_ci95_upper": 0.0008255230993172184,
+        "delta_vs_v1r_ci95_lower": -0.002074008050051763,
+        "delta_vs_v1r_ci95_upper": 0.0034912270690424635,
+        "spec": "patient_aggregated_core",
+        "threshold": 0.5
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.0014750307685216257,
+        "delta_vs_v0_ci95_upper": 0.0008969423940365781,
+        "delta_vs_v1r_ci95_lower": -0.001952641697933484,
+        "delta_vs_v1r_ci95_upper": 0.0035576293288259826,
+        "spec": "patient_aggregated_core",
+        "threshold": 0.6
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.0014901917490643683,
+        "delta_vs_v0_ci95_upper": 0.0009939300274263466,
+        "delta_vs_v1r_ci95_lower": -0.0018676030440493833,
+        "delta_vs_v1r_ci95_upper": 0.003628464938511581,
+        "spec": "patient_aggregated_plus_prediction_instability",
+        "threshold": 0.4
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.0015479224304816356,
+        "delta_vs_v0_ci95_upper": 0.0008159683635371456,
+        "delta_vs_v1r_ci95_lower": -0.002081566902276655,
+        "delta_vs_v1r_ci95_upper": 0.0034877525580821567,
+        "spec": "patient_aggregated_plus_prediction_instability",
+        "threshold": 0.5
+      },
+      {
+        "delta_vs_v0_ci95_lower": -0.0016172226340540566,
+        "delta_vs_v0_ci95_upper": 0.0007560934822882244,
+        "delta_vs_v1r_ci95_lower": -0.002147888707025032,
+        "delta_vs_v1r_ci95_upper": 0.0034228488735625513,
+        "spec": "patient_aggregated_plus_prediction_instability",
+        "threshold": 0.6
+      }
+    ]
+  },
+  "evaluated_on": "2026-08-28",
+  "governance": {
+    "confirmation_outcomes_read": false,
+    "confirmatory_claim_permitted": false,
+    "external_outcomes_read": false,
+    "official_test_outcomes_read": false,
+    "patient_level_predictions_tracked": false
+  },
+  "interpretation": "Development-only exploratory follow-up. Patient-level aggregation and instability proxies were evaluated to reduce repeated-OOF noise; no external or confirmatory inference is permitted.",
+  "ipcw_evaluable_patients": 492,
+  "n_rows_raw": 3050,
+  "policies": [
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": 0.0,
+      "delta_vs_v1r": 0.0011621536746283662,
+      "fallback_rate": 1.0,
+      "fuse_rate": 0.0,
+      "ipcw_brier": 0.12392674141558381,
+      "ranking_vs_v1r": 0.8673450160165819,
+      "spec": "V0_reference",
+      "threshold": NaN
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.0011621536746283662,
+      "delta_vs_v1r": 0.0,
+      "fallback_rate": 0.0,
+      "fuse_rate": 1.0,
+      "ipcw_brier": 0.12276458774095544,
+      "ranking_vs_v1r": 1.0,
+      "spec": "raw_V1R_reference",
+      "threshold": NaN
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.0003817498124716462,
+      "delta_vs_v1r": 0.00078040386215672,
+      "fallback_rate": 0.33934426229508197,
+      "fuse_rate": 0.660655737704918,
+      "ipcw_brier": 0.12354499160311216,
+      "ranking_vs_v1r": 0.9451075399068616,
+      "spec": "patient_aggregated_core",
+      "threshold": 0.4
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.00041594266968501825,
+      "delta_vs_v1r": 0.0007462110049433479,
+      "fallback_rate": 0.45901639344262296,
+      "fuse_rate": 0.5409836065573771,
+      "ipcw_brier": 0.12351079874589879,
+      "ranking_vs_v1r": 0.9386470699076691,
+      "spec": "patient_aggregated_core",
+      "threshold": 0.5
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.00034133171850994626,
+      "delta_vs_v1r": 0.0008208219561184199,
+      "fallback_rate": 0.5967213114754099,
+      "fuse_rate": 0.40327868852459015,
+      "ipcw_brier": 0.12358540969707386,
+      "ranking_vs_v1r": 0.9283856900589518,
+      "spec": "patient_aggregated_core",
+      "threshold": 0.6
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.0002786780336793693,
+      "delta_vs_v1r": 0.0008834756409489969,
+      "fallback_rate": 0.3295081967213115,
+      "fuse_rate": 0.6704918032786885,
+      "ipcw_brier": 0.12364806338190444,
+      "ranking_vs_v1r": 0.9455705402568036,
+      "spec": "patient_aggregated_plus_prediction_instability",
+      "threshold": 0.4
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.0004188251529422121,
+      "delta_vs_v1r": 0.000743328521686154,
+      "fallback_rate": 0.4524590163934426,
+      "fuse_rate": 0.5475409836065573,
+      "ipcw_brier": 0.1235079162626416,
+      "ranking_vs_v1r": 0.9380979299577378,
+      "spec": "patient_aggregated_plus_prediction_instability",
+      "threshold": 0.5
+    },
+    {
+      "coverage": 1.0,
+      "delta_vs_v0": -0.0005055832959775797,
+      "delta_vs_v1r": 0.0006565703786507865,
+      "fallback_rate": 0.5737704918032787,
+      "fuse_rate": 0.4262295081967213,
+      "ipcw_brier": 0.12342115811960623,
+      "ranking_vs_v1r": 0.9291286441088589,
+      "spec": "patient_aggregated_plus_prediction_instability",
+      "threshold": 0.6
+    }
+  ],
+  "ranking_note": "Router selection is not guaranteed to preserve global V1R ranking; ranking concordance is reported descriptively.",
+  "repetitions_per_patient": 5,
+  "stage": "U6R1_PATIENT_LEVEL_ROUTER_AGGREGATION_EXPLORATION",
+  "unique_patients": 610
+}

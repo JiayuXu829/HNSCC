@@ -1,7 +1,7 @@
 # PATTERN-Surv-HN Study Status
-**Date:** 2026-08-27
-**Current stage:** U6 cross-fitted value-router development exploration completed; modest OOF Brier gain, bootstrap intervals cross zero, no router confirmation authorized
-**Status:** `U6_CROSS_FITTED_VALUE_ROUTER_EXPLORATION_COMPLETED_EXPLORATORY_ONLY`
+**Date:** 2026-09-03
+**Current stage:** U7R2 RADCURE external characterization completed; formal current-V1R confirmation remains pending
+**Status:** `U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_COMPLETED_POST_HOC`
 **???** `U5_V1R_CALIBRATION_BRIDGE_FAILURE_REVIEW_COMPLETED`
 **?????** `post_hoc_exploratory_rescue`
 
@@ -294,3 +294,22 @@ Artifacts:
 - `scripts/run_u6_cross_fitted_value_router_exploration.py`
 - `research_studies/01_pattern_surv_hn/reports/2026-08-27_step_U6_cross_fitted_value_router_exploration_completed.md`
 
+## U7R2 RADCURE external characterization
+
+RADCURE was selected as the best available local cohort for an honest external characterization. The existing Phase 7 outcome-free prediction generation and post-unseal aggregate evaluation were frozen and packaged without copying patient-level outputs into the research-study directory.
+
+- Cohort: RADCURE sealed test split
+- Size: 626 patients / 110 events
+- Inputs: clinical + radiomics
+- Coverage: 100%
+- Comparators: C1-C4, with B5/B6 references
+- Interpretation: adapted clinical/radiomics transportability characterization only
+- Formal current-V1R external validation: **not established**
+
+The RADCURE input contract is not identical to current V1R's blood/ICD/TMA contract, and the outcome was previously consumed. Therefore this result must remain separate from the core V1R confirmation claim and cannot be used to tune V1R, bridge, router, thresholds, or safety gates.
+
+Artifacts:
+
+- `research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/`
+- `scripts/run_u7r2_radcure_external_characterization.py`
+- `reports/2026-09-03_step_U7R2_RADCURE_external_characterization_completed.md`

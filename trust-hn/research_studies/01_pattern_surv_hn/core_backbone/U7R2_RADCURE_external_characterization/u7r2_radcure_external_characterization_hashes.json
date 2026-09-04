@@ -1,0 +1,11 @@
+{
+  "configs/phase7_exploratory_benchmarks.json": "A7FAF0DEB2F8F7F4C536751D608B48010FE46246CF4A63573780B30297BF8AAF",
+  "research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/frozen_u7r2_radcure_external_characterization_protocol.yaml": "C3FEECBCFF1899DFDE8EFD9CA0B5B8E499D7208D15EA50AFB8B4B5D02E8E19FF",
+  "research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_aggregate_results.json": "183433A2701CF11199A0F4CA065B6EE7CFABBBC23A644ADC1D082C1DC4D8EE9E",
+  "research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_audit.md": "C8A9C50A535E8103CA643B43B77A605F6FC59C35BB15E801C73A42CDCAC7B28E",
+  "results/manifests/phase7_exploratory_prediction_receipt.json": "14920083B6A3BD17CF556F4B6067053C6AD631A5590B1F3262B488AD45D7BC7C",
+  "results/manifests/phase7_exploratory_receipt.json": "70D917A6EDD125DB29CA10BFD3357F35DFCAAD89DCF982C45C613068352518BF",
+  "results/metrics/phase7_exploratory/external_benchmark_combined.csv": "18F8BBFD98565D3E68796701595FDE9DD48447B8FC8F10601A5B8654916510D2",
+  "results/metrics/phase7_exploratory/external_metrics.csv": "596FD84184ACE4BB7335327258AD46C8442139E609F6055322A6BE50A040436D",
+  "results/metrics/phase7_exploratory/paired_comparisons.csv": "9A96B6AF49D9DBAEC29BFE48E9DF3BA79A4C8DFDE836D342F346BE7219A54BAC"
+}

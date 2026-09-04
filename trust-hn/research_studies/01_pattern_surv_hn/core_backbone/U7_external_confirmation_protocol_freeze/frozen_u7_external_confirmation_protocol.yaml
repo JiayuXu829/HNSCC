@@ -1,0 +1,87 @@
+schema_version: '0.1'
+stage: U7_CURRENT_V1R_EXTERNAL_CONFIRMATION_PROTOCOL_FREEZE
+status: FROZEN_PENDING_NEW_OUTCOME_UNTOUCHED_COHORT
+frozen_on: '2026-09-02'
+analysis_label: pre_outcome_access_external_confirmation_readiness
+purpose: Freeze the protocol and intake criteria for the next genuinely independent
+  current-V1R-compatible outcome-untouched external cohort.
+current_execution_status:
+  local_qualifying_cohort_available: false
+  patient_rows_read_in_this_step: false
+  outcome_columns_read_in_this_step: false
+  external_evaluation_executed: false
+  reason: U5R11 found zero certified outcome-untouched cohorts compatible with the
+    current V1R input contract.
+primary_external_estimand:
+  name: delta_uno_c_24m
+  definition: UnoC24_V1R_minus_UnoC24_V0
+  favourable_direction: positive
+  inference: paired patient-level bootstrap, 2000 replicates
+key_safety_estimand:
+  name: delta_ipcw_brier_24m
+  definition: IPCW_Brier24_V1R_minus_IPCW_Brier24_V0
+  favourable_direction: negative
+  no_harm_boundary: 0.005
+secondary_estimands:
+- time-dependent AUC at 24 months
+- Harrell C
+- CITL and calibration slope without refit
+- supported-pattern worst Brier regret
+- coverage and exact empty-set fallback
+locked_primary_models:
+  V0: reuse frozen clinical-pathological anchor and exact fallback
+  V1R: reuse approved shrinkage-controlled residual Deep Sets Cox artifact and matched
+    25-member ensemble
+  no_architecture_search: true
+  no_hyperparameter_reselection: true
+  no_post_unseal_refit: true
+secondary_layers:
+  fixed_bridge:
+    status: secondary_only_if_current_V1R_prediction_definition_is_identical
+    formula: p_bridge = sigmoid(alpha_dev + 0.90 * logit(p_V1R))
+    alpha_dev: -0.1450337985699547
+    beta: 0.9
+    no_refit: true
+    not_a_replacement_for_primary_raw_V1R_evaluation: true
+  router:
+    status: deferred_exploratory_only
+    reason: U6/U6R1 development signals were uncertain and below direct raw V1R; router
+      is not included in the primary external confirmation claim.
+    no_external_router_claim: true
+cohort_intake_gate:
+  must_be_new: true
+  must_be_outcome_untouched_until_prediction_seal: true
+  must_match_postoperative_prediction_time_contract: true
+  must_support_current_v1r_modalities:
+  - clinical-pathological anchor
+  - blood
+  - ICD
+  - TMA
+  must_have_predeclared_endpoint: overall survival with days-to-event/censoring and
+    death indicator
+  must_have_documented_provenance: true
+  must_have_no_prior_use_in_model_or_bridge_tuning: true
+  ineligible_if_legacy_b6_only: true
+  ineligible_if_outcomes_previously_consumed: true
+execution_order:
+- snapshot and hash cohort manifest
+- approve this frozen protocol
+- generate current V0/V1R predictions without reading outcomes
+- seal predictions, code, dependencies and hashes
+- independently audit the seal
+- unseal outcomes
+- evaluate only the locked estimands and all prespecified safety summaries
+- report primary raw V1R result before any secondary bridge/router characterization
+prohibited:
+- using an already-consumed cohort as pristine confirmation
+- changing V1R architecture or preprocessing after outcome access
+- fitting or refitting the bridge on external outcomes
+- training or selecting a router using external outcomes before primary readout
+- dropping patients because the result is unfavorable
+- promoting legacy B6 characterization to current V1R confirmation
+source_protocols:
+  v1r: research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_confirmation_protocol/frozen_confirmation_protocol.yaml
+  fixed_bridge: research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/frozen_beta09_logloss_bridge_candidate_protocol.yaml
+  router_exploration: research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/frozen_u6r1_router_protocol.yaml
+  prior_readiness_audit: research_studies/01_pattern_surv_hn/core_backbone/U5R11_current_v1r_external_cohort_readiness_audit/u5r11_readiness_aggregate_results.json
+  sealed_cohort_manifest: data/manifests/sealed/phase6_cohort_set_manifest.json

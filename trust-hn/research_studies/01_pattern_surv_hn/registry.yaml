@@ -1,9 +1,9 @@
 schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U5R10_FIXED_BRIDGE_EXTERNAL_SECONDARY_CHARACTERIZATION_COMPLETED
-current_step: U5R10 fixed bridge applied without refit to both available GEO cohorts as post-unseal characterization on legacy Phase 6 B6 risk; positive direction reproduced, current V1R confirmation not established
-next_allowed_step: freeze current V1R prediction and bridge protocol before outcome access in a genuinely independent outcome-untouched cohort; do not promote U5R10 to current V1R confirmation
+status: U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_COMPLETED_POST_HOC
+current_step: U7R2 RADCURE external characterization completed; formal current-V1R confirmation remains pending a new outcome-untouched compatible cohort
+next_allowed_step: acquire a genuinely new current-V1R-compatible outcome-untouched cohort; alternatively retain RADCURE only as exploratory appendix characterization
 study_governance:
   analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
@@ -708,3 +708,64 @@ U6_CROSS_FITTED_VALUE_ROUTER_EXPLORATION_outputs:
   confirmation_claim_permitted: false
   deployment_readiness_claimed: false
   interpretation: development_only_hypothesis_generating_router_signal
+U6R1_PATIENT_LEVEL_ROUTER_AGGREGATION_EXPLORATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/frozen_u6r1_router_protocol.yaml
+  runner: trust-hn/scripts/run_u6r1_patient_level_router_aggregation_exploration.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_aggregate_results.json
+  policy_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_policy_results.csv
+  bootstrap_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_bootstrap_results.csv
+  fold_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_fold_results.csv
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_hashes.json
+  raw_rows: 3050
+  unique_patients: 610
+  patient_aggregated_v0_ipcw_brier: 0.12392674141558381
+  patient_aggregated_v1r_ipcw_brier: 0.12276458774095544
+  best_router_policy: reliability_augmented_q_ge_0.60
+  best_router_delta_brier_vs_v0: -0.0005055832959775797
+  best_router_delta_brier_vs_v1r: 0.0006565703786507865
+  best_router_bootstrap_ci_vs_v0: [-0.0016172226340540566, 0.0007560934822882244]
+  bootstrap_interval_crosses_zero: true
+  exact_global_ranking_preserved: false
+  coverage_preserved: true
+  confirmation_claim_permitted: false
+  deployment_readiness_claimed: false
+  interpretation: patient_level_router_signal_remains_development_only_and_uncertain
+U7_CURRENT_V1R_EXTERNAL_CONFIRMATION_PROTOCOL_FROZEN_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze/frozen_u7_external_confirmation_protocol.yaml
+  runner: trust-hn/scripts/run_u7_external_confirmation_protocol_freeze.py
+  readiness_aggregate: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze/u7_external_confirmation_readiness_aggregate.json
+  cohort_intake_table: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze/u7_external_cohort_intake_table.json
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze/u7_external_confirmation_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7_external_confirmation_protocol_freeze/u7_external_confirmation_hashes.json
+  local_candidate_cohorts: 5
+  current_v1r_compatible_cohorts: 1
+  new_outcome_untouched_compatible_cohorts: 0
+  external_evaluation_executed: false
+  predictions_generated: false
+  outcomes_read: false
+  primary_external_claim: locked_raw_v1r_vs_v0
+  fixed_bridge_role: secondary_conditional_only
+  router_role: deferred_development_only
+  confirmation_claim_permitted: false
+  deployment_readiness_claimed: false
+  interpretation: protocol_frozen_pending_new_qualifying_cohort
+
+U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/frozen_u7r2_radcure_external_characterization_protocol.yaml
+  runner: trust-hn/scripts/run_u7r2_radcure_external_characterization.py
+  aggregate_results: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_aggregate_results.json
+  audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_audit.md
+  hash_manifest: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_hashes.json
+  cohort: RADCURE sealed_test
+  n: 626
+  events: 110
+  coverage: 1.0
+  analysis_label: post_hoc_exploratory_external_characterization
+  formal_current_v1r_external_validation: false
+  bridge_or_router_external_claim: false
+  interpretation: adapted_clinical_radiomics_transportability_characterization_only
+

@@ -1,0 +1,62 @@
+schema_version: '0.1'
+stage: U7R2_RADCURE_EXTERNAL_CHARACTERIZATION
+status: FROZEN_AND_COMPLETED
+frozen_on: '2026-09-03'
+analysis_label: post_hoc_exploratory_external_characterization
+purpose: Characterize transportability of explicitly adapted clinical/radiomics survival
+  comparators on the RADCURE held-out test split without upgrading the result to current-V1R
+  confirmation.
+cohort:
+  name: RADCURE
+  role: sealed_test
+  sample_size: 626
+  events: 110
+  source_scope: independent data source relative to HANCOCK, but same-source held-out
+    split for Phase 7 comparator training
+  data_contract: clinical plus radiomics; not the frozen V1R blood/ICD/TMA contract
+  outcome_status: previously consumed in historical Phase 6; not outcome-untouched
+locked_comparison_set:
+  new_comparators:
+    C1: Gradient Boosting Survival Analysis on direct clinical-plus-radiomics features
+    C2: XGBoost-Cox on direct clinical-plus-radiomics features
+    C3: Cross-fitted late-fusion stacking of clinical and radiomics Cox models
+    C4: Missing-aware direct-fusion elastic-net Cox with explicit missingness indicators
+  references:
+    B5: Direct clinical plus modality elastic-net Cox
+    B6: Legacy Phase 6 TRUST-HN stacked residual fusion comparator
+  external_refit: false
+  external_tuning: false
+  winner_selection_after_readout: false
+locked_estimands:
+- 24-month IPCW Brier (lower is better)
+- Uno C (higher is better)
+- Harrell C (higher is better)
+- 24-month time-dependent AUC (higher is better)
+- 'calibration-in-the-large: closer to 0 is better'
+- 'calibration slope: closer to 1 is better'
+- 'coverage: 1.0 required for complete evaluation'
+governance:
+  patient_rows_read_in_this_packaging_step: false
+  outcome_columns_read_in_this_packaging_step: false
+  predictions_regenerated_in_this_packaging_step: false
+  prediction_generation_outcome_free_in_source_phase: true
+  phase7_receipt_complete: true
+  phase6_outputs_overwritten: true
+  trust_hn_or_gate_retuned: true
+  formal_current_v1r_confirmation_claim_permitted: false
+  bridge_or_router_claim_permitted: false
+claim_boundary:
+  allowed:
+  - RADCURE held-out test-split characterization of adapted clinical/radiomics comparators
+  - descriptive discrimination, calibration and coverage transportability signals
+  prohibited:
+  - formal current-V1R external validation
+  - formal current-V1R bridge validation
+  - external router validation
+  - silent substitution of radiomics for blood, ICD or TMA
+  - using RADCURE outcomes to tune or select V1R, bridge, router, thresholds or gates
+source_artifacts:
+  phase7_config: configs/phase7_exploratory_benchmarks.json
+  phase7_prediction_receipt: results/manifests/phase7_exploratory_prediction_receipt.json
+  phase7_metrics: results/metrics/phase7_exploratory/external_metrics.csv
+  phase7_paired_comparisons: results/metrics/phase7_exploratory/paired_comparisons.csv

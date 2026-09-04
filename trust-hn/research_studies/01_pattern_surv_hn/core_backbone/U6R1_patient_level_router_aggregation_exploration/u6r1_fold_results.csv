@@ -1,0 +1,6 @@
+spec,fold,train_patients,train_observable_patients,test_patients,mean_q_test
+patient_aggregated_plus_prediction_instability,1,488,395,122,0.54605007509615
+patient_aggregated_plus_prediction_instability,2,488,399,122,0.5468029132338312
+patient_aggregated_plus_prediction_instability,3,488,393,122,0.5322197240423158
+patient_aggregated_plus_prediction_instability,4,488,391,122,0.5040915462006382
+patient_aggregated_plus_prediction_instability,5,488,390,122,0.5334254501950864
