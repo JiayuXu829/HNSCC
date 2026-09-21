@@ -1,3 +1,5 @@
+> **Artwork status:** Author-provided editable Figure 1 artwork has been imported to `paper/figures/figure1_pattern_surv_hn_framework.pptx` and exported as PDF/PNG. This specification records the intended content and claim boundaries.
+
 # Main-figure framework specification for V1R and U5R7
 
 ## Proposed left-to-right flow
@@ -32,7 +34,9 @@
    - raw V1R only: n=152, events=40, Uno C +0.021664, Brier -0.005166, 100% coverage;
    - annotate as positive directional point-estimate evidence with bootstrap intervals crossing zero;
    - bridge application to confirmation shown only as U5R8 secondary post-unseal validation, with failed calibration gates; raw V1R remains the primary confirmation readout.
-10. **Future modules**
-   - confirmation bridge application, reliability router and clinical utility evaluation; label as planned/future.
+10. **Exploratory extensions and future modules**
+   - confirmation bridge application: explored as U5R8 secondary post-unseal validation; calibration gates failed; remains development-only;
+   - reliability router: explored as U6R1 patient-level cross-fitted router; point estimate below raw V1R and bootstrap interval crosses zero; remains exploratory;
+   - clinical utility evaluation: not performed; label as future.
 
 The final visual should be drawn by the authors; this file is a framework specification rather than artwork.

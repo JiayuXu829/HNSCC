@@ -1,0 +1,1906 @@
+{
+  "schema_version": "0.1",
+  "study_id": "pattern_surv_hn",
+  "stage_id": "U8_T1R_TRANSCRIPTOME_DEVELOPMENT_CV",
+  "analysis_label": "post_hoc_exploratory_rescue",
+  "completed_on": "2026-09-07",
+  "model": {
+    "id": "T1R",
+    "name": "Clinical_Residual_Transcriptome_Cox_inner_selected_shrinkage",
+    "parameter_count": 16065,
+    "clinical_anchor": "cross_fitted_elastic_net_cox_7_clinical_vars",
+    "residual_head": "two_layer_tanh_mlp_over_transcriptome_top_k_genes",
+    "shrinkage": "inner_cv_selected_residual_scale_plus_L2_residual_penalty"
+  },
+  "estimand": {
+    "cohort": "TCGA-HNSC_development",
+    "eligible_n": 519,
+    "events": 221,
+    "horizon_days": 730.5,
+    "transcriptome": "within_sample_gene_ranks_common_gene_intersection",
+    "top_k": 500
+  },
+  "cross_fitting": {
+    "outer_folds": 5,
+    "outer_repetition_seeds": [
+      17,
+      29,
+      43,
+      71,
+      101
+    ],
+    "inner_folds": 3,
+    "oof_rows": 2595,
+    "expected_oof_rows": 2595,
+    "fold_bound_clinical_preprocessing": true,
+    "fold_bound_gene_selection": true,
+    "training_fold_Breslow_baseline": true
+  },
+  "results": {
+    "folds": [
+      {
+        "repetition_seed": 17,
+        "outer_fold": 0,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.01,
+        "selected_anchor_l1_ratio": 0.5,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 50,
+        "selected_residual_scale": 0.4,
+        "selected_inner_ipcw_brier_24m": 0.2159889362671288,
+        "selected_inner_uno_c_24m": 0.6004163873650255,
+        "initial_training_cox_loss": 5.196353383091058,
+        "final_training_cox_loss": 4.460586858001811,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 46
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 99.02381350150566,
+          "ipcw_brier_24m": 0.21118328588313043,
+          "harrell_c": 0.6203597397627248,
+          "uno_c_24m": 0.6002793422697659,
+          "auc_24m": 0.5757262449405265,
+          "calibration_in_the_large_24m": 0.018992478764888084,
+          "calibration_slope_24m": 0.5401009231151978,
+          "mean_predicted_risk_24m": 0.32542185051018385
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 99.02381350150566,
+          "ipcw_brier_24m": 0.20685905686953335,
+          "harrell_c": 0.6337543053960965,
+          "uno_c_24m": 0.6231302893629309,
+          "auc_24m": 0.6055318342485874,
+          "calibration_in_the_large_24m": -0.046327638012398864,
+          "calibration_slope_24m": 0.8457840121856183,
+          "mean_predicted_risk_24m": 0.34026062654235767
+        }
+      },
+      {
+        "repetition_seed": 17,
+        "outer_fold": 1,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21590111766239825,
+        "selected_inner_uno_c_24m": 0.606279040540712,
+        "initial_training_cox_loss": 5.208141830898655,
+        "final_training_cox_loss": 4.973096762143063,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 46
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 100.67149107694587,
+          "ipcw_brier_24m": 0.2076836452958607,
+          "harrell_c": 0.5841022001419447,
+          "uno_c_24m": 0.5936774303166023,
+          "auc_24m": 0.5809057287381498,
+          "calibration_in_the_large_24m": -0.1596214033391784,
+          "calibration_slope_24m": 1.5293625487636393,
+          "mean_predicted_risk_24m": 0.36114431734973534
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 100.67149107694587,
+          "ipcw_brier_24m": 0.20247847662302074,
+          "harrell_c": 0.6415897799858056,
+          "uno_c_24m": 0.6595976215291208,
+          "auc_24m": 0.6543990801943532,
+          "calibration_in_the_large_24m": -0.19334825686804336,
+          "calibration_slope_24m": 1.4553195206998362,
+          "mean_predicted_risk_24m": 0.3601687713616029
+        }
+      },
+      {
+        "repetition_seed": 17,
+        "outer_fold": 2,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.3,
+        "selected_inner_ipcw_brier_24m": 0.21798611169106052,
+        "selected_inner_uno_c_24m": 0.6111421017407191,
+        "initial_training_cox_loss": 5.159831643285557,
+        "final_training_cox_loss": 4.925023748954777,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 41
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 112.02774057270243,
+          "ipcw_brier_24m": 0.22324210379279297,
+          "harrell_c": 0.5557079190949605,
+          "uno_c_24m": 0.5609685745485244,
+          "auc_24m": 0.5906717553329902,
+          "calibration_in_the_large_24m": -0.11115560809261937,
+          "calibration_slope_24m": 1.5730620119673504,
+          "mean_predicted_risk_24m": 0.3416479339855717
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 112.02774057270243,
+          "ipcw_brier_24m": 0.21936727156924374,
+          "harrell_c": 0.603702434007542,
+          "uno_c_24m": 0.6004023210839978,
+          "auc_24m": 0.6285747343428891,
+          "calibration_in_the_large_24m": -0.15265403422405008,
+          "calibration_slope_24m": 1.3669801801173356,
+          "mean_predicted_risk_24m": 0.35027854218560783
+        }
+      },
+      {
+        "repetition_seed": 17,
+        "outer_fold": 3,
+        "train_n": 415,
+        "train_events": 176,
+        "validation_n": 104,
+        "validation_events": 45,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.5,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.2068956231605393,
+        "selected_inner_uno_c_24m": 0.6401809583128445,
+        "initial_training_cox_loss": 5.194429332383136,
+        "final_training_cox_loss": 4.987776231350341,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 112.0828503649569,
+          "ipcw_brier_24m": 0.2463782324624154,
+          "harrell_c": 0.5389477280491971,
+          "uno_c_24m": 0.5172491701692127,
+          "auc_24m": 0.5421716633822247,
+          "calibration_in_the_large_24m": 0.148507316632302,
+          "calibration_slope_24m": 0.6007228615905984,
+          "mean_predicted_risk_24m": 0.3249775196295899
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 112.0828503649569,
+          "ipcw_brier_24m": 0.24444728282871997,
+          "harrell_c": 0.5685001708233687,
+          "uno_c_24m": 0.5533395731996014,
+          "auc_24m": 0.5684649115729675,
+          "calibration_in_the_large_24m": 0.08885806785884726,
+          "calibration_slope_24m": 0.575860394748478,
+          "mean_predicted_risk_24m": 0.33651701028035785
+        }
+      },
+      {
+        "repetition_seed": 17,
+        "outer_fold": 4,
+        "train_n": 416,
+        "train_events": 177,
+        "validation_n": 103,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.3,
+        "selected_inner_ipcw_brier_24m": 0.2198297932026331,
+        "selected_inner_uno_c_24m": 0.58825377229814,
+        "initial_training_cox_loss": 5.225457984547455,
+        "final_training_cox_loss": 4.981320068457485,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 416,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 416
+        },
+        "V0_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 95.2632758239509,
+          "ipcw_brier_24m": 0.20826153049688154,
+          "harrell_c": 0.6387084447841039,
+          "uno_c_24m": 0.6159985211102724,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.06112931389665936,
+          "calibration_slope_24m": 1.0514842951128647,
+          "mean_predicted_risk_24m": 0.34349155447231655
+        },
+        "T1R_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 95.2632758239509,
+          "ipcw_brier_24m": 0.20155072091533385,
+          "harrell_c": 0.6568589988536492,
+          "uno_c_24m": 0.642042694651869,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.06356474186200375,
+          "calibration_slope_24m": 1.4608598772170893,
+          "mean_predicted_risk_24m": 0.3418535320668565
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "outer_fold": 0,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21844453098603941,
+        "selected_inner_uno_c_24m": 0.6324213977355851,
+        "initial_training_cox_loss": 5.164091725579501,
+        "final_training_cox_loss": 4.91261779151456,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.47577525671622,
+          "ipcw_brier_24m": 0.22947137173815826,
+          "harrell_c": 0.5039739884393064,
+          "uno_c_24m": 0.4893411272195768,
+          "auc_24m": 0.48264609078713266,
+          "calibration_in_the_large_24m": -0.21155429632734343,
+          "calibration_slope_24m": 0.02839294964693973,
+          "mean_predicted_risk_24m": 0.3448037438792148
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.47577525671622,
+          "ipcw_brier_24m": 0.2345200495689716,
+          "harrell_c": 0.509393063583815,
+          "uno_c_24m": 0.49992664992394253,
+          "auc_24m": 0.5093757966674235,
+          "calibration_in_the_large_24m": -0.2677462452988983,
+          "calibration_slope_24m": 0.13812308181668084,
+          "mean_predicted_risk_24m": 0.357165383588464
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "outer_fold": 1,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.21219243380974864,
+        "selected_inner_uno_c_24m": 0.6377556766462212,
+        "initial_training_cox_loss": 5.193445853620445,
+        "final_training_cox_loss": 4.95117154774658,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 103.16191414946533,
+          "ipcw_brier_24m": 0.2084705965933398,
+          "harrell_c": 0.6283302063789868,
+          "uno_c_24m": 0.6020844541575896,
+          "auc_24m": 0.6123708562437249,
+          "calibration_in_the_large_24m": -0.13790231340795633,
+          "calibration_slope_24m": 1.2130652764351715,
+          "mean_predicted_risk_24m": 0.3487424228046232
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 103.16191414946533,
+          "ipcw_brier_24m": 0.22874483960983139,
+          "harrell_c": 0.5812382739212008,
+          "uno_c_24m": 0.5511519507826341,
+          "auc_24m": 0.5447616089864373,
+          "calibration_in_the_large_24m": -0.16457685963465243,
+          "calibration_slope_24m": 0.20023975732795177,
+          "mean_predicted_risk_24m": 0.3395134923516727
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "outer_fold": 2,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 50,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.22003950968756458,
+        "selected_inner_uno_c_24m": 0.5939917285200177,
+        "initial_training_cox_loss": 5.197127663572136,
+        "final_training_cox_loss": 4.454366727578548,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 46
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 106.84550846258493,
+          "ipcw_brier_24m": 0.2172028508346446,
+          "harrell_c": 0.6118804664723032,
+          "uno_c_24m": 0.5895962433150732,
+          "auc_24m": 0.56256878842774,
+          "calibration_in_the_large_24m": -0.1732035958429808,
+          "calibration_slope_24m": 1.1657718249208615,
+          "mean_predicted_risk_24m": 0.3520966273734472
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 106.84550846258493,
+          "ipcw_brier_24m": 0.21480860813671296,
+          "harrell_c": 0.6424927113702624,
+          "uno_c_24m": 0.6308631620463624,
+          "auc_24m": 0.6282635420494588,
+          "calibration_in_the_large_24m": -0.265127438840423,
+          "calibration_slope_24m": 1.0157957978460537,
+          "mean_predicted_risk_24m": 0.37332513257296296
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "outer_fold": 3,
+        "train_n": 415,
+        "train_events": 176,
+        "validation_n": 104,
+        "validation_events": 45,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 25,
+        "selected_residual_scale": 0.2,
+        "selected_inner_ipcw_brier_24m": 0.21771637021425974,
+        "selected_inner_uno_c_24m": 0.5908993450806207,
+        "initial_training_cox_loss": 5.166023349147642,
+        "final_training_cox_loss": 4.2246649468749915,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 106.44192404908998,
+          "ipcw_brier_24m": 0.2307697816270794,
+          "harrell_c": 0.6192242833052276,
+          "uno_c_24m": 0.6210271750190596,
+          "auc_24m": 0.60589038450394,
+          "calibration_in_the_large_24m": 0.0964733468089477,
+          "calibration_slope_24m": 1.2947393142349317,
+          "mean_predicted_risk_24m": 0.3427769543074998
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 106.44192404908998,
+          "ipcw_brier_24m": 0.23324396240700215,
+          "harrell_c": 0.6016863406408094,
+          "uno_c_24m": 0.6029987347631405,
+          "auc_24m": 0.5835781331851773,
+          "calibration_in_the_large_24m": -0.00039575225769213545,
+          "calibration_slope_24m": 0.8570907283086927,
+          "mean_predicted_risk_24m": 0.36375657547907597
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "outer_fold": 4,
+        "train_n": 416,
+        "train_events": 177,
+        "validation_n": 103,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.9,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 50,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21314606705599112,
+        "selected_inner_uno_c_24m": 0.6093052831543541,
+        "initial_training_cox_loss": 5.305687149737304,
+        "final_training_cox_loss": 4.540159452378969,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 416,
+          "clinical_encoded_feature_count": 43
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 416
+        },
+        "V0_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 94.85996748148771,
+          "ipcw_brier_24m": 0.22212789227669782,
+          "harrell_c": 0.5,
+          "uno_c_24m": 0.5,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.2535698533280295,
+          "calibration_slope_24m": null,
+          "mean_predicted_risk_24m": 0.33112874595402697
+        },
+        "T1R_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 94.85996748148771,
+          "ipcw_brier_24m": 0.2103873399445843,
+          "harrell_c": 0.574210139603233,
+          "uno_c_24m": 0.5811586989506515,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.19860583462339237,
+          "calibration_slope_24m": 1.423400761900297,
+          "mean_predicted_risk_24m": 0.34638679340239686
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "outer_fold": 0,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.01,
+        "selected_anchor_l1_ratio": 0.9,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21486650904750168,
+        "selected_inner_uno_c_24m": 0.6225187886178293,
+        "initial_training_cox_loss": 5.194031874674659,
+        "final_training_cox_loss": 4.962257961685916,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.83676407763974,
+          "ipcw_brier_24m": 0.21955278848513946,
+          "harrell_c": 0.6042061386888973,
+          "uno_c_24m": 0.5828184453817055,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": -0.3085608032017917,
+          "calibration_slope_24m": 0.4592995469074098,
+          "mean_predicted_risk_24m": 0.3529033374300059
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.83676407763974,
+          "ipcw_brier_24m": 0.2168920962101678,
+          "harrell_c": 0.6510041682455475,
+          "uno_c_24m": 0.6138882584415909,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": -0.3030567519031131,
+          "calibration_slope_24m": 0.5598090211725154,
+          "mean_predicted_risk_24m": 0.3453134462742043
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "outer_fold": 1,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21658555096810986,
+        "selected_inner_uno_c_24m": 0.5972518134391419,
+        "initial_training_cox_loss": 5.148233636548801,
+        "final_training_cox_loss": 4.932349238349097,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.68332540435946,
+          "ipcw_brier_24m": 0.2333283585735059,
+          "harrell_c": 0.5171026156941649,
+          "uno_c_24m": 0.520691316270666,
+          "auc_24m": 0.5198192379343738,
+          "calibration_in_the_large_24m": 0.06197225179917566,
+          "calibration_slope_24m": 0.7235840828582845,
+          "mean_predicted_risk_24m": 0.3368418458517976
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 107.68332540435946,
+          "ipcw_brier_24m": 0.22349894125183864,
+          "harrell_c": 0.585177733065057,
+          "uno_c_24m": 0.5881525519374322,
+          "auc_24m": 0.5898065053396144,
+          "calibration_in_the_large_24m": 0.05125328098328809,
+          "calibration_slope_24m": 1.535069303984776,
+          "mean_predicted_risk_24m": 0.3357791187095466
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "outer_fold": 2,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21441811458341284,
+        "selected_inner_uno_c_24m": 0.6220067447202945,
+        "initial_training_cox_loss": 5.189473866911754,
+        "final_training_cox_loss": 4.951515146133989,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 114.08016227317634,
+          "ipcw_brier_24m": 0.23353939439733767,
+          "harrell_c": 0.6055728625822083,
+          "uno_c_24m": 0.5990952444587804,
+          "auc_24m": 0.5909495203736499,
+          "calibration_in_the_large_24m": -0.07549021659914013,
+          "calibration_slope_24m": 1.0576543570509924,
+          "mean_predicted_risk_24m": 0.33587497883485984
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 114.08016227317634,
+          "ipcw_brier_24m": 0.22551533071344007,
+          "harrell_c": 0.6306680512287989,
+          "uno_c_24m": 0.6258617708148737,
+          "auc_24m": 0.6292578892884666,
+          "calibration_in_the_large_24m": -0.08495957943589161,
+          "calibration_slope_24m": 1.288725647759064,
+          "mean_predicted_risk_24m": 0.33573815896431436
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "outer_fold": 3,
+        "train_n": 415,
+        "train_events": 176,
+        "validation_n": 104,
+        "validation_events": 45,
+        "selected_anchor_alpha": 0.01,
+        "selected_anchor_l1_ratio": 0.9,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.21399791787423386,
+        "selected_inner_uno_c_24m": 0.6262871723577654,
+        "initial_training_cox_loss": 5.191054907946665,
+        "final_training_cox_loss": 4.954994524613375,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 96.32285473709638,
+          "ipcw_brier_24m": 0.21046287932409072,
+          "harrell_c": 0.6001779359430605,
+          "uno_c_24m": 0.5824866296634656,
+          "auc_24m": 0.5402204590717788,
+          "calibration_in_the_large_24m": 0.11613895067382414,
+          "calibration_slope_24m": 1.0464300160013313,
+          "mean_predicted_risk_24m": 0.3379469388528662
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 96.32285473709638,
+          "ipcw_brier_24m": 0.20360763506762256,
+          "harrell_c": 0.6348754448398577,
+          "uno_c_24m": 0.6244454853961886,
+          "auc_24m": 0.6274309146760895,
+          "calibration_in_the_large_24m": -0.0006518708358039381,
+          "calibration_slope_24m": 1.1080644871835676,
+          "mean_predicted_risk_24m": 0.3694163456931981
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "outer_fold": 4,
+        "train_n": 416,
+        "train_events": 177,
+        "validation_n": 103,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.01,
+        "selected_anchor_l1_ratio": 0.5,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.2085937935101403,
+        "selected_inner_uno_c_24m": 0.6585084220699167,
+        "initial_training_cox_loss": 5.173683597764366,
+        "final_training_cox_loss": 4.915569150386948,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 416,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 416
+        },
+        "V0_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 93.52173814840381,
+          "ipcw_brier_24m": 0.2086804423309478,
+          "harrell_c": 0.5978511128165771,
+          "uno_c_24m": 0.577213949015877,
+          "auc_24m": 0.586683682682005,
+          "calibration_in_the_large_24m": 0.14766189996302556,
+          "calibration_slope_24m": 0.6326375860560463,
+          "mean_predicted_risk_24m": 0.34140186782552967
+        },
+        "T1R_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 93.52173814840381,
+          "ipcw_brier_24m": 0.2139889121254232,
+          "harrell_c": 0.5529547198772065,
+          "uno_c_24m": 0.5414129630661761,
+          "auc_24m": 0.5623224890111981,
+          "calibration_in_the_large_24m": 0.1207855002043134,
+          "calibration_slope_24m": 0.3942647852274849,
+          "mean_predicted_risk_24m": 0.350708057120079
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "outer_fold": 0,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.3,
+        "selected_inner_ipcw_brier_24m": 0.21917950748142725,
+        "selected_inner_uno_c_24m": 0.6015070168345632,
+        "initial_training_cox_loss": 5.19998119703255,
+        "final_training_cox_loss": 4.970253298514314,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 103.06885407582942,
+          "ipcw_brier_24m": 0.23326562025217232,
+          "harrell_c": 0.5307576894223556,
+          "uno_c_24m": 0.5257113303103326,
+          "auc_24m": 0.5372031887435901,
+          "calibration_in_the_large_24m": 0.21398192002402106,
+          "calibration_slope_24m": 0.4659053295023592,
+          "mean_predicted_risk_24m": 0.32745864732204555
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 103.06885407582942,
+          "ipcw_brier_24m": 0.22180808149175116,
+          "harrell_c": 0.5731432858214554,
+          "uno_c_24m": 0.5737001047239434,
+          "auc_24m": 0.6101981199151474,
+          "calibration_in_the_large_24m": 0.15720252357886277,
+          "calibration_slope_24m": 1.0570195845062533,
+          "mean_predicted_risk_24m": 0.3411356249321808
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "outer_fold": 1,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.5,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 50,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.21684658195793136,
+        "selected_inner_uno_c_24m": 0.5774211889779391,
+        "initial_training_cox_loss": 5.230257067807353,
+        "final_training_cox_loss": 4.4707906311635055,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 88.75808673235414,
+          "ipcw_brier_24m": 0.22405276734451157,
+          "harrell_c": 0.5904309467254836,
+          "uno_c_24m": 0.5886879845173821,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.555371117365133,
+          "calibration_slope_24m": 3.654257419051277,
+          "mean_predicted_risk_24m": 0.3235979469205574
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 88.75808673235414,
+          "ipcw_brier_24m": 0.21333291697569054,
+          "harrell_c": 0.6223277909738717,
+          "uno_c_24m": 0.6265188262443337,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.5031797255358207,
+          "calibration_slope_24m": 1.4306136393837376,
+          "mean_predicted_risk_24m": 0.33583130052326293
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "outer_fold": 2,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.01,
+        "selected_anchor_l1_ratio": 0.5,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.21737843507795937,
+        "selected_inner_uno_c_24m": 0.6195896100219681,
+        "initial_training_cox_loss": 5.135492735832156,
+        "final_training_cox_loss": 4.9037915480099405,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 104.24581899186032,
+          "ipcw_brier_24m": 0.20693440517213568,
+          "harrell_c": 0.6738686628104797,
+          "uno_c_24m": 0.6693459430312027,
+          "auc_24m": 0.6548998896465137,
+          "calibration_in_the_large_24m": -0.05057545843495299,
+          "calibration_slope_24m": 1.4172920477645692,
+          "mean_predicted_risk_24m": 0.3391917979298204
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 104.24581899186032,
+          "ipcw_brier_24m": 0.20512707729091903,
+          "harrell_c": 0.6532834297380061,
+          "uno_c_24m": 0.654601499305511,
+          "auc_24m": 0.6639368873593333,
+          "calibration_in_the_large_24m": -0.01138631779467127,
+          "calibration_slope_24m": 1.1006732952174727,
+          "mean_predicted_risk_24m": 0.3327785515000209
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "outer_fold": 3,
+        "train_n": 415,
+        "train_events": 176,
+        "validation_n": 104,
+        "validation_events": 45,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.2094641111912595,
+        "selected_inner_uno_c_24m": 0.6276213298869796,
+        "initial_training_cox_loss": 5.157472395213012,
+        "final_training_cox_loss": 4.941205353951048,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 107.82171062077887,
+          "ipcw_brier_24m": 0.23781897891612758,
+          "harrell_c": 0.49275618374558305,
+          "uno_c_24m": 0.45413934619479074,
+          "auc_24m": 0.40966362246426447,
+          "calibration_in_the_large_24m": -0.18648128151353052,
+          "calibration_slope_24m": -0.6801985915996754,
+          "mean_predicted_risk_24m": 0.3388296639923129
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 107.82171062077887,
+          "ipcw_brier_24m": 0.23333674057332202,
+          "harrell_c": 0.6017667844522968,
+          "uno_c_24m": 0.5593668807648902,
+          "auc_24m": 0.5192699970272721,
+          "calibration_in_the_large_24m": -0.29627771037889533,
+          "calibration_slope_24m": 0.04935224449363346,
+          "mean_predicted_risk_24m": 0.3584008376023171
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "outer_fold": 4,
+        "train_n": 416,
+        "train_events": 177,
+        "validation_n": 103,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.2199458534550844,
+        "selected_inner_uno_c_24m": 0.6388485314146147,
+        "initial_training_cox_loss": 5.24190755701729,
+        "final_training_cox_loss": 4.988972331297515,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 416,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 416
+        },
+        "V0_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 116.31802076914735,
+          "ipcw_brier_24m": 0.22461156183664288,
+          "harrell_c": 0.5516693163751988,
+          "uno_c_24m": 0.5249382266675388,
+          "auc_24m": 0.5367550125559666,
+          "calibration_in_the_large_24m": -0.5569896606597171,
+          "calibration_slope_24m": 0.7748747328381509,
+          "mean_predicted_risk_24m": 0.36783913536095264
+        },
+        "T1R_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 116.31802076914735,
+          "ipcw_brier_24m": 0.22058780320339494,
+          "harrell_c": 0.584658187599364,
+          "uno_c_24m": 0.5816586533635012,
+          "auc_24m": 0.6213618373328738,
+          "calibration_in_the_large_24m": -0.6254578093280146,
+          "calibration_slope_24m": 0.97123191468104,
+          "mean_predicted_risk_24m": 0.3809712501515947
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "outer_fold": 0,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.1,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.21494234219794273,
+        "selected_inner_uno_c_24m": 0.6559034958695557,
+        "initial_training_cox_loss": 5.236723794182045,
+        "final_training_cox_loss": 4.973142391773896,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 45
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 109.59138537638862,
+          "ipcw_brier_24m": 0.21106037498852237,
+          "harrell_c": 0.655511811023622,
+          "uno_c_24m": 0.6591779127251842,
+          "auc_24m": 0.6975065555848705,
+          "calibration_in_the_large_24m": -0.16293529170712748,
+          "calibration_slope_24m": 3.628258021435563,
+          "mean_predicted_risk_24m": 0.3421620891995929
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 109.59138537638862,
+          "ipcw_brier_24m": 0.2152796647083841,
+          "harrell_c": 0.6023622047244095,
+          "uno_c_24m": 0.596856856172346,
+          "auc_24m": 0.6265312941524437,
+          "calibration_in_the_large_24m": -0.10779674917942042,
+          "calibration_slope_24m": 0.7412625786157919,
+          "mean_predicted_risk_24m": 0.32738953206415633
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "outer_fold": 1,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.21585772975740622,
+        "selected_inner_uno_c_24m": 0.60666166713292,
+        "initial_training_cox_loss": 5.215673047572459,
+        "final_training_cox_loss": 5.006012151809234,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 46
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 95.24261864619888,
+          "ipcw_brier_24m": 0.20963173828413434,
+          "harrell_c": 0.567040115648717,
+          "uno_c_24m": 0.5605399463799513,
+          "auc_24m": 0.5834856501744836,
+          "calibration_in_the_large_24m": 0.17010032633455346,
+          "calibration_slope_24m": 1.8172667108290588,
+          "mean_predicted_risk_24m": 0.34383065057481804
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 95.24261864619888,
+          "ipcw_brier_24m": 0.19790559638393707,
+          "harrell_c": 0.6320925189736176,
+          "uno_c_24m": 0.6274344838448987,
+          "auc_24m": 0.6863441495561711,
+          "calibration_in_the_large_24m": 0.11204500124408212,
+          "calibration_slope_24m": 1.6876976266716537,
+          "mean_predicted_risk_24m": 0.35583328422044513
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "outer_fold": 2,
+        "train_n": 415,
+        "train_events": 177,
+        "validation_n": 104,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.1,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 1.0,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 1.0,
+        "selected_inner_ipcw_brier_24m": 0.2159565830127538,
+        "selected_inner_uno_c_24m": 0.6098063304486004,
+        "initial_training_cox_loss": 5.18785633646182,
+        "final_training_cox_loss": 4.960017105062931,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 46
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 109.56220128628543,
+          "ipcw_brier_24m": 0.2371369022317787,
+          "harrell_c": 0.5163904899135446,
+          "uno_c_24m": 0.5005171670495446,
+          "auc_24m": 0.4581901764041826,
+          "calibration_in_the_large_24m": -0.2479955577567959,
+          "calibration_slope_24m": -0.744460520082119,
+          "mean_predicted_risk_24m": 0.34981567805291647
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 109.56220128628543,
+          "ipcw_brier_24m": 0.22494799755748396,
+          "harrell_c": 0.6156340057636888,
+          "uno_c_24m": 0.5971915089861405,
+          "auc_24m": 0.5730012926818593,
+          "calibration_in_the_large_24m": -0.30721678065194147,
+          "calibration_slope_24m": 0.5301696467767302,
+          "mean_predicted_risk_24m": 0.3645826496867297
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "outer_fold": 3,
+        "train_n": 415,
+        "train_events": 176,
+        "validation_n": 104,
+        "validation_events": 45,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 50,
+        "selected_residual_scale": 0.1,
+        "selected_inner_ipcw_brier_24m": 0.21460228078905633,
+        "selected_inner_uno_c_24m": 0.6039358742620569,
+        "initial_training_cox_loss": 5.207579181675803,
+        "final_training_cox_loss": 3.2869742110020934,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 415,
+          "clinical_encoded_feature_count": 42
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 415
+        },
+        "V0_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 91.22025667067683,
+          "ipcw_brier_24m": 0.20338274791602357,
+          "harrell_c": 0.651183644189383,
+          "uno_c_24m": 0.6452795510107971,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.3428975611977797,
+          "calibration_slope_24m": 2.4341276049073373,
+          "mean_predicted_risk_24m": 0.32408811315324615
+        },
+        "T1R_metrics": {
+          "n": 104.0,
+          "events": 45.0,
+          "ipcw_evaluable_weight": 91.22025667067683,
+          "ipcw_brier_24m": 0.19369661960699514,
+          "harrell_c": 0.6517216642754663,
+          "uno_c_24m": 0.6478304107283749,
+          "auc_24m": null,
+          "calibration_in_the_large_24m": 0.18691316928382654,
+          "calibration_slope_24m": 2.2174724948721796,
+          "mean_predicted_risk_24m": 0.3570480105435335
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "outer_fold": 4,
+        "train_n": 416,
+        "train_events": 177,
+        "validation_n": 103,
+        "validation_events": 44,
+        "selected_anchor_alpha": 0.05,
+        "selected_anchor_l1_ratio": 0.1,
+        "selected_residual_penalty": 0.01,
+        "selected_optimization_steps": 10,
+        "selected_residual_scale": 0.5,
+        "selected_inner_ipcw_brier_24m": 0.20892033104027344,
+        "selected_inner_uno_c_24m": 0.6412136168598827,
+        "initial_training_cox_loss": 5.171756285812027,
+        "final_training_cox_loss": 4.933462310522063,
+        "fallback_residual_max_abs_error": 0.0,
+        "fallback_fused_max_abs_error": 0.0,
+        "clinical_preprocessing": {
+          "clinical_fit_n": 416,
+          "clinical_encoded_feature_count": 44
+        },
+        "modality_preprocessing": {
+          "selected_gene_count": 500,
+          "fit_n": 416
+        },
+        "V0_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 114.28555618177872,
+          "ipcw_brier_24m": 0.2521780596110836,
+          "harrell_c": 0.5067760342368046,
+          "uno_c_24m": 0.4713300482853618,
+          "auc_24m": 0.4305499483096853,
+          "calibration_in_the_large_24m": -0.16133807790172905,
+          "calibration_slope_24m": -0.13046634364733692,
+          "mean_predicted_risk_24m": 0.347189175367148
+        },
+        "T1R_metrics": {
+          "n": 103.0,
+          "events": 44.0,
+          "ipcw_evaluable_weight": 114.28555618177872,
+          "ipcw_brier_24m": 0.25167221204350676,
+          "harrell_c": 0.5748930099857347,
+          "uno_c_24m": 0.5517916266094632,
+          "auc_24m": 0.516165552990244,
+          "calibration_in_the_large_24m": -0.27072638551076056,
+          "calibration_slope_24m": 0.31033481977681676,
+          "mean_predicted_risk_24m": 0.3633997165442049
+        }
+      }
+    ],
+    "per_seed_metrics": [
+      {
+        "repetition_seed": 17,
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21937220835506313,
+          "harrell_c": 0.5880226343917008,
+          "uno_c_24m": 0.5773223163627427,
+          "auc_24m": 0.5741767790199156,
+          "calibration_in_the_large_24m": -0.006777456310891081,
+          "calibration_slope_24m": 0.911707387581408,
+          "mean_predicted_risk_24m": 0.3393286295646571
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21492884203169868,
+          "harrell_c": 0.6226744019890829,
+          "uno_c_24m": 0.615297447966101,
+          "auc_24m": 0.6161527806833311,
+          "calibration_in_the_large_24m": -0.046799211985136945,
+          "calibration_slope_24m": 1.0513911872113986,
+          "mean_predicted_risk_24m": 0.3458233307155271
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.0044433663233644505,
+          "harrell_c": 0.03465176759738209,
+          "uno_c_24m": 0.0379751316033583,
+          "auc_24m": 0.04197600166341553,
+          "calibration_in_the_large_24m": -0.04002175567424586,
+          "calibration_slope_24m": 0.13968379962999056,
+          "mean_predicted_risk_24m": 0.00649470115087003
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22161886073352263,
+          "harrell_c": 0.5772841587836872,
+          "uno_c_24m": 0.5655846687895728,
+          "auc_24m": 0.5591111213124393,
+          "calibration_in_the_large_24m": -0.034091771800249936,
+          "calibration_slope_24m": 0.7146930435330253,
+          "mean_predicted_risk_24m": 0.34393432497726867
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.224332506975697,
+          "harrell_c": 0.580306364493727,
+          "uno_c_24m": 0.5719830139953398,
+          "auc_24m": 0.5710955563149495,
+          "calibration_in_the_large_24m": -0.09864854530318472,
+          "calibration_slope_24m": 0.4997399581456969,
+          "mean_predicted_risk_24m": 0.35604805482780955
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": 0.002713646242174378,
+          "harrell_c": 0.0030222057100397492,
+          "uno_c_24m": 0.0063983452057669865,
+          "auc_24m": 0.011984435002510119,
+          "calibration_in_the_large_24m": -0.06455677350293479,
+          "calibration_slope_24m": -0.21495308538732844,
+          "mean_predicted_risk_24m": 0.012113729850540877
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22091427971232588,
+          "harrell_c": 0.584414563744963,
+          "uno_c_24m": 0.5721400732353487,
+          "auc_24m": 0.566775985345911,
+          "calibration_in_the_large_24m": -0.014653802471213806,
+          "calibration_slope_24m": 0.6820035580446763,
+          "mean_predicted_risk_24m": 0.34099300748913414
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21656135305105695,
+          "harrell_c": 0.6122717270155182,
+          "uno_c_24m": 0.6015103919582706,
+          "auc_24m": 0.6039710616177187,
+          "calibration_in_the_large_24m": -0.04502642206507825,
+          "calibration_slope_24m": 0.8026554798726273,
+          "mean_predicted_risk_24m": 0.34738463415425724
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.0043529266612689355,
+          "harrell_c": 0.027857163270555207,
+          "uno_c_24m": 0.02937031872292195,
+          "auc_24m": 0.03719507627180774,
+          "calibration_in_the_large_24m": -0.030372619593864447,
+          "calibration_slope_24m": 0.12065192182795104,
+          "mean_predicted_risk_24m": 0.006391626665123107
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22492927710708435,
+          "harrell_c": 0.5605298505329942,
+          "uno_c_24m": 0.5477644001205345,
+          "auc_24m": 0.5351357661349798,
+          "calibration_in_the_large_24m": -0.013668091523183826,
+          "calibration_slope_24m": 0.41235777477153346,
+          "mean_predicted_risk_24m": 0.3393286103724676
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21836966031334323,
+          "harrell_c": 0.6019404989854534,
+          "uno_c_24m": 0.5959291687403604,
+          "auc_24m": 0.6026743930269007,
+          "calibration_in_the_large_24m": -0.06233579650989375,
+          "calibration_slope_24m": 0.7425988085951261,
+          "mean_predicted_risk_24m": 0.3497634980339568
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.006559616793741119,
+          "harrell_c": 0.04141064845245923,
+          "uno_c_24m": 0.04816476861982588,
+          "auc_24m": 0.06753862689192092,
+          "calibration_in_the_large_24m": -0.04866770498670993,
+          "calibration_slope_24m": 0.3302410338235926,
+          "mean_predicted_risk_24m": 0.0104348876614892
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22214224312252803,
+          "harrell_c": 0.5761552970763911,
+          "uno_c_24m": 0.5631857879733944,
+          "auc_24m": 0.5516123494152562,
+          "calibration_in_the_large_24m": -0.021191862149903703,
+          "calibration_slope_24m": 0.6735250826737793,
+          "mean_predicted_risk_24m": 0.3414060198165625
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21609762230475243,
+          "harrell_c": 0.6124003315138178,
+          "uno_c_24m": 0.6016054559044038,
+          "auc_24m": 0.6072901490590582,
+          "calibration_in_the_large_24m": -0.0837346008525551,
+          "calibration_slope_24m": 0.8218161743401537,
+          "mean_predicted_risk_24m": 0.35363185426126975
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.006044620817775598,
+          "harrell_c": 0.03624503443742666,
+          "uno_c_24m": 0.03841966793100948,
+          "auc_24m": 0.05567779964380204,
+          "calibration_in_the_large_24m": -0.0625427387026514,
+          "calibration_slope_24m": 0.14829109166637444,
+          "mean_predicted_risk_24m": 0.012225834444707262
+        }
+      }
+    ],
+    "across_seed_summary": {
+      "ipcw_brier_24m": {
+        "V0_mean": 0.22179537380610478,
+        "T1R_mean": 0.21805799693530967,
+        "mean_delta_T1R_minus_V0": -0.003737376870795145,
+        "delta_sample_sd": 0.003734348493020786,
+        "T1R_better_seed_count": 4
+      },
+      "harrell_c": {
+        "V0_mean": 0.5772813009059472,
+        "T1R_mean": 0.6059186647995198,
+        "mean_delta_T1R_minus_V0": 0.028637363893572586,
+        "delta_sample_sd": 0.015115815750548168,
+        "T1R_better_seed_count": 5
+      },
+      "uno_c_24m": {
+        "V0_mean": 0.5651994492963186,
+        "T1R_mean": 0.5972650957128951,
+        "mean_delta_T1R_minus_V0": 0.03206564641657652,
+        "delta_sample_sd": 0.015815755460271513,
+        "T1R_better_seed_count": 5
+      },
+      "auc_24m": {
+        "V0_mean": 0.5573624002457004,
+        "T1R_mean": 0.6002367881403916,
+        "mean_delta_T1R_minus_V0": 0.042874387894691265,
+        "delta_sample_sd": 0.020973214499339792,
+        "T1R_better_seed_count": 5
+      },
+      "calibration_in_the_large_24m": {
+        "V0_mean": -0.01807659685108847,
+        "T1R_mean": -0.06730891534316977,
+        "mean_delta_T1R_minus_V0": -0.049232318492081276,
+        "delta_sample_sd": 0.014601778195863406,
+        "T1R_better_seed_count": 0
+      },
+      "calibration_slope_24m": {
+        "V0_mean": 0.6788573693208845,
+        "T1R_mean": 0.7836403216330006,
+        "mean_delta_T1R_minus_V0": 0.10478295231211603,
+        "delta_sample_sd": 0.1977532122682498,
+        "T1R_better_seed_count": 4
+      },
+      "mean_predicted_risk_24m": {
+        "V0_mean": 0.34099811844401795,
+        "T1R_mean": 0.3505302743985641,
+        "mean_delta_T1R_minus_V0": 0.009532155954546095,
+        "delta_sample_sd": 0.0029079377583460025,
+        "T1R_better_seed_count": 5
+      }
+    },
+    "pattern_stratified_metrics": [
+      {
+        "repetition_seed": 17,
+        "acquisition_pattern": "transcriptome_present",
+        "n": 519,
+        "events": 221,
+        "metric_support": true,
+        "interpretation": "supported_exploratory",
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21937220835506313,
+          "harrell_c": 0.5880226343917008,
+          "uno_c_24m": 0.5773223163627427,
+          "auc_24m": 0.5741767790199156,
+          "calibration_in_the_large_24m": -0.006777456310891081,
+          "calibration_slope_24m": 0.911707387581408,
+          "mean_predicted_risk_24m": 0.3393286295646571
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21492884203169868,
+          "harrell_c": 0.6226744019890829,
+          "uno_c_24m": 0.615297447966101,
+          "auc_24m": 0.6161527806833311,
+          "calibration_in_the_large_24m": -0.046799211985136945,
+          "calibration_slope_24m": 1.0513911872113986,
+          "mean_predicted_risk_24m": 0.3458233307155271
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.0044433663233644505,
+          "uno_c_24m": 0.0379751316033583
+        }
+      },
+      {
+        "repetition_seed": 29,
+        "acquisition_pattern": "transcriptome_present",
+        "n": 519,
+        "events": 221,
+        "metric_support": true,
+        "interpretation": "supported_exploratory",
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22161886073352263,
+          "harrell_c": 0.5772841587836872,
+          "uno_c_24m": 0.5655846687895728,
+          "auc_24m": 0.5591111213124393,
+          "calibration_in_the_large_24m": -0.034091771800249936,
+          "calibration_slope_24m": 0.7146930435330253,
+          "mean_predicted_risk_24m": 0.34393432497726867
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.224332506975697,
+          "harrell_c": 0.580306364493727,
+          "uno_c_24m": 0.5719830139953398,
+          "auc_24m": 0.5710955563149495,
+          "calibration_in_the_large_24m": -0.09864854530318472,
+          "calibration_slope_24m": 0.4997399581456969,
+          "mean_predicted_risk_24m": 0.35604805482780955
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": 0.002713646242174378,
+          "uno_c_24m": 0.0063983452057669865
+        }
+      },
+      {
+        "repetition_seed": 43,
+        "acquisition_pattern": "transcriptome_present",
+        "n": 519,
+        "events": 221,
+        "metric_support": true,
+        "interpretation": "supported_exploratory",
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22091427971232588,
+          "harrell_c": 0.584414563744963,
+          "uno_c_24m": 0.5721400732353487,
+          "auc_24m": 0.566775985345911,
+          "calibration_in_the_large_24m": -0.014653802471213806,
+          "calibration_slope_24m": 0.6820035580446763,
+          "mean_predicted_risk_24m": 0.34099300748913414
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21656135305105695,
+          "harrell_c": 0.6122717270155182,
+          "uno_c_24m": 0.6015103919582706,
+          "auc_24m": 0.6039710616177187,
+          "calibration_in_the_large_24m": -0.04502642206507825,
+          "calibration_slope_24m": 0.8026554798726273,
+          "mean_predicted_risk_24m": 0.34738463415425724
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.0043529266612689355,
+          "uno_c_24m": 0.02937031872292195
+        }
+      },
+      {
+        "repetition_seed": 71,
+        "acquisition_pattern": "transcriptome_present",
+        "n": 519,
+        "events": 221,
+        "metric_support": true,
+        "interpretation": "supported_exploratory",
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22492927710708435,
+          "harrell_c": 0.5605298505329942,
+          "uno_c_24m": 0.5477644001205345,
+          "auc_24m": 0.5351357661349798,
+          "calibration_in_the_large_24m": -0.013668091523183826,
+          "calibration_slope_24m": 0.41235777477153346,
+          "mean_predicted_risk_24m": 0.3393286103724676
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21836966031334323,
+          "harrell_c": 0.6019404989854534,
+          "uno_c_24m": 0.5959291687403604,
+          "auc_24m": 0.6026743930269007,
+          "calibration_in_the_large_24m": -0.06233579650989375,
+          "calibration_slope_24m": 0.7425988085951261,
+          "mean_predicted_risk_24m": 0.3497634980339568
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.006559616793741119,
+          "uno_c_24m": 0.04816476861982588
+        }
+      },
+      {
+        "repetition_seed": 101,
+        "acquisition_pattern": "transcriptome_present",
+        "n": 519,
+        "events": 221,
+        "metric_support": true,
+        "interpretation": "supported_exploratory",
+        "V0": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.22214224312252803,
+          "harrell_c": 0.5761552970763911,
+          "uno_c_24m": 0.5631857879733944,
+          "auc_24m": 0.5516123494152562,
+          "calibration_in_the_large_24m": -0.021191862149903703,
+          "calibration_slope_24m": 0.6735250826737793,
+          "mean_predicted_risk_24m": 0.3414060198165625
+        },
+        "T1R": {
+          "n": 519.0,
+          "events": 221.0,
+          "ipcw_evaluable_weight": 518.6403624933307,
+          "ipcw_brier_24m": 0.21609762230475243,
+          "harrell_c": 0.6124003315138178,
+          "uno_c_24m": 0.6016054559044038,
+          "auc_24m": 0.6072901490590582,
+          "calibration_in_the_large_24m": -0.0837346008525551,
+          "calibration_slope_24m": 0.8218161743401537,
+          "mean_predicted_risk_24m": 0.35363185426126975
+        },
+        "delta_T1R_minus_V0": {
+          "ipcw_brier_24m": -0.006044620817775598,
+          "uno_c_24m": 0.03841966793100948
+        }
+      }
+    ],
+    "t1r_selection_frequency": [
+      {
+        "residual_penalty": 0.01,
+        "optimization_steps": 10,
+        "residual_scale": 0.3,
+        "outer_fold_count": 3
+      },
+      {
+        "residual_penalty": 0.01,
+        "optimization_steps": 10,
+        "residual_scale": 0.5,
+        "outer_fold_count": 7
+      },
+      {
+        "residual_penalty": 0.01,
+        "optimization_steps": 10,
+        "residual_scale": 1.0,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 0.01,
+        "optimization_steps": 25,
+        "residual_scale": 0.2,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 0.01,
+        "optimization_steps": 50,
+        "residual_scale": 0.1,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 0.1,
+        "optimization_steps": 10,
+        "residual_scale": 1.0,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 1.0,
+        "optimization_steps": 10,
+        "residual_scale": 0.5,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 1.0,
+        "optimization_steps": 10,
+        "residual_scale": 1.0,
+        "outer_fold_count": 6
+      },
+      {
+        "residual_penalty": 1.0,
+        "optimization_steps": 50,
+        "residual_scale": 0.4,
+        "outer_fold_count": 1
+      },
+      {
+        "residual_penalty": 1.0,
+        "optimization_steps": 50,
+        "residual_scale": 0.5,
+        "outer_fold_count": 3
+      }
+    ],
+    "anchor_selection_frequency": [
+      {
+        "alpha": 0.01,
+        "l1_ratio": 0.5,
+        "outer_fold_count": 3
+      },
+      {
+        "alpha": 0.01,
+        "l1_ratio": 0.9,
+        "outer_fold_count": 2
+      },
+      {
+        "alpha": 0.05,
+        "l1_ratio": 0.1,
+        "outer_fold_count": 12
+      },
+      {
+        "alpha": 0.05,
+        "l1_ratio": 0.5,
+        "outer_fold_count": 1
+      },
+      {
+        "alpha": 0.1,
+        "l1_ratio": 0.1,
+        "outer_fold_count": 5
+      },
+      {
+        "alpha": 0.1,
+        "l1_ratio": 0.5,
+        "outer_fold_count": 1
+      },
+      {
+        "alpha": 0.1,
+        "l1_ratio": 0.9,
+        "outer_fold_count": 1
+      }
+    ],
+    "parameter_count": 16065
+  },
+  "complexity_gate": {
+    "decision": "T1R_EARNS_COMPLEXITY",
+    "coverage": {
+      "V0": 1.0,
+      "T1R": 1.0,
+      "pass": true
+    },
+    "structural": {
+      "fallback_residual_max_abs_error": 0.0,
+      "fallback_fused_max_abs_error": 0.0,
+      "parameter_count": 16065,
+      "pass": true
+    },
+    "safety": {
+      "mean_delta_IPCW_Brier_24m": -0.003737376870795145,
+      "supported_pattern_worst_Brier_regret": 0.002713646242174378,
+      "mean_absolute_CITL_deterioration": 0.049232318492081296,
+      "mean_absolute_calibration_slope_error_deterioration": -0.08422647742755662,
+      "checks": {
+        "overall_brier_noninferiority": true,
+        "supported_pattern_regret": true,
+        "calibration_in_the_large": true,
+        "calibration_slope": true
+      },
+      "pass": true
+    },
+    "incremental_value": {
+      "mean_delta_Uno_C_24m": 0.03206564641657652,
+      "paths": [
+        {
+          "name": "probability_error",
+          "effect_size_pass": true,
+          "supporting_seed_count": 4,
+          "seed_stability_pass": true,
+          "path_pass": true
+        },
+        {
+          "name": "discrimination",
+          "effect_size_pass": true,
+          "supporting_seed_count": 5,
+          "seed_stability_pass": true,
+          "path_pass": true
+        }
+      ],
+      "pass": true
+    },
+    "all_required_gates_pass": true
+  },
+  "governance": {
+    "post_hoc_exploratory": true,
+    "outcomes_already_consumed": true,
+    "confirmatory_claim_allowed": false,
+    "external_validation_claim_allowed": false,
+    "phase6_outputs_overwritten": false,
+    "external_outcomes_used": false,
+    "tracked_artifacts_aggregate_only": true,
+    "patient_level_oof_git_ignored": true
+  },
+  "artifacts": {
+    "frozen_spec": "research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_transcriptome_spec.yaml",
+    "frozen_spec_sha256": "8627FBA2168A984E3E3E3087C3A3E1755410275E1965A33EF2A7CFD0510A69F3",
+    "frozen_gate": "research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_exploratory_gate.yaml",
+    "frozen_gate_sha256": "68E6851F15E4489AC1DD5975037A1A1D713288C159ABB3E9F7BB5FE58807806A",
+    "patient_oof_relative_path": "results/predictions/pattern_surv_hn/U8_T1R/t1r_repeated_nested_oof_predictions.csv",
+    "patient_oof_sha256": "BFEE9B84F1E27400D2C8A9D3573BA7ED72B24F2A1CA0E0DFFC0BB64FA013619C",
+    "patient_oof_tracked": false
+  },
+  "limitations": [
+    "Post-hoc exploratory method replication; Phase 6 TCGA outcomes were already seen.",
+    "Not a pristine locked confirmation and not external validation.",
+    "The acquisition-pattern gate collapses to the single transcriptome-present pattern.",
+    "Results are internal development estimates only."
+  ]
+}

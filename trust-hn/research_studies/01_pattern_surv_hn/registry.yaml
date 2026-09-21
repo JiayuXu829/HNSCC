@@ -1,9 +1,9 @@
-schema_version: '0.1'
+﻿schema_version: '0.1'
 study_id: pattern_surv_hn
 registered_on: '2026-08-13'
-status: U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_COMPLETED_POST_HOC
-current_step: U7R2 RADCURE external characterization completed; formal current-V1R confirmation remains pending a new outcome-untouched compatible cohort
-next_allowed_step: acquire a genuinely new current-V1R-compatible outcome-untouched cohort; alternatively retain RADCURE only as exploratory appendix characterization
+status: U8E_T1R_EXTERNAL_CHARACTERIZATION_SUPPLEMENT_INTEGRATED_POST_HOC
+current_step: U8E GEO post-hoc external characterization completed and integrated into supplement S11
+next_allowed_step: perform manuscript/supplement consistency and submission-readiness checks, or conclude paper work; preserve the post-hoc characterization boundary and make no external-validation or confirmatory claim
 study_governance:
   analysis_label: post_hoc_exploratory_rescue
   phase6_outcomes_already_seen: true
@@ -114,6 +114,17 @@ approvals:
     device: cpu
     requirements_file: core_backbone/U1_4_V1_trainable_smoke/requirements-pytorch-cpu.txt
     pyproject_modified: false
+  U8E_T1R_EXTERNAL_CHARACTERIZATION:
+    status: completed
+    approved_on: '2026-09-20'
+    completed_on: '2026-09-20'
+    approved_by: Researcher (chat approval)
+    approval_text: "\u5b9e\u9a8c\u4fa7\u8fdb\u884c\u6269\u5c55"
+    request_file: approvals/U8E_T1R_EXTERNAL_CHARACTERIZATION_APPROVED.md
+    authorization: U8E_T1R_EXTERNAL_CHARACTERIZATION_ONLY
+    external_outcome_use: post_hoc_evaluation_only
+    formal_external_validation_claim: false
+    confirmatory_claim: false
 immutable_references:
   unified_proposal:
     path: docs/HNSCC_PATTERNSurv_HN_unified_Q1_research_proposal.md
@@ -768,4 +779,83 @@ U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_outputs:
   formal_current_v1r_external_validation: false
   bridge_or_router_external_claim: false
   interpretation: adapted_clinical_radiomics_transportability_characterization_only
+U8_T1R_TRANSCRIPTOME_DEVELOPMENT_CV_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage
+  frozen_spec: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_transcriptome_spec.yaml
+  frozen_gate: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_exploratory_gate.yaml
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/aggregate_t1r_transcriptome_development_cv_audit.json
+  completed_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8_T1R_transcriptome_development_cv_completed.md
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/t1r_model.py, t1r_development_cv.py, t1r_runner.py, transcriptome_contract.py
+  tests: trust-hn/tests/test_pattern_surv_hn_t1r.py
+  patient_oof_relative_path: results/predictions/pattern_surv_hn/U8_T1R/t1r_repeated_nested_oof_predictions.csv
+  cohort: TCGA-HNSC_development
+  n: 519
+  events: 221
+  outer_folds: 5
+  inner_folds: 3
+  repetition_seeds: [17, 29, 43, 71, 101]
+  oof_rows: 2595
+  parameter_count: 16065
+  V0_mean_ipcw_brier_24m: 0.22179537380610478
+  T1R_mean_ipcw_brier_24m: 0.21805799693530967
+  mean_delta_ipcw_brier_24m: -0.003737376870795145
+  V0_mean_uno_c_24m: 0.5651994492963186
+  T1R_mean_uno_c_24m: 0.5972650957128951
+  mean_delta_uno_c_24m: 0.03206564641657652
+  brier_favourable_seed_count: 4
+  uno_c_favourable_seed_count: 5
+  coverage: 1.0
+  exact_fallback_error: 0.0
+  complexity_gate_decision: T1R_EARNS_COMPLEXITY
+  analysis_label: post_hoc_exploratory_rescue
+  confirmatory_claim_permitted: false
+  external_validation_claim_permitted: false
+  external_outcomes_used: false
+  paper_integration_status: supplement_integrated_post_hoc_exploratory_only
+  paper_integration_completed_on: '2026-09-20'
+  paper_integration_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8_paper_supplement_integration_completed.md
+  supplement_section: S10
+  interpretation: transcriptome_residual_shrinkage_method_replication_signal_internal_development_only
+U8E_T1R_EXTERNAL_CHARACTERIZATION_outputs:
+  protocol_directory: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization
+  frozen_protocol: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/frozen_u8e_t1r_external_characterization_protocol.yaml
+  approval_receipt: trust-hn/research_studies/01_pattern_surv_hn/approvals/U8E_T1R_EXTERNAL_CHARACTERIZATION_APPROVED.md
+  aggregate_audit: trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json
+  completed_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8E_T1R_external_characterization_completed.md
+  implementation: trust-hn/src/trust_hn/pattern_surv_hn/t1r_external_eval.py
+  tests: trust-hn/tests/test_pattern_surv_hn_t1r.py
+  patient_output_relative_path: results/predictions/pattern_surv_hn/U8_T1R_external
+  patient_output_tracked: false
+  external_seed: 20260907
+  parameter_count: 16065
+  selected_anchor_alpha: 0.05
+  selected_anchor_l1_ratio: 0.1
+  selected_residual_penalty: 1.0
+  selected_optimization_steps: 10
+  selected_residual_scale: 1.0
+  GSE65858_n: 244
+  GSE65858_events: 78
+  GSE65858_delta_ipcw_brier_24m: -0.00013689566385699514
+  GSE65858_delta_harrell_c: 0.06306231256247918
+  GSE65858_delta_uno_c_24m: 0.06212346127641977
+  GSE65858_delta_auc_24m: 0.061761815901195116
+  GSE41613_n: 97
+  GSE41613_events: 51
+  GSE41613_delta_ipcw_brier_24m: -0.0071042907569013325
+  GSE41613_delta_harrell_c: 0.12636103151862466
+  GSE41613_delta_uno_c_24m: 0.1160385513970218
+  GSE41613_delta_auc_24m: 0.13401063827464643
+  GSE41613_V0_reference_constant: true
+  coverage: 1.0
+  analysis_label: post_hoc_exploratory_external_characterization
+  external_outcomes_used_for_fitting_or_tuning: false
+  formal_external_validation_claim_permitted: false
+  confirmatory_claim_permitted: false
+  clinical_utility_claim_permitted: false
+  deployment_readiness_claimed: false
+  paper_integration_status: supplement_integrated_post_hoc_characterization_only
+  paper_integration_completed_on: '2026-09-20'
+  paper_integration_report: trust-hn/research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8E_paper_supplement_integration_completed.md
+  supplement_section: S11
+  interpretation: descriptive_t1r_geo_transport_characterization_only
 

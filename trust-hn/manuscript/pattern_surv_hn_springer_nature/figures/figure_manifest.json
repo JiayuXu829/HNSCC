@@ -1,0 +1,67 @@
+{
+  "standard": "npj Digital Medicine / Nature Portfolio style; 183 mm double-column width; Arial; vector PDF plus 600-dpi PNG",
+  "data_boundary": "All generated figures read aggregate JSON artifacts only; no patient-level predictions are included.",
+  "figures": [
+    {
+      "number": 1,
+      "file": "figure1_pattern_surv_hn_framework.pdf",
+      "source": "author-provided editable artwork",
+      "claim": "architecture; raw V1R is primary; bridge development-only; router exploratory"
+    },
+    {
+      "number": 2,
+      "file": "figure2_cohort_flow_acquisition_usability.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_1_data_contract/aggregate_contract_audit.json",
+      "claim": "descriptive cohort and availability/usability audit"
+    },
+    {
+      "number": 3,
+      "file": "figure3_v1r_development_performance_safety.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json",
+      "claim": "development-only repeated nested cross-fitting"
+    },
+    {
+      "number": 4,
+      "file": "figure4_calibration_bridge_development_and_transport.pdf",
+      "source": [
+        "trust-hn/paper/manuscript_results/V1R_positive/v1r_bridge_positive_results.json",
+        "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_aggregate_results.json"
+      ],
+      "claim": "U5R7 development-only; U5R8 failed calibration transport gates"
+    },
+    {
+      "number": 5,
+      "file": "figure5_locked_raw_v1r_confirmation.pdf",
+      "source": "trust-hn/paper/manuscript_results/V1R_positive/v1r_locked_confirmation_positive_results.json",
+      "claim": "locked outcome-untouched raw-V1R directional signal; intervals cross zero"
+    },
+    {
+      "number": 1,
+      "extended": true,
+      "file": "extended_data_figure1_router_exploration.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_aggregate_results.json",
+      "claim": "exploratory development router only"
+    },
+    {
+      "number": 2,
+      "extended": true,
+      "file": "extended_data_figure2_radcure_characterization.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_aggregate_results.json",
+      "claim": "descriptive adapted-comparator characterization, not current-V1R validation"
+    },
+    {
+      "number": 3,
+      "extended": true,
+      "file": "extended_data_figure3_t1r_transcriptome_replication.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/aggregate_t1r_transcriptome_development_cv_audit.json",
+      "claim": "post-hoc TCGA-HNSC method replication"
+    },
+    {
+      "number": 4,
+      "extended": true,
+      "file": "extended_data_figure4_geo_t1r_characterization.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json",
+      "claim": "post-hoc descriptive GEO characterization"
+    }
+  ]
+}

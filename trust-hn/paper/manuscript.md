@@ -1,6 +1,6 @@
 # Clinically anchored multimodal survival prediction under missing and unreliable evidence in head and neck cancer
 
-> **Living manuscript draft updated 27 August 2026.** PATTERN-Surv-HN uses V1R?the shrinkage-controlled residual backbone?as its multimodal fusion method and U5R7 as a separately evaluated development calibration bridge. Evidence comprises repeated nested development cross-fitting and a locked raw-V1R HANCOCK confirmation cohort. A later U5R8 run evaluated the frozen bridge only as a locked secondary post-unseal validation; it did not reproduce the development calibration gain and therefore is not presented as confirmed external calibration.
+> **Living manuscript draft updated 7 September 2026.** PATTERN-Surv-HN uses V1R?the shrinkage-controlled residual backbone?as its multimodal fusion method and U5R7 as a separately evaluated development calibration bridge. Evidence comprises repeated nested development cross-fitting and a locked raw-V1R HANCOCK confirmation cohort. A later U5R8 run evaluated the frozen bridge only as a locked secondary post-unseal validation; it did not reproduce the development calibration gain and therefore is not presented as confirmed external calibration.
 
 ## Abstract
 
@@ -13,6 +13,10 @@ HNSCC outcomes reflect anatomy, tumour and nodal burden, HPV-related biology, sm
 The clinically relevant question is therefore not whether a model can combine all recorded data, but whether optional evidence can safely modify a prediction that remains available when optional tests are absent. PATTERN-Surv-HN addresses this through a clinical anchor and a shrinkage-controlled residual set model. The anchor supplies a prediction for every eligible postoperative patient; optional blood, ICD and TMA evidence is encoded as an unordered set and is permitted to make only a controlled correction. A separate, monotone risk-scale layer can address calibration without changing patient ranking or fallback behaviour. The completed development analyses therefore distinguish incremental discrimination from absolute-risk calibration, while the locked confirmation analysis remains an outcome-untouched test of raw V1R.
 
 ## Results
+
+![Figure 1 | Clinically anchored residual fusion architecture for PATTERN-Surv-HN.](figures/figure1_pattern_surv_hn_framework.png)
+
+**Figure 1 | Clinically anchored residual fusion architecture for PATTERN-Surv-HN.** **a**, Postoperative clinical-pathological variables are encoded by an elastic-net Cox clinical anchor (V0). **b**, Usable blood, ICD and TMA measurements are represented as unordered modality-specific tokens, each augmented with modality identity, availability/usability status and quality indicators, and processed by a shared permutation-invariant Deep Sets residual encoder. **c**, The residual estimate is shrinkage-controlled and added to the V0 anchor to produce the raw V1R score; residual penalty, optimization checkpoint and fold-specific residual scale are selected within inner cross-validation. **d**, The primary prediction path is raw V1R with full coverage. If no optional modality is usable, the residual is exactly zero and the model returns the V0 prediction. A global monotone calibration bridge is shown as a development-only layer and is not part of the primary locked readout. A reliability-routing module is shown as an optional exploratory concept rather than a validated deployment component.
 
 ### V0 provides a full-coverage clinical reference
 
@@ -77,6 +81,10 @@ After the V1R protocol, model specification, inputs and pre-unseal predictions h
 | Coverage | 100% | 100% | 0 | preserved |
 
 The confirmation result is interpreted as a positive directional signal at the prespecified point-estimate level. Patient-level stratified bootstrap intervals crossed zero for delta Uno C (mean +0.021654; 95% interval -0.025965 to +0.070816) and delta IPCW Brier (mean -0.005222; 95% interval -0.012843 to +0.002171). Accordingly, confirmation supports consistency of raw-V1R direction but does not establish definitive superiority. U5R8 subsequently evaluated the frozen bridge after the raw confirmation outcome unsealing; because Brier, CITL and slope safety criteria failed despite preserved ranking and coverage, the bridge contributes no confirmed calibration claim.
+
+### Exploratory extensions do not alter the confirmation boundary
+
+Two additional analyses were performed as explicitly exploratory extensions and are reported separately from the core confirmation claim. First, a patient-level cross-fitted value router that selects raw V1R (FUSE) or V0 (FALLBACK) was evaluated on development repeated OOF predictions. Its best point estimate (reliability-augmented, threshold 0.60) reduced IPCW Brier24 versus V0 by 0.000506, but the 2,000-replicate bootstrap interval crossed zero and the router remained worse than direct raw V1R while not preserving exact global ranking. Second, an external characterization on the RADCURE held-out test split (626 patients, 110 events) described transportability of an adapted clinical/radiomics comparator set, with full coverage and generally strong discrimination. Because RADCURE does not reproduce the frozen current-V1R blood/ICD/TMA contract and its outcome was previously consumed, this is descriptive characterization, not external validation of current V1R. Neither analysis changes the primary raw-V1R confirmation boundary.
 
 ## Discussion
 
@@ -146,10 +154,16 @@ where supported patterns required at least 30 patients and 10 events. The U5R7 d
 
 Lower Brier and positive discrimination differences favour V1R; calibration-in-the-large is better when closer to 0 and calibration slope is better when closer to 1. The formal development OOF SHA256 was `E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0`. The locked confirmation protocol SHA256 was `1E134D30557D1CC153997F6EBB79E99C2E160F85A9F94BF3BBDD81C2C588BDED`, and the sealed prediction artifact SHA256 was `E5DA83BDB3BB97C3488687C78CCF166FBD03059619DD0690E2767CAF8F393FCF`. Patient-level predictions remain outside version control.
 
-## Figure framework
+## Figure assets
 
-**Figure 1: PATTERN-Surv-HN clinically anchored V1R framework, development calibration bridge and locked readout.** Left-to-right flow: (a) postoperative clinical-pathological anchor; (b) unordered usable blood/ICD/TMA tokens with quality indicators; (c) permutation-invariant residual encoder; (d) inner-CV-selected shrinkage; (e) raw V1R fused score; (f) exact clinical fallback when the optional set is empty; (g) the U5R7 global monotone logit bridge as a development-only calibration layer; and (h) a separate locked confirmation readout for raw V1R. The bridge-to-confirmation path should be labelled as a secondary post-unseal validation path whose calibration gates were not passed; the primary confirmation path remains raw V1R. The final figure will be drawn manually from the framework specification.
+Figure 1 uses the author-provided editable artwork and is available in publication-facing formats:
+
+- Editable source: `figures/figure1_pattern_surv_hn_framework.pptx`
+- Vector export: `figures/figure1_pattern_surv_hn_framework.pdf`
+- Raster export: `figures/figure1_pattern_surv_hn_framework.png`
+
+Figures 2 and 3 remain planned result/acquisition figures and should be generated from the aggregate artifacts rather than redrawn from unpublished patient-level data.
 
 ## Data and code availability
 
-The repository stores aggregate metrics, frozen specifications and audits. The publication-facing source of truth is `paper/manuscript_results/V1R_positive/`; detailed U5R parameter grids are retained under `paper/manuscript_results/appendix_candidates/`. Patient-level predictions remain outside version control. Dataset access, ethics wording, author metadata, references and final journal formatting remain to be completed.
+The repository stores aggregate metrics, frozen specifications and audits. The publication-facing source of truth is `paper/manuscript_results/V1R_positive/`; detailed U5R parameter grids, the U6R1 router exploration and the U7R2 RADCURE characterization are retained under `paper/manuscript_results/appendix_candidates/`. Patient-level predictions remain outside version control. Dataset access, ethics wording, author metadata, references and final journal formatting remain to be completed.

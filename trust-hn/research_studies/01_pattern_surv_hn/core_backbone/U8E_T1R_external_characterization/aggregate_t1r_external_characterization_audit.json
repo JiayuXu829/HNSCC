@@ -1,0 +1,143 @@
+{
+  "schema_version": "0.1",
+  "study_id": "pattern_surv_hn",
+  "stage_id": "U8E_T1R_EXTERNAL_CHARACTERIZATION",
+  "analysis_label": "post_hoc_exploratory_characterization",
+  "completed_on": "2026-09-20",
+  "model": {
+    "id": "T1R",
+    "name": "Clinical_Residual_Transcriptome_Cox_inner_selected_shrinkage",
+    "fitted_on": "TCGA-HNSC_full_development",
+    "external_seed": 20260907,
+    "selected_anchor_alpha": 0.05,
+    "selected_anchor_l1_ratio": 0.1,
+    "selected_residual_penalty": 1.0,
+    "selected_optimization_steps": 10,
+    "selected_residual_scale": 1.0,
+    "parameter_count": 16065
+  },
+  "cohorts": [
+    {
+      "cohort": "GSE65858",
+      "role": "external_test",
+      "n": 244,
+      "events": 78,
+      "selected_anchor_alpha": 0.05,
+      "selected_anchor_l1_ratio": 0.1,
+      "selected_residual_penalty": 1.0,
+      "selected_optimization_steps": 10,
+      "selected_residual_scale": 1.0,
+      "V0_metrics": {
+        "n": 244.0,
+        "events": 78.0,
+        "ipcw_evaluable_weight": 295.5791260534729,
+        "ipcw_brier_24m": 0.1952069305894827,
+        "harrell_c": 0.5818060646451183,
+        "uno_c_24m": 0.5836943178397177,
+        "auc_24m": 0.5889715176713323,
+        "calibration_in_the_large_24m": -0.7637925220285864,
+        "calibration_slope_24m": 1.707441962018532,
+        "mean_predicted_risk_24m": 0.3123356555282571
+      },
+      "T1R_metrics": {
+        "n": 244.0,
+        "events": 78.0,
+        "ipcw_evaluable_weight": 295.5791260534729,
+        "ipcw_brier_24m": 0.19507003492562572,
+        "harrell_c": 0.6448683772075975,
+        "uno_c_24m": 0.6458177791161375,
+        "auc_24m": 0.6507333335725274,
+        "calibration_in_the_large_24m": -0.831958937806278,
+        "calibration_slope_24m": 1.9415615681143314,
+        "mean_predicted_risk_24m": 0.3251655928587952
+      },
+      "delta_T1R_minus_V0": {
+        "ipcw_brier_24m": -0.00013689566385699514,
+        "harrell_c": 0.06306231256247918,
+        "uno_c_24m": 0.06212346127641977,
+        "auc_24m": 0.061761815901195116,
+        "calibration_in_the_large_24m": -0.06816641577769167,
+        "calibration_slope_24m": 0.23411960609579952,
+        "mean_predicted_risk_24m": 0.01282993733053811
+      }
+    },
+    {
+      "cohort": "GSE41613",
+      "role": "sensitivity",
+      "n": 97,
+      "events": 51,
+      "selected_anchor_alpha": 0.05,
+      "selected_anchor_l1_ratio": 0.1,
+      "selected_residual_penalty": 1.0,
+      "selected_optimization_steps": 10,
+      "selected_residual_scale": 1.0,
+      "V0_metrics": {
+        "n": 97.0,
+        "events": 51.0,
+        "ipcw_evaluable_weight": 131.72482018942654,
+        "ipcw_brier_24m": 0.2657116999840139,
+        "harrell_c": 0.5,
+        "uno_c_24m": 0.5,
+        "auc_24m": 0.5,
+        "calibration_in_the_large_24m": -0.27371669829080886,
+        "calibration_slope_24m": null,
+        "mean_predicted_risk_24m": 0.31628947228244736
+      },
+      "T1R_metrics": {
+        "n": 97.0,
+        "events": 51.0,
+        "ipcw_evaluable_weight": 131.72482018942654,
+        "ipcw_brier_24m": 0.25860740922711256,
+        "harrell_c": 0.6263610315186247,
+        "uno_c_24m": 0.6160385513970218,
+        "auc_24m": 0.6340106382746464,
+        "calibration_in_the_large_24m": -0.2647915277084243,
+        "calibration_slope_24m": 1.9390183243994603,
+        "mean_predicted_risk_24m": 0.3152923960755726
+      },
+      "delta_T1R_minus_V0": {
+        "ipcw_brier_24m": -0.0071042907569013325,
+        "harrell_c": 0.12636103151862466,
+        "uno_c_24m": 0.1160385513970218,
+        "auc_24m": 0.13401063827464643,
+        "calibration_in_the_large_24m": 0.008925170582384567,
+        "calibration_slope_24m": null,
+        "mean_predicted_risk_24m": -0.0009970762068747807
+      }
+    }
+  ],
+  "governance": {
+    "post_hoc_exploratory": true,
+    "outcomes_already_consumed": true,
+    "external_outcomes_used_for_fitting_or_tuning": false,
+    "external_validation_claim_allowed": false,
+    "confirmatory_claim_allowed": false,
+    "phase6_outputs_overwritten": false,
+    "tracked_artifacts_aggregate_only": true,
+    "patient_level_predictions_git_ignored": true
+  },
+  "artifacts": {
+    "frozen_spec": "research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_transcriptome_spec.yaml",
+    "frozen_spec_sha256": "8627FBA2168A984E3E3E3087C3A3E1755410275E1965A33EF2A7CFD0510A69F3",
+    "patient_output_relative_path": "results/predictions/pattern_surv_hn/U8_T1R_external",
+    "patient_predictions": [
+      {
+        "cohort": "GSE65858",
+        "relative_path": "results/predictions/pattern_surv_hn/U8_T1R_external/t1r_gse65858_external_predictions.csv",
+        "sha256": "BA6647354F30EBB50BFFA745D88295F0D3B5143465E59A84B0E6CF8685DCE4F3",
+        "tracked": false
+      },
+      {
+        "cohort": "GSE41613",
+        "relative_path": "results/predictions/pattern_surv_hn/U8_T1R_external/t1r_gse41613_external_predictions.csv",
+        "sha256": "2C839417C9851186E9A5FD1A829932471BC5F2BD419EA6281003468D6A28C4B5",
+        "tracked": false
+      }
+    ]
+  },
+  "limitations": [
+    "Descriptive external characterization only; not external validation.",
+    "GEO outcomes were previously consumed during Phase 6.",
+    "A single T1R fit on full TCGA development is applied without external refitting."
+  ]
+}

@@ -1,0 +1,87 @@
+﻿schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U8E_T1R_EXTERNAL_CHARACTERIZATION
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-09-20'
+approved_by: Researcher
+approval_text: '实验侧进行扩展'
+approval_scope: >-
+  Explicit authorization to run only the optional U8E GEO post-hoc characterization. This does
+  not authorize a confirmatory claim, formal external validation claim, clinical utility claim,
+  or promotion of T1R into the main manuscript conclusion.
+analysis_label: post_hoc_exploratory_external_characterization
+motivation: >-
+  Characterize descriptive transport of the frozen U8 T1R transcriptome residual-shrinkage
+  construction to the two available GEO cohorts. GEO outcomes were already consumed during
+  legacy Phase 6, so this stage cannot produce pristine or formal external validation.
+
+source_stage: U8_T1R_transcriptome_residual_shrinkage_development_cross_validation
+source_spec_relative_path: research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/frozen_t1r_transcriptome_spec.yaml
+source_spec_sha256: 8627fba2168a984e3e3e3087c3a3e1755410275e1965a33ef2a7cf0510a69f3
+implementation_relative_path: src/trust_hn/pattern_surv_hn/t1r_external_eval.py
+implementation_sha256: a773a9ecabc48a42d3077b46b28ef89a67c90d06187b3544e5052fdaaeaff1f1d
+implementation_checks:
+  ruff_check: PASS
+  targeted_t1r_pytest: 6 passed
+  checked_on: '2026-09-20'
+
+development_fit:
+  cohort: TCGA-HNSC_full_development
+  expected_n: 519
+  expected_events: 221
+  horizon_days: 730.5
+  clinical_anchor: cross_fitted_elastic_net_cox_7_clinical_vars
+  residual_head: Linear_500_to_32_Tanh_Linear_32_to_1
+  top_k: 500
+  external_seed: 20260907
+  selection: development_only_inner_cv
+  selected_on_external_outcomes: false
+  refit_after_external_evaluation: false
+
+external_application:
+  cohorts:
+    - id: GSE65858
+      expected_n: 244
+      expected_events: 78
+      role: external_test_post_hoc_characterization
+    - id: GSE41613
+      expected_n: 97
+      expected_events: 51
+      role: external_sensitivity_post_hoc_characterization
+  refitting_allowed: false
+  external_tuning_allowed: false
+  architecture_selection_allowed: false
+  threshold_selection_allowed: false
+  external_outcome_use: post_hoc_evaluation_only
+  external_outcomes_already_consumed_in_prior_work: true
+
+evaluation:
+  paired_reference: V0_clinical_anchor
+  metrics:
+    - IPCW_Brier_24m
+    - Harrell_C
+    - Uno_C_24m
+    - cumulative_dynamic_AUC_24m
+    - IPCW_logistic_calibration_in_the_large_24m
+    - IPCW_logistic_calibration_slope_24m
+  primary_presentation: cohort_level_aggregate_deltas
+  inferential_test_requested: false
+  multiple_testing_correction_requested: false
+
+outputs:
+  aggregate_audit_relative_path: research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json
+  patient_output_relative_path: results/predictions/pattern_surv_hn/U8_T1R_external
+  patient_output_tracked: false
+  patient_level_copy_to_research_or_paper_directories_allowed: false
+
+governance:
+  tracked_outputs_aggregate_only: true
+  post_hoc_exploratory: true
+  outcomes_already_consumed: true
+  external_outcomes_used_for_fitting_or_tuning: false
+  external_validation_claim_allowed: false
+  confirmatory_claim_allowed: false
+  clinical_utility_claim_allowed: false
+  deployment_readiness_claim_allowed: false
+  allowed_interpretation: descriptive_post_hoc_external_characterization_only
+  phase6_outputs_overwritten: false

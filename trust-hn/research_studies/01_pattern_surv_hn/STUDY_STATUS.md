@@ -1,7 +1,7 @@
-# PATTERN-Surv-HN Study Status
-**Date:** 2026-09-03
-**Current stage:** U7R2 RADCURE external characterization completed; formal current-V1R confirmation remains pending
-**Status:** `U7R2_RADCURE_EXTERNAL_CHARACTERIZATION_COMPLETED_POST_HOC`
+﻿# PATTERN-Surv-HN Study Status
+**Date:** 2026-09-20
+**Current stage:** U8E T1R GEO post-hoc external characterization completed and integrated into Supplement S11
+**Status:** `U8E_T1R_EXTERNAL_CHARACTERIZATION_SUPPLEMENT_INTEGRATED_POST_HOC`
 **???** `U5_V1R_CALIBRATION_BRIDGE_FAILURE_REVIEW_COMPLETED`
 **?????** `post_hoc_exploratory_rescue`
 
@@ -200,7 +200,7 @@ ranking                                 preserved exactly
 locked secondary validation             FAIL
 ```
 
-The bridge preserved the properties it was designed to preserve鈥攃overage and ordering鈥攂ut its development calibration improvement did not reproduce in this cohort. U5R7 remains valid development-only evidence and is not erased; it is not promoted to confirmed external calibration. Raw V1R remains the primary locked confirmation output.
+The bridge preserved the properties it was designed to preserve閳ユ攦overage and ordering閳ユ攤ut its development calibration improvement did not reproduce in this cohort. U5R7 remains valid development-only evidence and is not erased; it is not promoted to confirmed external calibration. Raw V1R remains the primary locked confirmation output.
 
 Artifacts:
 
@@ -281,7 +281,7 @@ V0 IPCW Brier                                           0.124968
 FUSE q>=0.40 router Brier                               0.124619 (delta vs V0 -0.000349)
 FUSE q>=0.50 router Brier                               0.124619 (delta vs V0 -0.000350)
 FUSE q>=0.60 router Brier                               0.124622 (delta vs V0 -0.000346)
-FUSE rate                                               56.2%–61.2%
+FUSE rate                                               56.2%鈥?1.2%
 coverage                                                100%
 patient-cluster bootstrap CI for delta vs V0            crossed zero for all thresholds
 ```
@@ -313,3 +313,78 @@ Artifacts:
 - `research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/`
 - `scripts/run_u7r2_radcure_external_characterization.py`
 - `reports/2026-09-03_step_U7R2_RADCURE_external_characterization_completed.md`
+## U8 T1R transcriptome residual-shrinkage development CV
+
+U8 executed the frozen T1R method-replication experiment on TCGA-HNSC development data. T1R used a fold-fitted seven-variable elastic-net Cox clinical anchor plus a two-layer Tanh residual head over fold-bound top-500 gene ranks, with residual penalty, optimization checkpoint, and shrinkage selected in inner CV.
+
+```text
+cohort                                  TCGA-HNSC development
+patients / events                       519 / 221
+outer / inner folds                     5 / 3
+repetition seeds                        17, 29, 43, 71, 101
+OOF rows / coverage                      2595 / 100%
+trainable parameters                    16065
+exact clinical fallback error           0.0
+
+V0 mean IPCW Brier24                    0.221795
+T1R mean IPCW Brier24                   0.218058
+mean delta IPCW Brier24                -0.003737  (better in 4/5 seeds)
+
+V0 mean Uno C24                         0.565199
+T1R mean Uno C24                        0.597265
+mean delta Uno C24                     +0.032066  (better in 5/5 seeds)
+
+V0 mean AUC24                           0.557362
+T1R mean AUC24                          0.600236
+mean delta AUC24                       +0.042874  (better in 5/5 seeds)
+
+worst supported-pattern Brier regret    +0.002714
+frozen complexity gate                  PASS
+decision                                T1R_EARNS_COMPLEXITY
+```
+
+Because TCGA outcomes were already consumed, this is **post-hoc exploratory method replication**, not pristine confirmation. It does not establish external generalization, transportability, clinical utility, deployment readiness, or confirmatory superiority. T1R should not replace the existing V1R backbone or locked confirmation narrative without an explicit paper-integration decision; if included, the safest placement is a clearly labelled supplement or appendix.
+
+The GEO application script was not run as part of U8 itself. It was subsequently executed as separately authorized U8E; see the U8E section below. That use of previously consumed GEO outcomes remains non-confirmatory and cannot be described as formal external validation.
+
+Artifacts:
+
+- `research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/`
+- `research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8_T1R_transcriptome_development_cv_completed.md`
+- `tests/test_pattern_surv_hn_t1r.py`
+- Patient OOF remains git-ignored under `results/predictions/pattern_surv_hn/U8_T1R/`
+## U8E T1R GEO post-hoc external characterization
+
+U8E fitted the frozen T1R construction once on the full TCGA-HNSC development cohort (`n=519`, events `221`) and applied it without external refitting or tuning to both available GEO cohorts. Development-only selection chose anchor alpha `0.05`, L1 ratio `0.1`, residual penalty `1.0`, optimization checkpoint step `10`, and residual scale `1.0`; the model has `16065` parameters.
+
+```text
+GSE65858 (n=244, events=78):
+  IPCW Brier24   0.195207 -> 0.195070; delta -0.000137
+  Harrell C      0.581806 -> 0.644868; delta +0.063062
+  Uno C24        0.583694 -> 0.645818; delta +0.062123
+  AUC24          0.588972 -> 0.650733; delta +0.061762
+  CITL24        -0.763793 -> -0.831959; delta -0.068166
+  slope24        1.707442 -> 1.941562; delta +0.234120
+
+GSE41613 (n=97, events=51):
+  IPCW Brier24   0.265712 -> 0.258607; delta -0.007104
+  Harrell C      0.500000 -> 0.626361; delta +0.126361
+  Uno C24        0.500000 -> 0.616039; delta +0.116039
+  AUC24          0.500000 -> 0.634011; delta +0.134011
+  CITL24        -0.273717 -> -0.264792; delta +0.008925
+  V0 slope       undefined; T1R slope 1.939018
+```
+
+Aggregate Brier and discrimination deltas were favorable in both cohorts. Calibration was mixed in GSE65858: T1R moved CITL farther from zero and calibration slope farther from 1. In GSE41613, the applied V0 anchor was constant, making it a degenerate ranking reference. GEO outcomes were already consumed during Phase 6 and no inferential test was requested. Therefore U8E is **descriptive post-hoc external characterization only**, not formal external validation, confirmation, clinical utility, or deployment readiness. It does not replace the existing V1R/HANCOCK confirmation narrative.
+
+Artifacts:
+
+- `research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/`
+- `research_studies/01_pattern_surv_hn/approvals/U8E_T1R_EXTERNAL_CHARACTERIZATION_APPROVED.md`
+- `research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8E_T1R_external_characterization_completed.md`
+- `src/trust_hn/pattern_surv_hn/t1r_external_eval.py`
+- Patient predictions remain git-ignored under `results/predictions/pattern_surv_hn/U8_T1R_external/`
+- Supplement integration is complete in `paper/supplement.md`, Supplementary Methods and Table S11.
+- Integration report: `research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8E_paper_supplement_integration_completed.md`
+- The supplementary narrative emphasizes the consistent favorable Brier and discrimination direction across GEO cohorts while preserving the post-hoc characterization boundary.
+

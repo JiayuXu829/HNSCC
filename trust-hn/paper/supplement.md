@@ -1,6 +1,6 @@
-# PATTERN-Surv-HN Supplementary Information: V1R development, U5R7 calibration bridge, U5R8 secondary validation and locked confirmation
+﻿# PATTERN-Surv-HN Supplementary Information: V1R development, U5R7 calibration bridge, U5R8 secondary validation, U6R1 router exploration, RADCURE external characterization, U8 transcriptome method replication and U8E GEO characterization
 
-> Updated 27 August 2026. This supplement documents the aggregate results carried into the manuscript from the V1R development, U5R7 development-only bridge, U5R8 locked secondary validation and locked raw-V1R confirmation stages. Patient-level predictions remain Git-ignored. U5R7 is exploratory development evidence; U5R8 did not pass its bridge safety gates and is not presented as confirmed external calibration or definitive superiority.
+> Updated 20 September 2026. This supplement documents the aggregate results carried into the manuscript from the V1R development, U5R7 development-only bridge, U5R8 locked secondary validation, locked raw-V1R confirmation, U6R1 patient-level router exploration, U7R2 RADCURE external characterization, U8 T1R transcriptome method-replication and U8E GEO characterization stages. Patient-level predictions remain Git-ignored. U5R7 is exploratory development evidence; U5R8 did not pass its bridge safety gates and is not presented as confirmed external calibration or definitive superiority. U6R1 and U7R2 are exploratory and are not presented as external validation. U8 is an internal post-hoc exploratory analysis; U8E is a separately executed post-hoc GEO characterization that provides directionally consistent descriptive evidence while complementing, rather than replacing, the locked confirmation narrative.
 
 ## Supplementary Methods S1: V1R cross-fitting
 
@@ -104,4 +104,109 @@ The formal V1R development patient-level OOF SHA256 was `E43BB6C0D8E2C7F9C8B22A9
 
 ## Supplementary Methods S7: Framework figure specification
 
-The main framework figure should contain: (a) clinical anchor; (b) usable blood, ICD and TMA set tokens; (c) permutation-invariant residual encoder; (d) inner-CV-selected shrinkage; (e) raw V1R fused score; (f) exact clinical fallback for an empty set; (g) completed U5R7 global monotone logit bridge labelled development-only; (h) locked raw-V1R confirmation readout; and (i) a bridge-to-confirmation path labelled secondary post-unseal validation with failed calibration gates, while keeping raw V1R as the primary confirmation readout. Router and clinical-utility modules remain future work.
+The main framework figure should contain: (a) clinical anchor; (b) usable blood, ICD and TMA set tokens; (c) permutation-invariant residual encoder; (d) inner-CV-selected shrinkage; (e) raw V1R fused score; (f) exact clinical fallback for an empty set; (g) completed U5R7 global monotone logit bridge labelled development-only; (h) locked raw-V1R confirmation readout; and (i) a bridge-to-confirmation path labelled secondary post-unseal validation with failed calibration gates, while keeping raw V1R as the primary confirmation readout. Router exploration is documented in S8; clinical-utility analysis remains future work.
+
+## Supplementary Methods S8: U6R1 patient-level router exploration
+
+A value router was explored as a development-only mechanism that selects raw V1R (`FUSE`) or the V0 clinical anchor (`FALLBACK`) per patient. Repeated V0 and V1R OOF predictions were first averaged to one row per patient, then a five-fold patient-level cross-fitted logistic router (fixed `C=0.5`) was trained. A reliability-augmented feature set added the across-repetition SD of V0 risk, V1R risk and risk delta. Thresholds 0.40, 0.50 and 0.60 were fixed before readout and all reported. No official-test, confirmation or external outcomes were read.
+
+Patient-aggregated references: V0 IPCW Brier24 0.123927; raw V1R 0.122765 (delta -0.001162).
+
+| Policy | FUSE rate | IPCW Brier24 | 螖 vs V0 | 螖 vs raw V1R | Rank concordance vs raw V1R |
+|---|---:|---:|---:|---:|---:|
+| V0 | 0.0% | 0.123927 | 0 | +0.001162 | 0.867 |
+| raw V1R | 100.0% | 0.122765 | -0.001162 | 0 | 1.000 |
+| core router, q鈮?.40 | 66.1% | 0.123545 | -0.000382 | +0.000780 | 0.945 |
+| core router, q鈮?.50 | 54.1% | 0.123511 | -0.000416 | +0.000746 | 0.939 |
+| core router, q鈮?.60 | 40.3% | 0.123585 | -0.000341 | +0.000821 | 0.928 |
+| reliability router, q鈮?.40 | 67.0% | 0.123648 | -0.000279 | +0.000883 | 0.946 |
+| reliability router, q鈮?.50 | 54.8% | 0.123508 | -0.000419 | +0.000743 | 0.938 |
+| reliability router, q鈮?.60 | 42.6% | 0.123421 | -0.000506 | +0.000657 | 0.929 |
+
+The best point estimate (reliability router, threshold 0.60) gave 螖 Brier versus V0 of -0.000506; in a 2,000-replicate patient bootstrap the 95% interval was approximately -0.00162 to +0.00076, crossing zero. The router remained worse than raw V1R at the point estimate and did not preserve the exact global V1R ranking. Coverage was 100% for all policies because FALLBACK always returned a V0 prediction.
+
+Interpretation: patient-level aggregation and reliability features slightly improved the exploratory point estimate against V0, but the router remained uncertain and below direct raw V1R. Selective routing is therefore retained as a hypothesis-generating extension, not a validated backbone, ranking-preserving policy, or deployment mechanism.
+
+## Supplementary Methods S9: U7R2 RADCURE external characterization
+
+U7 froze the intake criteria and analysis order for a future formal current-V1R external confirmation before any qualifying cohort was selected. The local inventory contains no cohort that is simultaneously current-V1R-compatible and certified outcome-untouched, so no new external confirmation could be executed. RADCURE was selected as the best available cohort for an honest external characterization of an adapted clinical/radiomics comparator set, explicitly separated from the current-V1R claim.
+
+RADCURE held-out test split: 626 patients, 110 events, 100% coverage.
+
+| Comparator | IPCW Brier | Uno C | 24-month AUC | Harrell C | CITL | Calibration slope |
+|---|---:|---:|---:|---:|---:|---:|
+| C1 | 0.095801 | 0.806595 | 0.819376 | 0.795924 | -0.097110 | 1.950857 |
+| C2 | 0.090683 | 0.806744 | 0.818182 | 0.797862 | -0.044444 | 1.139466 |
+| C3 | 0.098469 | 0.771260 | 0.780742 | 0.761632 | -0.099603 | 1.268349 |
+| C4 | 0.097403 | 0.779243 | 0.787882 | 0.768812 | -0.074520 | 1.471544 |
+
+RADCURE does not reproduce the frozen current-V1R blood/ICD/TMA input contract, its outcome was previously consumed, and the held-out test split is not a newly acquired outcome-untouched cohort. The comparator set is adapted clinical/radiomics, not the current V1R residual-shrinkage ensemble. These results are therefore descriptive transportability characterization only; they do not constitute formal external validation of current V1R, its fixed bridge, or a router, and no RADCURE outcome was used to tune any model, bridge, router, threshold, or safety gate.
+
+## Supplementary Methods S10: U8 T1R transcriptome residual-shrinkage method replication
+
+U8 was a post-hoc exploratory analysis asking whether the residual-shrinkage design used by V1R can be transferred from the HANCOCK blood/ICD/TMA input contract to a single dense transcriptome modality. It was run only in the TCGA-HNSC development cohort after TCGA outcomes had already been consumed. The purpose was internal method replication, not a new backbone decision and not an external test.
+
+The analysis contained 519 patients and 221 events at a 730.5-day (approximately 24-month) horizon. The clinical anchor (`V0`) was a fold-fitted elastic-net Cox model using seven variables: age, sex, site, stage, HPV status, treatment and smoking. The transcriptome contained 14,417 common genes represented as within-sample gene ranks; in each training fold, variance selection retained the top 500 genes. The residual head was `Linear(500 -> 32) -> Tanh -> Linear(32 -> 1)`, and the fused score was
+
+\[
+\eta_{\mathrm{T1R},i}=\eta_{\mathrm{V0},i}+\lambda_f\Delta\eta_{\mathrm{transcriptome},i}.
+\]
+
+Repeated nested cross-fitting used five outer folds, three inner folds and repetition seeds 17, 29, 43, 71 and 101. Clinical preprocessing, gene selection, residual fitting, anchor selection, residual-penalty selection, optimization-checkpoint selection, shrinkage-scale selection and Breslow baseline-hazard estimation were confined to the corresponding training fold. The residual penalty, checkpoint and shrinkage scale were selected only by inner CV. The architecture was frozen before execution. The transcriptome residual head contained 16,065 trainable parameters (below the frozen 50,000 ceiling); the complete run produced 2,595 OOF rows with complete coverage and an exact fallback error of 0.0.
+
+### Supplementary Table S10.1: U8 development aggregate result
+
+| Metric | V0 anchor | T1R | T1R minus V0 | Favorable seeds |
+|---|---:|---:|---:|---:|
+| IPCW Brier at 24 months | 0.221795 | 0.218058 | -0.003737 | 4/5 |
+| Harrell C | 0.577281 | 0.605919 | +0.028637 | 5/5 |
+| Uno C at 24 months | 0.565199 | 0.597265 | +0.032066 | 5/5 |
+| Time-dependent AUC at 24 months | 0.557362 | 0.600236 | +0.042874 | 5/5 |
+
+### Supplementary Table S10.2: U8 per-seed paired changes
+
+| Repetition seed | Delta IPCW Brier at 24 months | Delta Uno C at 24 months |
+|---:|---:|---:|
+| 17 | -0.004443 | +0.037975 |
+| 29 | +0.002714 | +0.006398 |
+| 43 | -0.004353 | +0.029370 |
+| 71 | -0.006560 | +0.048165 |
+| 101 | -0.006045 | +0.038420 |
+
+The frozen exploratory gate required preserved coverage, structural safety, Brier safety, calibration safety and at least one incremental-value path. The observed worst supported-pattern Brier regret was +0.002714 (ceiling +0.020); mean absolute CITL deterioration was +0.049232 (ceiling +0.100); and mean absolute calibration-slope-error deterioration was -0.084226 (ceiling +0.150). Both probability-error and discrimination paths met their seed-stability requirements. The frozen gate therefore returned `T1R_EARNS_COMPLEXITY`, but that decision authorizes only the stated internal exploratory interpretation.
+
+T1R showed a directionally favourable internal exploratory signal, with improved discrimination in all five repetition seeds and a small mean Brier improvement in four of five seeds. Because TCGA outcomes had already been consumed, this analysis does not establish pristine confirmation, confirmatory superiority, external validity, transportability, clinical utility or deployment readiness. It also does not replace the main V1R backbone, the locked raw-V1R confirmation readout, the U5R7 development-only bridge or the failed U5R8 secondary bridge readout. The acquisition-pattern gate collapses to the single transcriptome-present pattern. The GEO application was not part of the U8 development-CV authorization; its subsequent execution as the separately authorized U8E stage is reported in Supplementary Methods S11.
+
+Aggregate provenance is `research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/aggregate_t1r_transcriptome_development_cv_audit.json`. Patient-level U8 OOF predictions remain Git-ignored and are not reproduced in this supplement.
+## Supplementary Methods S11: U8E T1R GEO post-hoc cross-cohort characterization
+
+U8 established that residual-shrinkage learning can be adapted to a dense transcriptome modality within the TCGA-HNSC development cohort. U8E extended that observation by asking whether the transcriptomic residual signal retained a favorable direction when the model encountered tumor transcriptomes from independently assembled GEO cohorts.
+
+A single T1R model was fitted on the complete TCGA-HNSC development cohort (`n=519`; 221 events). All selections were completed before application: development-only inner cross-validation selected an elastic-net anchor with alpha 0.05 and L1 ratio 0.1, residual penalty 1.0, optimization checkpoint 10 and residual scale 1.0. The resulting model contained 16,065 trainable parameters and used the frozen `Linear(500 -> 32) -> Tanh -> Linear(32 -> 1)` transcriptome residual head. It was then applied without external refitting, external tuning, threshold selection or outcome-dependent selection to GSE65858 (`n=244`; 78 events) and GSE41613 (`n=97`; 51 events). Coverage was complete in both cohorts.
+
+### Supplementary Table S11.1: U8E aggregate GEO characterization
+
+| Cohort and metric | V0 clinical anchor | T1R | T1R minus V0 |
+|---|---:|---:|---:|
+| **GSE65858 (n=244; 78 events)** | | | |
+| IPCW Brier at 24 months | 0.195207 | 0.195070 | -0.000137 |
+| Harrell C | 0.581806 | 0.644868 | +0.063062 |
+| Uno C at 24 months | 0.583694 | 0.645818 | +0.062123 |
+| Time-dependent AUC at 24 months | 0.588972 | 0.650733 | +0.061762 |
+| Calibration in the large at 24 months | -0.763793 | -0.831959 | -0.068166 |
+| Calibration slope at 24 months | 1.707442 | 1.941562 | +0.234120 |
+| **GSE41613 (n=97; 51 events)** | | | |
+| IPCW Brier at 24 months | 0.265712 | 0.258607 | -0.007104 |
+| Harrell C | 0.500000 | 0.626361 | +0.126361 |
+| Uno C at 24 months | 0.500000 | 0.616039 | +0.116039 |
+| Time-dependent AUC at 24 months | 0.500000 | 0.634011 | +0.134011 |
+| Calibration in the large at 24 months | -0.273717 | -0.264792 | +0.008925 |
+| Calibration slope at 24 months | — | 1.939018 | — |
+
+In GSE65858, T1R improved both the 24-month probability score and every discrimination measure relative to the clinical anchor. The pattern was also apparent in GSE41613, where the applied clinical anchor contained no cross-patient variation and T1R restored patient-level risk ordering, yielding a Harrell C of 0.626 and a 24-month AUC of 0.634. Calibration slopes above one in the T1R analyses indicate that predicted-risk dispersion remained compressed relative to observed outcomes, pointing to cohort-level recalibration as a natural next step for future prospective evaluation.
+
+Across two independently assembled transcriptomic cohorts, the direction of change was favorable for IPCW Brier score, Harrell C, Uno C and time-dependent AUC. This consistency strengthens the biological plausibility of the U8 finding: transcriptome residual learning can identify prognostic structure beyond a conventional clinical anchor and can retain a visible signal after transport across data sources and platforms.
+
+Because GEO outcomes had contributed to earlier Phase 6 analyses, U8E is presented as post-hoc cross-cohort characterization rather than formal external validation. Its role is to enrich the internal U8 signal with concordant descriptive GEO evidence and to motivate evaluation in an outcome-untouched cohort with prospectively frozen predictions. Patient-level U8E predictions remain Git-ignored and are not reproduced here.
+
+Aggregate provenance is `research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json`.
