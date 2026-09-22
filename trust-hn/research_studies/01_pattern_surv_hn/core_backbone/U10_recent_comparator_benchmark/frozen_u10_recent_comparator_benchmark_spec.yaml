@@ -1,0 +1,92 @@
+schema_version: '0.1'
+study_id: pattern_surv_hn
+stage: U10_recent_comparator_benchmark
+status: FROZEN_BEFORE_EXECUTION
+frozen_on: '2026-09-22'
+analysis_label: post_hoc_exploratory_recent_method_benchmark
+population:
+  cohort: HANCOCK_official_training
+  expected_n: 610
+  expected_events: 173
+endpoint:
+  horizon_days: 730.5
+cross_fitting:
+  outer_folds: 5
+  outer_repetition_seeds: [17, 29, 43, 71, 101]
+  fold_source: results/predictions/pattern_surv_hn/U2_V1R/v1_repeated_nested_oof_predictions.csv
+  preprocessing_fit_inside_outer_training_fold: true
+methods:
+  EARLY_FUSION:
+    label: Early feature fusion (adapted)
+    citation_key: zheng2026
+    representation_dim: 32
+    intervals: 12
+    epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  LATE_FUSION:
+    label: Late decision fusion (adapted)
+    citation_key: ruffini2026
+    representation_dim: 32
+    intervals: 12
+    unimodal_epochs: 60
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  MASKED_ATTENTION:
+    label: Masked attention fusion (adapted)
+    citation_key: zheng2026
+    representation_dim: 32
+    intervals: 12
+    epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  BILINEAR_FUSION:
+    label: Bilinear interaction fusion (adapted)
+    citation_key: zheng2026
+    representation_dim: 32
+    intervals: 12
+    epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  RUFFINI2026:
+    label: Missing-aware intermediate fusion (adapted)
+    citation_key: ruffini2026
+    representation_dim: 32
+    intervals: 12
+    unimodal_epochs: 60
+    fusion_epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  HAF2026:
+    label: Heterogeneous aligned fusion (adapted)
+    citation_key: zheng2026
+    representation_dim: 32
+    alignment_dim: 24
+    intervals: 12
+    unimodal_epochs: 60
+    alignment_epochs: 50
+    fusion_epochs: 100
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    alignment_weight: 0.25
+    monotonic_weight: 0.20
+    modality_dropout: 0.35
+adaptation_boundary:
+  exact_original_reproduction: false
+  rationale: Original methods use imaging or seven-modality inputs not available in the frozen blood-ICD-TMA evidence contract.
+  retained_principles:
+    EARLY_FUSION: availability-aware concatenation before a shared survival head
+    LATE_FUSION: averaging independently supervised modality-specific hazard logits over available inputs
+    MASKED_ATTENTION: learned attention over available modality embeddings without alignment
+    BILINEAR_FUSION: low-rank pairwise interactions among available modality embeddings
+    RUFFINI2026: frozen modality encoders followed by mask-aware intermediate fusion
+    HAF2026: detached prognostic encoders, global latent alignment, and monotonic mask-robust fusion
+  outcome_head: censoring-aware discrete hazards at the shared 24-month estimand
+governance:
+  phase6_outcomes_already_seen: true
+  post_hoc_exploratory: true
+  confirmation_outcomes_used: false
+  retune_v1r: false
+  hyperparameters_changed_after_execution: false
+  patient_level_predictions_git_ignored: true
+  tracked_outputs_aggregate_only: true

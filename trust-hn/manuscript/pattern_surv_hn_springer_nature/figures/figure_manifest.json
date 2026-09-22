@@ -4,36 +4,36 @@
   "figures": [
     {
       "number": 1,
-      "file": "figure1_pattern_surv_hn_framework.pdf",
-      "source": "author-provided editable artwork",
-      "claim": "architecture; raw V1R is primary; bridge development-only; router exploratory"
-    },
-    {
-      "number": 2,
       "file": "figure2_cohort_flow_acquisition_usability.pdf",
       "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U1_1_data_contract/aggregate_contract_audit.json",
       "claim": "descriptive cohort and availability/usability audit"
     },
     {
-      "number": 3,
+      "number": 2,
       "file": "figure3_v1r_development_performance_safety.pdf",
       "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json",
       "claim": "development-only repeated nested cross-fitting"
     },
     {
-      "number": 4,
+      "number": 3,
       "file": "figure4_calibration_bridge_development_and_transport.pdf",
       "source": [
         "trust-hn/paper/manuscript_results/V1R_positive/v1r_bridge_positive_results.json",
         "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U5R8_V1R_beta09_logloss_bridge_confirmation_validation/u5r7_confirmation_bridge_aggregate_results.json"
       ],
-      "claim": "U5R7 development-only; U5R8 failed calibration transport gates"
+      "claim": "U5R7 development-only; U5R8 probability-scale transport estimates"
     },
     {
-      "number": 5,
+      "number": 4,
       "file": "figure5_locked_raw_v1r_confirmation.pdf",
       "source": "trust-hn/paper/manuscript_results/V1R_positive/v1r_locked_confirmation_positive_results.json",
       "claim": "locked outcome-untouched raw-V1R directional signal; intervals cross zero"
+    },
+    {
+      "number": 5,
+      "file": "figure1_pattern_surv_hn_framework.pdf",
+      "source": "publication diagram generated from the frozen method specification",
+      "claim": "Methods architecture; raw SCRF is primary; bridge development-only; router exploratory"
     },
     {
       "number": 1,
@@ -62,6 +62,23 @@
       "file": "extended_data_figure4_geo_t1r_characterization.pdf",
       "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json",
       "claim": "post-hoc descriptive GEO characterization"
+    },
+    {
+      "number": 5,
+      "extended": true,
+      "file": "extended_data_figure5_evidence_pattern_landscape.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U2_V1R_residual_shrinkage_rescue/aggregate_u2_v1r_rescue_audit.json",
+      "claim": "aggregate supported-pattern stability and inner-selection landscape"
+    },
+    {
+      "number": 6,
+      "extended": true,
+      "file": "extended_data_figure6_published_comparator_landscape.pdf",
+      "source": [
+        "trust-hn/results/metrics/pattern_surv_hn/U9_published_comparator_benchmark/u9_main_table_summary.csv",
+        "trust-hn/results/metrics/pattern_surv_hn/U10_recent_comparator_benchmark/u10_main_table_summary.csv"
+      ],
+      "claim": "post-hoc same-fold published-method performance and calibration landscape"
     }
   ]
 }

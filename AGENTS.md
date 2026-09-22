@@ -13,3 +13,8 @@
 - Use an external skill only when the user explicitly names it or explicitly asks to use external skills.
 - Built-in Codex system skills under `.codex/skills/.system` may still be used when required for the task.
 - This preference overrides any external skill instruction that says it must be invoked automatically at the start of every conversation.
+
+## Manuscript style
+
+- Write biomedical manuscripts in a journal-article style suitable for venues such as *npj Digital Medicine*, emphasizing claims supported by the evidence rather than using a technical-report checklist of advantages and disadvantages.
+- Preserve scientific integrity: do not hide stronger comparators, failed validations, uncertainty, or limitations. Frame the manuscript around the method's substantiated contribution and clinical relevance without overstating superiority.

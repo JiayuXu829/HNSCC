@@ -1,0 +1,8 @@
+{
+  "python": "3.11.9",
+  "numpy": "2.3.2",
+  "pandas": "2.3.1",
+  "scikit-learn": "1.7.1",
+  "pytorch": "2.12.1+cpu",
+  "note": "Stage-local receipt for the frozen U10 recent-comparator benchmark; global frozen Phase 6 dependency files were not modified."
+}

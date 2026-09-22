@@ -1,0 +1,9 @@
+{
+  "python": "3.11",
+  "pycox": "0.3.0",
+  "torchtuples": "0.2.2",
+  "scikit-survival": "0.25.0",
+  "xgboost": "3.0.3",
+  "pytorch": "2.12.1+cpu",
+  "note": "Stage-local receipt; global frozen Phase 6 dependency files were not modified."
+}
