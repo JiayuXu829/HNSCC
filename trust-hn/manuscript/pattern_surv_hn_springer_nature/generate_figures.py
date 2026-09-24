@@ -168,24 +168,27 @@ def figure2():
     ax = fig.add_subplot(gs[0, 0])
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
     boxes = [
-        (0.02, 0.75, "HANCOCK records", f"n={d['records']}"),
-        (0.02, 0.48, "Eligible postoperative", f"n={d['eligible']}"),
-        (0.02, 0.17, "Development", f"n={d['development_eligible']}; deaths={d['development_events']}"),
-        (0.65, 0.17, "Outcome-sealed cohort", f"n={d['outcome_sealed']}; deaths=40"),
+        (0.02, 0.75, 0.42, "HANCOCK records", f"n={d['records']}"),
+        (0.02, 0.48, 0.42, "Eligible\npostoperative cohort", f"n={d['eligible']}"),
+        (0.02, 0.17, 0.42, "Development", f"n={d['development_eligible']}; deaths={d['development_events']}"),
+        (0.57, 0.17, 0.41, "Outcome-sealed\ncohort", f"n={d['outcome_sealed']}; deaths=40"),
     ]
-    for x, y, title, detail in boxes:
+    for x, y, width, title, detail in boxes:
         col = COL_BLUE if x < 0.5 else COL_TEAL
-        ax.add_patch(FancyBboxPatch((x, y), 0.35 if x < 0.5 else 0.33, 0.16,
+        ax.add_patch(FancyBboxPatch((x, y), width, 0.16,
                                     boxstyle="round,pad=0.012,rounding_size=0.02",
                                     linewidth=0.65, edgecolor=col, facecolor="#F4F8FC"))
-        cx = x + (0.175 if x < 0.5 else 0.165)
-        ax.text(cx, y + 0.098, title, ha="center", va="center", fontsize=6.6, fontweight="bold", color=COL_DARK)
-        ax.text(cx, y + 0.042, detail, ha="center", va="center", fontsize=6.3, color=COL_GREY)
-    ax.text(0.20, 0.685, f"excluded n={d['excluded']}", fontsize=6.1, color=COL_RED, ha="center")
-    ax.add_patch(FancyArrowPatch((0.20, 0.745), (0.20, 0.655), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY))
-    ax.add_patch(FancyArrowPatch((0.20, 0.475), (0.20, 0.345), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY))
-    ax.add_patch(FancyArrowPatch((0.40, 0.25), (0.64, 0.25), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY, connectionstyle="arc3,rad=0.18"))
-    ax.text(0.525, 0.075, "Outcome sealed before confirmation prediction unsealing", ha="center", fontsize=6.0, color=COL_GREY)
+        cx = x + width / 2
+        title_y = y + (0.105 if "\n" not in title else 0.108)
+        ax.text(cx, title_y, title, ha="center", va="center", fontsize=6.1,
+                linespacing=0.94, fontweight="bold", color=COL_DARK)
+        ax.text(cx, y + 0.036, detail, ha="center", va="center", fontsize=5.9, color=COL_GREY)
+    ax.text(0.23, 0.685, f"excluded n={d['excluded']}", fontsize=5.9, color=COL_RED, ha="center")
+    ax.add_patch(FancyArrowPatch((0.23, 0.745), (0.23, 0.655), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY))
+    ax.add_patch(FancyArrowPatch((0.23, 0.475), (0.23, 0.345), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY))
+    ax.add_patch(FancyArrowPatch((0.45, 0.25), (0.56, 0.25), arrowstyle="-|>", mutation_scale=7, linewidth=0.7, color=COL_GREY, connectionstyle="arc3,rad=0.18"))
+    ax.text(0.50, 0.058, "Outcomes sealed before confirmation\nprediction unsealing",
+            ha="center", va="center", fontsize=5.4, linespacing=1.05, color=COL_GREY)
     panel(ax, "a")
 
     ax = fig.add_subplot(gs[0, 1:])
@@ -218,10 +221,14 @@ def figure2():
     for yi, (n, e, s) in enumerate(zip(ns, ev, supported)):
         ax.text(n + 4, yi - 0.19, str(int(n)), va="center", fontsize=6.0, color=COL_BLUE)
         ax.text(e + 4, yi + 0.19, str(int(e)), va="center", fontsize=6.0, color=COL_ORANGE)
-        if not s: ax.text(392, yi, "low support", va="center", ha="right", fontsize=5.8, color=COL_RED)
-    ax.set_yticks(yy, names); ax.set_xlabel("Development patients and exposed deaths"); ax.set_xlim(0, 410)
-    ax.legend(loc="lower right", ncol=2); ax.grid(axis="x", color="#E2E7ED", linewidth=0.45); ax.set_axisbelow(True)
-    ax.text(0.01, 1.06, "Blood-ICD-TMA usability tuple (1=usable)", transform=ax.transAxes, fontsize=6.2, color=COL_GREY)
+        if not s:
+            # Reserve a dedicated annotation column beyond the longest bars so
+            # low-support flags never collide with values or the series legend.
+            ax.text(428, yi, "low support", va="center", ha="right", fontsize=5.8, color=COL_RED)
+    ax.set_yticks(yy, names); ax.set_xlabel("Development patients and exposed deaths"); ax.set_xlim(0, 435)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.01), ncol=2, frameon=False, borderaxespad=0)
+    ax.grid(axis="x", color="#E2E7ED", linewidth=0.45); ax.set_axisbelow(True)
+    ax.text(0.01, 1.13, "Blood-ICD-TMA usability tuple (1=usable)", transform=ax.transAxes, fontsize=6.2, color=COL_GREY)
     panel(ax, "c")
 
     ax = fig.add_subplot(gs[1, 2])
@@ -247,7 +254,6 @@ def figure3():
     for i, (a, b) in enumerate(zip(v0, v1)): ax.plot([i, i], [a, b], color="#B8C4D2", linewidth=0.8, zorder=0)
     ax.set_xticks(xx, [m for m, _, _ in metrics], rotation=18, ha="right"); ax.set_ylabel("Mean over five seeds")
     ax.legend(loc="center left", bbox_to_anchor=(0.02, 0.48)); clean_axes(ax)
-    ax.text(0.02, 0.88, "Brier lower; discrimination higher", transform=ax.transAxes, fontsize=6.0, color=COL_GREY)
     panel(ax, "a")
 
     ax = fig.add_subplot(gs[0, 2:]); colors = [COL_BLUE, COL_ORANGE, COL_TEAL, COL_PURPLE]
@@ -268,7 +274,7 @@ def figure3():
 
     ax = fig.add_subplot(gs[1, 2:]); ax.axis("off")
     items = [("Coverage, anchor and SCRF", "100%", COL_TEAL), ("Empty-set residual error", "0", COL_TEAL),
-             ("Empty-set fused-score error", "0", COL_TEAL), ("Worst supported-pattern Brier regret", "+0.009848", COL_ORANGE),
+             ("Empty-set fused-score error", "0", COL_TEAL), ("Worst supported-pattern Brier regret", "+0.0098", COL_ORANGE),
              ("Prespecified no-harm boundary", "+0.020", COL_GREY)]
     for i, (label, val, col) in enumerate(items):
         y = 0.88 - i * 0.19
@@ -333,8 +339,9 @@ def figure4():
     ax.axvline(0, color=COL_DARK, linewidth=0.65)
     ax.hlines(yy, 0, changes, color=COL_ORANGE, linewidth=1.4)
     ax.scatter(changes, yy, s=28, color=COL_ORANGE, zorder=3)
-    for y, value in zip(yy, changes, strict=True):
-        ax.text(value + 0.008, y, f"{value:+.4f}", va="center", fontsize=6.2, color=COL_DARK)
+    for y, label, value in zip(yy, change_labels, changes, strict=True):
+        decimals = 4 if "Brier" in label else 3
+        ax.text(value + 0.008, y, f"{value:+.{decimals}f}", va="center", fontsize=6.2, color=COL_DARK)
     ax.set_yticks(yy, change_labels); ax.invert_yaxis(); ax.set_xlim(-0.03, 0.22)
     ax.set_xlabel("Change after frozen bridge (positive = larger error)")
     ax.grid(axis="x", color="#E2E7ED", linewidth=0.45); ax.set_axisbelow(True)
@@ -358,7 +365,8 @@ def figure5():
     for y, (label, b) in enumerate(rows):
         mean, lo, hi = b["mean"], b["ci95_lower"], b["ci95_upper"]; col = COL_TEAL if "Brier" in label else COL_BLUE
         ax.hlines(y, lo, hi, color=col, linewidth=1.5); ax.plot([lo, lo], [y - 0.10, y + 0.10], color=col, linewidth=1.2); ax.plot([hi, hi], [y - 0.10, y + 0.10], color=col, linewidth=1.2)
-        ax.scatter(mean, y, s=20, color=col, zorder=3); ax.text(hi + 0.006, y, f"{mean:+.4f}  [{lo:+.4f}, {hi:+.4f}]", va="center", fontsize=6.0, color=COL_DARK)
+        decimals = 4 if "Brier" in label else 3
+        ax.scatter(mean, y, s=20, color=col, zorder=3); ax.text(hi + 0.006, y, f"{mean:+.{decimals}f}  [{lo:+.{decimals}f}, {hi:+.{decimals}f}]", va="center", fontsize=6.0, color=COL_DARK)
     ax.axvline(0, color=COL_DARK, linewidth=0.7); ax.set_yticks(yy, [r[0] for r in rows]); ax.invert_yaxis(); ax.set_xlim(-0.085, 0.115)
     ax.set_xlabel("Raw SCRF − clinical anchor (bootstrap 95% interval)"); ax.grid(axis="x", color="#E2E7ED", linewidth=0.45); ax.set_axisbelow(True)
     ax.text(0.01, 1.06, "All intervals cross zero; estimates are directional", transform=ax.transAxes, fontsize=6.3, color=COL_GREY); panel(ax, "b")
@@ -408,12 +416,12 @@ def extfig2():
 
 def extfig3():
     d = load(U8); s = d["results"]["across_seed_summary"]; seeds = d["results"]["per_seed_metrics"]; gate = d["complexity_gate"]["decision"]
-    fig = plt.figure(figsize=(FULLW, 88 * MM)); gs = fig.add_gridspec(1, 3, width_ratios=[1.1, 1.3, 0.85], left=0.08, right=0.98, top=0.87, bottom=0.19, wspace=0.52)
+    fig = plt.figure(figsize=(FULLW, 92 * MM)); gs = fig.add_gridspec(1, 3, width_ratios=[1.05, 1.22, 1.18], left=0.08, right=0.98, top=0.87, bottom=0.19, wspace=0.50)
     ax = fig.add_subplot(gs[0, 0]); metrics = [("Brier24", "ipcw_brier_24m"), ("Uno C24", "uno_c_24m"), ("AUC24", "auc_24m")]
     xx = np.arange(len(metrics)); v0 = [s[k]["V0_mean"] for _, k in metrics]; t1 = [s[k]["T1R_mean"] for _, k in metrics]
     ax.plot(xx, v0, "o", ms=4, color=COL_GREY, label="Clinical anchor"); ax.plot(xx, t1, "o", ms=4, color=COL_PURPLE, label="tSCRF")
     for i in range(len(metrics)): ax.plot([i, i], [v0[i], t1[i]], color="#B8C4D2", linewidth=0.8)
-    ax.set_xticks(xx, [m for m, _ in metrics]); ax.set_ylabel("TCGA-HNSC mean"); ax.legend(loc="upper left"); clean_axes(ax); panel(ax, "a")
+    ax.set_xticks(xx, [m for m, _ in metrics]); ax.set_ylabel("TCGA-HNSC mean"); ax.legend(loc="center left", bbox_to_anchor=(0.02, 0.48)); clean_axes(ax); panel(ax, "a")
     ax = fig.add_subplot(gs[0, 1]); colors = [COL_BLUE, COL_PURPLE, COL_TEAL]
     for j, (_, key) in enumerate(metrics):
         vals = [z["delta_T1R_minus_V0"][key] for z in seeds]
@@ -421,9 +429,13 @@ def extfig3():
     ax.axhline(0, color=COL_DARK, linewidth=.65); ax.set_xticks(range(len(metrics)), [m for m, _ in metrics]); ax.set_ylabel("tSCRF − anchor")
     ax.grid(axis="y", color="#E2E7ED", linewidth=.45); ax.set_axisbelow(True); panel(ax, "b")
     ax = fig.add_subplot(gs[0, 2]); ax.axis("off")
-    facts = [("Cohort", f"n={d['estimand']['eligible_n']}"), ("Deaths", f"{d['estimand']['events']}"), ("Cross-fitting", "5×5 outer; inner 3-fold"), ("Complexity gate", gate.replace("_", " ").lower()), ("Claim boundary", "Post-hoc method replication")]
+    gate_label = "Residual model retained" if "EARNS_COMPLEXITY" in gate else "Clinical anchor retained"
+    facts = [("Cohort", f"n={d['estimand']['eligible_n']}"), ("Deaths", f"{d['estimand']['events']}"), ("Cross-fitting", "5×5 outer folds; 3 inner folds"), ("Complexity gate", gate_label), ("Claim boundary", "Post-hoc method replication")]
     for i, (a, b) in enumerate(facts):
-        y = .82 - i * .18; ax.text(.02, y, a, fontsize=6.4, color=COL_GREY, va="center"); ax.text(1.0, y, b, fontsize=6.5, color=COL_DARK, va="center", ha="right"); ax.hlines(y - .08, .02, 1, color="#E2E7ED", linewidth=.45)
+        y = .91 - i * .18
+        ax.text(.02, y, a, fontsize=5.9, color=COL_GREY, va="top")
+        ax.text(.02, y - .055, b, fontsize=6.25, color=COL_DARK, va="top", ha="left", wrap=True)
+        ax.hlines(y - .13, .02, 1, color="#E2E7ED", linewidth=.45)
     panel(ax, "c"); save(fig, "extended_data_figure3_t1r_transcriptome_replication")
 
 
@@ -440,7 +452,7 @@ def extfig4():
         a = abs(c["V0_metrics"]["calibration_in_the_large_24m"]); b = abs(c["T1R_metrics"]["calibration_in_the_large_24m"])
         ax.scatter(a, i, s=25, color=COL_GREY, label="CAM" if i == 0 else None); ax.scatter(b, i, s=25, color=COL_PURPLE, label="tSCRF" if i == 0 else None); ax.plot([a, b], [i, i], color="#B8C4D2", linewidth=.8)
     ax.set_yticks(range(len(cohorts)), [c["cohort"] for c in cohorts]); ax.set_xlabel("|Calibration-in-the-large| (closer to 0 is better)")
-    ax.grid(axis="x", color="#E2E7ED", linewidth=.45); ax.set_axisbelow(True); ax.legend(loc="lower right"); panel(ax, "b")
+    ax.grid(axis="x", color="#E2E7ED", linewidth=.45); ax.set_axisbelow(True); ax.legend(loc="center right"); panel(ax, "b")
     ax = fig.add_subplot(gs[0, 2]); ax.axis("off")
     for i, c in enumerate(cohorts):
         y = .80 - i * .35; ax.text(.0, y, c["cohort"], fontsize=7, fontweight="bold", color=COL_DARK); ax.text(.0, y-.10, f"n={c['n']}; deaths={c['events']}", fontsize=6.3, color=COL_GREY); ax.text(.0, y-.20, "Post-hoc descriptive characterization", fontsize=6.3, color=COL_RED)
@@ -569,15 +581,12 @@ def extfig6():
     ax = fig.add_subplot(gs[0, 2])
     colors = [COL_BLUE if m == "V1R" else (COL_PURPLE if m in {"EARLY_FUSION", "LATE_FUSION", "MASKED_ATTENTION", "BILINEAR_FUSION", "RUFFINI2026", "HAF2026"} else COL_GREY) for m in methods]
     ax.scatter(values[:, 0], values[:, 1], c=colors, s=23, edgecolor="white", linewidth=0.4, zorder=3)
-    annotation_offsets = {
-        "RSF": (4, 4), "ENCOX": (-2, -9), "V1R": (5, -3),
-        "MASKED_ATTENTION": (6, 7), "BILINEAR_FUSION": (7, -10),
-    }
     for i, m in enumerate(methods):
-        short = {"V1R": "SCRF", "RSF": "RSF", "ENCOX": "EN-Cox", "MASKED_ATTENTION": "MaskAttn", "BILINEAR_FUSION": "Bilinear"}.get(m)
-        if short:
-            ax.annotate(short, (values[i, 0], values[i, 1]), xytext=annotation_offsets[m],
-                        textcoords="offset points", fontsize=5.7)
+        if m == "V1R":
+            ax.annotate("SCRF", (values[i, 0], values[i, 1]), xytext=(14, -13),
+                        textcoords="offset points", fontsize=5.5,
+                        arrowprops={"arrowstyle": "-", "color": "#9AA8B8", "lw": 0.45},
+                        bbox={"boxstyle": "round,pad=0.12", "fc": "white", "ec": "none", "alpha": 0.88})
     ax.set_xlabel("IPCW Brier$_{24}$ (lower)")
     ax.set_ylabel("Uno C$_{24}$ (higher)")
     ax.grid(color="#E2E7ED", linewidth=0.45); ax.set_axisbelow(True)
@@ -602,21 +611,19 @@ def extfig6():
 
 
 def main():
-    source_fig = ROOT / "trust-hn/paper/figures/figure1_pattern_surv_hn_framework.pdf"
-    if source_fig.exists():
-        for ext in ("pdf", "png", "pptx"):
-            src = source_fig.with_suffix("." + ext)
-            if src.exists():
-                dst = FIGDIR / src.name
-                if dst.exists(): dst.chmod(0o666)
-                shutil.copy2(src, dst)
-    figure1(); figure2(); figure3(); figure4(); figure5(); extfig1(); extfig2(); extfig3(); extfig4(); extfig5(); extfig6()
+    # Preserve the author-supplied editable architecture when present.  The
+    # Python diagram is only a fallback for repositories without that source.
+    architecture_pptx = FIGDIR / "figure1_pattern_surv_hn_framework.pptx"
+    architecture_pdf = FIGDIR / "figure1_pattern_surv_hn_framework.pdf"
+    if not (architecture_pptx.exists() and architecture_pdf.exists()):
+        figure1()
+    figure2(); figure3(); figure4(); figure5(); extfig1(); extfig2(); extfig3(); extfig4(); extfig5(); extfig6()
     manifest = {"standard": "npj Digital Medicine / Nature Portfolio style; 183 mm double-column width; Arial; vector PDF plus 600-dpi PNG", "data_boundary": "All generated figures read aggregate JSON artifacts only; no patient-level predictions are included.", "figures": [
         {"number": 1, "file": "figure2_cohort_flow_acquisition_usability.pdf", "source": U1, "claim": "descriptive cohort and availability/usability audit"},
         {"number": 2, "file": "figure3_v1r_development_performance_safety.pdf", "source": U2, "claim": "development-only repeated nested cross-fitting"},
         {"number": 3, "file": "figure4_calibration_bridge_development_and_transport.pdf", "source": [BRIDGE, U5R8], "claim": "U5R7 development-only; U5R8 probability-scale transport estimates"},
         {"number": 4, "file": "figure5_locked_raw_v1r_confirmation.pdf", "source": LOCKED, "claim": "locked outcome-untouched raw-V1R directional signal; intervals cross zero"},
-        {"number": 5, "file": "figure1_pattern_surv_hn_framework.pdf", "source": "publication diagram generated from the frozen method specification", "claim": "Methods architecture; raw SCRF is primary; bridge development-only; router exploratory"},
+        {"number": 5, "file": "figure1_pattern_surv_hn_framework.pdf", "source": ["figure1_pattern_surv_hn_framework.pptx", "frozen method specification"], "claim": "Methods architecture; raw SCRF is primary; bridge development-only; router exploratory"},
         {"number": 1, "extended": True, "file": "extended_data_figure1_router_exploration.pdf", "source": U6, "claim": "exploratory development router only"},
         {"number": 2, "extended": True, "file": "extended_data_figure2_radcure_characterization.pdf", "source": U7, "claim": "descriptive adapted-comparator characterization, not current-V1R validation"},
         {"number": 3, "extended": True, "file": "extended_data_figure3_t1r_transcriptome_replication.pdf", "source": U8, "claim": "post-hoc TCGA-HNSC method replication"},

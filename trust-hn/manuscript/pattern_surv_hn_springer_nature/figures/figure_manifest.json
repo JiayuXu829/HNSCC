@@ -32,7 +32,10 @@
     {
       "number": 5,
       "file": "figure1_pattern_surv_hn_framework.pdf",
-      "source": "publication diagram generated from the frozen method specification",
+      "source": [
+        "figure1_pattern_surv_hn_framework.pptx",
+        "frozen method specification"
+      ],
       "claim": "Methods architecture; raw SCRF is primary; bridge development-only; router exploratory"
     },
     {

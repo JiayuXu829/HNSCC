@@ -23,19 +23,19 @@
 \author[2]{\fnm{Third} \sur{Author}}
 \affil*[1]{\orgdiv{Department of \TBD{department}}, \orgname{\TBD{institution}}, \orgaddress{\city{\TBD{city}}, \country{\TBD{country}}}}
 \affil[2]{\orgdiv{Department of \TBD{department}}, \orgname{\TBD{institution}}, \orgaddress{\city{\TBD{city}}, \country{\TBD{country}}}}
-\abstract{Multimodal prognostic models are often developed as though every recorded modality were simultaneously available and equally trustworthy. We developed PATTERN-Surv-HN, a clinically anchored framework for postoperative head and neck squamous cell carcinoma survival prediction in which usable blood, ICD and tissue-microarray measurements contribute through shrinkage-controlled residual fusion (SCRF) around a clinical anchor model (CAM). In 610 eligible HANCOCK development patients with 173 deaths, repeated nested cross-fitting gave 100\% coverage for CAM and SCRF. SCRF improved mean 24-month Uno C from 0.644239 to 0.665542 ($\Delta+0.021303$; favourable in 5/5 seeds), AUC from 0.662022 to 0.682511 ($\Delta+0.020488$), and IPCW Brier score from 0.124745 to 0.124338 ($\Delta-0.000407$). A post-hoc same-fold benchmark against fourteen published survival and multimodal-fusion families found the best discrimination for random survival forests and the lowest Brier score for elastic-net Cox. Component ablation showed that residual shrinkage, rather than an unconstrained residual alone, accounted for the favourable joint discrimination--Brier profile. A separately frozen global monotone bridge improved development calibration summaries while preserving ranking and coverage. In a locked outcome-untouched HANCOCK cohort of 152 patients with 40 events, raw SCRF again favoured every principal point estimate. Together, these analyses show that controlled incremental multimodal fusion can improve risk ranking while retaining complete prediction availability, exact clinical fallback and pattern-level safety; independent calibration transport and clinical utility define the next evaluation stage.}
+\abstract{Multimodal prognostic models are often developed as though every recorded modality were simultaneously available and equally trustworthy. We developed PATTERN-Surv-HN, a clinically anchored framework for postoperative head and neck squamous cell carcinoma survival prediction in which usable blood, ICD and tissue-microarray measurements contribute through shrinkage-controlled residual fusion (SCRF) around a clinical anchor model (CAM). In 610 eligible HANCOCK development patients with 173 deaths, repeated nested cross-fitting gave 100\% coverage for CAM and SCRF. SCRF improved mean 24-month Uno C from 0.644 to 0.666 ($\Delta+0.021$; favourable in 5/5 seeds), AUC from 0.662 to 0.683 ($\Delta+0.020$), and IPCW Brier score from 0.1247 to 0.1243 ($\Delta-0.0004$). A post-hoc same-fold benchmark against fourteen published survival and multimodal-fusion families found the best discrimination for random survival forests and the lowest Brier score for elastic-net Cox. Component ablation showed that residual shrinkage, rather than an unconstrained residual alone, accounted for the favourable joint discrimination--Brier profile. A separately frozen global monotone bridge improved development calibration summaries while preserving ranking and coverage. In a locked outcome-untouched HANCOCK cohort of 152 patients with 40 events, raw SCRF again favoured every principal point estimate. Together, these analyses show that controlled incremental multimodal fusion can improve risk ranking while retaining complete prediction availability, exact clinical fallback and pattern-level safety; independent calibration transport and clinical utility define the next evaluation stage.}
 \keywords{head and neck squamous cell carcinoma, multimodal learning, survival analysis, missing modalities, calibration, selective prediction, trustworthy artificial intelligence}
 \maketitle
 \noindent\colorbox{softblue}{\parbox{0.96\textwidth}{\textbf{Evidence status (22 September 2026).} The manuscript reports repeated nested SCRF development, a formal CAM--URF--SCRF component ablation, a post-hoc fourteen-comparator same-fold benchmark, a development-only calibration bridge, locked raw-SCRF confirmation, locked secondary post-unseal bridge validation and explicitly exploratory extensions. Bootstrap intervals for the confirmation deltas cross zero. Internal artifact identifiers V0, V1 and V1R are retained only for repository traceability. Red \TBD{} fields denote author, ethics, accession and archive details only.}}
 
 \section{Introduction}
-Head and neck squamous cell carcinoma (HNSCC) comprises clinically and biologically heterogeneous diseases whose outcomes reflect anatomical site, tumour and nodal burden, human papillomavirus-related biology, smoking exposure, pathological features, treatment and host condition. Molecular studies have further resolved genomic and transcriptomic phenotypes not captured by stage alone \cite{tcga2015,liu2018,wichmann2015,lohavanichbutr2013}. Prognostic models therefore increasingly combine clinical, pathological, imaging, blood, tissue-microenvironment and molecular data; resources such as HANCOCK and RADCURE, together with recent HNSCC fusion studies, make this technically feasible \cite{dorrich2025,welch2024,tian2025}. Across cancer types, multimodal prognosis research has progressed from modality-specific encoders and dropout to co-attention and pathway-aware cross-modal interactions \cite{cheerla2019,chen2021mcat,jaume2024survpath,meng2024}. The clinically relevant question, however, is not simply whether more modalities improve an average performance metric. It is whether optional evidence can safely alter a prediction that must still be available when those modalities are absent or unreliable.
+Head and neck squamous cell carcinoma (HNSCC) comprises clinically and biologically heterogeneous diseases whose outcomes reflect anatomical site, tumour and nodal burden, human papillomavirus-related biology, smoking exposure, pathological features, treatment and host condition \cite{ang2010,bernier2004,cooper2004}. Molecular studies have further resolved genomic and transcriptomic phenotypes not captured by stage alone \cite{tcga2015,liu2018,wichmann2015,lohavanichbutr2013}. Prognostic models therefore increasingly combine clinical, pathological, imaging, blood, tissue-microenvironment and molecular data; resources such as HANCOCK and RADCURE, together with recent HNSCC fusion studies, make this technically feasible \cite{dorrich2025,welch2024,tian2025}. Across cancer types, multimodal prognosis research has progressed from modality-specific encoders and modality dropout to attention-based pooling, co-attention and pathway-aware cross-modal interactions \cite{baltrusaitis2019,neverova2016,ilse2018,cheerla2019,chen2021mcat,jaume2024survpath,meng2024}. Histology--genomic studies further show how weakly supervised tissue representations can be coupled to molecular evidence for prognosis \cite{mobadersany2018,courtiol2019,huang2022pathomic,lu2021clam,chen2022pancancer}. The clinically relevant question, however, is not simply whether more modalities improve an average performance metric. It is whether optional evidence can safely alter a prediction that must still be available when those modalities are absent or unreliable.
 
-A single distinction organises this problem: recorded data are not necessarily trustworthy evidence. First, a modality may be missing because it was not acquired, was structurally unavailable or failed preprocessing; naturally occurring combinations need not resemble random masking, and conventional imputation remains assumption-dependent \cite{sterne2009}. Second, a modality may transport enough signal to preserve patient ranking while the baseline risk and probability scale shift across centres or assay platforms. Third, a modality may be present and apparently predictive but encode tumour volume, site, device, batch or processing shortcuts rather than the intended biology. Complete-case fusion and undifferentiated missing-value handling conflate these states, although they require different clinical responses.
+A single distinction organises this problem: recorded data are not necessarily trustworthy evidence. First, a modality may be missing because it was not acquired, was structurally unavailable or failed preprocessing; naturally occurring combinations need not resemble random masking, and conventional imputation remains assumption-dependent \cite{sterne2009,little2012}. Architectures developed for incomplete multimodal input show the value of modality-aware aggregation, but do not remove the need to distinguish absence from failed usability \cite{neverova2016,havaei2016}. Second, a modality may transport enough signal to preserve patient ranking while the baseline risk and probability scale shift across centres or assay platforms. Third, a modality may be present and apparently predictive but encode tumour volume, site, device, batch or processing shortcuts rather than the intended biology \cite{geirhos2020,oakdenrayner2020,roberts2021,ongly2024}. Complete-case fusion and undifferentiated missing-value handling conflate these states, although they require different clinical responses.
 
-Classical Cox models provide interpretable, censoring-aware estimation but generally assume a fixed covariate vector \cite{cox1972,breslow1974}. Random survival forests, neural Cox extensions and discrete-time neural survival models accommodate non-linearity, yet do not by themselves decide whether an optional modality should be used \cite{ishwaran2008,katzman2018,lee2018,gensheimer2019,kvamme2019}. Recent incomplete-modality methods reconstruct or distil missing representations, use modality dropout or prompts, align heterogeneous embeddings, or aggregate available inputs with attention \cite{xu2025,zheng2026,ruffini2026}. These studies establish that survival learning can remain feasible as modalities disappear. The unresolved translational gap is broader: natural acquisition and usability, combinations absent during training, exact clinical fallback, present-but-invalid controls, transport of calibrated probabilities and selective reporting must be evaluated within one governed prediction pathway.
+Classical Cox models provide interpretable, censoring-aware estimation but generally assume a fixed covariate vector \cite{cox1972,breslow1974,harrell1996}. Random survival forests, neural Cox extensions and discrete-time neural survival models accommodate non-linearity, yet do not by themselves decide whether an optional modality should be used \cite{ishwaran2008,katzman2018,lee2018,gensheimer2019,kvamme2019}. Recent incomplete-modality methods reconstruct or distil missing representations, use modality dropout or prompts, align heterogeneous embeddings, or aggregate available inputs with attention \cite{xu2025,zheng2026,ruffini2026}. These studies establish that survival learning can remain feasible as modalities disappear. The unresolved translational gap is broader: natural acquisition and usability, combinations absent during training, exact clinical fallback, present-but-invalid controls, transport of calibrated probabilities and selective reporting must be evaluated within one governed prediction pathway.
 
-Discrimination alone is insufficient for that pathway. Concordance and time-dependent AUC describe ranking, whereas a statement such as ``24-month mortality risk is 35\%'' additionally requires a transportable baseline hazard and calibration relationship. A model can preserve ordering under domain shift while becoming systematically overconfident. Likewise, a selective model can appear safer simply by excluding difficult patients, and average performance can hide severe failure in a rare modality pattern. Evaluation must therefore retain fallback patients in the full-coverage estimand, compare selective policies on identical retained patients, report calibration and coverage by pattern, and use negative controls to test whether apparent value is specific to the intended modality \cite{graf1999,uno2011,stegyerberg2010,vancalster2019,geirhos2020,ongly2024}.
+Discrimination alone is insufficient for that pathway. Concordance and time-dependent AUC describe ranking, whereas a statement such as ``24-month mortality risk is 35\%'' additionally requires a transportable baseline hazard and calibration relationship. A model can preserve ordering under domain shift while becoming systematically overconfident. Likewise, a selective model can appear safer simply by excluding difficult patients, and average performance can hide severe failure in a rare modality pattern. Evaluation must therefore retain fallback patients in the full-coverage estimand, compare selective policies on identical retained patients, report calibration and coverage by pattern, and use negative controls to test whether apparent value is specific to the intended modality \cite{graf1999,gerds2006,heagerty2000,uno2011,stegyerberg2010,pencina2008,vancalster2019,vickers2006,guo2017,niculescu2005,geirhos2020,ongly2024}.
 
 We developed \methodname around one framework, three falsification challenges and four supported outputs. A postoperative \anchorname{} supplies a prediction for every eligible patient. Available non-clinical modalities form an unordered set and contribute through \fusionname{} rather than replacing the anchor. HANCOCK tests natural absence, acquired-but-unusable inputs and pattern-level safety; TCGA--GEO transfer tests whether ranking can survive when absolute risk does not; and RADCURE tests whether a present modality remains more informative than volume, permutation and random-feature controls. A calibration bridge and strictly cross-fitted value--reliability router remain prespecified extensions. The completed development claim is deliberately narrow: inner-selected residual shrinkage can add discrimination and modestly improve probabilistic accuracy while preserving full coverage, exact clinical fallback and a bounded worst-pattern regret. Strong external-generalisation claims additionally require a frozen, outcome-untouched postoperative cohort.
 
@@ -60,11 +60,11 @@ Natural usability combinations were correspondingly sparse. In development, the 
 
 \subsubsection*{Shrinkage-controlled residual fusion improves development discrimination at full coverage}
 
-SCRF retained CAM and added a residual learned only from usable optional modalities. Under five repetition seeds, five outer folds and three inner folds, mean 24-month Uno C increased from 0.644239 to 0.665542 (mean difference $+0.021303$), time-dependent AUC from 0.662022 to 0.682511 ($+0.020488$), and IPCW Brier score decreased from 0.124745 to 0.124338 ($-0.000407$; Table~\ref{tab:development} and Fig.~\ref{fig:v1r}). Uno C, AUC and Harrell C favoured SCRF in all five seeds; IPCW Brier favoured SCRF in three of five seeds.
+SCRF retained CAM and added a residual learned only from usable optional modalities. Under five repetition seeds, five outer folds and three inner folds, mean 24-month Uno C increased from 0.644 to 0.666 (mean difference $+0.021$), time-dependent AUC from 0.662 to 0.683 ($+0.020$), and IPCW Brier score decreased from 0.1247 to 0.1243 ($-0.0004$; Table~\ref{tab:development} and Fig.~\ref{fig:v1r}). Uno C, AUC and Harrell C favoured SCRF in all five seeds; IPCW Brier favoured SCRF in three of five seeds.
 
-The gain did not come from selective reporting. CAM and SCRF both covered all 610 eligible development patients. When the usable optional set was empty, residual and fused-score fallback errors were exactly zero. The worst supported-pattern Brier regret was $+0.009848$, below the prespecified $+0.020$ no-harm boundary.
+The gain did not come from selective reporting. CAM and SCRF both covered all 610 eligible development patients. When the usable optional set was empty, residual and fused-score fallback errors were exactly zero. The worst supported-pattern Brier regret was $+0.0098$, below the prespecified $+0.020$ no-harm boundary.
 
-A staged component ablation separated CAM, the same 3,225-parameter residual network without shrinkage (URF), and the full inner-selected SCRF model. URF changed mean Uno C by only $+0.002116$ and increased Brier by $+0.001801$ relative to CAM, whereas SCRF increased Uno C by $+0.021303$ and reduced Brier by $-0.000407$. Thus, the principal contribution was not merely adding a nonlinear multimodal branch; it was controlling the magnitude of that branch within each training fold (Supplementary Table~\ref{tab:ablation}).
+A staged component ablation separated CAM, the same 3,225-parameter residual network without shrinkage (URF), and the full inner-selected SCRF model. URF changed mean Uno C by only $+0.002$ and increased Brier by $+0.0018$ relative to CAM, whereas SCRF increased Uno C by $+0.021$ and reduced Brier by $-0.0004$. Thus, the principal contribution was not merely adding a nonlinear multimodal branch; it was controlling the magnitude of that branch within each training fold (Supplementary Table~\ref{tab:ablation}).
 
 \begin{table*}[t]
 \centering
@@ -74,15 +74,15 @@ A staged component ablation separated CAM, the same 3,225-parameter residual net
 \toprule
 Model & Brier$_{24}$ & Uno C$_{24}$ & AUC$_{24}$ & Harrell C & Coverage & Worst regret\\
 \midrule
-Clinical anchor model (CAM) & 0.124745 & 0.644239 & 0.662022 & 0.623021 & 100\% & reference\\
-Shrinkage-controlled residual fusion (SCRF) & 0.124338 & 0.665542 & 0.682511 & 0.633710 & 100\% & $+0.009848$\\
+Clinical anchor model (CAM) & 0.1247 & 0.644 & 0.662 & 0.623 & 100\% & reference\\
+Shrinkage-controlled residual fusion (SCRF) & 0.1243 & 0.666 & 0.683 & 0.634 & 100\% & $+0.0098$\\
 \bottomrule
 \end{tabularx}
 \end{table*}
 
 \subsubsection*{A same-fold benchmark situates SCRF among published survival methods}
 
-The expanded published-method benchmark placed SCRF against fourteen survival and multimodal-fusion families on the same five repetition seeds, outer-fold assignments, 610 patients and 24-month estimand (Table~\ref{tab:published_benchmark}). The benchmark was explicitly post-hoc, did not access confirmation-cohort outcomes and did not retune SCRF. Random survival forests gave the strongest mean discrimination (Uno C 0.6799, AUC 0.6955 and Harrell C 0.6475), whereas elastic-net Cox gave the lowest mean IPCW Brier score (0.1192). Among the fusion-family adaptations used by the two recent papers, masked attention gave Uno C 0.6723, bilinear fusion gave Brier 0.1239, and SCRF gave Uno C 0.6655 with Brier 0.1243. SCRF exceeded early, late, HAF and missing-aware intermediate fusion across all four performance measures while retaining exact clinical fallback and pattern-level safety. These findings position SCRF as a competitive safeguarded fusion pathway rather than an unconstrained universal winner.
+The expanded published-method benchmark placed SCRF against fourteen survival and multimodal-fusion families on the same five repetition seeds, outer-fold assignments, 610 patients and 24-month estimand (Table~\ref{tab:published_benchmark}). The benchmark was explicitly post-hoc, did not access confirmation-cohort outcomes and did not retune SCRF. Random survival forests gave the strongest mean discrimination (Uno C 0.680, AUC 0.696 and Harrell C 0.648), whereas elastic-net Cox gave the lowest mean IPCW Brier score (0.1192). Among the fusion-family adaptations used by the two recent papers, masked attention gave Uno C 0.672, bilinear fusion gave Brier 0.1239, and SCRF gave Uno C 0.666 with Brier 0.1243. SCRF exceeded early, late, HAF and missing-aware intermediate fusion across all four performance measures while retaining exact clinical fallback and pattern-level safety. These findings position SCRF as a competitive safeguarded fusion pathway rather than an unconstrained universal winner.
 
 \begingroup
 \small
@@ -106,34 +106,34 @@ Method & \makecell{IPCW Brier$_{24}$\\$\downarrow$} & \makecell{Uno C$_{24}$\\$\
 \endlastfoot
 \multicolumn{6}{l}{\itshape Conventional statistical and machine-learning comparators (1972--2016)}\\
 \addlinespace[2pt]
-Clinical Cox proportional hazards \cite{cox1972} & \makecell{0.1217\\{\scriptsize(0.0011)}} & \makecell{0.6595\\{\scriptsize(0.0066)}} & \makecell{0.6783\\{\scriptsize(0.0068)}} & \makecell{0.6306\\{\scriptsize(0.0047)}} & 100\%\\
-Elastic-net Cox \cite{simon2011} & \makecell{\textbf{0.1192}\\{\scriptsize\textbf{(0.0017)}}} & \makecell{0.6684\\{\scriptsize(0.0047)}} & \makecell{0.6810\\{\scriptsize(0.0058)}} & \makecell{0.6343\\{\scriptsize(0.0064)}} & 100\%\\
-Random survival forest \cite{ishwaran2008} & \makecell{0.1213\\{\scriptsize(0.0007)}} & \makecell{\textbf{0.6799}\\{\scriptsize\textbf{(0.0093)}}} & \makecell{\textbf{0.6955}\\{\scriptsize\textbf{(0.0104)}}} & \makecell{\textbf{0.6475}\\{\scriptsize\textbf{(0.0063)}}} & 100\%\\
-Gradient boosting survival \cite{hothorn2006} & \makecell{0.1234\\{\scriptsize(0.0008)}} & \makecell{0.6741\\{\scriptsize(0.0110)}} & \makecell{0.6878\\{\scriptsize(0.0128)}} & \makecell{0.6416\\{\scriptsize(0.0065)}} & 100\%\\
-XGBoost with Cox objective \cite{chen2016} & \makecell{0.1221\\{\scriptsize(0.0006)}} & \makecell{0.6626\\{\scriptsize(0.0089)}} & \makecell{0.6765\\{\scriptsize(0.0103)}} & \makecell{0.6276\\{\scriptsize(0.0077)}} & 100\%\\
+Clinical Cox proportional hazards \cite{cox1972} & \makecell{0.1217\\{\scriptsize(0.0011)}} & \makecell{0.660\\{\scriptsize(0.007)}} & \makecell{0.678\\{\scriptsize(0.007)}} & \makecell{0.631\\{\scriptsize(0.005)}} & 100\%\\
+Elastic-net Cox \cite{simon2011} & \makecell{\textbf{0.1192}\\{\scriptsize\textbf{(0.0017)}}} & \makecell{0.668\\{\scriptsize(0.005)}} & \makecell{0.681\\{\scriptsize(0.006)}} & \makecell{0.634\\{\scriptsize(0.006)}} & 100\%\\
+Random survival forest \cite{ishwaran2008} & \makecell{0.1213\\{\scriptsize(0.0007)}} & \makecell{\textbf{0.680}\\{\scriptsize\textbf{(0.009)}}} & \makecell{\textbf{0.696}\\{\scriptsize\textbf{(0.010)}}} & \makecell{\textbf{0.648}\\{\scriptsize\textbf{(0.006)}}} & 100\%\\
+Gradient boosting survival \cite{hothorn2006} & \makecell{0.1234\\{\scriptsize(0.0008)}} & \makecell{0.674\\{\scriptsize(0.011)}} & \makecell{0.688\\{\scriptsize(0.013)}} & \makecell{0.642\\{\scriptsize(0.007)}} & 100\%\\
+XGBoost with Cox objective \cite{chen2016} & \makecell{0.1221\\{\scriptsize(0.0006)}} & \makecell{0.663\\{\scriptsize(0.009)}} & \makecell{0.677\\{\scriptsize(0.010)}} & \makecell{0.628\\{\scriptsize(0.008)}} & 100\%\\
 \midrule
 \multicolumn{6}{l}{\itshape Established neural survival comparators (2018--2021)}\\
 \addlinespace[2pt]
-DeepSurv \cite{katzman2018} & \makecell{0.1626\\{\scriptsize(0.0090)}} & \makecell{0.6389\\{\scriptsize(0.0296)}} & \makecell{0.6495\\{\scriptsize(0.0335)}} & \makecell{0.6030\\{\scriptsize(0.0152)}} & 100\%\\
-DeepHit \cite{lee2018} & \makecell{0.1458\\{\scriptsize(0.0089)}} & \makecell{0.6225\\{\scriptsize(0.0187)}} & \makecell{0.6345\\{\scriptsize(0.0215)}} & \makecell{0.5938\\{\scriptsize(0.0100)}} & 100\%\\
-MultiSurv, adapted \cite{valesilva2021} & \makecell{0.1261\\{\scriptsize(0.0021)}} & \makecell{0.6262\\{\scriptsize(0.0213)}} & \makecell{0.6393\\{\scriptsize(0.0233)}} & \makecell{0.5972\\{\scriptsize(0.0143)}} & 100\%\\
+DeepSurv \cite{katzman2018} & \makecell{0.1626\\{\scriptsize(0.0090)}} & \makecell{0.639\\{\scriptsize(0.030)}} & \makecell{0.650\\{\scriptsize(0.034)}} & \makecell{0.603\\{\scriptsize(0.015)}} & 100\%\\
+DeepHit \cite{lee2018} & \makecell{0.1458\\{\scriptsize(0.0089)}} & \makecell{0.623\\{\scriptsize(0.019)}} & \makecell{0.635\\{\scriptsize(0.022)}} & \makecell{0.594\\{\scriptsize(0.010)}} & 100\%\\
+MultiSurv, adapted \cite{valesilva2021} & \makecell{0.1261\\{\scriptsize(0.0021)}} & \makecell{0.626\\{\scriptsize(0.021)}} & \makecell{0.639\\{\scriptsize(0.023)}} & \makecell{0.597\\{\scriptsize(0.014)}} & 100\%\\
 \pagebreak[4]
 \midrule
 \multicolumn{6}{l}{\itshape Fusion-family baselines mirrored from recent protocols (2026)}\\
 \addlinespace[2pt]
-Early feature fusion, adapted \cite{zheng2026,ruffini2026} & \makecell{0.1354\\{\scriptsize(0.0032)}} & \makecell{0.6357\\{\scriptsize(0.0102)}} & \makecell{0.6433\\{\scriptsize(0.0114)}} & \makecell{0.5989\\{\scriptsize(0.0053)}} & 100\%\\
-Late decision fusion, adapted \cite{zheng2026,ruffini2026} & \makecell{0.1694\\{\scriptsize(0.0072)}} & \makecell{0.5712\\{\scriptsize(0.0237)}} & \makecell{0.5726\\{\scriptsize(0.0257)}} & \makecell{0.5521\\{\scriptsize(0.0188)}} & 100\%\\
-Masked attention fusion, adapted \cite{zheng2026} & \makecell{0.1245\\{\scriptsize(0.0012)}} & \makecell{0.6723\\{\scriptsize(0.0095)}} & \makecell{0.6859\\{\scriptsize(0.0127)}} & \makecell{0.6372\\{\scriptsize(0.0107)}} & 100\%\\
-Bilinear interaction fusion, adapted \cite{zheng2026} & \makecell{0.1239\\{\scriptsize(0.0005)}} & \makecell{0.6631\\{\scriptsize(0.0092)}} & \makecell{0.6744\\{\scriptsize(0.0095)}} & \makecell{0.6290\\{\scriptsize(0.0030)}} & 100\%\\
+Early feature fusion, adapted \cite{zheng2026,ruffini2026} & \makecell{0.1354\\{\scriptsize(0.0032)}} & \makecell{0.636\\{\scriptsize(0.010)}} & \makecell{0.643\\{\scriptsize(0.011)}} & \makecell{0.599\\{\scriptsize(0.005)}} & 100\%\\
+Late decision fusion, adapted \cite{zheng2026,ruffini2026} & \makecell{0.1694\\{\scriptsize(0.0072)}} & \makecell{0.571\\{\scriptsize(0.024)}} & \makecell{0.573\\{\scriptsize(0.026)}} & \makecell{0.552\\{\scriptsize(0.019)}} & 100\%\\
+Masked attention fusion, adapted \cite{zheng2026} & \makecell{0.1245\\{\scriptsize(0.0012)}} & \makecell{0.672\\{\scriptsize(0.010)}} & \makecell{0.686\\{\scriptsize(0.013)}} & \makecell{0.637\\{\scriptsize(0.011)}} & 100\%\\
+Bilinear interaction fusion, adapted \cite{zheng2026} & \makecell{0.1239\\{\scriptsize(0.0005)}} & \makecell{0.663\\{\scriptsize(0.009)}} & \makecell{0.674\\{\scriptsize(0.010)}} & \makecell{0.629\\{\scriptsize(0.003)}} & 100\%\\
 \midrule
 \multicolumn{6}{l}{\itshape Recent missing-modality comparators (2026)}\\
 \addlinespace[2pt]
-Missing-aware intermediate fusion, adapted \cite{ruffini2026} & \makecell{0.1332\\{\scriptsize(0.0009)}} & \makecell{0.5564\\{\scriptsize(0.0101)}} & \makecell{0.5486\\{\scriptsize(0.0110)}} & \makecell{0.5386\\{\scriptsize(0.0050)}} & 100\%\\
-Heterogeneous aligned fusion, adapted \cite{zheng2026} & \makecell{0.1295\\{\scriptsize(0.0008)}} & \makecell{0.5730\\{\scriptsize(0.0293)}} & \makecell{0.5742\\{\scriptsize(0.0329)}} & \makecell{0.5541\\{\scriptsize(0.0183)}} & 100\%\\
+Missing-aware intermediate fusion, adapted \cite{ruffini2026} & \makecell{0.1332\\{\scriptsize(0.0009)}} & \makecell{0.556\\{\scriptsize(0.010)}} & \makecell{0.549\\{\scriptsize(0.011)}} & \makecell{0.539\\{\scriptsize(0.005)}} & 100\%\\
+Heterogeneous aligned fusion, adapted \cite{zheng2026} & \makecell{0.1295\\{\scriptsize(0.0008)}} & \makecell{0.573\\{\scriptsize(0.029)}} & \makecell{0.574\\{\scriptsize(0.033)}} & \makecell{0.554\\{\scriptsize(0.018)}} & 100\%\\
 \midrule
 \multicolumn{6}{l}{\itshape Proposed method}\\
 \addlinespace[2pt]
-\textbf{PATTERN-Surv-HN (SCRF; ours)} & \makecell{0.1243\\{\scriptsize(0.0033)}} & \makecell{0.6655\\{\scriptsize(0.0171)}} & \makecell{0.6825\\{\scriptsize(0.0177)}} & \makecell{0.6337\\{\scriptsize(0.0188)}} & 100\%\\
+\textbf{PATTERN-Surv-HN (SCRF; ours)} & \makecell{0.1243\\{\scriptsize(0.0033)}} & \makecell{0.666\\{\scriptsize(0.017)}} & \makecell{0.683\\{\scriptsize(0.018)}} & \makecell{0.634\\{\scriptsize(0.019)}} & 100\%\\
 \end{longtable}
 \par\vspace{5pt}
 \begin{minipage}{0.94\textwidth}\footnotesize Values are mean with s.d. in parentheses on the second line across five complete repeated out-of-fold prediction sets; each repetition contains one prediction for every patient. The first fourteen rows are literature-defined method or fusion families with the defining source cited beside each method; none is an internal degradation variant. Clinical Cox used the clinical-pathological block. Other comparators received fold-bound clinical, blood, ICD and TMA inputs with explicit usability/status features. MultiSurv and the 2026 fusion families were transparently adapted because their original imaging, molecular or seven-modality inputs were not available under the frozen evidence contract; the adaptations retained their defining fusion principles and used the common censoring-aware discrete-hazard head. Only PATTERN-Surv-HN SCRF is proposed here. Bold denotes the best mean in each metric. This post-hoc development benchmark is not a locked superiority test.\end{minipage}
@@ -148,9 +148,9 @@ Heterogeneous aligned fusion, adapted \cite{zheng2026} & \makecell{0.1295\\{\scr
 
 \subsubsection*{A rank-preserving bridge improves the development risk scale but does not transport}
 
-Raw SCRF showed mild under-dispersion in the development absolute-risk diagnostic (calibration slope 0.825887; calibration-in-the-large $+0.011680$). The separately evaluated development calibration bridge used a fixed positive slope of 0.90 and a cross-fitted weighted-log-loss intercept on the logit scale. It preserved ranking and 100\% coverage while moving calibration-in-the-large to $-0.003796$ and slope to 0.881552 (Fig.~\ref{fig:bridge}). Its IPCW Brier penalty was $+0.000147$, within the development gate of $+0.0005$, and its worst supported-pattern regret was $+0.004176$, below $+0.005$.
+Raw SCRF showed mild under-dispersion in the development absolute-risk diagnostic (calibration slope 0.826; calibration-in-the-large $+0.012$). The separately evaluated development calibration bridge used a fixed positive slope of 0.90 and a cross-fitted weighted-log-loss intercept on the logit scale. It preserved ranking and 100\% coverage while moving calibration-in-the-large to $-0.004$ and slope to 0.882 (Fig.~\ref{fig:bridge}). Its IPCW Brier penalty was $+0.0001$, within the development gate of $+0.0005$, and its worst supported-pattern regret was $+0.0042$, below $+0.005$.
 
-The locked secondary bridge analysis then applied the already frozen transformation without confirmation-cohort refitting, after the raw-SCRF confirmation outcomes had been unsealed. Ranking and coverage remained preserved, but IPCW Brier worsened by $+0.001085$, absolute calibration-in-the-large error worsened by $+0.004194$, and absolute calibration-slope error worsened by $+0.167815$. Thus, the development calibration gain did not transport; the bridge remains development-only and is not a confirmed calibration layer.
+The locked secondary bridge analysis then applied the already frozen transformation without confirmation-cohort refitting, after the raw-SCRF confirmation outcomes had been unsealed. Ranking and coverage remained preserved, but IPCW Brier worsened by $+0.0011$, absolute calibration-in-the-large error worsened by $+0.0042$, and absolute calibration-slope error worsened by $+0.168$. Thus, the development calibration gain did not transport; the bridge remains development-only and is not a confirmed calibration layer.
 
 \begin{figure*}[t]
 \centering
@@ -162,9 +162,9 @@ The locked secondary bridge analysis then applied the already frozen transformat
 
 \subsubsection*{Locked outcome-untouched confirmation shows a favourable raw-SCRF direction}
 
-After the SCRF protocol, input manifest, dependency lock and patient-level predictions had been frozen, confirmation outcomes were unsealed in 152 HANCOCK patients with 40 deaths. The primary readout was raw SCRF, not the calibration bridge or router. SCRF retained 100\% coverage and had favourable point estimates for Uno C (0.804242 versus 0.782579), IPCW Brier (0.131246 versus 0.136412), AUC$_{24}$ (0.813637 versus 0.801094) and Harrell C (0.752842 versus 0.733253; Table~\ref{tab:confirmation} and Fig.~\ref{fig:confirmation}).
+After the SCRF protocol, input manifest, dependency lock and patient-level predictions had been frozen, confirmation outcomes were unsealed in 152 HANCOCK patients with 40 deaths. The primary readout was raw SCRF, not the calibration bridge or router. SCRF retained 100\% coverage and had favourable point estimates for Uno C (0.804 versus 0.783), IPCW Brier (0.1312 versus 0.1364), AUC$_{24}$ (0.814 versus 0.801) and Harrell C (0.753 versus 0.733; Table~\ref{tab:confirmation} and Fig.~\ref{fig:confirmation}).
 
-Patient-level stratified bootstrap intervals crossed zero for every principal delta. For example, the mean delta Uno C was $+0.021654$ (95\% interval $-0.025965$ to $+0.070816$) and mean delta IPCW Brier was $-0.005222$ ($-0.012843$ to $+0.002171$). The locked result therefore supports a positive directional raw-SCRF confirmation signal, not definitive superiority or clinical utility.
+Patient-level stratified bootstrap intervals crossed zero for every principal delta. For example, the mean delta Uno C was $+0.022$ (95\% interval $-0.026$ to $+0.071$) and mean delta IPCW Brier was $-0.0052$ ($-0.0128$ to $+0.0022$). The locked result therefore supports a positive directional raw-SCRF confirmation signal, not definitive superiority or clinical utility.
 
 \begin{table*}[t]
 \centering
@@ -174,10 +174,10 @@ Patient-level stratified bootstrap intervals crossed zero for every principal de
 \toprule
 Metric & CAM & Raw SCRF & Difference & Bootstrap mean (95\% CI)\\
 \midrule
-Uno C$_{24}$ & 0.782579 & 0.804242 & $+0.021664$ & $+0.021654$ ($-0.025965$, $+0.070816$)\\
-IPCW Brier$_{24}$ & 0.136412 & 0.131246 & $-0.005166$ & $-0.005222$ ($-0.012843$, $+0.002171$)\\
-AUC$_{24}$ & 0.801094 & 0.813637 & $+0.012543$ & $+0.012725$ ($-0.041031$, $+0.068438$)\\
-Harrell C & 0.733253 & 0.752842 & $+0.019589$ & $+0.019665$ ($-0.017423$, $+0.061196$)\\
+Uno C$_{24}$ & 0.783 & 0.804 & $+0.022$ & $+0.022$ ($-0.026$, $+0.071$)\\
+IPCW Brier$_{24}$ & 0.1364 & 0.1312 & $-0.0052$ & $-0.0052$ ($-0.0128$, $+0.0022$)\\
+AUC$_{24}$ & 0.801 & 0.814 & $+0.013$ & $+0.013$ ($-0.041$, $+0.068$)\\
+Harrell C & 0.733 & 0.753 & $+0.020$ & $+0.020$ ($-0.017$, $+0.061$)\\
 Coverage & 100\% & 100\% & 0 & --\\
 \bottomrule
 \end{tabular}
@@ -191,9 +191,9 @@ Coverage & 100\% & 100\% & 0 & --\\
 
 \subsubsection*{Exploratory extensions do not alter the confirmation boundary}
 
-Several extensions were analysed after the core evidence and are reported in Supplementary Information. A cross-fitted patient-level value router selected raw SCRF or CAM using value-only or reliability-augmented features. Its best policy (reliability-augmented, threshold 0.60) reduced IPCW Brier versus CAM by 0.000506, but its bootstrap interval crossed zero; the router was worse than direct raw SCRF and did not preserve exact global ranking (Supplementary Section~S14 and Fig.~S1).
+Several extensions were analysed after the core evidence and are reported in Supplementary Information. A cross-fitted patient-level value router selected raw SCRF or CAM using value-only or reliability-augmented features. Its best policy (reliability-augmented, threshold 0.60) reduced IPCW Brier versus CAM by 0.0005, but its bootstrap interval crossed zero; the router was worse than direct raw SCRF and did not preserve exact global ranking (Supplementary Section~S14 and Fig.~S1).
 
-Adapted clinical/radiomics comparator families were characterized in a held-out RADCURE test split of 626 patients with 110 events. They provide a contemporary benchmark, but RADCURE does not reproduce the frozen blood--ICD--TMA evidence contract and cannot validate current SCRF (Supplementary Section~S15 and Fig.~S2). A transcriptome SCRF analogue was then replicated in TCGA-HNSC (519 patients, 221 events): mean IPCW Brier improved from 0.221795 to 0.218058 and Uno C from 0.565199 to 0.597265. A single frozen transcriptome model retained favourable discrimination changes in GSE65858 and GSE41613, although probability-scale calibration did not transport uniformly (Supplementary Section~S15 and Figs.~S3--S4). These analyses support the residual-shrinkage design principle but remain post-hoc method replication or characterization, not confirmation of the current artifact.
+Adapted clinical/radiomics comparator families were characterized in a held-out RADCURE test split of 626 patients with 110 events. They provide a contemporary benchmark, but RADCURE does not reproduce the frozen blood--ICD--TMA evidence contract and cannot validate current SCRF (Supplementary Section~S15 and Fig.~S2). A transcriptome SCRF analogue was then replicated in TCGA-HNSC (519 patients, 221 events): mean IPCW Brier improved from 0.2218 to 0.2181 and Uno C from 0.565 to 0.597. A single frozen transcriptome model retained favourable discrimination changes in GSE65858 and GSE41613, although probability-scale calibration did not transport uniformly (Supplementary Section~S15 and Figs.~S3--S4). These analyses support the residual-shrinkage design principle but remain post-hoc method replication or characterization, not confirmation of the current artifact.
 
 \section{Discussion}
 
@@ -209,7 +209,7 @@ The extension analyses broaden the design lessons without changing the primary c
 
 The same-fold benchmark clarifies the contribution of the proposed design. Random survival forests produced the highest development discrimination and elastic-net Cox produced the lowest Brier score. Within the recent fusion panel, masked attention modestly exceeded SCRF in discrimination and bilinear fusion modestly reduced Brier, while SCRF exceeded early, late, HAF and missing-aware intermediate fusion across all four performance measures. The component ablation is therefore important: it shows that SCRF's gain arose from shrinkage control, not simply from adding architectural complexity. SCRF combined competitive performance with a stricter operational contract in which optional evidence could modify the clinical anchor without removing prediction availability, altering the empty-set prediction or bypassing the pattern-level no-harm assessment. The contemporary comparisons strengthen the evidence that these safeguards can be retained without forfeiting the prognostic signal available in the current multimodal inputs.
 
-The present evidence boundary can be stated once. Development analyses were repeated and internally controlled, the raw-SCRF confirmation was outcome-untouched, the bridge readout was secondary and post-unseal, and RADCURE/TCGA/GEO analyses are method-transfer and benchmarking studies rather than validation of the current blood--ICD--TMA artifact. The confirmation intervals cross zero, rare natural patterns have limited independent support, and clinical utility has not yet been tested in a prospective workflow. These are priorities rather than weaknesses of the observed signal: a larger outcome-untouched cohort, site-adapted calibration, invalid-present negative controls and a prospective implementation study would convert the present directional evidence into an effectiveness and utility assessment.
+The present evidence boundary can be stated once. Development analyses were repeated and internally controlled, the raw-SCRF confirmation was outcome-untouched, the bridge readout was secondary and post-unseal, and RADCURE/TCGA/GEO analyses are method-transfer and benchmarking studies rather than validation of the current blood--ICD--TMA artifact. The confirmation intervals cross zero, rare natural patterns have limited independent support, and clinical utility has not yet been tested in a prospective workflow. These are priorities rather than weaknesses of the observed signal: an appropriately sized outcome-untouched cohort, site-adapted calibration, invalid-present negative controls and a prospective implementation study would convert the present directional evidence into an effectiveness and utility assessment \cite{riley2020,riley2024}.
 
 In summary, \methodname provides a governed template for clinically anchored multimodal prognostic modelling in HNSCC. Its value is not simply an incremental concordance gain, but a reproducible way to preserve prediction availability, distinguish absence from unusability, quantify pattern safety, separate ranking from calibrated absolute risk and stage evidence before stronger claims are made. This framework is well suited to centres that already collect heterogeneous clinical and molecular data but require a model that remains dependable when part of that evidence is missing, shifted or shortcut-prone.
 
@@ -247,7 +247,7 @@ CAM was an elastic-net Cox proportional-hazards model using age, sex, smoking, p
 \end{equation}
 Encoding, imputation, scaling and category handling were confined to the training fold, and a training-fold Breslow baseline hazard converted the linear predictor to 24-month risk.
 
-Each usable optional modality was represented as an unordered token containing measurements, modality identity, usability/status indicators and quality features. A permutation-invariant Deep Sets residual encoder processed the available token set:
+Each usable optional modality was represented as an unordered token containing measurements, modality identity, usability/status indicators and quality features. A permutation-invariant Deep Sets residual encoder processed the available token set \cite{zaheer2017,lee2019}:
 \begin{equation}
 h_i=\rho\left(\frac{1}{|\mathcal{M}_i|}\sum_{m\in\mathcal{M}_i}\phi(x_{im},q_{im},e_m)\right),\qquad
 \Delta\eta_{\mathrm{res},i}=g(h_i).
@@ -297,7 +297,7 @@ with analogous deltas for Uno C, horizon AUC and Harrell C. Lower Brier and high
 \mathcal{R}_{\mathrm{worst}}=\max_{p\in\mathcal{P}_{\mathrm{supported}}}
 \{\mathrm{Brier}_{24}(\mathrm{candidate},p)-\mathrm{Brier}_{24}(\mathrm{reference},p)\}.
 \end{equation}
-IPCW Brier scores, Uno C and time-dependent AUC addressed censoring \cite{graf1999,uno2011}. Bootstrap resampling was performed at patient level, preserving the paired nature of model comparisons. Two-sided 95\% intervals are percentile bootstrap intervals from the prespecified replicate sets.
+IPCW Brier scores, Uno C and time-dependent AUC addressed censoring \cite{graf1999,gerds2006,heagerty2000,uno2011}. Bootstrap resampling was performed at patient level, preserving the paired nature of model comparisons. Two-sided 95\% intervals are percentile bootstrap intervals from the prespecified replicate sets. Publication-facing performance estimates and confidence limits are rounded to three decimals; Brier scores and changes smaller than 0.01 are shown to four decimals when three-decimal rounding would obscure the comparison. All calculations, model selection and safety gates used the unrounded values.
 
 \subsection{Reproducibility, artifact governance and ethics}
 Repetition seeds, split roles, hash identities and aggregate-source paths were recorded for each analysis. The formal development out-of-fold SHA256 was \hashid{E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0}; the confirmation protocol SHA256 was \hashid{1E134D30557D1CC153997F6EBB79E99C2E160F85A9F94BF3BBDD81C2C588BDED}; and the sealed prediction artifact SHA256 was \hashid{E5DA83BDB3BB97C3488687C78CCF166FBD03059619DD0690E2767CAF8F393FCF}. Two CAM reruns (internal artifact V0) produced identical out-of-fold hashes. All result figures and tables were generated from aggregate JSON artifacts; no patient-level predictions are included in the manuscript repository.
@@ -457,7 +457,7 @@ All selection steps were confined to training folds. The completed run produced 
 
 The replication used five outer folds, three inner folds and the same repetition seeds 17, 29, 43, 71 and 101. Within every outer-training partition, clinical preprocessing, elastic-net anchor selection, the 500-gene variance filter, residual fitting, residual-penalty choice, optimization checkpoint, shrinkage scale and Breslow baseline hazard were estimated without the held-out fold. The transcriptome residual head contained 16,065 trainable parameters, below the frozen 50,000-parameter ceiling. The acquisition-pattern safety check collapsed to the single transcriptome-present pattern, while the score construction retained exact zero-residual fallback as a structural test.
 
-The frozen exploratory gate required complete coverage, structural fallback safety, bounded Brier deterioration, bounded calibration deterioration and at least one reproducible incremental-value path. Observed worst supported-pattern Brier regret was $+0.002714$ against a $+0.020$ ceiling. Mean absolute calibration-in-the-large deterioration was $+0.049232$ against a $+0.100$ ceiling, and mean absolute calibration-slope-error deterioration was $-0.084226$ against a $+0.150$ ceiling. Both probability-error and discrimination paths met their seed-stability requirements, so the frozen gate returned \texttt{T1R\_EARNS\_COMPLEXITY}.
+The frozen exploratory gate required complete coverage, structural fallback safety, bounded Brier deterioration, bounded calibration deterioration and at least one reproducible incremental-value path. Observed worst supported-pattern Brier regret was $+0.0027$ against a $+0.020$ ceiling. Mean absolute calibration-in-the-large deterioration was $+0.049$ against a $+0.100$ ceiling, and mean absolute calibration-slope-error deterioration was $-0.084$ against a $+0.150$ ceiling. Both probability-error and discrimination paths met their seed-stability requirements, so the frozen gate returned \texttt{T1R\_EARNS\_COMPLEXITY}.
 
 That gate result has a deliberately limited meaning. It authorizes the statement that the residual-shrinkage principle showed internal value in a dense transcriptome setting; it does not establish current-SCRF external validity, pristine confirmation, clinical utility or deployment readiness. It also does not replace the HANCOCK backbone or alter the locked raw-SCRF confirmation. Patient-level TCGA predictions remain outside the manuscript repository, and the publication table is generated from the aggregate development audit.
 
@@ -493,9 +493,9 @@ For natural evidence-pattern analyses, a pattern entered the supported set only 
 Development cross-fitting produced repeated predictions for stability assessment, but uncertainty calculations respected the patient as the sampling unit. Confirmation intervals were computed from 2,000 patient-level stratified replicates. Router intervals likewise used 2,000 patient bootstrap replicates after repeated predictions had first been aggregated to one row per patient. Extension analyses report prespecified aggregate and seed-direction summaries without multiplicity-adjusted inferential claims. This hierarchy keeps the locked confirmation, development diagnostics and post-hoc characterizations statistically distinct.
 
 \section*{S13~Supporting development and calibration evidence}
-SCRF improved every aggregate discrimination measure and the mean 24-month IPCW Brier score in HANCOCK development (Table~\ref{tab:supptable1}). The mean Uno C gain was $+0.021303$ and was favourable in all five seeds. Coverage remained 100\%, the empty-set fallback error was zero, and the worst supported-pattern Brier regret was $+0.009848$, below the $+0.020$ safety boundary.
+SCRF improved every aggregate discrimination measure and the mean 24-month IPCW Brier score in HANCOCK development (Table~\ref{tab:supptable1}). The mean Uno C gain was $+0.021$ and was favourable in all five seeds. Coverage remained 100\%, the empty-set fallback error was zero, and the worst supported-pattern Brier regret was $+0.0098$, below the $+0.020$ safety boundary.
 
-The U5R7 bridge moved calibration-in-the-large from $+0.011680$ to $-0.003796$ and calibration slope from 0.825887 to 0.881552 (Table~\ref{tab:supptable2}). Ranking and coverage were preserved. The global Brier change was $+0.000147$, within the $+0.0005$ gate, and worst supported-pattern regret was $+0.004176$, below the $+0.005$ gate. Thus, the development bridge improved the probability scale without changing patient ordering or availability.
+The U5R7 bridge moved calibration-in-the-large from $+0.012$ to $-0.004$ and calibration slope from 0.826 to 0.882 (Table~\ref{tab:supptable2}). Ranking and coverage were preserved. The global Brier change was $+0.0001$, within the $+0.0005$ gate, and worst supported-pattern regret was $+0.0042$, below the $+0.005$ gate. Thus, the development bridge improved the probability scale without changing patient ordering or availability.
 
 \begingroup
 \scriptsize
@@ -513,13 +513,13 @@ Metric & CAM & SCRF & Difference & Interpretation\\
 \endhead
 \bottomrule
 \endlastfoot
-IPCW Brier at 24 months & 0.124745 & 0.124338 & $-0.000407$ & Lower probabilistic error\\
-Uno C at 24 months & 0.644239 & 0.665542 & $+0.021303$ & Improved discrimination\\
-Time-dependent AUC at 24 months & 0.662022 & 0.682511 & $+0.020488$ & Improved horizon ranking\\
-Harrell C & 0.623021 & 0.633710 & $+0.010690$ & Improved overall ranking\\
+IPCW Brier at 24 months & 0.1247 & 0.1243 & $-0.0004$ & Lower probabilistic error\\
+Uno C at 24 months & 0.644 & 0.666 & $+0.021$ & Improved discrimination\\
+Time-dependent AUC at 24 months & 0.662 & 0.683 & $+0.020$ & Improved horizon ranking\\
+Harrell C & 0.623 & 0.634 & $+0.011$ & Improved overall ranking\\
 Coverage & 100\% & 100\% & 0 & Full output availability\\
 Empty-set fallback error & 0 & 0 & 0 & Exact clinical fallback\\
-Worst supported-pattern Brier regret & Reference & $+0.009848$ & $+0.009848$ & Below $+0.020$ boundary\\
+Worst supported-pattern Brier regret & Reference & $+0.0098$ & $+0.0098$ & Below $+0.020$ boundary\\
 Seeds with improved Uno C & -- & 5/5 & -- & Consistent direction\\
 \end{longtable}
 \endgroup
@@ -542,12 +542,12 @@ Model stage & IPCW Brier$_{24}$ & Uno C$_{24}$ & AUC$_{24}$ & Harrell C\\
 \endhead
 \bottomrule
 \endlastfoot
-Clinical anchor model (CAM) & 0.124745 & 0.644239 & 0.662022 & 0.623021\\
-Unshrunk residual fusion (URF) & 0.126546 & 0.646355 & 0.658904 & 0.627593\\
-Shrinkage-controlled residual fusion (SCRF) & \textbf{0.124338} & \textbf{0.665542} & \textbf{0.682511} & \textbf{0.633710}\\
+Clinical anchor model (CAM) & 0.1247 & 0.644 & 0.662 & 0.623\\
+Unshrunk residual fusion (URF) & 0.1265 & 0.646 & 0.659 & 0.628\\
+Shrinkage-controlled residual fusion (SCRF) & \textbf{0.1243} & \textbf{0.666} & \textbf{0.683} & \textbf{0.634}\\
 \addlinespace[3pt]
-URF minus CAM & $+0.001801$ & $+0.002116$ & $-0.003118$ & $+0.004572$\\
-SCRF minus CAM & $-0.000407$ & $+0.021303$ & $+0.020488$ & $+0.010690$\\
+URF minus CAM & $+0.0018$ & $+0.002$ & $-0.003$ & $+0.005$\\
+SCRF minus CAM & $-0.0004$ & $+0.021$ & $+0.020$ & $+0.011$\\
 \end{longtable}
 \endgroup
 
@@ -567,19 +567,19 @@ Metric & Raw SCRF & U5R7 bridge & Change & Interpretation\\
 \endhead
 \bottomrule
 \endlastfoot
-IPCW Brier at 24 months & 0.126637 & 0.126784 & $+0.000147$ & Within $+0.0005$ gate\\
-Calibration-in-the-large & $+0.011680$ & $-0.003796$ & $-0.015477$ & Absolute error improved by 0.007884\\
-Calibration slope & 0.825887 & 0.881552 & $+0.055665$ & Absolute error improved by 0.055665\\
-Worst supported-pattern Brier regret & Reference & $+0.004176$ & $+0.004176$ & Below $+0.005$ gate\\
+IPCW Brier at 24 months & 0.1266 & 0.1268 & $+0.0001$ & Within $+0.0005$ gate\\
+Calibration-in-the-large & $+0.012$ & $-0.004$ & $-0.015$ & Absolute error improved by 0.008\\
+Calibration slope & 0.826 & 0.882 & $+0.056$ & Absolute error improved by 0.056\\
+Worst supported-pattern Brier regret & Reference & $+0.0042$ & $+0.0042$ & Below $+0.005$ gate\\
 Coverage & 100\% & 100\% & 0 & Preserved\\
 Ranking & Reference & Preserved & -- & All held-out folds\\
 \end{longtable}
 \endgroup
 
 \section*{S14~Locked confirmation and routing readouts}
-In the 152-patient, 40-event outcome-sealed cohort, raw SCRF showed favourable point estimates for discrimination, Brier score and calibration summaries (Table~\ref{tab:supptable3}). Patient-level stratified bootstrap with 2,000 replicates gave a mean delta Uno C of $+0.021654$ (95\% interval $-0.025965$ to $+0.070816$) and a mean delta IPCW Brier of $-0.005222$ (95\% interval $-0.012843$ to $+0.002171$). The direction was favourable across the principal readouts, with intervals reflecting the moderate event count.
+In the 152-patient, 40-event outcome-sealed cohort, raw SCRF showed favourable point estimates for discrimination, Brier score and calibration summaries (Table~\ref{tab:supptable3}). Patient-level stratified bootstrap with 2,000 replicates gave a mean delta Uno C of $+0.022$ (95\% interval $-0.026$ to $+0.071$) and a mean delta IPCW Brier of $-0.0052$ (95\% interval $-0.0128$ to $+0.0022$). The direction was favourable across the principal readouts, with intervals reflecting the moderate event count.
 
-The secondary U5R8 bridge readout preserved ranking and coverage but changed IPCW Brier from 0.134697 to 0.135782, calibration-in-the-large from $+0.156751$ to $+0.160944$ and calibration slope from 1.510335 to 1.678150. This result identifies cohort-level probability recalibration as the key next step for transportable absolute-risk output.
+The secondary U5R8 bridge readout preserved ranking and coverage but changed IPCW Brier from 0.1347 to 0.1358, calibration-in-the-large from $+0.157$ to $+0.161$ and calibration slope from 1.510 to 1.678. This result identifies cohort-level probability recalibration as the key next step for transportable absolute-risk output.
 
 \begingroup
 \scriptsize
@@ -597,17 +597,17 @@ Metric at 24 months & CAM & Raw SCRF & Difference & Interpretation\\
 \endhead
 \bottomrule
 \endlastfoot
-Uno C & 0.782579 & 0.804242 & $+0.021664$ & Favourable point estimate\\
-IPCW Brier & 0.136412 & 0.131246 & $-0.005166$ & Favourable point estimate\\
-Time-dependent AUC & 0.801094 & 0.813637 & $+0.012543$ & Favourable point estimate\\
-Harrell C & 0.733253 & 0.752842 & $+0.019589$ & Favourable point estimate\\
-Calibration-in-the-large & 0.211270 & 0.116482 & $-0.094788$ & Closer to zero\\
-Calibration slope & 1.945126 & 1.501223 & $-0.443903$ & Closer to one\\
+Uno C & 0.783 & 0.804 & $+0.022$ & Favourable point estimate\\
+IPCW Brier & 0.1364 & 0.1312 & $-0.0052$ & Favourable point estimate\\
+Time-dependent AUC & 0.801 & 0.814 & $+0.013$ & Favourable point estimate\\
+Harrell C & 0.733 & 0.753 & $+0.020$ & Favourable point estimate\\
+Calibration-in-the-large & 0.211 & 0.116 & $-0.095$ & Closer to zero\\
+Calibration slope & 1.945 & 1.501 & $-0.444$ & Closer to one\\
 Coverage & 100\% & 100\% & 0 & Preserved\\
 \end{longtable}
 \endgroup
 
-Every router improved on CAM at the point estimate, while direct raw SCRF remained the strongest overall policy (Table~\ref{tab:supptable4} and Fig.~\ref{fig:supp_router}). The best router used reliability features at threshold 0.60: delta Brier versus CAM was $-0.000506$, and its bootstrap interval was approximately $-0.00162$ to $+0.00076$. These results show that repetition-level stability contains useful routing information and support further development of selective prediction at matched coverage.
+Every router improved on CAM at the point estimate, while direct raw SCRF remained the strongest overall policy (Table~\ref{tab:supptable4} and Fig.~\ref{fig:supp_router}). The best router used reliability features at threshold 0.60: delta Brier versus CAM was $-0.0005$, and its bootstrap interval was approximately $-0.0016$ to $+0.0008$. These results show that repetition-level stability contains useful routing information and support further development of selective prediction at matched coverage.
 
 \begingroup
 \scriptsize
@@ -625,14 +625,14 @@ Policy & FUSE rate & Brier$_{24}$ & $\Delta$ vs CAM & $\Delta$ vs raw SCRF & Ran
 \endhead
 \bottomrule
 \endlastfoot
-CAM & 0.0\% & 0.123927 & 0 & $+0.001162$ & 0.867\\
-Raw SCRF & 100.0\% & 0.122765 & $-0.001162$ & 0 & 1.000\\
-Core router, $q\ge0.40$ & 66.1\% & 0.123545 & $-0.000382$ & $+0.000780$ & 0.945\\
-Core router, $q\ge0.50$ & 54.1\% & 0.123511 & $-0.000416$ & $+0.000746$ & 0.939\\
-Core router, $q\ge0.60$ & 40.3\% & 0.123585 & $-0.000341$ & $+0.000821$ & 0.928\\
-Reliability router, $q\ge0.40$ & 67.0\% & 0.123648 & $-0.000279$ & $+0.000883$ & 0.946\\
-Reliability router, $q\ge0.50$ & 54.8\% & 0.123508 & $-0.000419$ & $+0.000743$ & 0.938\\
-Reliability router, $q\ge0.60$ & 42.6\% & 0.123421 & $-0.000506$ & $+0.000657$ & 0.929\\
+CAM & 0.0\% & 0.1239 & 0 & $+0.0012$ & 0.867\\
+Raw SCRF & 100.0\% & 0.1228 & $-0.0012$ & 0 & 1.000\\
+Core router, $q\ge0.40$ & 66.1\% & 0.1235 & $-0.0004$ & $+0.0008$ & 0.945\\
+Core router, $q\ge0.50$ & 54.1\% & 0.1235 & $-0.0004$ & $+0.0007$ & 0.939\\
+Core router, $q\ge0.60$ & 40.3\% & 0.1236 & $-0.0003$ & $+0.0008$ & 0.928\\
+Reliability router, $q\ge0.40$ & 67.0\% & 0.1236 & $-0.0003$ & $+0.0009$ & 0.946\\
+Reliability router, $q\ge0.50$ & 54.8\% & 0.1235 & $-0.0004$ & $+0.0007$ & 0.938\\
+Reliability router, $q\ge0.60$ & 42.6\% & 0.1234 & $-0.0005$ & $+0.0007$ & 0.929\\
 \end{longtable}
 \endgroup
 
@@ -644,7 +644,7 @@ Reliability router, $q\ge0.60$ & 42.6\% & 0.123421 & $-0.000506$ & $+0.000657$ &
 
 \clearpage
 \section*{S15~Extension readouts: RADCURE, TCGA and GEO}
-The RADCURE held-out analysis characterized adapted clinical/radiomics comparator families in 626 patients with 110 events. The strongest comparator, C2, achieved Uno C 0.806744, 24-month AUC 0.818182 and IPCW Brier 0.090683 (Table~\ref{tab:supptable5} and Fig.~\ref{fig:supp_radcure}). This analysis provides a strong contemporary benchmark for the multimodal prognostic task and highlights the value of combining clinical and tumour-volume information.
+The RADCURE held-out analysis characterized adapted clinical/radiomics comparator families in 626 patients with 110 events. The strongest comparator, C2, achieved Uno C 0.807, 24-month AUC 0.818 and IPCW Brier 0.0907 (Table~\ref{tab:supptable5} and Fig.~\ref{fig:supp_radcure}). This analysis provides a strong contemporary benchmark for the multimodal prognostic task and highlights the value of combining clinical and tumour-volume information.
 
 \begingroup
 \scriptsize
@@ -662,10 +662,10 @@ Comparator & Brier$_{24}$ & Uno C & AUC$_{24}$ & Harrell C & CITL & Calibration 
 \endhead
 \bottomrule
 \endlastfoot
-C1 & 0.095801 & 0.806595 & 0.819376 & 0.795924 & $-0.097110$ & 1.950857\\
-C2 & 0.090683 & 0.806744 & 0.818182 & 0.797862 & $-0.044444$ & 1.139466\\
-C3 & 0.098469 & 0.771260 & 0.780742 & 0.761632 & $-0.099603$ & 1.268349\\
-C4 & 0.097403 & 0.779243 & 0.787882 & 0.768812 & $-0.074520$ & 1.471544\\
+C1 & 0.0958 & 0.807 & 0.819 & 0.796 & $-0.097$ & 1.951\\
+C2 & 0.0907 & 0.807 & 0.818 & 0.798 & $-0.044$ & 1.139\\
+C3 & 0.0985 & 0.771 & 0.781 & 0.762 & $-0.100$ & 1.268\\
+C4 & 0.0974 & 0.779 & 0.788 & 0.769 & $-0.075$ & 1.472\\
 \end{longtable}
 \endgroup
 
@@ -693,10 +693,10 @@ Metric & Clinical anchor & tSCRF & Difference & Favourable seeds\\
 \endhead
 \bottomrule
 \endlastfoot
-IPCW Brier at 24 months & 0.221795 & 0.218058 & $-0.003737$ & 4/5\\
-Harrell C & 0.577281 & 0.605919 & $+0.028637$ & 5/5\\
-Uno C at 24 months & 0.565199 & 0.597265 & $+0.032066$ & 5/5\\
-Time-dependent AUC at 24 months & 0.557362 & 0.600236 & $+0.042874$ & 5/5\\
+IPCW Brier at 24 months & 0.2218 & 0.2181 & $-0.0037$ & 4/5\\
+Harrell C & 0.577 & 0.606 & $+0.029$ & 5/5\\
+Uno C at 24 months & 0.565 & 0.597 & $+0.032$ & 5/5\\
+Time-dependent AUC at 24 months & 0.557 & 0.600 & $+0.043$ & 5/5\\
 \end{longtable}
 \endgroup
 
@@ -716,11 +716,11 @@ Repetition seed & $\Delta$ IPCW Brier$_{24}$ & $\Delta$ Uno C$_{24}$\\
 \endhead
 \bottomrule
 \endlastfoot
-17 & $-0.004443$ & $+0.037975$\\
-29 & $+0.002714$ & $+0.006398$\\
-43 & $-0.004353$ & $+0.029370$\\
-71 & $-0.006560$ & $+0.048165$\\
-101 & $-0.006045$ & $+0.038420$\\
+17 & $-0.0044$ & $+0.038$\\
+29 & $+0.0027$ & $+0.006$\\
+43 & $-0.0044$ & $+0.029$\\
+71 & $-0.0066$ & $+0.048$\\
+101 & $-0.0060$ & $+0.038$\\
 \end{longtable}
 \endgroup
 
@@ -730,7 +730,7 @@ Repetition seed & $\Delta$ IPCW Brier$_{24}$ & $\Delta$ Uno C$_{24}$\\
 \caption{\textbf{Transcriptome SCRF method replication in TCGA-HNSC.} \textbf{a}, Mean anchor and tSCRF performance. \textbf{b}, Seed-level tSCRF$-$anchor differences. \textbf{c}, Cohort role and claim label. Discrimination improved in all five seeds.}\label{fig:supp_t1r}
 \end{figure*}
 
-A single tSCRF model fitted to the complete TCGA-HNSC development cohort showed favourable Brier and discrimination changes in both GEO cohorts (Table~\ref{tab:supptable8} and Fig.~\ref{fig:supp_geo}). In GSE65858, Uno C increased from 0.583694 to 0.645818. In GSE41613, the applied clinical anchor had no cross-patient variation, whereas tSCRF restored patient-level ordering, with Harrell C 0.626361 and 24-month AUC 0.634011. Calibration slopes above one indicate compressed predicted-risk dispersion, making cohort-level recalibration a constructive next step for prospective absolute-risk reporting.
+A single tSCRF model fitted to the complete TCGA-HNSC development cohort showed favourable Brier and discrimination changes in both GEO cohorts (Table~\ref{tab:supptable8} and Fig.~\ref{fig:supp_geo}). In GSE65858, Uno C increased from 0.584 to 0.646. In GSE41613, the applied clinical anchor had no cross-patient variation, whereas tSCRF restored patient-level ordering, with Harrell C 0.626 and 24-month AUC 0.634. Calibration slopes above one indicate compressed predicted-risk dispersion, making cohort-level recalibration a constructive next step for prospective absolute-risk reporting.
 
 \begingroup
 \scriptsize
@@ -749,19 +749,19 @@ Cohort and metric & Clinical anchor & tSCRF & Difference\\
 \bottomrule
 \endlastfoot
 \multicolumn{4}{l}{\textbf{GSE65858 (n=244; 78 events)}}\\
-IPCW Brier at 24 months & 0.195207 & 0.195070 & $-0.000137$\\
-Harrell C & 0.581806 & 0.644868 & $+0.063062$\\
-Uno C at 24 months & 0.583694 & 0.645818 & $+0.062123$\\
-Time-dependent AUC at 24 months & 0.588972 & 0.650733 & $+0.061762$\\
-Calibration-in-the-large & $-0.763793$ & $-0.831959$ & $-0.068166$\\
-Calibration slope & 1.707442 & 1.941562 & $+0.234120$\\
+IPCW Brier at 24 months & 0.1952 & 0.1951 & $-0.0001$\\
+Harrell C & 0.582 & 0.645 & $+0.063$\\
+Uno C at 24 months & 0.584 & 0.646 & $+0.062$\\
+Time-dependent AUC at 24 months & 0.589 & 0.651 & $+0.062$\\
+Calibration-in-the-large & $-0.764$ & $-0.832$ & $-0.068$\\
+Calibration slope & 1.707 & 1.942 & $+0.234$\\
 \multicolumn{4}{l}{\textbf{GSE41613 (n=97; 51 events)}}\\
-IPCW Brier at 24 months & 0.265712 & 0.258607 & $-0.007104$\\
-Harrell C & 0.500000 & 0.626361 & $+0.126361$\\
-Uno C at 24 months & 0.500000 & 0.616039 & $+0.116039$\\
-Time-dependent AUC at 24 months & 0.500000 & 0.634011 & $+0.134011$\\
-Calibration-in-the-large & $-0.273717$ & $-0.264792$ & $+0.008925$\\
-Calibration slope & -- & 1.939018 & --\\
+IPCW Brier at 24 months & 0.2657 & 0.2586 & $-0.0071$\\
+Harrell C & 0.500 & 0.626 & $+0.126$\\
+Uno C at 24 months & 0.500 & 0.616 & $+0.116$\\
+Time-dependent AUC at 24 months & 0.500 & 0.634 & $+0.134$\\
+Calibration-in-the-large & $-0.274$ & $-0.265$ & $+0.0089$\\
+Calibration slope & -- & 1.939 & --\\
 \end{longtable}
 \endgroup
 
@@ -799,21 +799,21 @@ Method & \makecell{Calibration-in-\\the-large} & \makecell{Calibration\\slope} &
 \endfoot
 \bottomrule
 \endlastfoot
-Clinical Cox PH & $+0.0401$ (0.0080) & 0.7422 (0.0540) & 0.65\\
-Elastic-net Cox & $-0.0185$ (0.0227) & 1.0089 (0.4623) & 0.58\\
-Random survival forest & $+0.0135$ (0.0098) & 1.5507 (0.0711) & 5.62\\
-Gradient boosting survival & $-0.0116$ (0.0029) & 1.9186 (0.1631) & 1.80\\
-XGBoost-Cox & $+0.0384$ (0.0250) & 0.7204 (0.0319) & 0.79\\
-DeepSurv & $+0.9428$ (0.2685) & unstable ($>10^{10}$) & 5.60\\
-DeepHit & $+0.8460$ (0.2784) & unstable ($>10^{10}$) & 8.27\\
-MultiSurv, adapted & $+0.0637$ (0.0445) & 0.4767 (0.0817) & 3.33\\
-Early feature fusion, adapted & $-0.5974$ (0.0663) & 0.7027 (0.0843) & 1.32\\
-Late decision fusion, adapted & $-1.1033$ (0.0590) & 0.9304 (1.0115) & 1.99\\
-Masked attention fusion, adapted & $-0.0782$ (0.0468) & 1.8012 (0.3606) & 2.50\\
-Bilinear interaction fusion, adapted & $+0.0668$ (0.0447) & 1.1537 (0.0999) & 3.04\\
-Missing-aware intermediate fusion, adapted & $-0.0918$ (0.0450) & 0.1587 (0.0949) & 2.94\\
-Heterogeneous aligned fusion, adapted & $-0.0525$ (0.0603) & 0.7723 (0.5607) & 5.17\\
-PATTERN-Surv-HN (SCRF) & $-0.0169$ (0.0198) & 0.8513 (0.1693) & --\\
+Clinical Cox PH & $+0.040$ (0.008) & 0.742 (0.054) & 0.65\\
+Elastic-net Cox & $-0.019$ (0.023) & 1.009 (0.462) & 0.58\\
+Random survival forest & $+0.014$ (0.010) & 1.551 (0.071) & 5.62\\
+Gradient boosting survival & $-0.012$ (0.003) & 1.919 (0.163) & 1.80\\
+XGBoost-Cox & $+0.038$ (0.025) & 0.720 (0.032) & 0.79\\
+DeepSurv & $+0.943$ (0.269) & unstable ($>10^{10}$) & 5.60\\
+DeepHit & $+0.846$ (0.278) & unstable ($>10^{10}$) & 8.27\\
+MultiSurv, adapted & $+0.064$ (0.045) & 0.477 (0.082) & 3.33\\
+Early feature fusion, adapted & $-0.597$ (0.066) & 0.703 (0.084) & 1.32\\
+Late decision fusion, adapted & $-1.103$ (0.059) & 0.930 (1.012) & 1.99\\
+Masked attention fusion, adapted & $-0.078$ (0.047) & 1.801 (0.361) & 2.50\\
+Bilinear interaction fusion, adapted & $+0.067$ (0.045) & 1.154 (0.100) & 3.04\\
+Missing-aware intermediate fusion, adapted & $-0.092$ (0.045) & 0.159 (0.095) & 2.94\\
+Heterogeneous aligned fusion, adapted & $-0.053$ (0.060) & 0.772 (0.561) & 5.17\\
+PATTERN-Surv-HN (SCRF) & $-0.017$ (0.020) & 0.851 (0.169) & --\\
 \end{longtable}
 \endgroup
 
