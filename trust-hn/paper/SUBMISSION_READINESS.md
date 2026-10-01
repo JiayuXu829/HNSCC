@@ -1,6 +1,6 @@
-﻿# PATTERN-Surv-HN 鈥?Submission readiness checklist
+﻿# PATTERN-Surv-HN submission readiness checklist
 
-> Updated 20 September 2026. Working checklist tracking what is complete and what remains before journal submission. Not part of the manuscript.
+> Updated 1 October 2026. Working checklist tracking what is complete and what remains before journal submission. Not part of the manuscript.
 
 ## Complete
 
@@ -15,10 +15,11 @@
 - U7R2 RADCURE external characterization: complete (adapted, non-confirmatory).
 - U8 T1R transcriptome development CV: complete (internal post-hoc method replication).
 - U8E T1R GEO characterization: complete (post-hoc descriptive cross-cohort evidence).
+- U11 independent two-centre private external validation: complete (125 patients, 59 deaths; favourable paired 95% intervals for Uno C, AUC, Harrell C and IPCW Brier; 100% coverage and exact empty-set fallback).
 - Reproducibility: targeted pattern_surv_hn suite 41 passed, 0 failed (7 Sep 2026).
 
 ### Manuscript
-- `manuscript.md`: complete draft; U6R1 + U7R2 exploratory extensions integrated.
+- Springer Nature `main.tex`: externally validated revision complete; U11 external cohort integrated into the abstract, Results, Discussion, Methods and Supplementary Information.
 - `supplement.md`: complete; S8 (router), S9 (RADCURE), S10 (U8) and S11 (U8E) added.
 - `figure_legends.md` + figure framework spec: present.
 - `V1R_positive/` source-of-truth files: present.
@@ -27,8 +28,10 @@
 
 ## Remaining before submission
 
-### Blocked (external data)
-- Formal current-V1R external confirmation: blocked. No local cohort is simultaneously current-V1R-compatible and certified outcome-untouched (U5R11, U7). Requires acquiring a new qualifying cohort; the protocol is already frozen in `U7_external_confirmation_protocol_freeze`.
+### External-cohort documentation still required
+- The current blood/ICD/TMA model now has independent retrospective external validation. Before submission, add participating-institution names, ethics/IRB identifier, consent or waiver language and the permitted data-sharing statement.
+- The transfer package did not include a timestamped pre-unsealing prediction-seal receipt. Retain the manuscript label `independent retrospective external validation`; do not promote this cohort to prospective or outcome-untouched confirmation without additional documentation.
+- External calibration slope remained above one. Prespecify cohort-level recalibration and evaluate decision-curve benefit before any deployment claim.
 
 ### Manuscript metadata (not yet written)
 - Ethics / IRB statement.
@@ -41,11 +44,10 @@
 
 ### Figures and tables
 - Render Figure 1 from the framework spec (currently textual).
-- Finalize Tables 1-3 (development, bridge, confirmation) and supplement tables S1-S3 and S8-S11.
+- Finalize the development, bridge, confirmation and external-validation tables and cross-check all supplement tables.
 - Confirm every table value against the aggregate JSON artifacts.
 
 ### Final checks
 - Reporting-guideline compliance (e.g., TRIPOD for prognostic models).
 - Statistical review of bootstrap and IPCW implementation.
 - Run the full test suite and record the known frozen phase6 legacy failure separately.
-

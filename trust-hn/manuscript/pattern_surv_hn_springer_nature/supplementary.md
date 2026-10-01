@@ -2,11 +2,11 @@
 
 ## Supplementary Note 1. Evidence architecture and interpretation
 
-This Supplementary Information expands the main-text Methods and Results. It documents the cohort roles, acquisition and usability definitions, model architecture, cross-fitting procedure, calibration layer, locked confirmation analysis, routing exploration and extension analyses in RADCURE, TCGA-HNSC and GEO. All numerical summaries are derived from frozen aggregate artifacts; no patient-level predictions are included.
+This Supplementary Information expands the main-text Methods and Results. It documents the cohort roles, acquisition and usability definitions, model architecture, cross-fitting procedure, calibration layer, locked confirmation analysis, independent two-centre external validation, routing exploration and extension analyses in RADCURE, TCGA-HNSC and GEO. All publication-facing numerical summaries are derived from aggregate artifacts; no patient-level predictions are included.
 
-The study was organized as a staged evidence pipeline. First, repeated nested cross-fitting in the HANCOCK development cohort quantified the incremental value of the V1R residual pathway over a clinical-pathological anchor. Second, a monotone calibration bridge was optimized and evaluated within development folds. Third, raw V1R predictions and all analysis dependencies were sealed before confirmation outcomes were accessed. Fourth, router, RADCURE, transcriptome and GEO analyses examined complementary questions of selective use, multimodal benchmarking, method transfer and platform transport.
+The study was organized as a staged evidence pipeline. First, repeated nested cross-fitting in the HANCOCK development cohort quantified the incremental value of the V1R residual pathway over a clinical-pathological anchor. Second, a monotone calibration bridge was optimized and evaluated within development folds. Third, raw V1R predictions and all analysis dependencies were sealed before confirmation outcomes were accessed. Fourth, frozen CAM and SCRF predictions were evaluated in an independent two-centre postoperative cohort. Fifth, router, RADCURE, transcriptome and GEO analyses examined complementary questions of selective use, multimodal benchmarking, method transfer and platform transport.
 
-The interpretation used throughout the manuscript is summarized here once. V1R showed a reproducible development gain, favourable in all five repetition seeds, with complete coverage and pattern-level safety within the prespecified boundary. The locked HANCOCK confirmation cohort showed favourable point estimates for every principal metric; bootstrap intervals were wide and included zero, supporting a consistent directional signal. The development bridge improved calibration summaries, whereas the later bridge readout indicated that probability-scale transport requires cohort-specific recalibration. Router and extension analyses are used to generate design insights and transport evidence rather than to replace the locked raw-V1R result.
+The interpretation used throughout the manuscript is summarized here once. V1R showed a reproducible development gain, favourable in all five repetition seeds, with complete coverage and pattern-level safety within the prespecified boundary. The locked HANCOCK confirmation cohort showed favourable point estimates for every principal metric, although bootstrap intervals included zero. In the independent external cohort, SCRF improved Brier score and every discrimination metric, with paired intervals excluding the null. The development bridge improved calibration summaries, whereas the later bridge readout and the external calibration slope indicated that probability-scale transport requires cohort-specific recalibration. Router and extension analyses provide design insights rather than replacing the primary SCRF evaluations.
 
 This staged architecture is a strength of the study: model development, calibration, confirmation and extension are separated by frozen protocols and explicit artifact boundaries. It allows the central finding—controlled incremental multimodal evidence can improve risk ranking while preserving full output availability—to be evaluated alongside calibration, routing and transport considerations.
 
@@ -14,7 +14,7 @@ This staged architecture is a strength of the study: model development, calibrat
 
 ### Cohorts, prediction time and endpoint
 
-HANCOCK was the primary development and confirmation ecosystem. The development analysis included 610 eligible postoperative patients with 173 deaths; the locked confirmation analysis included 152 patients with 40 events. TCGA-HNSC contributed 519 patients and 221 events to the transcriptome method-replication analysis. GSE65858 and GSE41613 contributed 244 patients with 78 events and 97 patients with 51 events, respectively, to descriptive GEO characterization. The RADCURE held-out characterization included 626 patients and 110 events.
+HANCOCK was the primary development and confirmation ecosystem. The development analysis included 610 eligible postoperative patients with 173 deaths; the locked confirmation analysis included 152 patients with 40 events. The independent external validation cohort included 125 postoperative patients from two pseudonymized centres, 59 observed deaths and 19 deaths by 24 months. TCGA-HNSC contributed 519 patients and 221 events to the transcriptome method-replication analysis. GSE65858 and GSE41613 contributed 244 patients with 78 events and 97 patients with 51 events, respectively, to descriptive GEO characterization. The RADCURE held-out characterization included 626 patients and 110 events.
 
 For patient \(i\), \(T_i\) denotes event time, \(C_i\) censoring time, \(Y_i=\min(T_i,C_i)\) observed duration and \(\delta_i=I(T_i\le C_i)\) the event indicator. In HANCOCK, follow-up began at first treatment and ended at last information; the event was all-cause death. Non-positive durations were excluded. The primary horizon was \(t^*=730.5\) days, approximately 24 months, and the target was all-cause mortality risk by that horizon. Prediction was designed for the period immediately after definitive surgery and pathological review, using information available at that time.
 
@@ -238,10 +238,31 @@ T1R showed favourable Brier and discrimination changes in both GEO cohorts (Supp
 | Calibration-in-the-large | -0.273717 | -0.264792 | +0.008925 |
 | Calibration slope | -- | 1.939018 | -- |
 
+### Independent two-centre external validation
+
+The private external cohort contained 125 eligible postoperative patients from two pseudonymized centres, including 59 observed deaths and 19 deaths by 24 months. Median observed follow-up was 1,339 days. Median age was 62 years (interquartile range 55--71), 29 patients were female and 96 were male. All required clinical predictors and all CAM and SCRF predictions were complete, and every prediction aggregated 25 model members.
+
+All eight blood--ICD--TMA usability patterns occurred: `000` (n=1), `001` (n=4), `010` (n=7), `011` (n=11), `100` (n=5), `101` (n=9), `110` (n=14) and `111` (n=74). Pattern `111` was the only pattern meeting the prespecified threshold of at least 30 patients and 10 deaths. Its Brier change was -0.005034. The patient with pattern `000` had exact CAM fallback for score and 24-month risk.
+
+### Supplementary Table 9. Independent external validation of CAM and SCRF
+
+| Metric | CAM | SCRF | SCRF minus CAM | Paired bootstrap 95% CI |
+|---|---:|---:|---:|---:|
+| IPCW Brier at 24 months | 0.121450 | 0.110822 | -0.010628 | -0.018537 to -0.003465 |
+| Uno C at 24 months | 0.727700 | 0.796615 | +0.068915 | +0.020752 to +0.124547 |
+| Time-dependent AUC at 24 months | 0.752898 | 0.829089 | +0.076192 | +0.024772 to +0.133700 |
+| Harrell C | 0.674562 | 0.746566 | +0.072004 | +0.039998 to +0.105636 |
+| Calibration-in-the-large | +0.020932 | -0.009730 | -0.030661 | -- |
+| Calibration slope | 1.249521 | 1.507270 | +0.257749 | -- |
+| Mean predicted 24-month risk | 0.161429 | 0.164279 | +0.002851 | -- |
+| Coverage | 100% | 100% | 0 | -- |
+
+Point estimates were independently recomputed and matched the workbook to absolute tolerance 1e-12. The workbook SHA256 was `9341150581FBF3805D4A7F39C2FEB43A419E12DE2CC7CC5C6ED238E28261A281`. The transfer package did not include a timestamped prediction-sealing receipt; this cohort is therefore described as independent retrospective external validation rather than outcome-untouched confirmation. Calibration slope remained above one, and clinical utility was not evaluated.
+
 ## Reproducibility and artifact governance
 
 The formal V1R development out-of-fold SHA256 was `E43BB6C0D8E2C7F9C8B22A9C416AD752109B926A8526273D88811458CD73BCE0`. The confirmation protocol SHA256 was `1E134D30557D1CC153997F6EBB79E99C2E160F85A9F94BF3BBDD81C2C588FDED`, and the locked prediction artifact SHA256 was `E5DA83BDB3BB97C3488687C78CCF166FBD03059619DD0690E2767CAF8F393FCF`. Two V0 reruns produced identical out-of-fold hashes.
 
-Aggregate sources included `research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/aggregate_t1r_transcriptome_development_cv_audit.json` and `research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json`.
+Aggregate sources included `research_studies/01_pattern_surv_hn/core_backbone/U5R7_V1R_beta09_logloss_bridge_candidate/selected_bridge_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U6R1_patient_level_router_aggregation_exploration/u6r1_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U7R2_RADCURE_external_characterization/u7r2_radcure_external_characterization_aggregate_results.json`, `research_studies/01_pattern_surv_hn/core_backbone/U8_T1R_transcriptome_residual_shrinkage/aggregate_t1r_transcriptome_development_cv_audit.json`, `research_studies/01_pattern_surv_hn/core_backbone/U8E_T1R_external_characterization/aggregate_t1r_external_characterization_audit.json` and `research_studies/01_pattern_surv_hn/core_backbone/U11_private_external_validation/u11_private_external_validation_aggregate.json`.
 
 Cohorts, preprocessing and stage definitions were configuration controlled. Repetition seeds were 17, 29, 43, 71 and 101. Each stage recorded analysis label, prior outcome access, tuning status and artifact integrity. Patient identifiers and patient-level predictions were excluded from version control; the publication-facing tables and figures were generated from aggregate metrics, manifests and audits.

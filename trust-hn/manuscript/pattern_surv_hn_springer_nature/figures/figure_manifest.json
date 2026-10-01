@@ -39,6 +39,12 @@
       "claim": "Methods architecture; raw SCRF is primary; bridge development-only; router exploratory"
     },
     {
+      "number": 6,
+      "file": "figure6_private_external_validation.pdf",
+      "source": "trust-hn/research_studies/01_pattern_surv_hn/core_backbone/U11_private_external_validation/u11_private_external_validation_aggregate.json",
+      "claim": "independent two-centre retrospective external validation; paired intervals favour SCRF; calibration slope remains above one"
+    },
+    {
       "number": 1,
       "extended": true,
       "file": "extended_data_figure1_router_exploration.pdf",

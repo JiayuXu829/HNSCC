@@ -26,7 +26,7 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error supplementary.tex
 
 Edit `supplementary.md`, rather than generated `supplementary.tex`, when changing supplement wording or tables. The generator preserves the Nature-template preamble, converts the eight numbered supplementary tables to long tables and handles aggregate-artifact hashes without patient-level output.
 
-## Current evidence architecture (21 September 2026)
+## Current evidence architecture (1 October 2026)
 
 The manuscript reports:
 
@@ -34,10 +34,11 @@ The manuscript reports:
 - Repeated nested V1R development (610 patients; 173 deaths).
 - U5R7 development-only calibration bridge.
 - Locked outcome-untouched raw-V1R HANCOCK confirmation (152 patients; 40 events).
+- Independent two-centre retrospective external validation of frozen CAM/SCRF predictions (125 patients; 59 deaths), with paired 95% intervals favouring SCRF for Uno C, AUC, Harrell C and IPCW Brier score.
 - U5R8 locked secondary post-unseal bridge readout, identifying cohort-level probability recalibration as the next step for transportable absolute-risk output.
 - U6R1 reliability-aware routing, U7R2 RADCURE characterization, U8 TCGA T1R replication and U8E GEO characterization.
 
-The principal confirmation bootstrap intervals cross zero. RADCURE, TCGA and GEO are complementary benchmarking, method-transfer and platform-transport analyses rather than formal current-V1R external validation. The draft does not claim clinical utility or deployment readiness.
+The principal HANCOCK confirmation intervals cross zero, whereas the independent external-validation intervals exclude the null in the favourable direction. External calibration slope remains above one, and the transfer package lacks a timestamped prediction-seal receipt. The draft therefore claims retrospective external validation of incremental performance, but not prospective confirmation, calibration transport, clinical utility or deployment readiness. RADCURE, TCGA and GEO remain complementary benchmarking, method-transfer and platform-transport analyses.
 
 ## Figure inventory
 
@@ -46,6 +47,7 @@ The principal confirmation bootstrap intervals cross zero. RADCURE, TCGA and GEO
 - Main Fig. 3: V1R development performance, seed stability and safety.
 - Main Fig. 4: U5R7 bridge and U5R8 post-unseal transport check.
 - Main Fig. 5: locked raw-V1R confirmation forest plot.
+- Main Fig. 6: independent external validation, usability patterns, coverage and calibration.
 - Extended Data Figs. 1–4: router, RADCURE, TCGA T1R and GEO analyses.
 
 All generated figures read aggregate JSON artifacts only. The Supplementary Information uses the same Springer Nature class as the main article and contains Supplementary Note 1, combined Supplementary Methods and Results, and Supplementary Tables 1–8. Patient-level predictions remain outside version control.

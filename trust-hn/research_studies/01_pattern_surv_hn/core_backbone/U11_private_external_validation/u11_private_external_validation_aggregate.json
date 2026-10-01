@@ -1,0 +1,188 @@
+{
+  "analysis": "U11 private two-centre retrospective external validation",
+  "analysis_date": "2026-10-01",
+  "claim_boundary": "Independent retrospective external validation with complete coverage and favourable paired discrimination and IPCW-Brier intervals. The workbook did not encode a timestamped prediction-seal receipt, so this is not described as prospective or outcome-untouched confirmation. Calibration slope remained above one and clinical utility was not evaluated.",
+  "cohort": {
+    "age_iqr_years": [
+      55.0,
+      71.0
+    ],
+    "age_median_years": 62.0,
+    "censored_by_24m": 13,
+    "centres": {
+      "CENTER-A": 79,
+      "CENTER-B": 46
+    },
+    "complete_optional_pattern_111": 74,
+    "deaths_by_24m": 19,
+    "empty_optional_pattern_000": 1,
+    "female": 29,
+    "male": 96,
+    "median_observed_follow_up_days": 1339.0,
+    "observed_deaths": 59,
+    "patients": 125,
+    "prediction_lag_median_days": 9.0
+  },
+  "input_workbook_sha256": "9341150581FBF3805D4A7F39C2FEB43A419E12DE2CC7CC5C6ED238E28261A281",
+  "integrity": {
+    "aligned_unique_patient_ids": true,
+    "complete_predictions": true,
+    "complete_required_clinical_fields": true,
+    "exact_empty_set_risk_fallback_error": 0.0,
+    "exact_empty_set_score_fallback_error": 0.0,
+    "member_count_all_25": true,
+    "prediction_coverage": 1.0,
+    "valid_outcome_chronology": true,
+    "valid_prediction_chronology": true
+  },
+  "metrics": {
+    "CAM": {
+      "auc_24m": 0.7528975084313276,
+      "calibration_in_the_large_24m": 0.020931578332379422,
+      "calibration_slope_24m": 1.2495210042173615,
+      "harrell_c": 0.6745618190431075,
+      "ipcw_brier_24m": 0.12145004744125422,
+      "mean_predicted_risk_24m": 0.16142859427449385,
+      "uno_c_24m": 0.7277001743436627
+    },
+    "SCRF": {
+      "auc_24m": 0.8290892860709379,
+      "calibration_in_the_large_24m": -0.009729868230168288,
+      "calibration_slope_24m": 1.5072699101877898,
+      "harrell_c": 0.7465656087162482,
+      "ipcw_brier_24m": 0.11082175682021404,
+      "mean_predicted_risk_24m": 0.16427929870746336,
+      "uno_c_24m": 0.7966150466934098
+    },
+    "SCRF_minus_CAM": {
+      "auc_24m": 0.07619177763961027,
+      "calibration_in_the_large_24m": -0.03066144656254771,
+      "calibration_slope_24m": 0.2577489059704283,
+      "harrell_c": 0.0720037896731407,
+      "ipcw_brier_24m": -0.010628290621040176,
+      "mean_predicted_risk_24m": 0.002850704432969503,
+      "uno_c_24m": 0.06891487234974703
+    },
+    "paired_bootstrap_95ci_from_workbook": {
+      "auc_24m": {
+        "ci_lower": 0.0247721522793216,
+        "ci_upper": 0.133700213358791,
+        "replicates": 2000
+      },
+      "harrell_c": {
+        "ci_lower": 0.0399984540066993,
+        "ci_upper": 0.105636379392569,
+        "replicates": 2000
+      },
+      "ipcw_brier_24m": {
+        "ci_lower": -0.0185369267496682,
+        "ci_upper": -0.00346451814277192,
+        "replicates": 2000
+      },
+      "uno_c_24m": {
+        "ci_lower": 0.0207516381912668,
+        "ci_upper": 0.124546977806087,
+        "replicates": 2000
+      }
+    }
+  },
+  "patient_level_data_written": false,
+  "patterns": [
+    {
+      "cam_brier_24m": 0.0160211480495822,
+      "cam_uno_c_24m": null,
+      "delta_brier": 0.0,
+      "delta_uno_c": null,
+      "events": 1,
+      "n": 1,
+      "scrf_brier_24m": 0.0160211480495822,
+      "scrf_uno_c_24m": null,
+      "supported_n30_events10": false,
+      "usable_pattern": 0
+    },
+    {
+      "cam_brier_24m": 0.0241345523361369,
+      "cam_uno_c_24m": null,
+      "delta_brier": 0.000262860448079546,
+      "delta_uno_c": null,
+      "events": 3,
+      "n": 4,
+      "scrf_brier_24m": 0.0243974127842165,
+      "scrf_uno_c_24m": null,
+      "supported_n30_events10": false,
+      "usable_pattern": 1
+    },
+    {
+      "cam_brier_24m": 0.190905729718337,
+      "cam_uno_c_24m": 0.810598787894883,
+      "delta_brier": -0.0349349425405449,
+      "delta_uno_c": 0.0,
+      "events": 4,
+      "n": 7,
+      "scrf_brier_24m": 0.155970787177792,
+      "scrf_uno_c_24m": 0.810598787894883,
+      "supported_n30_events10": false,
+      "usable_pattern": 10
+    },
+    {
+      "cam_brier_24m": 0.216314289813247,
+      "cam_uno_c_24m": 0.804802045524832,
+      "delta_brier": -0.014643998926957,
+      "delta_uno_c": 0.0312813796344199,
+      "events": 8,
+      "n": 11,
+      "scrf_brier_24m": 0.20167029088629,
+      "scrf_uno_c_24m": 0.836083425159252,
+      "supported_n30_events10": false,
+      "usable_pattern": 11
+    },
+    {
+      "cam_brier_24m": 0.294849782263515,
+      "cam_uno_c_24m": 0.425022200920411,
+      "delta_brier": -0.0129780370104837,
+      "delta_uno_c": -0.137533301380617,
+      "events": 3,
+      "n": 5,
+      "scrf_brier_24m": 0.281871745253031,
+      "scrf_uno_c_24m": 0.287488899539794,
+      "supported_n30_events10": false,
+      "usable_pattern": 100
+    },
+    {
+      "cam_brier_24m": 0.0741880264440732,
+      "cam_uno_c_24m": 0.875,
+      "delta_brier": -0.0209441374905151,
+      "delta_uno_c": 0.0,
+      "events": 3,
+      "n": 9,
+      "scrf_brier_24m": 0.0532438889535581,
+      "scrf_uno_c_24m": 0.875,
+      "supported_n30_events10": false,
+      "usable_pattern": 101
+    },
+    {
+      "cam_brier_24m": 0.0639266258366634,
+      "cam_uno_c_24m": 1.0,
+      "delta_brier": -0.0212921755610456,
+      "delta_uno_c": 0.0,
+      "events": 7,
+      "n": 14,
+      "scrf_brier_24m": 0.0426344502756178,
+      "scrf_uno_c_24m": 1.0,
+      "supported_n30_events10": false,
+      "usable_pattern": 110
+    },
+    {
+      "cam_brier_24m": 0.112378180618393,
+      "cam_uno_c_24m": 0.624643484324227,
+      "delta_brier": -0.00503353112324736,
+      "delta_uno_c": 0.118410382963466,
+      "events": 30,
+      "n": 74,
+      "scrf_brier_24m": 0.107344649495145,
+      "scrf_uno_c_24m": 0.743053867287693,
+      "supported_n30_events10": true,
+      "usable_pattern": 111
+    }
+  ]
+}

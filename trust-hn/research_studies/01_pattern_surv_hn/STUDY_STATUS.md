@@ -388,3 +388,31 @@ Artifacts:
 - Integration report: `research_studies/01_pattern_surv_hn/reports/2026-09-20_step_U8E_paper_supplement_integration_completed.md`
 - The supplementary narrative emphasizes the consistent favorable Brier and discrimination direction across GEO cohorts while preserving the post-hoc characterization boundary.
 
+## U11 private two-centre external validation
+
+U11 audited the supplied private external workbook in place and exported aggregate results only. The cohort contained 125 eligible postoperative patients from two pseudonymized centres and 59 observed deaths, including 19 deaths by 24 months. CAM and SCRF predictions were complete for every patient and aggregated 25 model members.
+
+```text
+CAM Uno C24                              0.727700
+SCRF Uno C24                            0.796615
+delta Uno C24                          +0.068915  (95% CI +0.020752 to +0.124547)
+
+CAM IPCW Brier24                        0.121450
+SCRF IPCW Brier24                       0.110822
+delta IPCW Brier24                     -0.010628  (95% CI -0.018537 to -0.003465)
+
+delta AUC24                            +0.076192  (95% CI +0.024772 to +0.133700)
+delta Harrell C                        +0.072004  (95% CI +0.039998 to +0.105636)
+coverage                                100%
+exact empty-set score/risk fallback     0.0 / 0.0
+worst supported-pattern Brier change   -0.005034
+```
+
+This result establishes independent retrospective external validation of the current CAM/SCRF blood--ICD--TMA prediction contract. It is not labelled prospective or outcome-untouched confirmation because the transfer package did not include a timestamped prediction-seal receipt. Calibration slope remained above one, and no clinical-utility or deployment claim is permitted.
+
+Artifacts:
+
+- `research_studies/01_pattern_surv_hn/core_backbone/U11_private_external_validation/u11_private_external_validation_aggregate.json`
+- `research_studies/01_pattern_surv_hn/core_backbone/U11_private_external_validation/u11_private_external_validation_audit.md`
+- `scripts/run_u11_private_external_validation.py`
+- Private input workbook SHA256: `9341150581FBF3805D4A7F39C2FEB43A419E12DE2CC7CC5C6ED238E28261A281`
